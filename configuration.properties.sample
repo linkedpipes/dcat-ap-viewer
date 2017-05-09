@@ -1,0 +1,5 @@
+# Path to Solr Core (collection) with DCAT-AP data.
+solr.url = http://localhost:8983/solr/nkod
+
+# Port used by DCAT-AP viewer.
+port = 3000
