@@ -1,5 +1,8 @@
 # Path to Solr Core (collection) with DCAT-AP data.
-solr.url = http://localhost:8983/solr/nkod
+solr.url = http://localhost:8983/solr/collection1
+
+# Path to Virtuoso SPARQL endpoint.
+virtuoso.sparql.url = https://localhost/sparql
 
 # Port used by DCAT-AP viewer.
 port = 3000

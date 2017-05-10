@@ -34,6 +34,9 @@ function readProperty(option) {
         "solr": {
             "url": properties.get("solr.url")
         },
+        "sparql": {
+            "url": properties.get("virtuoso.sparql.url")
+        },
         "port": properties.get("port")
     };
 })();

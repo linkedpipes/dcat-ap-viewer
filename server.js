@@ -10,6 +10,7 @@ function initializeParsers(app) {
 
 function initializeRoutes(app) {
     app.use("/api/v1/solr", require("./server/routes/solr"));
+    app.use("/api/v1/resource/", require("./server/routes/resource"));
 }
 
 function initializeWebpack(app) {
