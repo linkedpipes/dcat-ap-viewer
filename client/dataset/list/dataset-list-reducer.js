@@ -6,8 +6,9 @@ import {
     SET_LIST_FACET_FILTER,
     SET_LIST_QUERY_STRING,
     SET_LIST_QUERY_FILTER
-} from "./actions";
+} from "./dataset-list-actions";
 
+// TODO Split to UI and data.
 const initialState = {
     "fetching": false,
     "pageCount": 11068,
@@ -73,17 +74,13 @@ export const datasetListReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_LIST_PAGE_REQUEST:
             return {
-                ...state,
-                "fetching": true
+                ...state
             };
         case FETCH_LIST_PAGE_SUCCESS:
             return parseSolrResponse(state, action.data);
         case FETCH_LIST_PAGE_FAILED:
-            // TODO Handle failure
-            return {
-                ...state,
-                "fetching": false
-            };
+            // TODO Implement
+            return state;
         case SET_LIST_QUERY_STRING:
             return {
                 ...state,

@@ -1,5 +1,4 @@
 import React from "react";
-import {Container} from "reactstrap";
 import Header from "./header";
 
 class App extends React.Component {
@@ -7,9 +6,9 @@ class App extends React.Component {
         return (
             <div>
                 <Header/>
-                <Container>
+                <div>
                     {React.cloneElement(this.props.children, this.props)}
-                </Container>
+                </div>
             </div>
         );
     };

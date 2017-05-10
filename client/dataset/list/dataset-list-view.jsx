@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Row, Col} from "reactstrap";
+import {Row, Col, Container} from "reactstrap";
 import FacetFilter from "../../components/facet-filter";
 import SearchBox from "../../components/search-box";
 import DatasetList from "./dataset-list";
@@ -11,7 +11,7 @@ import {
     setListFacetFilter,
     setListQueryString,
     setListQueryFilter
-} from "../actions";
+} from "./dataset-list-actions";
 
 class DatasetListViewComponent extends React.Component {
 
@@ -28,43 +28,40 @@ class DatasetListViewComponent extends React.Component {
         }
     }
 
-    // componentDidUpdate() {
-    //     console.log("componentWillUpdate");
-    //     this.props.fetchData(this.props.query);
-    // }
-
     render() {
         const props = this.props;
         return (
-            <Row>
-                <Col md={3} style={{backgroundColor: "yellow"}}>
-                    <FacetFilter
-                        label="Tagy"
-                        values={props.keyword}
-                        active={props.query.keyword}
-                        onChange={props.setKeywordsFacet}
-                    />
-                    <FacetFilter
-                        label="Organizace"
-                        values={props.publisher}
-                        active={props.query.publisher}
-                        onChange={props.setPublisherFacet}
-                    />
-                </Col>
-                <Col md={9} style={{backgroundColor: "beige"}}>
-                    <SearchBox
-                        value={props.searchString}
-                        onChange={this.props.setQueryString}
-                        onSearch={this.props.setQueryFilter}
-                    />
-                    <DatasetList values={props.data}/>
-                    <Paginator
-                        start={0}
-                        end={props.pageCount}
-                        value={props.query.page}
-                        onChange={this.props.setPage}/>
-                </Col>
-            </Row>
+            <Container>
+                <Row>
+                    <Col md={3} style={{backgroundColor: "yellow"}}>
+                        <FacetFilter
+                            label="Tagy"
+                            values={props.keyword}
+                            active={props.query.keyword}
+                            onChange={props.setKeywordsFacet}
+                        />
+                        <FacetFilter
+                            label="Organizace"
+                            values={props.publisher}
+                            active={props.query.publisher}
+                            onChange={props.setPublisherFacet}
+                        />
+                    </Col>
+                    <Col md={9} style={{backgroundColor: "beige"}}>
+                        <SearchBox
+                            value={props.searchString}
+                            onChange={this.props.setQueryString}
+                            onSearch={this.props.setQueryFilter}
+                        />
+                        <DatasetList values={props.data}/>
+                        <Paginator
+                            start={0}
+                            end={props.pageCount}
+                            value={props.query.page}
+                            onChange={this.props.setPage}/>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 }

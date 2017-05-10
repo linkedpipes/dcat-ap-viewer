@@ -2,7 +2,7 @@
 
 import {combineReducers} from "redux";
 import {routerReducer} from "react-router-redux";
-import {datasetListReducer} from "./dataset/reducer";
+import {datasetListReducer} from "./dataset/list/dataset-list-reducer";
 
 // http://redux.js.org/docs/api/combineReducers.html
 const reducers = combineReducers({
