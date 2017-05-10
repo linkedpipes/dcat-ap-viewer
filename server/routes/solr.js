@@ -1,17 +1,14 @@
-/**
- * Forward communication to Solr instance.
- */
 (() => {
     const express = require("express");
-    // https://github.com/request/request
-    const request = require("request");
+    const request = require("request"); // https://github.com/request/request
     const configuration = require('./../configuration');
 
     const router = express.Router();
 
+    // Forward to Solr.
     router.get("/query", function (req, res) {
         const url = configuration.solr.url + req.url;
-        var options = {
+        const options = {
             "url": url
         };
         request.get(options).pipe(res);
