@@ -24,7 +24,9 @@ const SearchBox = ({value, onChange, onSearch}) => (
                 placeholder="Search datasets..."
                 type="text"/>
             <InputGroupButton>
-                <Button onClick={() => onSearch(value)} color="secondary">Search</Button>
+                <Button onClick={() => onSearch(value)} color="secondary">
+                    Search
+                </Button>
             </InputGroupButton>
         </InputGroup>
     </div>
