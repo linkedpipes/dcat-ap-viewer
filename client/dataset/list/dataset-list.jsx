@@ -1,11 +1,14 @@
 import React from "react";
+import {Link} from "react-router";
 
 const DatasetList = ({values}) => {
     return (
         <div>
             {values.map((item) => (
                 <div key={item.id}>
-                    <h4>{item.title}</h4>
+                    <Link to={"/dataset?url=" + encodeURI(item.iri)}>
+                        <h4>{item.title}</h4>
+                    </Link>
                     <p>
                         {item.description}
                     </p>
