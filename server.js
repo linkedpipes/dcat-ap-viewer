@@ -26,6 +26,15 @@ function initializeWebpack(app) {
             "chunks": false
         }
     }));
+    initializeRoutesForStaticResources(app);
+}
+
+function initializeRoutesForStaticResources(app) {
+    const express = require("express");
+
+    const assetsPath = path.join(__dirname, "public/assets");
+    app.use("/assets", express.static(assetsPath));
+
     // Serve the index - use as fall back.  Without the * the server
     // fail to resolve non root paths like server/about .
     app.get("*", function (req, res) {
