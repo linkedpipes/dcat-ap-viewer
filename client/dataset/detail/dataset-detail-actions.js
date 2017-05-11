@@ -1,3 +1,6 @@
+import {triples} from "../../services/jsonld"
+import {DCAT, DCTERMS} from "../../services/vocabulary"
+
 export const FETCH_DATASET_REQUEST = "FETCH_DATASET_REQUEST";
 export function fetchDataset(iri) {
     return (dispatch) => {
@@ -22,31 +25,19 @@ export function fetchDataset(iri) {
 
 function convertDatasetJsonLdToData(jsonld) {
     const entity = jsonld["@graph"][0];
-    // TODO Use better conversion method, fix conversion of arrays.
-    // TODO Export vocabulary.
-    const distribution = [];
-    if (Array.isArray(entity["http://www.w3.org/ns/dcat#distribution"])) {
-        entity["http://www.w3.org/ns/dcat#distribution"].forEach((item) => {
-            distribution.push(item["@id"]);
-        });
-    } else {
-        distribution.push(
-            entity["http://www.w3.org/ns/dcat#distribution"]["@id"]);
-    }
-
     return {
-        "iri": entity["@id"],
-        "modified": entity["http://purl.org/dc/terms/modified"]["@value"],
-        "accrualPeriodicity": entity["http://purl.org/dc/terms/accrualPeriodicity"]["@id"],
-        "description": entity["http://purl.org/dc/terms/description"]["@value"],
-        "issued": entity["http://purl.org/dc/terms/issued"]["@value"],
-        "publisher": entity["http://purl.org/dc/terms/publisher"]["@id"],
-        "spatial": entity["http://purl.org/dc/terms/spatial"]["@id"],
-        "title": entity["http://purl.org/dc/terms/title"]["@value"],
-        "keyword": entity["http://www.w3.org/ns/dcat#keyword"].map((value) => value["@value"]),
-        "distribution": distribution,
-        "contactPoint": entity["http://www.w3.org/ns/dcat#contactPoint"]["@id"],
-        "temporal": entity["http://purl.org/dc/terms/temporal"]["@id"]
+        "iri": triples.getId(entity),
+        "modified": triples.getValue(entity, DCTERMS.modified),
+        "accrualPeriodicity": triples.getResource(entity, DCTERMS.accrualPeriodicity),
+        "description": triples.getValue(entity, DCTERMS.description),
+        "issued": triples.getValue(entity, DCTERMS.issued),
+        "publisher": triples.getResource(entity, DCTERMS.publisher),
+        "spatial": triples.getResource(entity, DCTERMS.spatial),
+        "title": triples.getValue(entity, DCTERMS.title),
+        "keyword": triples.getValues(entity, DCAT.keyword),
+        "distribution": triples.getResources(entity, DCAT.distribution),
+        "contactPoint": triples.getResource(entity, DCAT.contactPoint),
+        "temporal": triples.getResource(entity, DCTERMS.temporal)
     }
 }
 
@@ -89,16 +80,15 @@ export function fetchDistribution(iri) {
 
 function convertDistributionJsonLdToData(jsonld) {
     const entity = jsonld["@graph"][0];
-    // TODO Same as convertDatasetJsonLdToData
     return {
-        "iri": entity["@id"],
-        "description": entity["http://purl.org/dc/terms/description"]["@value"],
-        "title": entity["http://purl.org/dc/terms/title"]["@value"],
-        "format": readProperty(entity, "http://purl.org/dc/terms/format"),
-        "license": entity["http://purl.org/dc/terms/license"]["@id"],
-        "downloadURL": entity["http://www.w3.org/ns/dcat#downloadURL"]["@id"],
-        "mediaType": entity["http://www.w3.org/ns/dcat#mediaType"]["@id"],
-        "accessURL": entity["http://www.w3.org/ns/dcat#accessURL"]["@id"]
+        "iri": triples.getId(entity),
+        "description": triples.getValue(entity, DCTERMS.description),
+        "title": triples.getValue(entity, DCTERMS.title),
+        "format": triples.getResource(entity, DCTERMS.format),
+        "license": triples.getResource(entity, DCTERMS.license),
+        "downloadURL": triples.getResource(entity, DCAT.downloadURL),
+        "mediaType": triples.getResource(entity, DCAT.mediaType),
+        "accessURL": triples.getResource(entity, DCAT.accessURL)
     }
 }
 
