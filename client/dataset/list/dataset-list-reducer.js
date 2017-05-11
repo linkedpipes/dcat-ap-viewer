@@ -26,8 +26,6 @@ const initialState = {
 
 function parseSolrResponse(state, json) {
 
-    const pageCount = Math.ceil(json.response.numFound / 10);
-
     const keywords = json.facet_counts.facet_fields.keyword;
     const keywords_list = [];
     for (let index = 0; index < keywords.length; index += 2) {
@@ -61,7 +59,7 @@ function parseSolrResponse(state, json) {
             "format": item.formatName,
             "license": item.license
         })),
-        "pageCount": pageCount,
+        "datasetCount": json.response.numFound,
         "keyword": keywords_list,
         "publisher": publisher_list,
         // Do not change the query, as it is still the same.
