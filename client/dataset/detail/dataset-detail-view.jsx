@@ -7,7 +7,7 @@ import {
 } from "./dataset-detail-actions";
 import {Container, Table} from "reactstrap";
 import Paginator from "../../components/paginator";
-import TagLine from "../../components/tag-line"
+import TagLine from "../../components/tag-line";
 
 // TODO Add other fields.
 // TODO Extract to component.
@@ -71,7 +71,6 @@ class DistributionList extends React.Component {
                 if (title === undefined || title === "") {
                     title = "Nepojmenovaná distribuce";
                 }
-
                 rows.push((
                     <tr key={key}>
                         <td>
@@ -80,14 +79,12 @@ class DistributionList extends React.Component {
                             </a>
                         </td>
                         <td>
-                            {distribution.format.substr(
-                                distribution.format.lastIndexOf("/") + 1)}
-                        </td>
-                        <td>
+                            {distribution.license.substr &&
                             <a href={distribution.license}>
                                 {distribution.license.substr(
                                     distribution.license.lastIndexOf("/") + 1)}
                             </a>
+                            }
                         </td>
                     </tr>
                 ));
@@ -103,7 +100,6 @@ class DistributionList extends React.Component {
                     <thead>
                     <tr>
                         <th>Data</th>
-                        <th>Formát</th>
                         <th>Licence</th>
                     </tr>
                     </thead>
