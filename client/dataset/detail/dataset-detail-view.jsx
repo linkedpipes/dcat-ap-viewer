@@ -7,21 +7,7 @@ import {
 } from "./dataset-detail-actions";
 import {Container, Table} from "reactstrap";
 import Paginator from "../../components/paginator";
-
-const TagLine = ({values}) => {
-    if (values === undefined) {
-        return (
-            <div></div>
-        )
-    }
-    return (
-        <div>
-            {values.map((item) => (
-                <span key={item}>{item} </span>
-            ))}
-        </div>
-    );
-};
+import TagLine from "../../components/tag-line"
 
 // TODO Add other fields.
 // TODO Extract to component.
@@ -81,13 +67,27 @@ class DistributionList extends React.Component {
                     </tr>
                 ));
             } else {
+                let title = distribution.title;
+                if (title === undefined || title === "") {
+                    title = "Nepojmenovaná distribuce";
+                }
+
                 rows.push((
                     <tr key={key}>
                         <td>
-                            {distribution.title}
+                            <a href={distribution.accessURL}>
+                                {title}
+                            </a>
                         </td>
                         <td>
-                            {distribution.license}
+                            {distribution.format.substr(
+                                distribution.format.lastIndexOf("/") + 1)}
+                        </td>
+                        <td>
+                            <a href={distribution.license}>
+                                {distribution.license.substr(
+                                    distribution.license.lastIndexOf("/") + 1)}
+                            </a>
                         </td>
                     </tr>
                 ));
@@ -103,6 +103,7 @@ class DistributionList extends React.Component {
                     <thead>
                     <tr>
                         <th>Data</th>
+                        <th>Formát</th>
                         <th>Licence</th>
                     </tr>
                     </thead>
@@ -150,22 +151,24 @@ class DatasetDetailViewComponent extends React.Component {
 
         return (
             <Container>
-                <div>
+                <div style={{"marginTop": "2em"}}>
                     <h3>{dataset.title}</h3>
                     <p>{dataset.description}</p>
                     <TagLine values={dataset.keyword}/>
                 </div>
-                <br/>
-                <div>
+                <div style={{"marginTop": "2em"}}>
+                    <h4>Vlastnosti</h4>
                     <DatasetPropertyTable dataset={dataset}/>
                 </div>
-                <DistributionList
-                    keys={dataset.distribution}
-                    values={distributions}
-                    fetchDistribution={this.props.fetchDistribution}
-                    setPage={this.props.setDistributionPageIndex}
-                    page={ui.distributionsPageIndex}
-                />
+                <div style={{"marginTop": "2em"}}>
+                    <DistributionList
+                        keys={dataset.distribution}
+                        values={distributions}
+                        fetchDistribution={this.props.fetchDistribution}
+                        setPage={this.props.setDistributionPageIndex}
+                        page={ui.distributionsPageIndex}
+                    />
+                </div>
             </Container>
         );
     }
