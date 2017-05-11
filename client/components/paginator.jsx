@@ -7,7 +7,6 @@ import {Pagination, PaginationItem, PaginationLink} from "reactstrap";
 // TODO Add dots 1 ... 9 10 11 ... 199
 
 const Paginator = ({start, end, value, onChange}) => {
-    console.log(start, end);
     if (start === end) {
         return null;
     }
