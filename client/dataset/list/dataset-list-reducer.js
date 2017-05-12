@@ -45,6 +45,7 @@ function parseSolrResponse(state, json) {
     }
 
     const data = {
+        ...state,
         "fetching": false,
         "data": json.response.docs.map((item) => ({
             "id": item.id,
@@ -62,8 +63,6 @@ function parseSolrResponse(state, json) {
         "datasetCount": json.response.numFound,
         "keyword": keywords_list,
         "publisher": publisher_list,
-        // Do not change the query, as it is still the same.
-        "query": state.query
     };
     return data;
 }
