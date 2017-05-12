@@ -43,13 +43,21 @@ export const datasetDetailReducer = (state = initialState, action) => {
                 ...state,
             };
         case FETCH_DISTRIBUTION_REQUEST:
-            return state;
-        case FETCH_DISTRIBUTION_SUCCESS:
-            const distributions = {...state.distributions};
-            distributions[action.iri] = action.data;
             return {
                 ...state,
-                "distributions" : distributions
+                "distributions": copyAndAdd(state.distributions, action.iri, {
+                    ...action.data,
+                    "status": "fetching"
+                })
+            }
+            return state;
+        case FETCH_DISTRIBUTION_SUCCESS:
+            return {
+                ...state,
+                "distributions": copyAndAdd(state.distributions, action.iri, {
+                    ...action.data,
+                    "status": "actual"
+                })
             };
         case FETCH_DISTRIBUTION_FAILED:
             console.error(action);
@@ -66,3 +74,9 @@ export const datasetDetailReducer = (state = initialState, action) => {
             return state
     }
 };
+
+function copyAndAdd(dictionary, key, item) {
+    const copy = {...dictionary};
+    copy[key] = item;
+    return copy;
+}
