@@ -41,10 +41,14 @@ class DistributionRow  extends React.Component {
                     <a href={url}>{title}</a>
                 </td>
                 <td>
-                    {dist.format}
+                    {dist.format !== undefined &&
+                    <a href={dist.format}>{dist.format}</a>
+                    }
                 </td>
                 <td>
-                    {dist.conformsTo}
+                    {dist.conformsTo !== undefined &&
+                    <a href={dist.conformsTo}>{dist.conformsTo}</a>
+                    }
                 </td>
             </tr>
         )
