@@ -13,7 +13,7 @@ const SearchBox = ({value, onChange, onSearch}) => (
                     onSearch(value);
                 }
             }}
-            placeholder="Vyhledat datasety ..."
+            placeholder="Vyhledat datové sady ..."
             type="text"/>
         <InputGroupButton>
             <Button onClick={() => onSearch(value)} color="secondary">
