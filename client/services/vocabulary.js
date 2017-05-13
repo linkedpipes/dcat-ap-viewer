@@ -25,6 +25,7 @@ export const DCTERMS = {
 
 const DCAT_PREFIX = "http://www.w3.org/ns/dcat#";
 export const DCAT = {
+    "Dataset": DCAT_PREFIX + "Dataset",
     "keyword": DCAT_PREFIX + "keyword",
     "contactPoint": DCAT_PREFIX + "contactPoint",
     "distribution": DCAT_PREFIX + "distribution",
