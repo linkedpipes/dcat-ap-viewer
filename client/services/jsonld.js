@@ -1,4 +1,39 @@
-export const quads = {};
+export const graph = {};
+
+graph.getByType = (data, type) => {
+    const graph = data["@graph"];
+    for (let index = 0; index < graph.length; ++index) {
+        if (triples.getType(graph[index]).indexOf(type) > -1) {
+            return graph[index];
+        }
+    }
+    return undefined;
+};
+
+graph.getByResources = (data, iris) => {
+    const iriList = asArray(iris);
+    const graph = data["@graph"];
+    const result = [];
+    for (let index = 0; index < graph.length; ++index) {
+        if (iriList.indexOf(triples.getId(graph[index])) > -1) {
+            result.push(graph[index]);
+        }
+    }
+    return result;
+};
+
+graph.getByResource = (data, iri) => {
+    if (iri == undefined) {
+        return undefined;
+    }
+    const graph = data["@graph"];
+    for (let index = 0; index < graph.length; ++index) {
+        if (triples.getId(graph[index]) === iri) {
+            return graph[index];
+        }
+    }
+    return undefined;
+};
 
 export const triples = {};
 
@@ -9,6 +44,14 @@ triples.getId = (entity) => {
         return entity["id"];
     } else {
         return undefined;
+    }
+};
+
+triples.getType = (entity) => {
+    if (entity["@type"] === undefined) {
+        return [];
+    } else {
+        return entity["@type"];
     }
 };
 
@@ -49,7 +92,7 @@ triples.getResources = (entity, predicate) => {
     return values.map((item) => {
         const id = triples.getId(item);
         if (id === undefined) {
-            console.warn("Missing @id for: ", value);
+            console.warn("Missing @id for: ", item);
             return undefined;
         } else {
             return id;
