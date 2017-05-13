@@ -11,7 +11,11 @@ const DatasetList = ({values}) => {
                     <Link to={"/dataset?url=" + encodeURI(item.iri)}>
                         <h4>{item.title}</h4>
                     </Link>
-                    <p>
+                    <p style={{
+                        "overflow": "hidden",
+                        "display": "-webkit-box",
+                        "WebkitLineClamp": "3",
+                        "WebkitBoxOrient": "vertical"}}>
                         {item.description}
                     </p>
                     <hr/>
