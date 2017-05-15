@@ -50,6 +50,16 @@ export function convertDatasetJsonLd(jsonld) {
 
     const temporal = graph.getByResource(jsonld,
         triples.getResource(dataset, DCTERMS.temporal));
+    let temporalObject;
+    if (temporal === undefined) {
+        temporalObject = undefined;
+    } else {
+        temporalObject = {
+            "iri": triples.getResource(dataset, DCTERMS.temporal),
+            "startDate": triples.getValue(temporal, SCHEMA.startDate),
+            "endDate": triples.getValue(temporal, SCHEMA.endDate)
+        };
+    }
 
     const frequency = triples.getResource(dataset, DCTERMS.accrualPeriodicity);
 
@@ -94,11 +104,7 @@ export function convertDatasetJsonLd(jsonld) {
         "sample": triples.getResource(dataset, ADMS.sample),
         "source": triples.getResource(dataset, DCTERMS.source),
         "spatial": triples.getResource(dataset, DCTERMS.spatial),
-        "temporal": {
-            "iri": triples.getResource(dataset, DCTERMS.temporal),
-            "startDate": triples.getValue(temporal, SCHEMA.startDate),
-            "endDate": triples.getValue(temporal, SCHEMA.endDate)
-        },
+        "temporal": temporalObject,
         "type": triples.getValue(dataset, DCTERMS.type),
         "modified": triples.getValue(dataset, DCTERMS.modified),
         "version": triples.getValue(dataset, OWL.versionInfo),
