@@ -49,13 +49,13 @@ class DatasetListViewComponent extends React.Component {
                 <Row>
                     <Col md={3}>
                         <FacetFilter
-                            label="Organizace"
+                            label="Poskytovatelé"
                             values={props.publisher}
                             active={props.query.publisher}
                             onChange={props.setPublisherFacet}
                         />
                         <FacetFilter
-                            label="Tagy"
+                            label="Klíčová slova"
                             values={props.keyword}
                             active={props.query.keyword}
                             onChange={props.setKeywordsFacet}
