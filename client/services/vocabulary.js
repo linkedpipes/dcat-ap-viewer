@@ -26,6 +26,7 @@ export const DCTERMS = {
 const DCAT_PREFIX = "http://www.w3.org/ns/dcat#";
 export const DCAT = {
     "Dataset": DCAT_PREFIX + "Dataset",
+    "Distribution": DCAT_PREFIX + "Distribution",
     "keyword": DCAT_PREFIX + "keyword",
     "contactPoint": DCAT_PREFIX + "contactPoint",
     "distribution": DCAT_PREFIX + "distribution",
@@ -58,4 +59,21 @@ export const OWL = {
 const SPDX_PREFIX = "http://spdx.org/rdf/terms#";
 export const SPDX = {
     "checksum" : SPDX_PREFIX + "checksum"
+};
+
+const VCARD_PREFIX = "http://www.w3.org/2006/vcard/ns#";
+export const VCARD = {
+    "fn" : VCARD_PREFIX + "fn",
+    "hasEmail" : VCARD_PREFIX + "hasEmail"
+};
+
+const SCHEMA_PREFIX = "http://schema.org/";
+export const SCHEMA = {
+    "startDate" : SCHEMA_PREFIX + "startDate",
+    "endDate" : SCHEMA_PREFIX + "endDate"
+};
+
+const SKOS_PREFIX = "http://www.w3.org/2004/02/skos/core#";
+export const SKOS = {
+    "prefLabel": SKOS_PREFIX + "prefLabel"
 };
