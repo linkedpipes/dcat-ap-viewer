@@ -50,7 +50,7 @@ class Header extends React.Component {
                     <NavbarToggler right onClick={this.toggleNavbar}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
-                            <NavItem>
+                            <NavItem className="active">
                                 <NavLink href="/">
                                     Datové sady
                                 </NavLink>
