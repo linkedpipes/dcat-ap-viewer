@@ -36,13 +36,12 @@ class DatasetDetailViewComponent extends React.Component {
                 </Container>
             )
         }
-
         return (
             <Container>
                 <div style={{"marginTop": "2em"}}>
                     <h3>{dataset.title}</h3>
                     <h4>
-                        <a href={dataset.publisher}>{dataset.publisher}</a>
+                        <a href={dataset.publisher.iri}>{dataset.publisher.label}</a>
                     </h4>
                     <p>{dataset.description}</p>
                     <TagLine values={dataset.keyword}/>

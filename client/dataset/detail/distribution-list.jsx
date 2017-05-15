@@ -2,7 +2,7 @@ import React from "react";
 import {Table} from "reactstrap";
 import Paginator from "../../components/paginator";
 
-class DistributionRow  extends React.Component {
+class DistributionRow extends React.Component {
 
     componentWillMount() {
         const dist = this.props.distribution;
@@ -35,6 +35,17 @@ class DistributionRow  extends React.Component {
             url = dist.downloadURL;
         }
 
+        let formatLabel;
+        if (dist.format === undefined) {
+            formatLabel = undefined;
+        } else {
+            if (dist.format.prefLabel === undefined) {
+                formatLabel = dist.iri;
+            } else {
+                formatLabel = dist.format.prefLabel;
+            }
+        }
+
         return (
             <tr>
                 <td>
@@ -42,7 +53,7 @@ class DistributionRow  extends React.Component {
                 </td>
                 <td>
                     {dist.format !== undefined &&
-                    <a href={dist.format}>{dist.format}</a>
+                    <a href={dist.format.iri}>{formatLabel}</a>
                     }
                 </td>
                 <td>
@@ -56,7 +67,6 @@ class DistributionRow  extends React.Component {
 }
 
 class DistributionList extends React.Component {
-
 
     render() {
         const distributions = this.props.values;
