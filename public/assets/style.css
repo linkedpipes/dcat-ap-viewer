@@ -6,3 +6,11 @@ a {
     background-color: #057fa5;
     border-color: white;
 }
+
+.page-link {
+    color: #057fa5;
+}
+
+.page-item.active .page-link {
+    background-color: #057fa5;
+}
