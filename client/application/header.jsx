@@ -42,7 +42,7 @@ class Header extends React.Component {
         return (
             <Navbar toggleable="md">
                 <Container>
-                    <NavbarBrand href="#">
+                    <NavbarBrand href="https://data.gov.cz.opendata.cz/">
                         <img width="174" height="30"
                              className="d-inline-block align-top"
                              src="assets/images/opendata-logo.png"/>
