@@ -47,7 +47,6 @@ class DatasetDetailViewComponent extends React.Component {
                     <TagLine values={dataset.keyword}/>
                 </div>
                 <div style={{"marginTop": "2em"}}>
-                    <h4>Vlastnosti</h4>
                     <DatasetPropertyTable dataset={dataset}/>
                 </div>
                 <div style={{"marginTop": "2em"}}>

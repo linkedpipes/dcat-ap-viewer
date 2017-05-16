@@ -145,12 +145,6 @@ const ValueRow = ({label, value}) => {
 
 const DatasetPropertyTable = ({dataset}) => (
     <Table>
-        <thead>
-        <tr>
-            <th>Pole</th>
-            <th>Hodnota</th>
-        </tr>
-        </thead>
         <tbody>
         <ContactPoints label="Kontaktní bod" value={dataset.contactPoint}/>
         <UrlRow label="Poskytovatel" value={dataset.publisher}/>
