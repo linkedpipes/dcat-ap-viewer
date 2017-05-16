@@ -30,12 +30,10 @@ const QueryStatusLine = ({resultSize, query}) => (
 class DatasetListViewComponent extends React.Component {
 
     componentDidMount() {
-        console.log("componentDidMount");
         this.props.fetchData(this.props.query);
     }
 
     componentWillReceiveProps(nextProps) {
-        console.log("componentWillReceiveProps");
         // Check whether we need to update data.
         if (nextProps.query !== this.props.query) {
             this.props.fetchData(nextProps.query);

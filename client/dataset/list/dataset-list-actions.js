@@ -20,7 +20,6 @@ function constructSearchQueryUrl(query) {
     if (query.search === undefined || query.search === "") {
         url += "q=*:*";
     } else {
-        console.log(query.search, encodeURI(query.search));
         url += "q=" + encodeURI(query.search)
     }
 
