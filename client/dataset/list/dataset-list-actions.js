@@ -3,9 +3,6 @@ export const FETCH_LIST_PAGE_SUCCESS = "FETCH_LIST_PAGE_SUCCESS";
 export const FETCH_LIST_PAGE_FAILED = "FETCH_LIST_PAGE_FAILED";
 
 export const SET_LIST_QUERY_STRING = "SET_LIST_QUERY_STRING";
-export const SET_LIST_QUERY_FILTER = "SET_LIST_QUERY_FILTER";
-export const SET_LIST_FACET_FILTER = "SET_LIST_FACET_FILTER";
-export const SET_LIST_PAGE = "SET_LIST_PAGE";
 
 function constructSearchQueryUrl(query) {
     let url = "api/v1/solr/query?" +
@@ -65,31 +62,9 @@ export function fetchDataFailed(error) {
     };
 }
 
-export function setListQueryString(value) {
+export function setQueryString(value) {
     return {
         "type": SET_LIST_QUERY_STRING,
         "value": value
-    };
-}
-
-export function setListQueryFilter(value) {
-    return {
-        "type": SET_LIST_QUERY_FILTER,
-        "value": value
-    };
-}
-
-export function setListFacetFilter(facet, value) {
-    return {
-        "type": SET_LIST_FACET_FILTER,
-        "facet": facet,
-        "value": value
-    };
-}
-
-export function setListPage(page) {
-    return {
-        "type": SET_LIST_PAGE,
-        "page": page
     };
 }

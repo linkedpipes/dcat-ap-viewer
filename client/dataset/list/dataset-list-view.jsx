@@ -9,7 +9,7 @@ import {
     fetchDataRequest,
     setListPage,
     setListFacetFilter,
-    setListQueryString,
+    setQueryString,
     setListQueryFilter
 } from "./dataset-list-actions";
 import TagLine from "../../components/tag-line";
@@ -62,7 +62,7 @@ class DatasetListViewComponent extends React.Component {
                     <Col md={9}>
                         <div style={{"margin": "1em 1em 1em 1em"}}>
                             <SearchBox
-                                value={props.searchString}
+                                value={props.searchQuery}
                                 onChange={props.setQueryString}
                                 onSearch={props.setQueryFilter}/>
                             <br/>
@@ -71,7 +71,7 @@ class DatasetListViewComponent extends React.Component {
                                 query={props.query}
                             />
                             <br/>
-                            <DatasetList values={props.data}/>
+                            <DatasetList values={props.datasets}/>
                             <br/>
                             <Paginator
                                 start={0}
@@ -87,12 +87,11 @@ class DatasetListViewComponent extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    // "fetching": state.dataset.list.fetching,
-    "searchString": state.dataset.list.searchString,
-    "keyword": state.dataset.list.keyword,
-    "publisher": state.dataset.list.publisher,
-    "data": state.dataset.list.data,
-    "datasetCount": state.dataset.list.datasetCount,
+    "searchQuery": state.dataset.list.ui.searchQuery,
+    "keyword": state.dataset.list.data.keyword,
+    "publisher": state.dataset.list.data.publisher,
+    "datasets": state.dataset.list.data.datasets,
+    "datasetCount": state.dataset.list.data.datasetCount,
     "query": state.dataset.list.query,
 });
 
@@ -101,19 +100,77 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(fetchDataRequest(query));
     },
     "setQueryString": (value) => {
-        dispatch(setListQueryString(value));
+        dispatch(setQueryString(value));
     },
     "setQueryFilter": (value) => {
-        dispatch(setListQueryFilter(value));
+        if (value == "") {
+            value = undefined;
+        }
+        ownProps.router.push({
+            "pathname": "/",
+            "query": {
+                ...ownProps.router.location.query,
+                "search": value,
+                "page": undefined
+            }
+        });
     },
-    "setKeywordsFacet": (facet) => {
-        dispatch(setListFacetFilter("keyword", facet));
+    "setKeywordsFacet": (facet, isActive) => {
+        const value = facet.label;
+        let keywords = ownProps.router.location.query.keyword;
+        if (keywords == undefined) {
+            keywords = [];
+        } else if (!Array.isArray(keywords)) {
+            keywords = [keywords];
+        }
+        const index = keywords.indexOf(value);
+        if (isActive && index == -1) {
+            keywords.push(value);
+        } else if (index > -1) {
+            keywords.splice(index, 1);
+        }
+        ownProps.router.push({
+            "pathname": "/",
+            "query": {
+                ...ownProps.router.location.query,
+                "page": undefined,
+                "keyword": keywords
+            }
+        });
     },
-    "setPublisherFacet": (facet) => {
-        dispatch(setListFacetFilter("publisher", facet));
+    "setPublisherFacet": (facet, isActive) => {
+        const value = facet.label;
+        let publishers = ownProps.router.location.query.publisher;
+        if (publishers == undefined) {
+            publishers = [];
+        } else if (!Array.isArray(publishers)) {
+            publishers = [publishers];
+        }
+        const index = publishers.indexOf(value);
+        if (isActive && index == -1) {
+            publishers.push(value);
+        } else if (index > -1) {
+            publishers.splice(index, 1);
+        }
+        ownProps.router.push({
+            "pathname": "/",
+            "query": {
+                ...ownProps.router.location.query,
+                "page": undefined,
+                "publisher": publishers
+            }
+        });
     },
     "setPage": (page) => {
-        dispatch(setListPage(page));
+        if (page == 0) {
+            page = undefined;
+        }
+        ownProps.router.push({
+            "pathname": "/", "query": {
+                ...ownProps.router.location.query,
+                "page": page,
+            }
+        });
     }
 });
 

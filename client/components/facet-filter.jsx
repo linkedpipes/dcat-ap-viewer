@@ -35,7 +35,7 @@ class FacetFilter extends React.Component {
             const html = (
                 <ListGroupItem
                     key={value.label}
-                    onClick={() => props.onChange(value)}
+                    onClick={() => props.onChange(value, !isActive)}
                     action
                     active={isActive}
                     href="javascript:void(0)"

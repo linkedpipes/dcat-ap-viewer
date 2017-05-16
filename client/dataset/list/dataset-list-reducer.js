@@ -2,21 +2,27 @@ import {
     FETCH_LIST_PAGE_REQUEST,
     FETCH_LIST_PAGE_SUCCESS,
     FETCH_LIST_PAGE_FAILED,
-    SET_LIST_PAGE,
-    SET_LIST_FACET_FILTER,
-    SET_LIST_QUERY_STRING,
-    SET_LIST_QUERY_FILTER
+    SET_LIST_QUERY_STRING
 } from "./dataset-list-actions";
 
-// TODO Split to UI and data.
+// TODO Isolate changes to minimize rendering.
+//  For example paginator re-render on every change of string query.
+
 const initialState = {
-    "fetching": false,
-    "pageCount": 11068,
-    "data": [],
-    "keyword": [],
-    "publisher": [],
-    "searchString": "",
+    "ui": {
+        "searchQuery": "",
+    },
+    "data": {
+        // TODO Replace with "status" in "DAO" layer
+        "status": "uninitialized",
+        "datasetCount": 0,
+        "datasets": [],
+        "keyword": [],
+        "publisher": []
+    },
+    // Mirror of location.
     "query": {
+        // TODO Update pages to start from 1, as it will look better in URL.
         "page": 0,
         "search": "",
         "keyword": [],
@@ -44,81 +50,90 @@ function parseSolrResponse(state, json) {
         });
     }
 
-    const data = {
+    return {
         ...state,
-        "fetching": false,
-        "data": json.response.docs.map((item) => ({
-            "id": item.id,
-            "iri": item.iri[0],
-            "modified": item.modified[0],
-            "accrualPeriodicity": item.accrualPeriodicity[0],
-            "description": item.description[0],
-            "issued": item.issued[0],
-            "publisher": item.publisherName[0],
-            "title": item.title[0],
-            "keyword": item.keyword,
-            "format": item.formatName,
-            "license": item.license
-        })),
-        "datasetCount": json.response.numFound,
-        "keyword": keywords_list,
-        "publisher": publisher_list,
+        "data": {
+            "status": "actual",
+            "datasetCount": json.response.numFound,
+            "datasets": json.response.docs.map((item) => ({
+                "id": item.id,
+                "iri": item.iri[0],
+                "modified": item.modified[0],
+                "accrualPeriodicity": item.accrualPeriodicity[0],
+                "description": item.description[0],
+                "issued": item.issued[0],
+                "publisher": item.publisherName[0],
+                "title": item.title[0],
+                "keyword": item.keyword,
+                "format": item.formatName,
+                "license": item.license
+            })),
+            "keyword": keywords_list,
+            "publisher": publisher_list
+        }
     };
-    return data;
+}
+
+function locationToQuery(location) {
+    let page = parseInt(location.page);
+    if (isNaN(page)) {
+        page = 0;
+    }
+
+    return {
+        "page": page,
+        "search": location.search,
+        "keyword": asArray(location.keyword),
+        "publisher": asArray(location.publisher)
+    };
+}
+
+function asArray(value) {
+    if (value === undefined) {
+        return [];
+    } else if (Array.isArray(value)) {
+        return value;
+    } else {
+        return [value];
+    }
 }
 
 export const datasetListReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_LIST_PAGE_REQUEST:
-            return {
-                ...state
-            };
+            // TODO Add loading indicator.
+            return state;
         case FETCH_LIST_PAGE_SUCCESS:
             return parseSolrResponse(state, action.data);
         case FETCH_LIST_PAGE_FAILED:
-            // TODO Implement
+            // TODO Implement.
             return state;
         case SET_LIST_QUERY_STRING:
             return {
                 ...state,
-                "searchString": action.value
+                "ui": {
+                    ...state.ui,
+                    "searchQuery": action.value
+                }
             };
-        case SET_LIST_QUERY_FILTER:
+        case "@@router/LOCATION_CHANGE":
             return {
                 ...state,
-                "query": {
-                    ...state.query,
-                    "search": action.value
+                "query": locationToQuery(action.payload.query),
+                "ui": {
+                    ...state.ui,
+                    "searchQuery": undefinedAsEmpty(action.payload.query.search)
                 }
             };
-        case SET_LIST_FACET_FILTER:
-            const newState = {
-                ...state,
-                "query": {
-                    ...state.query
-                }
-            };
-            const index = state.query[action.facet].indexOf(action.value.label);
-            if (index == -1) {
-                newState.query[action.facet] = [
-                    ...newState.query[action.facet],
-                    action.value.label];
-            } else {
-                newState.query[action.facet] = [
-                    ...newState.query[action.facet].splice(0, index),
-                    ...newState.query[action.facet].splice(index + 1)
-                ]
-            }
-            return newState;
-        case SET_LIST_PAGE:
-            return {
-                ...state,
-                "query": {
-                    ...state.query,
-                    "page": action.page
-                }
-            }
         default:
             return state
     }
 };
+
+function undefinedAsEmpty(value) {
+    if (value === undefined) {
+        return "";
+    } else {
+        return value;
+    }
+}
