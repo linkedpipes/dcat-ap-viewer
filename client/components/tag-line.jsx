@@ -1,7 +1,8 @@
 import React from "react";
 import {Badge} from "reactstrap";
+import {PropTypes} from "prop-types";
 
-const TagLine = ({values}) => {
+const TagLine = ({values, size=1}) => {
     if (values === undefined) {
         return (
             <div></div>
@@ -11,7 +12,7 @@ const TagLine = ({values}) => {
         <div style={{"marginTop": "0.2em"}}>
             {values.map((item) => (
                 <Badge
-                    style={{"marginLeft": "1em", "fontSize": "1em"}}
+                    style={{"marginLeft": "1em", "fontSize": size + "em"}}
                     color="default"
                     pill
                     key={item}>
@@ -22,4 +23,10 @@ const TagLine = ({values}) => {
     );
 };
 
+TagLine.propTypes = {
+    "values": PropTypes.arrayOf(PropTypes.string).isRequired,
+    "size": PropTypes.number
+};
+
 export default TagLine;
+
