@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router";
+import TagLine from "../../components/tag-line"
 
-// TODO item.format
 const DatasetList = ({values}) => {
     return (
         <div>
@@ -18,6 +18,7 @@ const DatasetList = ({values}) => {
                         "WebkitBoxOrient": "vertical"}}>
                         {item.description}
                     </p>
+                    <TagLine values={item.format} size={0.7}/>
                     <hr/>
                 </div>
             ))}
