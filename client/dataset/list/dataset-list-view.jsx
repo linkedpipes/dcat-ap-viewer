@@ -24,6 +24,7 @@ const QueryStatusLine = ({resultSize, query}) => (
         </h4>
         <TagLine values={query.publisher}/>
         <TagLine values={query.keyword}/>
+        <TagLine values={query.format}/>
     </div>
 );
 
@@ -58,6 +59,13 @@ class DatasetListViewComponent extends React.Component {
                             active={props.query.keyword}
                             onChange={props.setKeywordsFacet}
                         />
+                        <FacetFilter
+                            label="Formát"
+                            values={props.format}
+                            active={props.query.format}
+                            onChange={props.setFormatFacet}
+                        />
+
                     </Col>
                     <Col md={9}>
                         <div style={{"margin": "1em 1em 1em 1em"}}>
@@ -90,6 +98,7 @@ const mapStateToProps = (state, ownProps) => ({
     "searchQuery": state.dataset.list.ui.searchQuery,
     "keyword": state.dataset.list.data.keyword,
     "publisher": state.dataset.list.data.publisher,
+    "format": state.dataset.list.data.format,
     "datasets": state.dataset.list.data.datasets,
     "datasetCount": state.dataset.list.data.datasetCount,
     "query": state.dataset.list.query,
@@ -161,6 +170,17 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             }
         });
     },
+    "setFormatFacet": (facet, isActive) => {
+        let formats = ownProps.router.location.query.format;
+        ownProps.router.push({
+            "pathname": "/",
+            "query": {
+                ...ownProps.router.location.query,
+                "page": undefined,
+                "format": updateValueList(facet.label, isActive, formats)
+            }
+        });
+    },
     "setPage": (page) => {
         if (page == 0) {
             page = undefined;
@@ -173,6 +193,27 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         });
     }
 });
+
+function updateValueList(value, isActive, activeList) {
+    activeList = asNewArray(activeList);
+    const index = activeList.indexOf(value);
+    if (isActive && index == -1) {
+        activeList.push(value);
+    } else if (index > -1) {
+        activeList.splice(index, 1);
+    }
+    return activeList;
+}
+
+function asNewArray(value) {
+    if (value === undefined) {
+        return [];
+    } else if (Array.isArray(value)) {
+        return [...value];
+    } else {
+        return [value];
+    }
+}
 
 export const DatasetListView = connect(
     mapStateToProps,

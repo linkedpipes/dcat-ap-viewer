@@ -8,6 +8,7 @@ function constructSearchQueryUrl(query) {
     let url = "api/v1/solr/query?" +
         "facet.field=keyword&" +
         "facet.field=publisherName&" +
+        "facet.field=formatName&" +
         "facet=true&" +
         "facet.mincount=1&";
 
@@ -27,6 +28,10 @@ function constructSearchQueryUrl(query) {
 
     query.publisher.forEach((item) => {
         url += "&fq=publisherName:\"" + encodeURI(item) + "\""
+    });
+
+    query.format.forEach((item) => {
+        url += "&fq=formatName:\"" + encodeURI(item) + "\""
     });
 
     return url;

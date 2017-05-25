@@ -18,7 +18,8 @@ const initialState = {
         "datasetCount": 0,
         "datasets": [],
         "keyword": [],
-        "publisher": []
+        "publisher": [],
+        "format": []
     },
     // Mirror of location.
     "query": {
@@ -26,7 +27,8 @@ const initialState = {
         "page": 0,
         "search": "",
         "keyword": [],
-        "publisher": []
+        "publisher": [],
+        "format": []
     }
 };
 
@@ -50,6 +52,15 @@ function parseSolrResponse(state, json) {
         });
     }
 
+    const format = json.facet_counts.facet_fields.formatName;
+    const format_list = [];
+    for (let index = 0; index < format.length; index += 2) {
+        format_list.push({
+            "label": format[index],
+            "count": format[index + 1]
+        });
+    }
+
     return {
         ...state,
         "data": {
@@ -69,7 +80,8 @@ function parseSolrResponse(state, json) {
                 "license": item.license
             })),
             "keyword": keywords_list,
-            "publisher": publisher_list
+            "publisher": publisher_list,
+            "format": format_list
         }
     };
 }
@@ -84,7 +96,8 @@ function locationToQuery(location) {
         "page": page,
         "search": location.search,
         "keyword": asArray(location.keyword),
-        "publisher": asArray(location.publisher)
+        "publisher": asArray(location.publisher),
+        "format": asArray(location.format)
     };
 }
 
