@@ -13,11 +13,11 @@ class DistributionRow extends React.Component {
 
     render() {
         const dist = this.props.distribution;
-        if (dist === undefined) {
+        if (dist === undefined || dist.status === "fetching") {
             return (
                 <tr>
                     <td>
-                        Loading ...
+                        Načítání ...
                     </td>
                 </tr>
             )
