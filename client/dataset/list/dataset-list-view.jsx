@@ -125,48 +125,24 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         });
     },
     "setKeywordsFacet": (facet, isActive) => {
-        const value = facet.label;
         let keywords = ownProps.router.location.query.keyword;
-        if (keywords == undefined) {
-            keywords = [];
-        } else if (!Array.isArray(keywords)) {
-            keywords = [keywords];
-        }
-        const index = keywords.indexOf(value);
-        if (isActive && index == -1) {
-            keywords.push(value);
-        } else if (index > -1) {
-            keywords.splice(index, 1);
-        }
         ownProps.router.push({
             "pathname": "/",
             "query": {
                 ...ownProps.router.location.query,
                 "page": undefined,
-                "keyword": keywords
+                "keyword": updateValueList(facet.label, isActive, keywords)
             }
         });
     },
     "setPublisherFacet": (facet, isActive) => {
-        const value = facet.label;
         let publishers = ownProps.router.location.query.publisher;
-        if (publishers == undefined) {
-            publishers = [];
-        } else if (!Array.isArray(publishers)) {
-            publishers = [publishers];
-        }
-        const index = publishers.indexOf(value);
-        if (isActive && index == -1) {
-            publishers.push(value);
-        } else if (index > -1) {
-            publishers.splice(index, 1);
-        }
         ownProps.router.push({
             "pathname": "/",
             "query": {
                 ...ownProps.router.location.query,
                 "page": undefined,
-                "publisher": publishers
+                "publisher": updateValueList(facet.label, isActive, publishers)
             }
         });
     },
