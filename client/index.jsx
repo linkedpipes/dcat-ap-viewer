@@ -7,6 +7,7 @@ import {syncHistoryWithStore} from "react-router-redux";
 import App from "./application/app";
 import {DatasetListView} from "./dataset/list/dataset-list-view";
 import {DatasetDetailView} from "./dataset/detail/dataset-detail-view"
+import {OrganisationListView} from "./organisation/list/organisation-list-view"
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
@@ -17,6 +18,7 @@ ReactDOM.render((
             <Route path="/" component={App}>
                 <IndexRoute component={DatasetListView}/>
                 <Route path="dataset" component={DatasetDetailView}/>
+                <Route path="organisations" component={OrganisationListView}/>
             </Route>
         </Router>
     </Provider>
