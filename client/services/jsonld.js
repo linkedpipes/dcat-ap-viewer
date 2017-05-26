@@ -2,6 +2,9 @@ export const graph = {};
 
 graph.getByType = (data, type) => {
     const graph = data["@graph"];
+    if (graph === undefined || graph.length === undefined) {
+        return undefined;
+    }
     for (let index = 0; index < graph.length; ++index) {
         if (triples.getType(graph[index]).indexOf(type) > -1) {
             return graph[index];
@@ -56,7 +59,7 @@ triples.getType = (entity) => {
 };
 
 triples.getValues = (entity, predicate) => {
-    let values = asArray(entity[predicate]);
+    let values = asArray(getValueForPredicate(entity,predicate));
     const result = [];
     values.forEach((item) => {
         if (item["@value"] === undefined) {
@@ -68,14 +71,13 @@ triples.getValues = (entity, predicate) => {
     return result;
 };
 
-triples.getValue = (entity, predicate) => {
-    const values = triples.getValues(entity, predicate);
-    if (values.length === 0) {
+function getValueForPredicate(entity, predicate) {
+    if (entity === undefined) {
         return undefined;
     } else {
-        return values[0];
+        return entity[predicate];
     }
-};
+}
 
 function asArray(values) {
     if (values === undefined || values === null) {
@@ -87,8 +89,17 @@ function asArray(values) {
     }
 }
 
+triples.getValue = (entity, predicate) => {
+    const values = triples.getValues(entity, predicate);
+    if (values.length === 0) {
+        return undefined;
+    } else {
+        return values[0];
+    }
+};
+
 triples.getResources = (entity, predicate) => {
-    let values = asArray(entity[predicate]);
+    let values = asArray(getValueForPredicate(entity,predicate));
     return values.map((item) => {
         const id = triples.getId(item);
         if (id === undefined) {
