@@ -53,14 +53,15 @@ class OrganisationListViewComponent extends React.Component {
 
     render() {
         const props = this.props;
+        // TODO Extract "organisations.length", update label
         return (
             <Container>
                 <Row>
-                    <Col md={3}>
-
-                    </Col>
-                    <Col md={9}>
+                    <Col>
                         <div style={{"margin": "1em 1em 1em 1em"}}>
+                            <h4>
+                                {props.organisations.length} organizací nalezeno
+                            </h4>
                             <OrganisationList values={props.organisations}/>
                         </div>
                     </Col>
