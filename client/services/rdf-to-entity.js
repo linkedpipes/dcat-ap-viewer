@@ -11,7 +11,6 @@ import {
     SKOS
 } from "./vocabulary";
 
-
 // TODO Extract to some external source, hide in backend?
 // TODO Get as a reference from http://publications.europa.eu/mdr/authority/frequency/
 const FREQUENCY_TO_LABEL = {
@@ -89,8 +88,8 @@ export function convertDatasetJsonLd(jsonld) {
         "conformsTo": triples.getResources(dataset, DCTERMS.conformsTo),
         "documentation": triples.getResources(dataset, FOAF.page),
         "frequency": {
-            "iri" : frequency,
-            "label" : FREQUENCY_TO_LABEL[frequency]
+            "iri": frequency,
+            "label": FREQUENCY_TO_LABEL[frequency]
         },
         "hasVersion": triples.getResource(dataset, DCTERMS.hasVersion),
         "identifier": triples.getValues(dataset, DCTERMS.identifier),
