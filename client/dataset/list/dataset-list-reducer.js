@@ -76,7 +76,7 @@ function parseSolrResponse(state, json) {
                 "publisher": item.publisherName,
                 "title": item.title,
                 "keyword": item.keyword,
-                "format": item.formatName,
+                "format": item.formatName === undefined ? [] : item.formatName,
                 "license": item.license
             })),
             "keyword": keywords_list,
