@@ -52,13 +52,24 @@ export const datasetDetailReducer = (state = initialState, action) => {
             }
             return state;
         case FETCH_DISTRIBUTION_SUCCESS:
-            return {
-                ...state,
-                "distributions": copyAndAdd(state.distributions, action.iri, {
-                    ...action.data,
-                    "status": "actual"
-                })
-            };
+            if (action.data === undefined) {
+                return {
+                    ...state,
+                    "distributions": copyAndAdd(state.distributions, action.iri,
+                        {
+                            "status": "error"
+                        })
+                };
+            } else {
+                return {
+                    ...state,
+                    "distributions": copyAndAdd(state.distributions, action.iri,
+                        {
+                            ...action.data,
+                            "status": "actual"
+                        })
+                };
+            }
         case FETCH_DISTRIBUTION_FAILED:
             console.error(action);
             return state;

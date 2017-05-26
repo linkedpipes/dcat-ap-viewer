@@ -114,6 +114,10 @@ export function convertDatasetJsonLd(jsonld) {
 export function convertDistributionJsonLd(jsonld) {
     const distribution = graph.getByType(jsonld, DCAT.Distribution);
 
+    if (distribution === undefined) {
+        return undefined;
+    }
+
     const format = graph.getByResource(jsonld,
         triples.getResource(distribution, DCTERMS.format));
 

@@ -22,6 +22,15 @@ class DistributionRow extends React.Component {
                 </tr>
             )
         }
+        if (dist.status === "error") {
+            return (
+                <tr>
+                    <td colSpan={3}>
+                        Nepodařilo se načíst data
+                    </td>
+                </tr>
+            )
+        }
 
         let title = dist.title;
         if (title === undefined || title === "") {
