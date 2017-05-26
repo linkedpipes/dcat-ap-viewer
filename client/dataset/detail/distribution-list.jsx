@@ -16,7 +16,7 @@ class DistributionRow extends React.Component {
         if (dist === undefined || dist.status === "fetching") {
             return (
                 <tr>
-                    <td>
+                    <td colSpan={3}>
                         Načítání ...
                     </td>
                 </tr>
@@ -49,7 +49,7 @@ class DistributionRow extends React.Component {
             formatLabel = undefined;
         } else {
             if (dist.format.prefLabel === undefined) {
-                formatLabel = dist.iri;
+                formatLabel = dist.format.iri;
             } else {
                 formatLabel = dist.format.prefLabel;
             }
