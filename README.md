@@ -34,3 +34,5 @@ curl http://localhost:{solr_port}/solr/{core_name}/schema -X POST -H 'Content-ty
 node server -configFileLocation=configuration.properties
 ```
 
+## Known issues
+- Internet Explorer is not supported as it is missing implementation of fetch API
