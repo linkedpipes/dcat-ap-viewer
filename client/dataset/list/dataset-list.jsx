@@ -8,7 +8,7 @@ const DatasetList = ({values}) => {
             <hr/>
             {values.map((item) => (
                 <div key={item.id}>
-                    <Link to={"/dataset?url=" + encodeURI(item.iri)}>
+                    <Link to={"/dataset?url=" + encodeURIComponent(item.iri)}>
                         <h4>{item.title}</h4>
                     </Link>
                     <p style={{

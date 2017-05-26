@@ -51,7 +51,7 @@ class Header extends React.Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem className="active">
-                                <NavLink href="/">
+                                <NavLink href="/datasets">
                                     Datové sady
                                 </NavLink>
                             </NavItem>

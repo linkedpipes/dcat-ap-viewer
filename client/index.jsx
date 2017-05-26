@@ -18,6 +18,7 @@ ReactDOM.render((
             <Route path="/" component={App}>
                 <IndexRoute component={DatasetListView}/>
                 <Route path="dataset" component={DatasetDetailView}/>
+                <Route path="datasets" component={DatasetListView}/>
                 <Route path="organisations" component={OrganisationListView}/>
             </Route>
         </Router>

@@ -116,7 +116,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             value = undefined;
         }
         ownProps.router.push({
-            "pathname": "/",
+            "pathname": "/datasets",
             "query": {
                 ...ownProps.router.location.query,
                 "search": value,
@@ -127,7 +127,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     "setKeywordsFacet": (facet, isActive) => {
         let keywords = ownProps.router.location.query.keyword;
         ownProps.router.push({
-            "pathname": "/",
+            "pathname": "/datasets",
             "query": {
                 ...ownProps.router.location.query,
                 "page": undefined,
@@ -138,7 +138,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     "setPublisherFacet": (facet, isActive) => {
         let publishers = ownProps.router.location.query.publisher;
         ownProps.router.push({
-            "pathname": "/",
+            "pathname": "/datasets",
             "query": {
                 ...ownProps.router.location.query,
                 "page": undefined,
@@ -149,7 +149,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     "setFormatFacet": (facet, isActive) => {
         let formats = ownProps.router.location.query.format;
         ownProps.router.push({
-            "pathname": "/",
+            "pathname": "/datasets",
             "query": {
                 ...ownProps.router.location.query,
                 "page": undefined,
@@ -162,7 +162,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             page = undefined;
         }
         ownProps.router.push({
-            "pathname": "/", "query": {
+            "pathname": "/datasets", "query": {
                 ...ownProps.router.location.query,
                 "page": page,
             }

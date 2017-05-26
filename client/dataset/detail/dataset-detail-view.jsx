@@ -36,7 +36,8 @@ class DatasetDetailViewComponent extends React.Component {
                 </Container>
             )
         }
-        const publisherUrl = "./?publisher=" + encodeURIComponent(dataset.publisher.label);
+        const publisherUrl = "./datasets?publisher=" +
+            encodeURIComponent(dataset.publisher.label);
 
         return (
             <Container>
