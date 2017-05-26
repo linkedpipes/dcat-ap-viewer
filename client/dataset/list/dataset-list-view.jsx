@@ -43,6 +43,8 @@ class DatasetListViewComponent extends React.Component {
 
     render() {
         const props = this.props;
+        const showPublisher = props.query.publisher === undefined ||
+            props.query.publisher.length === 0;
         return (
             <Container>
                 <Row>
@@ -79,7 +81,10 @@ class DatasetListViewComponent extends React.Component {
                                 query={props.query}
                             />
                             <br/>
-                            <DatasetList values={props.datasets}/>
+                            <DatasetList
+                                values={props.datasets}
+                                showPublisher={showPublisher}
+                            />
                             <br/>
                             <Paginator
                                 start={0}
