@@ -103,11 +103,15 @@ function getDistributionSparqlQuery(iri) {
         "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> " +
         "PREFIX dcterms: <http://purl.org/dc/terms/> " +
         "" +
-        "CONSTRUCT WHERE { " +
+        "CONSTRUCT { " +
+        "   <" + iri + "> ?p ?o . " +
+        "   <" + iri + "> dcterms:format ?format . " +
+        "   ?format skos:prefLabel ?formatLabel. " +
+        "} WHERE { " +
         "   <" + iri + "> ?p ?o . " +
         "OPTIONAL { " +
         "   <" + iri + "> dcterms:format ?format . " +
         "   ?format skos:prefLabel ?formatLabel. " +
-        "}" +
+        "} " +
         "}";
 }
