@@ -60,7 +60,7 @@ class OrganisationListViewComponent extends React.Component {
                     <Col>
                         <div style={{"margin": "1em 1em 1em 1em"}}>
                             <h4>
-                                {props.organisations.length} organizací nalezeno
+                                {props.organisations.length} poskytovatelů nalezeno
                             </h4>
                             <OrganisationList values={props.organisations}/>
                         </div>
