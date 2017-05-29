@@ -13,11 +13,12 @@ import {
     setListQueryFilter
 } from "./dataset-list-actions";
 import TagLine from "../../components/tag-line";
+import {formatNumber} from "../../services/formats"
 
 const QueryStatusLine = ({resultSize, query}) => (
     <div>
         <h4>
-            {resultSize} datových sad nalezeno
+            {formatNumber(resultSize)} datových sad nalezeno
             {query.search &&
             " na dotaz: \"" + query.search + "\""
             }

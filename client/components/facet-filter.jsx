@@ -1,6 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {ListGroup, ListGroupItem} from "reactstrap";
+import {formatNumber} from "../services/formats"
 
 class FacetFilter extends React.Component {
 
@@ -40,7 +41,7 @@ class FacetFilter extends React.Component {
                     active={isActive}
                     href="javascript:void(0)"
                     tag="a">
-                    {value.label} ({value.count})
+                    {value.label} ({formatNumber(value.count)})
                 </ListGroupItem >
             );
             items.push(html);
