@@ -152,7 +152,7 @@ const DatasetPropertyTable = ({dataset}) => (
         <UrlRow label="Přístupová práva" value={dataset.accessRights}/>
         <UrlRow label="Splňuje" value={dataset.conformsTo}/>
         <UrlRow label="Dokumentace" value={dataset.documentation}/>
-        <UrlRow label="Frekvence" value={dataset.frequency}/>
+        <UrlRow label="Periodicita aktualizace" value={dataset.frequency}/>
         <UrlRow label="Má verzi" value={dataset.hasVersion}/>
         <UrlRow label="Je verzí" value={dataset.isVersionOf}/>
         <UrlRow label="Identifikátor" value={dataset.identifier}/>
