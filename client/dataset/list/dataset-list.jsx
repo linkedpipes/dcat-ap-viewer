@@ -1,20 +1,28 @@
 import React from "react";
 import {Link} from "react-router";
 import TagLine from "../../components/tag-line";
+import {
+    getUrl,
+    DATASET_DETAIL_URL,
+    DATASET_QUERY,
+    DATASET_LIST_URL,
+    PUBLISHER_QUERY
+} from "../../application/navigation";
 
 const DatasetListItem = ({value, showPublisher}) => {
-    const datasetUrl = "/dataset?url=" + encodeURIComponent(value.iri);
-    const publisherUrl = "/datasets?publisher=" +
-        encodeURIComponent(value.publisher);
+    const datasetUrl = getUrl(DATASET_DETAIL_URL, {
+        [DATASET_QUERY]: value.iri
+    });
+    const publisherUrl = getUrl(DATASET_LIST_URL, {
+        [PUBLISHER_QUERY]: value.publisher
+    });
     return (
         <div >
             <Link to={datasetUrl}>
                 <h4>{value.title}</h4>
             </Link>
             {showPublisher &&
-            <Link to={publisherUrl}>
-                {value.publisher}
-            </Link>
+            <Link to={publisherUrl}>{value.publisher}</Link>
             }
             <p style={{
                 "overflow": "hidden",

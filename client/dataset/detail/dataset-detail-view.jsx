@@ -9,11 +9,19 @@ import {Container} from "reactstrap";
 import DistributionList from "./distribution-list";
 import TagLine from "../../components/tag-line";
 import DatasetPropertyTable from "./dataset-property-table";
+import {
+    getUrl,
+    getQuery,
+    DATASET_LIST_URL,
+    PUBLISHER_QUERY,
+    DATASET_QUERY
+} from "../../application/navigation";
 
 class DatasetDetailViewComponent extends React.Component {
 
     componentWillMount() {
-        this.props.fetchDataset(this.props.location.query.url);
+        const queryKey = getQuery(DATASET_QUERY);
+        this.props.fetchDataset(this.props.location.query[queryKey]);
     }
 
     render() {
@@ -21,6 +29,8 @@ class DatasetDetailViewComponent extends React.Component {
         const distributions = this.props.distributions;
         const ui = this.props.ui;
 
+        // TODO Export status report to another componanet
+        // TODO Add translation
         if (dataset.status === "uninitialized") {
             return (
                 <Container>
@@ -36,14 +46,17 @@ class DatasetDetailViewComponent extends React.Component {
                 </Container>
             )
         }
-        const publisherUrl = "./datasets?publisher=" +
-            encodeURIComponent(dataset.publisher.label);
+
+        const publisherUrl = getUrl(DATASET_LIST_URL, {
+            [PUBLISHER_QUERY]: dataset.publisher.label
+        });
 
         return (
             <Container>
                 <div style={{"marginTop": "2em"}}>
                     <h3>{dataset.title}</h3>
                     <h4>
+                        {/* TODO Replace with link component integrated with navigation */}
                         <a href={publisherUrl}>{dataset.publisher.label}</a>
                     </h4>
                     <p>{dataset.description}</p>

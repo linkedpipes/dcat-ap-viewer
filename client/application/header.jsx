@@ -13,6 +13,7 @@ import {
     DropdownMenu,
     DropdownItem
 } from "reactstrap";
+import {getUrl, DATASET_LIST_URL, ORGANISATION_LIST_URL} from "./navigation"
 
 class Header extends React.Component {
 
@@ -22,7 +23,7 @@ class Header extends React.Component {
         this.toggleDropDown = this.toggleDropDown.bind(this);
         this.state = {
             "isOpen": false,
-            "dropdownOpen": false
+            "dropDownOpen": false
         };
     }
 
@@ -34,7 +35,7 @@ class Header extends React.Component {
 
     toggleDropDown() {
         this.setState({
-            "dropdownOpen": !this.state.dropdownOpen
+            "dropDownOpen": !this.state.dropDownOpen
         });
     }
 
@@ -51,12 +52,12 @@ class Header extends React.Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem className="active">
-                                <NavLink href="/datasets">
+                                <NavLink href={getUrl(DATASET_LIST_URL)}>
                                     Datové sady
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/organisations">
+                                <NavLink href={getUrl(ORGANISATION_LIST_URL)}>
                                     Poskytovatelé
                                 </NavLink>
                             </NavItem>
@@ -66,7 +67,7 @@ class Header extends React.Component {
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <Dropdown isOpen={this.state.dropdownOpen}
+                                <Dropdown isOpen={this.state.dropDownOpen}
                                           toggle={this.toggleDropDown}>
                                     <DropdownToggle caret nav>
                                         Další

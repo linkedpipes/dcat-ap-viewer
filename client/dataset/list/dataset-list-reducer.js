@@ -4,6 +4,14 @@ import {
     FETCH_LIST_PAGE_FAILED,
     SET_LIST_QUERY_STRING
 } from "./dataset-list-actions";
+import {
+    getQuery,
+    PUBLISHER_QUERY,
+    KEYWORDS_QUERY,
+    FORMAT_QUERY,
+    STRING_QUERY,
+    PAGE_QUERY
+} from "../../application/navigation";
 
 // TODO Isolate changes to minimize rendering.
 //  For example paginator re-render on every change of string query.
@@ -87,17 +95,16 @@ function parseSolrResponse(state, json) {
 }
 
 function locationToQuery(location) {
-    let page = parseInt(location.page);
+    let page = parseInt(location[getQuery(PAGE_QUERY)]);
     if (isNaN(page)) {
         page = 0;
     }
-
     return {
         "page": page,
-        "search": location.search,
-        "keyword": asArray(location.keyword),
-        "publisher": asArray(location.publisher),
-        "format": asArray(location.format)
+        "search": location[getQuery(STRING_QUERY)],
+        "keyword": asArray(location[getQuery(KEYWORDS_QUERY)]),
+        "publisher": asArray(location[getQuery(PUBLISHER_QUERY)]),
+        "format": asArray(location[getQuery(FORMAT_QUERY)])
     };
 }
 

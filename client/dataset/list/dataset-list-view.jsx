@@ -13,7 +13,16 @@ import {
     setListQueryFilter
 } from "./dataset-list-actions";
 import TagLine from "../../components/tag-line";
-import {formatNumber} from "../../services/formats"
+import {formatNumber} from "../../services/formats";
+import {
+    getQuery,
+    FORMAT_QUERY,
+    STRING_QUERY,
+    ORGANISATION_LIST_URL,
+    KEYWORDS_QUERY,
+    PAGE_QUERY,
+    PUBLISHER_QUERY
+} from "../../application/navigation";
 
 const QueryStatusLine = ({resultSize, query}) => (
     <div>
@@ -122,44 +131,44 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             value = undefined;
         }
         ownProps.router.push({
-            "pathname": "/datasets",
+            "pathname": ownProps.router.pathname,
             "query": {
                 ...ownProps.router.location.query,
-                "search": value,
-                "page": undefined
+                [getQuery(STRING_QUERY)]: value,
+                [getQuery(PAGE_QUERY)]: undefined
             }
         });
     },
     "setKeywordsFacet": (facet, isActive) => {
-        let keywords = ownProps.router.location.query.keyword;
+        let keywords = ownProps.router.location.query[getQuery(KEYWORDS_QUERY)];
         ownProps.router.push({
-            "pathname": "/datasets",
+            "pathname": ownProps.router.location.pathname,
             "query": {
                 ...ownProps.router.location.query,
-                "page": undefined,
-                "keyword": updateValueList(facet.label, isActive, keywords)
+                [getQuery(KEYWORDS_QUERY)]: updateValueList(facet.label, isActive, keywords),
+                [getQuery(PAGE_QUERY)]: undefined
             }
         });
     },
     "setPublisherFacet": (facet, isActive) => {
-        let publishers = ownProps.router.location.query.publisher;
+        let publishers = ownProps.router.location.query[getQuery(PUBLISHER_QUERY)];
         ownProps.router.push({
-            "pathname": "/datasets",
+            "pathname": ownProps.router.location.pathname,
             "query": {
                 ...ownProps.router.location.query,
-                "page": undefined,
-                "publisher": updateValueList(facet.label, isActive, publishers)
+                [getQuery(PUBLISHER_QUERY)]: updateValueList(facet.label, isActive, publishers),
+                [getQuery(PAGE_QUERY)]: undefined
             }
         });
     },
     "setFormatFacet": (facet, isActive) => {
-        let formats = ownProps.router.location.query.format;
+        let formats = ownProps.router.location.query[getQuery(FORMAT_QUERY)];
         ownProps.router.push({
-            "pathname": "/datasets",
+            "pathname": ownProps.router.location.pathname,
             "query": {
                 ...ownProps.router.location.query,
-                "page": undefined,
-                "format": updateValueList(facet.label, isActive, formats)
+                [getQuery(FORMAT_QUERY)]: updateValueList(facet.label, isActive, formats),
+                [getQuery(PAGE_QUERY)]: undefined
             }
         });
     },
@@ -168,9 +177,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             page = undefined;
         }
         ownProps.router.push({
-            "pathname": "/datasets", "query": {
+            "pathname": ownProps.router.location.pathname,
+            "query": {
                 ...ownProps.router.location.query,
-                "page": page,
+                [getQuery(PAGE_QUERY)]: page
             }
         });
     }

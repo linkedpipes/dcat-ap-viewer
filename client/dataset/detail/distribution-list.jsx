@@ -13,6 +13,8 @@ class DistributionRow extends React.Component {
 
     render() {
         const dist = this.props.distribution;
+
+        // TODO Introduce some general handling of fetching - DAO. Children can be wrapped as a properties.
         if (dist === undefined || dist.status === "fetching") {
             return (
                 <tr>

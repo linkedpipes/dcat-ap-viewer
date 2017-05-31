@@ -29,7 +29,7 @@ class FacetFilter extends React.Component {
             indexEnd = Math.min(7, props.values.length);
         }
         const items = [];
-        // TODO First show all actives
+        // TODO First show all active
         for (let index = 0; index < indexEnd; ++index) {
             const value = props.values[index];
             const isActive = props.active.indexOf(value.label) >= 0;

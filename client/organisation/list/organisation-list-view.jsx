@@ -3,20 +3,26 @@ import {Link} from "react-router";
 import {connect} from "react-redux";
 import {Row, Col, Container} from "reactstrap";
 import {fetchDataRequest} from "./organisation-list-action";
-import {formatNumber} from "../../services/formats"
+import {formatNumber} from "../../services/formats";
+import {
+    getUrl,
+    DATASET_LIST_URL,
+    PUBLISHER_QUERY
+} from "../../application/navigation";
 
 const OrganisationListItem = ({value}) => {
     let datasetCountLabel;
     if (value.count === 1) {
         datasetCountLabel = "1 datová sada";
     } else if (value.count <= 4) {
-        datasetCountLabel = value.count  + " datové sady";
+        datasetCountLabel = value.count + " datové sady";
     } else {
         datasetCountLabel = formatNumber(value.count) + " datových sad";
     }
     return (
         <div>
-            <Link to={"/?publisher=" + encodeURIComponent(value.label)}>
+            <Link
+                to={getUrl(DATASET_LIST_URL, {[PUBLISHER_QUERY]: value.label})}>
                 <h4>{value.label}</h4>
             </Link>
             <p>
@@ -26,7 +32,6 @@ const OrganisationListItem = ({value}) => {
         </div>
     );
 };
-
 
 const OrganisationList = ({values}) => {
     return (
@@ -61,7 +66,8 @@ class OrganisationListViewComponent extends React.Component {
                     <Col>
                         <div style={{"margin": "1em 1em 1em 1em"}}>
                             <h4>
-                                {formatNumber(props.organisations.length)} poskytovatelů nalezeno
+                                {formatNumber(props.organisations.length)}
+                                poskytovatelů nalezeno
                             </h4>
                             <OrganisationList values={props.organisations}/>
                         </div>
@@ -79,22 +85,6 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch, ownProps) => ({
     "fetchData": (query) => {
         dispatch(fetchDataRequest(query));
-    },
-    "setQueryString": (value) => {
-        dispatch(setQueryString(value));
-    },
-    "setQueryFilter": (value) => {
-        if (value == "") {
-            value = undefined;
-        }
-        ownProps.router.push({
-            "pathname": "/",
-            "query": {
-                ...ownProps.router.location.query,
-                "search": value,
-                "page": undefined
-            }
-        });
     }
 });
 
