@@ -60,12 +60,16 @@ function getDatasetSparqlQuery(iri) {
         "?Dataset ?p ?o .  " +
         "  " +
         "?cp vcard:fn ?cpfn ; " +
-        "   vcard:hasEmail ?cpemail .  " +
+        "  vcard:hasEmail ?cpemail .  " +
         " " +
         "?publisher a foaf:Agent; " +
-        "   foaf:name ?name .  " +
+        "  foaf:name ?name .  " +
         "?temporal schema:startDate ?temporalStart ; " +
-        "   schema:endDate ?temporalEnd . " +
+        "  schema:endDate ?temporalEnd . " +
+        "" +
+        "?primaryTopic a dcat:CatalogRecord ; " +
+        "  foaf:primaryTopic ?Dataset ; " +
+        "  dcterms:source ?source ." +
         "} WHERE {  " +
         "?Dataset ?p ?o . " +
         "" +
@@ -80,19 +84,24 @@ function getDatasetSparqlQuery(iri) {
         "OPTIONAL { ?Dataset dcat:landingPage ?landingPage . } " +
         "OPTIONAL { ?Dataset dcat:keyword ?keyword . } " +
         "OPTIONAL {  " +
-        "   ?Dataset dcat:contactPoint ?cp .  " +
-        "   ?cp vcard:fn ?cpfn ; " +
-        "       vcard:hasEmail ?cpemail .  " +
+        "  ?Dataset dcat:contactPoint ?cp .  " +
+        "  ?cp vcard:fn ?cpfn ; " +
+        "    vcard:hasEmail ?cpemail .  " +
         "} " +
-        "OPTIONAL {  " +
-        "   ?Dataset dcterms:publisher ?publisher .  " +
-        "   ?publisher a foaf:Agent; " +
-        "       foaf:name ?name .  " +
+        "OPTIONAL { " +
+        "  ?Dataset dcterms:publisher ?publisher .  " +
+        "  ?publisher a foaf:Agent; " +
+        "    foaf:name ?name .  " +
         "} " +
-        "OPTIONAL {" +
-        "    ?Dataset dcterms:temporal ?temporal . " +
-        "    ?temporal schema:startDate ?temporalStart ; " +
-        "       schema:endDate ?temporalEnd . " +
+        "OPTIONAL { " +
+        "  ?Dataset dcterms:temporal ?temporal . " +
+        "  ?temporal schema:startDate ?temporalStart ; " +
+        "    schema:endDate ?temporalEnd . " +
+        "} " +
+        "OPTIONAL { " +
+        "  ?primaryTopic a dcat:CatalogRecord ; " +
+        "    foaf:primaryTopic ?Dataset ; " +
+        "    dcterms:source ?source ." +
         "} " +
         "VALUES (?Dataset) { (<" + iri + ">) } " +
         "}";

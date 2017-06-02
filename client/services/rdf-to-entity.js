@@ -62,6 +62,11 @@ export function convertDatasetJsonLd(jsonld) {
 
     const frequency = triples.getResource(dataset, DCTERMS.accrualPeriodicity);
 
+    let catalogRecord = graph.getByType(jsonld, DCAT.CatalogRecord);
+    if (catalogRecord === undefined) {
+        catalogRecord = {};
+    }
+
     // TODO Add labels for all fields
 
     return {
@@ -107,7 +112,8 @@ export function convertDatasetJsonLd(jsonld) {
         "type": triples.getValue(dataset, DCTERMS.type),
         "modified": triples.getValue(dataset, DCTERMS.modified),
         "version": triples.getValue(dataset, OWL.versionInfo),
-        "versionNotes": triples.getValue(dataset, ADMS.versionNotes)
+        "versionNotes": triples.getValue(dataset, ADMS.versionNotes),
+        "catalogSource" : triples.getResource(catalogRecord, DCTERMS.source)
     }
 }
 

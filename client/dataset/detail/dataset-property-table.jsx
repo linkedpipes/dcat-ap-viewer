@@ -171,6 +171,7 @@ const DatasetPropertyTable = ({dataset}) => (
         <ValueRow label="Typ" value={dataset.type}/>
         <ValueRow label="Verze" value={dataset.version}/>
         <ValueRow label="Poznámka k verzi" value={dataset.versionNotes}/>
+        <UrlRow label="Odkaz do PVS" value={dataset.catalogSource}/>
         </tbody>
     </Table>
 );
