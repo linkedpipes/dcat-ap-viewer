@@ -35,6 +35,9 @@ function initializeRoutesForStaticResources(app) {
     const assetsPath = path.join(__dirname, "public/assets");
     app.use("/assets", express.static(assetsPath));
 
+    // TODO Improve fetching of static resources, do not load from hard drive
+    // https://github.com/expressjs/serve-favicon
+
     // Serve the index - use as fall back.  Without the * the server
     // fail to resolve non root paths like server/about .
     app.get("*", function (req, res) {
