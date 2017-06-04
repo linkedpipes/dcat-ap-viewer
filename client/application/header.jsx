@@ -14,6 +14,7 @@ import {
     DropdownItem
 } from "reactstrap";
 import {getUrl, DATASET_LIST_URL, ORGANISATION_LIST_URL} from "./navigation"
+import {Link} from "react-router";
 
 class Header extends React.Component {
 
@@ -52,14 +53,14 @@ class Header extends React.Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem className="active">
-                                <NavLink href={getUrl(DATASET_LIST_URL)}>
+                                <Link to={getUrl(DATASET_LIST_URL)} className="nav-link">
                                     Datové sady
-                                </NavLink>
+                                </Link>
                             </NavItem>
                             <NavItem>
-                                <NavLink href={getUrl(ORGANISATION_LIST_URL)}>
+                                <Link to={getUrl(ORGANISATION_LIST_URL)} className="nav-link">
                                     Poskytovatelé
-                                </NavLink>
+                                </Link>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="/">
