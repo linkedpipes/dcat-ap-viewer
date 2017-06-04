@@ -23,6 +23,8 @@ import {
     PAGE_QUERY,
     PUBLISHER_QUERY
 } from "../../application/navigation";
+import getString from "../../application/strings"
+import setPageTitle from "../../services/page-title"
 
 const QueryStatusLine = ({resultSize, query}) => (
     <div>
@@ -55,6 +57,9 @@ class DatasetListViewComponent extends React.Component {
         const props = this.props;
         const showPublisher = props.query.publisher === undefined ||
             props.query.publisher.length === 0;
+
+        setPageTitle(getString("title.datasets"));
+
         return (
             <Container>
                 <Row>

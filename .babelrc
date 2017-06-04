@@ -5,5 +5,9 @@
     "stage-2"
   ],
   "plugins": [
+    [
+      "transform-define",
+      "./server/configuration.js"
+    ]
   ]
 }

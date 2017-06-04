@@ -25,10 +25,10 @@ function readProperty(option) {
 
 (() => {
     const propertiesReader = require("properties-reader");
-    const propertyFilePath = readProperty("configFileLocation")
+    const propertyFilePath = readProperty("configFileLocation");
     const properties = propertiesReader(propertyFilePath);
 
-    console.log("Used configuration: ", propertyFilePath)
+    console.log("Using configuration: ", propertyFilePath);
 
     module.exports = {
         "solr": {
@@ -37,6 +37,8 @@ function readProperty(option) {
         "sparql": {
             "url": properties.get("virtuoso.sparql.url")
         },
-        "port": properties.get("port")
+        "port": properties.get("port"),
+        // SECTION WITH PAGE OPTIONS
+        "CONST_TITLE_PREFIX": properties.get("client.title_prefix") + " "
     };
 })();

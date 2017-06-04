@@ -16,6 +16,9 @@ import {
     PUBLISHER_QUERY,
     DATASET_QUERY
 } from "../../application/navigation";
+import {Link} from "react-router";
+import getString from "../../application/strings"
+import setPageTitle from "../../services/page-title"
 
 class DatasetDetailViewComponent extends React.Component {
 
@@ -25,6 +28,8 @@ class DatasetDetailViewComponent extends React.Component {
     }
 
     render() {
+        setPageTitle(getString("title.dataset"));
+
         const dataset = this.props.dataset;
         const distributions = this.props.distributions;
         const ui = this.props.ui;
@@ -51,13 +56,15 @@ class DatasetDetailViewComponent extends React.Component {
             [PUBLISHER_QUERY]: dataset.publisher.label
         });
 
+        setPageTitle(dataset.title);
+
         return (
             <Container>
                 <div style={{"marginTop": "2em"}}>
                     <h3>{dataset.title}</h3>
                     <h4>
                         {/* TODO Replace with link component integrated with navigation */}
-                        <a href={publisherUrl}>{dataset.publisher.label}</a>
+                        <Link to={publisherUrl}>{dataset.publisher.label}</Link>
                     </h4>
                     <p>{dataset.description}</p>
                     <TagLine values={dataset.keyword}/>

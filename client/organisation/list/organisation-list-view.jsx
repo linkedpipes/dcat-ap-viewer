@@ -9,6 +9,8 @@ import {
     DATASET_LIST_URL,
     PUBLISHER_QUERY
 } from "../../application/navigation";
+import getString from "../../application/strings"
+import setPageTitle from "../../services/page-title"
 
 const OrganisationListItem = ({value}) => {
     let datasetCountLabel;
@@ -59,6 +61,9 @@ class OrganisationListViewComponent extends React.Component {
 
     render() {
         const props = this.props;
+
+        setPageTitle(getString("title.organisations"));
+
         // TODO Extract "organisations.length", update label
         return (
             <Container>
