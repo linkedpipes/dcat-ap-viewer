@@ -7,5 +7,7 @@ virtuoso.sparql.url = https://localhost/sparql
 # Port used by DCAT-AP viewer.
 port = 3000
 
-# Page title prefix.
-client.title_prefix = NKOD
+# Page title configuration.
+client.title_prefix =
+client.title_suffix = - NKOD
+

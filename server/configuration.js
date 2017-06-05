@@ -39,6 +39,7 @@ function readProperty(option) {
         },
         "port": properties.get("port"),
         // SECTION WITH PAGE OPTIONS
-        "CONST_TITLE_PREFIX": properties.get("client.title_prefix") + " "
+        "CONST_TITLE_PREFIX": properties.get("client.title_prefix"),
+        "CONST_TITLE_SUFFIX": properties.get("client.title_suffix")
     };
 })();
