@@ -16,7 +16,14 @@ export function fetchDataset(iri) {
             return response.json();
         }).then((json) => {
             if (json.error === undefined) {
-                dispatch(fetchDatasetSuccess(json));
+                // TODO Move to special function, add @graph to data model.
+                let data;
+                if (REPOSITORY_TYPE == "COUCHDB") {
+                    data = {"@graph": json["jsonld"]}
+                } else {
+                    data = json;
+                }
+                dispatch(fetchDatasetSuccess(data));
             }
             // TODO Add error handling
             // }).catch((error) => {

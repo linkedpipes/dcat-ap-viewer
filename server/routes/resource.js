@@ -2,43 +2,48 @@
     const express = require("express");
     const request = require("request"); // https://github.com/request/request
     const configuration = require('./../configuration');
-
     const router = express.Router();
 
     router.get("/dataset", function (req, res) {
-        // TODO Extract Virtuoso query to function
-        const datasetIri = req.query.iri;
-        const url = configuration.sparql.url + "/?" +
-            "format=application%2Fx-json%2Bld&" +
-            "timeout=0&" +
-            "query=" + encodeURIComponent(getDatasetSparqlQuery(datasetIri));
-        const options = {
-            "url": url
-        };
         // TODO Update content-type
         // TODO Add error handling
-        request.get(options).pipe(res);
+        if (configuration.REPOSITORY_TYPE == "COUCHDB") {
+            queryDataFromCouchDB(configuration, request, req, res);
+        } else {
+            queryDataFromSparql(configuration, request, req, res);
+        }
     });
 
     router.get("/distribution", function (req, res) {
-        // TODO Same as for /dataset
         const datasetIri = req.query.iri;
         const url = configuration.sparql.url + "/?" +
             "format=application%2Fx-json%2Bld&" +
             "timeout=0&" +
             "query=" + encodeURIComponent(
                 getDistributionSparqlQuery(datasetIri));
-
-        const options = {
-            "url": url
-        };
         // TODO Update content-type
         // TODO Add error handling
-        request.get(options).pipe(res);
+        request.get({"url": url}).pipe(res);
     });
 
     module.exports = router;
 })();
+
+function queryDataFromCouchDB(configuration, request, req, res) {
+    const datasetIri = req.query.iri;
+    const url = configuration.couchdb.url + "/" +
+        encodeURIComponent(datasetIri);
+    request.get({"url": url}).pipe(res);
+}
+
+function queryDataFromSparql(configuration, request, req, res) {
+    const datasetIri = req.query.iri;
+    const url = configuration.sparql.url + "/?" +
+        "format=application%2Fx-json%2Bld&" +
+        "timeout=0&" +
+        "query=" + encodeURIComponent(getDatasetSparqlQuery(datasetIri));
+    request.get({"url": url}).pipe(res);
+}
 
 function getDatasetSparqlQuery(iri) {
     return "" +

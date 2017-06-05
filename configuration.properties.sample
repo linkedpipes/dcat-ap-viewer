@@ -1,8 +1,15 @@
-# Path to Solr Core (collection) with DCAT-AP data.
-solr.url = http://localhost:8983/solr/collection1
+#
+# All URLs must NOT end with "/".
+#
 
-# Path to Virtuoso SPARQL endpoint.
-virtuoso.sparql.url = https://localhost/sparql
+# Path to Solr Core (collection) with DCAT-AP data.
+solr.url = http://localhost:8983/solr/nkod
+
+# Path to Virtuoso instance with data.
+virtuoso.sparql.url =
+
+# Path to CouchDB database.
+couchdb.dataset.url =
 
 # Port used by DCAT-AP viewer.
 port = 3000
@@ -10,4 +17,3 @@ port = 3000
 # Page title configuration.
 client.title_prefix =
 client.title_suffix = - NKOD
-
