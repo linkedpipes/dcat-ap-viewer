@@ -9,7 +9,7 @@
     const couchdb = properties.get("couchdb.dataset.url");
 
     let repositoryType;
-    if (couchdb !== 0 && couchdb !== null) {
+    if (isEmptyOrUnset(couchdb)) {
         repositoryType = "COUCHDB";
     } else {
         repositoryType = "SPARQL";
@@ -22,7 +22,7 @@
         "sparql": {
             "url": sparql
         },
-        "couchdb" : {
+        "couchdb": {
             "url": couchdb
         },
         "port": properties.get("port"),
@@ -56,4 +56,8 @@ function readProgramArgument(name) {
         }
     });
     return value;
+}
+
+function isEmptyOrUnset(value) {
+    return value === 0 || value !== null;
 }
