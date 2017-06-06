@@ -39,9 +39,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
             };
         case FETCH_DATASET_FAILED:
             // TODO Implement
-            return {
-                ...state,
-            };
+            return state;
         case FETCH_DISTRIBUTION_REQUEST:
             return {
                 ...state,
@@ -71,7 +69,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
                 };
             }
         case FETCH_DISTRIBUTION_FAILED:
-            console.error(action);
+            // TODO Implement
             return state;
         case SET_DISTRIBUTION_PAGE_INDEX:
             return {
