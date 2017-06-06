@@ -29,7 +29,9 @@
         // SECTION WITH PAGE OPTIONS
         "CONST_TITLE_PREFIX": properties.get("client.title_prefix"),
         "CONST_TITLE_SUFFIX": properties.get("client.title_suffix"),
-        "REPOSITORY_TYPE": repositoryType
+        "REPOSITORY_TYPE": repositoryType,
+        "SENTRY_REPORT": isEmptyOrUnset(properties.get("sentry.url")),
+        "SENTRY_URL": properties.get("sentry.url")
     };
 })();
 

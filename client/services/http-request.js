@@ -1,3 +1,5 @@
+import Raven from "raven-js";
+
 export const fetchJsonAndDispatch = (url, dispatch, onSuccess, onFailure) => {
     fetch(url).then((response) => {
         return response.json();
@@ -28,7 +30,9 @@ function doesRequestFailed(json) {
 
 function handleException(exception, extra) {
     console.error(exception, extra);
-
+    Raven.captureException(exception, {
+        "extra": extra
+    });
 }
 
 function dispatchWithCheck(dispatch, call) {

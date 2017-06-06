@@ -18,6 +18,7 @@
     "express": "^4.14.0",
     "prop-types": "^15.5.8",
     "properties-reader": "0.0.15",
+    "raven-js": "^3.15.0",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.5.2",
     "react-addons-transition-group": "^15.5.2",
