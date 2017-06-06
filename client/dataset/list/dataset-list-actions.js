@@ -1,7 +1,8 @@
+import {fetchJsonAndDispatch} from "../../services/http-request"
+
 export const FETCH_LIST_PAGE_REQUEST = "FETCH_LIST_PAGE_REQUEST";
 export const FETCH_LIST_PAGE_SUCCESS = "FETCH_LIST_PAGE_SUCCESS";
 export const FETCH_LIST_PAGE_FAILED = "FETCH_LIST_PAGE_FAILED";
-
 export const SET_LIST_QUERY_STRING = "SET_LIST_QUERY_STRING";
 
 function constructSearchQueryUrl(query) {
@@ -48,13 +49,7 @@ export function fetchDataRequest(query) {
             "type": FETCH_LIST_PAGE_REQUEST,
         });
         const url = constructSearchQueryUrl(query);
-        fetch(url).then((response) => {
-            return response.json();
-        }).then((json) => {
-            dispatch(fetchDataSuccess(json));
-        }).catch((error) => {
-            dispatch(fetchDataFailed(error));
-        });
+        fetchJsonAndDispatch(url, dispatch, fetchDataSuccess, fetchDataFailed);
     };
 }
 

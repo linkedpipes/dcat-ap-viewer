@@ -2,6 +2,7 @@ import {
     convertDatasetJsonLd,
     convertDistributionJsonLd
 } from "../../services/rdf-to-entity";
+import {fetchJsonAndDispatch} from "../../services/http-request";
 
 export const FETCH_DATASET_REQUEST = "FETCH_DATASET_REQUEST";
 export function fetchDataset(iri) {
@@ -10,25 +11,16 @@ export function fetchDataset(iri) {
             "type": FETCH_DATASET_REQUEST,
             "iri": iri
         });
-        // TODO Extract HTTP query into special function
         let url = "/api/v1/resource/dataset?iri=" + encodeURI(iri);
-        fetch(url).then((response) => {
-            return response.json();
-        }).then((json) => {
-            if (json.error === undefined) {
-                // TODO Move to special function, add @graph to data model.
-                let data;
-                if (REPOSITORY_TYPE == "COUCHDB") {
-                    data = {"@graph": json["jsonld"]}
-                } else {
-                    data = json;
-                }
-                dispatch(fetchDatasetSuccess(data));
+        fetchJsonAndDispatch(url, dispatch, (data) => {
+            // TODO Extractor to another layer.
+            if (REPOSITORY_TYPE == "COUCHDB") {
+                data = {"@graph": data["jsonld"]}
+            } else {
+                data = data;
             }
-            // TODO Add error handling
-            // }).catch((error) => {
-            //     dispatch(fetchDatasetFailed(error));
-        });
+            return fetchDatasetSuccess(data)
+        }, fetchDatasetFailed);
     };
 }
 
@@ -56,16 +48,9 @@ export function fetchDistribution(iri) {
             "iri": iri
         });
         let url = "/api/v1/resource/distribution?iri=" + encodeURI(iri);
-        fetch(url).then((response) => {
-            return response.json();
-        }).then((json) => {
-            if (json.error === undefined) {
-                dispatch(fetchDistributionSuccess(iri, json));
-            }
-            // TODO Add error handling
-            // }).catch((error) => {
-            //     dispatch(fetchDistributionFailed(iri, error));
-        });
+        fetchJsonAndDispatch(url, dispatch,
+            (data) => fetchDistributionSuccess(iri, data),
+            (error) => fetchDistributionFailed(iri, error));
     };
 }
 

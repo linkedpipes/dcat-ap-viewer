@@ -1,3 +1,5 @@
+import {fetchJsonAndDispatch} from "../../services/http-request";
+
 export const FETCH_LIST_PAGE_REQUEST = "FETCH_ORGANISATION_LIST_PAGE_REQUEST";
 export const FETCH_LIST_PAGE_SUCCESS = "FETCH_ORGANISATION_LIST_PAGE_SUCCESS";
 export const FETCH_LIST_PAGE_FAILED = "FETCH_ORGANISATION_LIST_PAGE_FAILED";
@@ -18,13 +20,7 @@ export function fetchDataRequest() {
             "type": FETCH_LIST_PAGE_REQUEST,
         });
         const url = constructQueryUrl();
-        fetch(url).then((response) => {
-            return response.json();
-        }).then((json) => {
-            dispatch(fetchDataSuccess(json));
-        }).catch((error) => {
-            dispatch(fetchDataFailed(error));
-        });
+        fetchJsonAndDispatch(url, dispatch, fetchDataSuccess, fetchDataFailed);
     };
 }
 
@@ -36,7 +32,6 @@ export function fetchDataSuccess(json) {
 }
 
 export function fetchDataFailed(error) {
-    console.log(error);
     return {
         "type": FETCH_LIST_PAGE_FAILED,
         "data": error
