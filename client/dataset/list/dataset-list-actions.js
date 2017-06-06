@@ -18,7 +18,7 @@ function constructSearchQueryUrl(query) {
     if (query.search === undefined || query.search === "") {
         url += "q=*:*";
     } else {
-        url += "q=" + encodeURI(query.search)
+        url += "q=" + encodeURI(escapeSolrQuery(query.search))
     }
 
     query.keyword.forEach((item) => {
@@ -35,6 +35,11 @@ function constructSearchQueryUrl(query) {
     });
 
     return url;
+}
+
+function escapeSolrQuery(query) {
+    const pattern = /([\!\*\+\-\=\<\>\&\|\(\)\[\]\{\}\^\~\?\:\\/"])/g;
+    return query.replace(pattern, "\\$1");
 }
 
 export function fetchDataRequest(query) {
