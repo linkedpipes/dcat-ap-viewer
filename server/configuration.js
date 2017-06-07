@@ -20,7 +20,8 @@
             "url": properties.get("solr.url")
         },
         "sparql": {
-            "url": sparql
+            "url": sparql,
+            "profile": properties.get("virtuoso.sparql.type")
         },
         "couchdb": {
             "url": couchdb

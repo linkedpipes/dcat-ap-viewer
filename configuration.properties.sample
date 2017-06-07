@@ -7,6 +7,10 @@ solr.url = http://localhost:8983/solr/nkod
 
 # Path to Virtuoso instance with data.
 virtuoso.sparql.url =
+# Options
+# SINGLE-GRAPH - dataset query is restricted to a single graph
+# MULTI-GRAPH - no graph restriction is used
+virtuoso.sparql.type = SINGLE-GRAPH
 
 # Path to CouchDB database.
 couchdb.dataset.url =

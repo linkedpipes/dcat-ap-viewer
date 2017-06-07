@@ -38,15 +38,17 @@ function queryDataFromCouchDB(configuration, request, req, res) {
 
 function queryDataFromSparql(configuration, request, req, res) {
     const datasetIri = req.query.iri;
+    const sparql = getDatasetSparqlQuery(
+        datasetIri, configuration.sparql.profile);
     const url = configuration.sparql.url + "/?" +
         "format=application%2Fx-json%2Bld&" +
         "timeout=0&" +
-        "query=" + encodeURIComponent(getDatasetSparqlQuery(datasetIri));
+        "query=" + encodeURIComponent(sparql);
     request.get({"url": url}).pipe(res);
 }
 
-function getDatasetSparqlQuery(iri) {
-    return "" +
+function getDatasetSparqlQuery(iri, profile) {
+    let query = "" +
         "PREFIX dcat: <http://www.w3.org/ns/dcat#> " +
         "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
         "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> " +
@@ -75,8 +77,14 @@ function getDatasetSparqlQuery(iri) {
         "?primaryTopic a dcat:CatalogRecord ; " +
         "  foaf:primaryTopic ?Dataset ; " +
         "  dcterms:source ?source ." +
-        "} WHERE {  " +
-        "?Dataset ?p ?o . " +
+        "} WHERE {  ";
+
+    // TODO Prepare template on start instead on every query
+    if (profile === "SINGLE-GRAPH") {
+        query += "GRAPH ?g { "
+    }
+
+    query += "?Dataset ?p ?o . " +
         "" +
         "OPTIONAL { ?Dataset dcterms:modified ?modified . } " +
         "OPTIONAL { ?Dataset dcterms:accrualPeriodicity ?accrualPeriodicity . } " +
@@ -107,9 +115,16 @@ function getDatasetSparqlQuery(iri) {
         "  ?primaryTopic a dcat:CatalogRecord ; " +
         "    foaf:primaryTopic ?Dataset ; " +
         "    dcterms:source ?source ." +
-        "} " +
-        "VALUES (?Dataset) { (<" + iri + ">) } " +
-        "}";
+        "} ";
+
+    if (profile === "SINGLE-GRAPH") {
+        query += "} "
+    }
+
+    query += "VALUES (?Dataset) { (<" + iri + ">) } " +
+        "} ";
+
+    return query;
 }
 
 function getDistributionSparqlQuery(iri) {
