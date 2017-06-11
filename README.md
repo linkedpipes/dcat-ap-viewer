@@ -16,7 +16,7 @@ Prepare Solr schema before loading the data:
 ```
 curl http://localhost:{solr_port}/solr/{core_name}/schema -X POST -H 'Content-type:application/json' --data-binary '{
     "add-field" : { "name" : "iri", "type" : "string" },
-    "add-field" : { "name" : "modified", "type" : "tdate", "DocValues": true },
+    "add-field" : { "name" : "modified", "type" : "tdate", "docValues": "true" },
     "add-field" : { "name" : "issued", "type" : "tdate" },
     "add-field" : { "name" : "accrualPeriodicity", "type" : "string" },
     "add-field" : { "name" : "description", "type" : "string" },
