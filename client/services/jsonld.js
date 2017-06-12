@@ -105,7 +105,7 @@ triples.getResources = (entity, predicate) => {
     return values.map((item) => {
         const id = triples.getId(item);
         if (id === undefined) {
-            console.warn("Missing @id for: ", item);
+            console.warn("Missing resource @id: ", item);
             return undefined;
         } else {
             return id;
