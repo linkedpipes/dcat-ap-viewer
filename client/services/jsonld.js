@@ -41,7 +41,9 @@ graph.getByResource = (data, iri) => {
 export const triples = {};
 
 triples.getId = (entity) => {
-    if (entity["@id"]) {
+    if (entity === undefined) {
+        return undefined;
+    } else if (entity["@id"]) {
         return entity["@id"];
     } else if (entity["id"]) {
         return entity["id"];
