@@ -44,8 +44,8 @@ export function convertDatasetJsonLd(jsonld) {
     const contactPoints = graph.getByResources(jsonld,
         triples.getResources(dataset, DCAT.contactPoint));
 
-    const publisher = graph.getByResource(jsonld,
-        triples.getResource(dataset, DCTERMS.publisher));
+    const publisherIri = triples.getResource(dataset, DCTERMS.publisher);
+    const publisher = graph.getByResource(jsonld, publisherIri);
 
     const temporal = graph.getByResource(jsonld,
         triples.getResource(dataset, DCTERMS.temporal));
@@ -83,7 +83,7 @@ export function convertDatasetJsonLd(jsonld) {
         "distribution": triples.getResources(dataset, DCAT.distribution),
         "keyword": triples.getValues(dataset, DCAT.keyword),
         "publisher": {
-            "iri": triples.getId(publisher),
+            "iri": publisherIri,
             "label": triples.getValues(publisher,
                 "http://xmlns.com/foaf/0.1/name")
         },
@@ -113,7 +113,7 @@ export function convertDatasetJsonLd(jsonld) {
         "modified": triples.getValue(dataset, DCTERMS.modified),
         "version": triples.getValue(dataset, OWL.versionInfo),
         "versionNotes": triples.getValue(dataset, ADMS.versionNotes),
-        "catalogSource" : triples.getResource(catalogRecord, DCTERMS.source)
+        "catalogSource": triples.getResource(catalogRecord, DCTERMS.source)
     }
 }
 
