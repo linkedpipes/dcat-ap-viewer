@@ -118,7 +118,7 @@ class DistributionList extends React.Component {
                         <th>Název</th>
                         <th>Formát</th>
                         <th>Struktura</th>
-                        <th>Licence</th>
+                        <th>Podmínky užití</th>
                     </tr>
                     </thead>
                     <tbody>
