@@ -13,7 +13,7 @@ import {
     DropdownMenu,
     DropdownItem
 } from "reactstrap";
-import {getUrl, DATASET_LIST_URL, ORGANISATION_LIST_URL} from "./navigation"
+import {getUrl, DATASET_LIST_URL, ORGANISATION_LIST_URL} from "./navigation";
 import {Link} from "react-router";
 
 class Header extends React.Component {
@@ -42,8 +42,8 @@ class Header extends React.Component {
 
     render() {
         return (
-            <Navbar toggleable="md">
-                <Container>
+            <Container>
+                <Navbar toggleable="md" className="navbar-light">
                     <NavbarBrand href="https://data.gov.cz.opendata.cz/">
                         <img width="174" height="30"
                              className="d-inline-block align-top"
@@ -52,13 +52,17 @@ class Header extends React.Component {
                     <NavbarToggler right onClick={this.toggleNavbar}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
-                            <NavItem className="active">
-                                <Link to={getUrl(DATASET_LIST_URL)} className="nav-link">
+                            <NavItem>
+                                <Link to={getUrl(DATASET_LIST_URL)}
+                                      className="nav-link"
+                                      activeClassName="active">
                                     Datové sady
                                 </Link>
                             </NavItem>
                             <NavItem>
-                                <Link to={getUrl(ORGANISATION_LIST_URL)} className="nav-link">
+                                <Link to={getUrl(ORGANISATION_LIST_URL)}
+                                      className="nav-link"
+                                      activeClassName="active">
                                     Poskytovatelé
                                 </Link>
                             </NavItem>
@@ -94,8 +98,8 @@ class Header extends React.Component {
                             </NavItem>
                         </Nav>
                     </Collapse>
-                </Container>
-            </Navbar>
+                </Navbar>
+            </Container>
         )
     }
 }
