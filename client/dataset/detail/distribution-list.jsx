@@ -72,6 +72,11 @@ class DistributionRow extends React.Component {
                     <a href={dist.conformsTo}>{dist.conformsTo}</a>
                     }
                 </td>
+                <td>
+                    {dist.license !== undefined &&
+                    <a href={dist.license}>{dist.license}</a>
+                    }
+                </td>
             </tr>
         )
     }
@@ -113,6 +118,7 @@ class DistributionList extends React.Component {
                         <th>Název</th>
                         <th>Formát</th>
                         <th>Struktura</th>
+                        <th>Licence</th>
                     </tr>
                     </thead>
                     <tbody>
