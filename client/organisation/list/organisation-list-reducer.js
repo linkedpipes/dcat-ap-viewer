@@ -21,6 +21,7 @@ function parseSolrResponse(state, json) {
             "count": publisher[index + 1]
         });
     }
+    publisher_list.sort((left, right) => right.count - left.count);
     return {
         ...state,
         "data": {
