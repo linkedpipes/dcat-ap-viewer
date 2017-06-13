@@ -6,11 +6,11 @@ export const FETCH_LIST_PAGE_FAILED = "FETCH_ORGANISATION_LIST_PAGE_FAILED";
 
 function constructQueryUrl() {
     let url = "api/v1/solr/query?" +
-        "facet.field=keyword&" +
         "facet.field=publisherName&" +
         "facet=true&" +
         "facet.mincount=1&" +
-        "q=*:*";
+        "q=*:*&" +
+        "facet.limit=-1";
     return url;
 }
 
