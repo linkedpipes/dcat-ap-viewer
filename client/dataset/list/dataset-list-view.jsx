@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Row, Col, Container} from "reactstrap";
+import {Row, Col, Container, Button, Collapse} from "reactstrap";
 import FacetFilter from "../../components/facet-filter";
 import SearchBox from "../../components/search-box";
 import DatasetList from "./dataset-list";
@@ -42,6 +42,15 @@ const QueryStatusLine = ({resultSize, query}) => (
 
 class DatasetListViewComponent extends React.Component {
 
+    constructor(props){
+        super(props);
+        this.toggleFacets = this.toggleFacets.bind(this);
+        this.state = {
+            "areFacetsOpen": false
+        };
+    }
+
+
     componentDidMount() {
         this.props.fetchData(this.props.query);
     }
@@ -51,6 +60,12 @@ class DatasetListViewComponent extends React.Component {
         if (nextProps.query !== this.props.query) {
             this.props.fetchData(nextProps.query);
         }
+    }
+
+    toggleFacets() {
+        this.setState({
+            "areFacetsOpen": !this.state.areFacetsOpen
+        });
     }
 
     render() {
@@ -64,31 +79,48 @@ class DatasetListViewComponent extends React.Component {
             setPageTitle(getString("title.datasets"));
         }
 
+        // TODO Extract into another component
+        let facetClassName;
+        let toggleButtonLabel;
+        if (this.state.areFacetsOpen) {
+            toggleButtonLabel = "Skrýt filtry";
+            facetClassName = "collapse-sm-down show";
+        } else {
+            toggleButtonLabel = "Zobrazit filtry";
+            facetClassName = "collapse-sm-down";
+        }
+
         return (
             <Container>
                 <Row>
-                    <Col md={3}>
-                        <FacetFilter
-                            label="Poskytovatelé"
-                            values={props.publisher}
-                            active={props.query.publisher}
-                            onChange={props.setPublisherFacet}
-                        />
-                        <FacetFilter
-                            label="Klíčová slova"
-                            values={props.keyword}
-                            active={props.query.keyword}
-                            onChange={props.setKeywordsFacet}
-                        />
-                        <FacetFilter
-                            label="Formát"
-                            values={props.format}
-                            active={props.query.format}
-                            onChange={props.setFormatFacet}
-                        />
-
+                    <Col xs={12} md={3}>
+                        <div className="hidden-sm-up">
+                            <Button onClick={this.toggleFacets} style={{"margin":"1em"}}>
+                                {toggleButtonLabel}
+                            </Button>
+                        </div>
+                        <div className={facetClassName}>
+                            <FacetFilter
+                                label="Poskytovatelé"
+                                values={props.publisher}
+                                active={props.query.publisher}
+                                onChange={props.setPublisherFacet}
+                            />
+                            <FacetFilter
+                                label="Klíčová slova"
+                                values={props.keyword}
+                                active={props.query.keyword}
+                                onChange={props.setKeywordsFacet}
+                            />
+                            <FacetFilter
+                                label="Formát"
+                                values={props.format}
+                                active={props.query.format}
+                                onChange={props.setFormatFacet}
+                            />
+                        </div>
                     </Col>
-                    <Col md={9}>
+                    <Col xs={12} md={9}>
                         <div style={{"margin": "1em 1em 1em 1em"}}>
                             <SearchBox
                                 value={props.searchQuery}
