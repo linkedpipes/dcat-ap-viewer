@@ -27,13 +27,13 @@
             "url": couchdb
         },
         "port": properties.get("port"),
-        // SECTION WITH PAGE OPTIONS
+        // CLIENT OPTIONS
         "CONST_TITLE_PREFIX": properties.get("client.title_prefix"),
         "CONST_TITLE_SUFFIX": properties.get("client.title_suffix"),
         "REPOSITORY_TYPE": repositoryType,
         "SENTRY_REPORT": isEmptyOrUnset(properties.get("sentry.url")),
         "SENTRY_URL": properties.get("sentry.url"),
-        "DEFAULT_LANGUAGE": properties.get("client.default_language")
+        "IS_PRODUCTION_ENV":  process.env.NODE_ENV === "production"
     };
 })();
 

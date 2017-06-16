@@ -1,6 +1,7 @@
 import React from "react";
 import {Table} from "reactstrap";
 import Paginator from "../../components/paginator";
+import {getString} from "../../application/strings";
 
 class DistributionRow extends React.Component {
 
@@ -19,7 +20,7 @@ class DistributionRow extends React.Component {
             return (
                 <tr>
                     <td colSpan={3}>
-                        Načítání ...
+                        {getString("s.fetching")}
                     </td>
                 </tr>
             )
@@ -28,7 +29,7 @@ class DistributionRow extends React.Component {
             return (
                 <tr>
                     <td colSpan={3}>
-                        Nepodařilo se načíst data
+                        {getString("s.fetch_failed")}
                     </td>
                 </tr>
             )
@@ -36,7 +37,7 @@ class DistributionRow extends React.Component {
 
         let title = dist.title;
         if (title === undefined || title === "") {
-            title = "Nepojmenovaná distribuce";
+            title = getString("s.unnamed_distribution");
         }
 
         let url;
@@ -111,14 +112,14 @@ class DistributionList extends React.Component {
 
         return (
             <div>
-                <h4>Distribuce</h4>
+                <h4>{getString("s.distribution")}</h4>
                 <Table>
                     <thead>
                     <tr>
-                        <th>Název</th>
-                        <th>Formát</th>
-                        <th>Struktura</th>
-                        <th>Podmínky užití</th>
+                        <th>{getString("s.name")}</th>
+                        <th>{getString("s.format")}</th>
+                        <th>{getString("s.structure")}</th>
+                        <th>{getString("s.licence")}</th>
                     </tr>
                     </thead>
                     <tbody>

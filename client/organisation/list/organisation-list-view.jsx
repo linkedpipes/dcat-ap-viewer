@@ -9,17 +9,19 @@ import {
     DATASET_LIST_URL,
     PUBLISHER_QUERY
 } from "../../application/navigation";
-import getString from "../../application/strings"
+import {getString} from "../../application/strings"
 import setPageTitle from "../../services/page-title"
 
 const OrganisationListItem = ({value}) => {
     let datasetCountLabel;
     if (value.count === 1) {
-        datasetCountLabel = "1 datová sada";
+        datasetCountLabel = getString("s.one_dataset");
     } else if (value.count <= 4) {
-        datasetCountLabel = value.count + " datové sady";
+        datasetCountLabel = value.count +
+            getString("s.two_three_datasets");
     } else {
-        datasetCountLabel = formatNumber(value.count) + " datových sad";
+        datasetCountLabel = formatNumber(value.count) +
+            getString("s.many_datasets");
     }
     return (
         <div>
@@ -72,7 +74,7 @@ class OrganisationListViewComponent extends React.Component {
                         <div style={{"margin": "1em 1em 1em 1em"}}>
                             <h4>
                                 {formatNumber(props.organisations.length)}
-                                &nbsp;poskytovatelů nalezeno
+                                &nbsp;{getString("s.publishers_found")}
                             </h4>
                             <OrganisationList values={props.organisations}/>
                         </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import {InputGroup, InputGroupButton, Button, Input} from "reactstrap";
+import {getString} from "./../application/strings"
 
 const SearchBox = ({value, onChange, onSearch}) => (
     <InputGroup>
@@ -13,7 +14,7 @@ const SearchBox = ({value, onChange, onSearch}) => (
                     onSearch(value);
                 }
             }}
-            placeholder="Vyhledat datové sady ..."
+            placeholder={getString("s.search_query_placeholder")}
             type="text"/>
         <InputGroupButton>
             <Button onClick={() => onSearch(value)} color="secondary">

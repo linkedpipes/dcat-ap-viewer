@@ -29,7 +29,7 @@ const NAVIGATION = {
     "en": {}
 };
 
-// TODO Extract to a new file as a language based navigation
+// TODO Use strings
 NAVIGATION["cs"][PAGE] = {};
 NAVIGATION["cs"][PAGE][DATASET_LIST_URL] = "datové-sady";
 NAVIGATION["cs"][PAGE][DATASET_DETAIL_URL] = "datová-sada";
@@ -45,7 +45,7 @@ NAVIGATION["cs"][QUERY][PAGE_QUERY] = "stránka";
 NAVIGATION["en"][PAGE] = {};
 NAVIGATION["en"][PAGE][DATASET_LIST_URL] = "datasets";
 NAVIGATION["en"][PAGE][DATASET_DETAIL_URL] = "dataset";
-NAVIGATION["en"][PAGE][ORGANISATION_LIST_URL] = "organisations";
+NAVIGATION["en"][PAGE][ORGANISATION_LIST_URL] = "publishers";
 NAVIGATION["en"][QUERY] = {};
 NAVIGATION["en"][QUERY][PUBLISHER_QUERY] = "publisher";
 NAVIGATION["en"][QUERY][KEYWORDS_QUERY] = "keywords";
@@ -54,10 +54,32 @@ NAVIGATION["en"][QUERY][STRING_QUERY] = "query";
 NAVIGATION["en"][QUERY][DATASET_QUERY] = "iri";
 NAVIGATION["en"][QUERY][PAGE_QUERY] = "page";
 
+//
+// TODO Split to multiple files
+//
 
-function getLanguage() {
-    return DEFAULT_LANGUAGE;
+let activeLanguage = getDefaultLanguage();
+
+function getDefaultLanguage() {
+    const language = navigator.language || navigator.userLanguage;
+    if (NAVIGATION[language] === undefined) {
+        return "en";
+    } else {
+        return language;
+    }
 }
+
+export function getLanguage() {
+    return activeLanguage;
+}
+
+function setLanguage(language) {
+    activeLanguage = language;
+}
+
+//
+//
+//
 
 export const getUrl = (page, query) => {
     let url = "/" + encodeURI(NAVIGATION[getLanguage()][PAGE][page]);
@@ -77,20 +99,22 @@ export const getQuery = (query) => {
     return NAVIGATION[getLanguage()][QUERY][query];
 };
 
-export const createRoutes = () => {
-    return (
-        <Route path="/" component={App}>
-            <IndexRoute component={DatasetListView}/>
-            {
-                getRouteObjects().map(page =>
-                    <Route path={page.link}
-                           component={page.component}
-                           key={page.id}/>
-                )
-            }
-        </Route>
-    );
-};
+//
+//
+//
+
+export const createRoutes = () => (
+    <Route path="/" component={App}>
+        <IndexRoute component={DatasetListView}/>
+        {
+            getRouteObjects().map(page =>
+                <Route path={page.link}
+                       component={page.component}
+                       key={page.id}/>
+            )
+        }
+    </Route>
+);
 
 function getRouteObjects() {
     const routes = [];
@@ -106,3 +130,110 @@ function getRouteObjects() {
     return routes;
 }
 
+//
+//
+//
+
+function translate(value, type, targetLanguage) {
+    for (let language in NAVIGATION) {
+        const value_map = NAVIGATION[language][type];
+        for (let key in value_map) {
+            if (value === value_map[key]) {
+                return NAVIGATION[targetLanguage][type][key];
+            }
+        }
+    }
+}
+
+function getLanguageForUrl(value) {
+    for (let language in NAVIGATION) {
+        const value_map = NAVIGATION[language][PAGE];
+        for (let key in value_map) {
+            if (value === value_map[key]) {
+                return language;
+            }
+        }
+    }
+}
+
+/**
+ * Top level component, does not modify the content.
+ * Set the language based on the URL, browser options or perform
+ * redirect.
+ */
+export class LanguageReRouter extends React.Component {
+
+    componentWillMount() {
+        const lang = this.props.location.query.lang;
+        if (lang === undefined) {
+            this.handleNoLanguageQuery();
+        } else {
+            this.handleLanguageQuery();
+        }
+    }
+
+    handleNoLanguageQuery() {
+        const location = this.props.location;
+        const pathname = decodeURI(location.pathname.substring(1));
+        if (pathname === "") {
+            this.redirectToHome();
+        } else {
+            const pathLanguage = getLanguageForUrl(pathname);
+            setLanguage(pathLanguage);
+        }
+    }
+
+    redirectToHome() {
+        this.props.router.push({
+            "pathname": getUrl(DATASET_LIST_URL),
+            "query": location.query
+        });
+    }
+
+    handleLanguageQuery() {
+        const location = this.props.location;
+        const pathname = decodeURI(location.pathname.substring(1));
+        const pathLanguage = getLanguageForUrl(pathname);
+        const queryLanguage = location.query.lang;
+        if (pathLanguage === queryLanguage) {
+            this.handleLanguagesAreSame(location, queryLanguage);
+        } else {
+            this.handleLanguagesAreDifferent(location, pathname, queryLanguage);
+        }
+    }
+
+    handleLanguagesAreSame(location, targetLanguage) {
+        const path = location.pathname;
+        const query = {
+            ...location.query,
+            "lang": undefined
+        };
+        setLanguage(targetLanguage);
+        this.props.router.push({
+            "pathname": path,
+            "query": query
+        });
+    }
+
+    handleLanguagesAreDifferent(location, pathname, targetLanguage) {
+        const path = translate(decodeURI(pathname), PAGE, targetLanguage);
+        const query = {}
+        for (let param in location.query) {
+            if (param === "lang") {
+                continue;
+            }
+            query[translate(param, QUERY, targetLanguage)] =
+                location.query[param];
+        }
+        setLanguage(targetLanguage);
+        this.props.router.push({
+            "pathname": path,
+            "query": query
+        });
+    }
+
+    render() {
+        return this.props.children;
+    }
+
+}

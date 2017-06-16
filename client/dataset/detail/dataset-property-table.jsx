@@ -1,5 +1,6 @@
 import React from "react";
 import {Table} from "reactstrap";
+import {getString} from "../../application/strings";
 
 // TODO Add component that test for empty value and only provide value as children.
 const Temporal = ({label, value}) => {
@@ -25,7 +26,7 @@ const Temporal = ({label, value}) => {
     }
     return (
         <tr>
-            <td>{label}</td>
+            <td>{getString(label)}</td>
             <td>{valueNode}</td>
         </tr>
     )
@@ -73,7 +74,7 @@ const ContactPoints = ({label, value}) => {
     }
     return (
         <tr>
-            <td>{label}</td>
+            <td>{getString(label)}</td>
             <td>
                 {
                     valuesAsArray.map((item) => (
@@ -116,7 +117,7 @@ const UrlRow = ({label, value}) => {
     }
     return (
         <tr>
-            <td>{label}</td>
+            <td>{getString(label)}</td>
             <td>
                 {
                     valuesAsArray.map((item) => (
@@ -137,7 +138,7 @@ const ValueRow = ({label, value}) => {
     }
     return (
         <tr>
-            <td>{label}</td>
+            <td>{getString(label)}</td>
             <td>{value}</td>
         </tr>
     )
@@ -146,32 +147,32 @@ const ValueRow = ({label, value}) => {
 const DatasetPropertyTable = ({dataset}) => (
     <Table>
         <tbody>
-        <UrlRow label="Dataset IRI" value={dataset.iri}/>
-        <ContactPoints label="Kontaktní bod" value={dataset.contactPoint}/>
-        <UrlRow label="Poskytovatel" value={dataset.publisher}/>
-        <UrlRow label="Téma" value={dataset.theme}/>
-        <UrlRow label="Přístupová práva" value={dataset.accessRights}/>
-        <UrlRow label="Splňuje" value={dataset.conformsTo}/>
-        <UrlRow label="Dokumentace" value={dataset.documentation}/>
-        <UrlRow label="Periodicita aktualizace" value={dataset.frequency}/>
-        <UrlRow label="Má verzi" value={dataset.hasVersion}/>
-        <UrlRow label="Je verzí" value={dataset.isVersionOf}/>
-        <UrlRow label="Identifikátor" value={dataset.identifier}/>
-        <UrlRow label="Jiný identifikátor" value={dataset.otherIdentifier}/>
-        <UrlRow label="Vstupní stránka" value={dataset.landingPage}/>
-        <UrlRow label="Jazyk" value={dataset.language}/>
-        <UrlRow label="Původ" value={dataset.provenance}/>
-        <UrlRow label="Související zdroj" value={dataset.relation}/>
-        <ValueRow label="Datum vydání" value={dataset.issued}/>
-        <ValueRow label="Datum aktualizace" value={dataset.modified}/>
-        <UrlRow label="Vzorek" value={dataset.sample}/>
-        <UrlRow label="Zdroj" value={dataset.source}/>
-        <UrlRow label="Územní pokrytí" value={dataset.spatial}/>
-        <Temporal label="Časové pokrytí" value={dataset.temporal}/>
-        <ValueRow label="Typ" value={dataset.type}/>
-        <ValueRow label="Verze" value={dataset.version}/>
-        <ValueRow label="Poznámka k verzi" value={dataset.versionNotes}/>
-        <UrlRow label="Odkaz do PVS" value={dataset.catalogSource}/>
+        <UrlRow label="s.dataset_iri" value={dataset.iri}/>
+        <ContactPoints label="s.contact_point" value={dataset.contactPoint}/>
+        <UrlRow label="s.publisher" value={dataset.publisher}/>
+        <UrlRow label="s.topic" value={dataset.theme}/>
+        <UrlRow label="s.access_right" value={dataset.accessRights}/>
+        <UrlRow label="s.conforms_to" value={dataset.conformsTo}/>
+        <UrlRow label="s.documentation" value={dataset.documentation}/>
+        <UrlRow label="s.frequency" value={dataset.frequency}/>
+        <UrlRow label="s.has_version" value={dataset.hasVersion}/>
+        <UrlRow label="s.is_version_of" value={dataset.isVersionOf}/>
+        <UrlRow label="s.identifier" value={dataset.identifier}/>
+        <UrlRow label="s.other_identifier" value={dataset.otherIdentifier}/>
+        <UrlRow label="s.landing_page" value={dataset.landingPage}/>
+        <UrlRow label="s.language" value={dataset.language}/>
+        <UrlRow label="s.provenance" value={dataset.provenance}/>
+        <UrlRow label="s.relation" value={dataset.relation}/>
+        <ValueRow label="s.issued" value={dataset.issued}/>
+        <ValueRow label="s.modified" value={dataset.modified}/>
+        <UrlRow label="s.sample" value={dataset.sample}/>
+        <UrlRow label="s.source" value={dataset.source}/>
+        <UrlRow label="s.spatial" value={dataset.spatial}/>
+        <Temporal label="s.temporal" value={dataset.temporal}/>
+        <ValueRow label="s.type" value={dataset.type}/>
+        <ValueRow label="s.version" value={dataset.version}/>
+        <ValueRow label="s.version_notes" value={dataset.versionNotes}/>
+        <UrlRow label="s.catalog_source" value={dataset.catalogSource}/>
         </tbody>
     </Table>
 );

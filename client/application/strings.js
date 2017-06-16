@@ -1,19 +1,166 @@
+import {getLanguage} from "./navigation";
 
 const STRINGS = {
-    "cs" : {
-        "title.datasets" : "Datové sady",
+    "cs": {
+        "title.datasets": "Datové sady",
         "title.dataset": "Datová sada",
-        "title.organisations" : "Poskytovatelé"
+        "title.organisations": "Poskytovatelé",
+        "url.datasets" : "datové-sady",
+        "url.dataset": "datová-sada",
+        "url.publishers": "poskytovatelé",
+        "query.publisher": "poskytovatel",
+        "query.keywords": "klíčová slova",
+        "query.formats": "formáty",
+        "query.query": "dotaz",
+        "query.iri" : "iri",
+        "query.page": "stránka",
+        "h.datasets": "Datové sady",
+        "h.publishers": "Poskytovatelé",
+        "h.applications": "Aplikace",
+        "h.more": "Další",
+        "h.for_interested_in_open_data": "Pro zájemce o otevírání dat",
+        "h.for_programmes": "Pro uživatele a programátory",
+        "h.for_publishers": "Pro poskytovatele dat",
+        "s.no_data": "Žádná data nebyla nalezena",
+        "s.fetching": "Načítám data ...",
+        "s.fetch_failed": "Nepodařilo se načíst data",
+        "s.unnamed_distribution": "Nepojmenovaná distribuce",
+        "s.dataset_iri": "Dataset IRI",
+        "s.contact_point": "Kontaktní bod",
+        "s.publisher": "Poskytovatel",
+        "s.topic": "Téma",
+        "s.access_right": "Přístupová práva",
+        "s.conforms_to": "Splňuje",
+        "s.documentation": "Dokumentace",
+        "s.frequency": "Periodicita aktualizace",
+        "s.has_version": "Má verzi",
+        "s.is_version_of": "Je verzí",
+        "s.identifier": "Identifikátor",
+        "s.other_identifier": "Jiný identifikátor",
+        "s.landing_page": "Vstupní stránka",
+        "s.language": "Jazyk",
+        "s.provenance": "Původ",
+        "s.relation": "Související zdroj",
+        "s.issued": "Datum vydání",
+        "s.modified": "Datum aktualizace",
+        "s.sample": "Vzorek",
+        "s.source": "Zdroj",
+        "s.spatial": "Územní pokrytí",
+        "s.temporal": "Časové pokrytí",
+        "s.type": "Typ",
+        "s.version": "Verze",
+        "s.version_notes": "Poznámka k verzi",
+        "s.catalog_source": "Odkaz do PVS",
+        "s.distribution": "Distribuce",
+        "s.name": "Název",
+        "s.format": "Formát",
+        "s.structure": "Struktura",
+        "s.licence": "Podmínky užití",
+        "s.publishers_found": "poskytovatelů nalezeno",
+        "s.one_dataset": "1 datová sada",
+        "s.two_three_datasets": " datové sady",
+        "s.many_datasets": " datových sad",
+        "s.show_facets": "Zobrazit filtry",
+        "s.hide_facets": "Skrýt filtry",
+        "s.datasets_found": "datových sad nalezeno",
+        "s.with_query": " na dotaz",
+        "s.publishers": "Poskytovatelé",
+        "s.keywords": "Klíčová slova",
+        "s.formats": "Formáty",
+        "s.show_popular": "Zobrazit pouze populární",
+        "s.show_more": "Zobrazit další",
+        "s.search_query_placeholder": "Vyhledat datové sady ..."
+    },
+    "en": {
+        "title.datasets": "Datasets",
+        "title.dataset": "Dataset",
+        "title.organisations": "Publisher",
+        "url.datasets" : "datasets",
+        "url.dataset": "dataset",
+        "url.publishers": "publishers",
+        "query.publisher": "publisher",
+        "query.keywords": "keywords",
+        "query.formats": "formats",
+        "query.query": "query",
+        "query.iri" : "iri",
+        "query.page": "page",
+        "h.datasets": "Datasets",
+        "h.publishers": "Publishers",
+        "h.applications": "Applications",
+        "h.more": "More",
+        "h.for_interested_in_open_data": "About Open Data",
+        "h.for_programmes": "For users and programmers",
+        "h.for_publishers": "For publishers",
+        "s.no_data": "No data have been found ",
+        "s.fetching": "Loading ...",
+        "s.fetch_failed": "Failed to load data",
+        "s.unnamed_distribution": "Unnamed distribution",
+        "s.dataset_iri": "Dataset IRI",
+        "s.contact_point": "Contact point",
+        "s.publisher": "Publisher",
+        "s.topic": "Topic",
+        "s.access_right": "Access right",
+        "s.conforms_to": "Conforms to",
+        "s.documentation": "Documentation",
+        "s.frequency": "Frequency",
+        "s.has_version": "Has version",
+        "s.is_version_of": "is version of",
+        "s.identifier": "Identifier",
+        "s.other_identifier": "Other identifier",
+        "s.landing_page": "Landing page",
+        "s.language": "Language",
+        "s.provenance": "Provenance",
+        "s.relation": "Relation",
+        "s.issued": "Issued",
+        "s.modified": "Modified",
+        "s.sample": "Sample",
+        "s.source": "Source",
+        "s.spatial": "Spatial coverage",
+        "s.temporal": "Temporal coverage",
+        "s.type": "Type",
+        "s.version": "Version",
+        "s.version_notes": "Version notes",
+        "s.catalog_source": "Source catalog",
+        "s.distribution": "Distribution",
+        "s.name": "Label",
+        "s.format": "Format",
+        "s.structure": "Structure",
+        "s.licence": "License",
+        "s.publishers_found": "publishers found",
+        "s.one_dataset": "1 dataset",
+        "s.two_three_datasets": " datasets",
+        "s.many_datasets": " datasets",
+        "s.show_facets": "Show filters",
+        "s.hide_facets": "Hide filters",
+        "s.datasets_found": "datasets found",
+        "s.with_query": " with query",
+        "s.publishers": "Publisher",
+        "s.keywords": "Keyword",
+        "s.formats": "Format",
+        "s.show_popular": "Show popular only",
+        "s.show_more": "Show more",
+        "s.search_query_placeholder": "Search datasets ..."
     }
 };
 
-function getLanguage() {
-    return "cs";
-}
-
-const getString = (name) => {
-    // TODO Add check in DEVELOP for missing strings.
-    return STRINGS[getLanguage()][name];
+export const getLanguages = () => {
+    let languages = [];
+    for (let lang in STRINGS) {
+        languages.push(lang);
+    }
+    return languages;
 };
 
-export default getString;
+// TODO Add support for arguments in the string function
+export  const getString = (name) => {
+    if (IS_PRODUCTION_ENV) {
+        return STRINGS[getLanguage()][name];
+    } else {
+        const language = getLanguage();
+        const value = STRINGS[language][name];
+        if (value === undefined) {
+            console.error("Missing key (", language, ") :", name);
+        }
+        return value;
+    }
+};

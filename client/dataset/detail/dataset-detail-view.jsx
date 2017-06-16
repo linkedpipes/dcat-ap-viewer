@@ -17,8 +17,8 @@ import {
     DATASET_QUERY
 } from "../../application/navigation";
 import {Link} from "react-router";
-import getString from "../../application/strings"
-import setPageTitle from "../../services/page-title"
+import {getString} from "../../application/strings";
+import setPageTitle from "../../services/page-title";
 
 class DatasetDetailViewComponent extends React.Component {
 
@@ -34,12 +34,11 @@ class DatasetDetailViewComponent extends React.Component {
         const distributions = this.props.distributions;
         const ui = this.props.ui;
 
-        // TODO Export status report to another componanet
-        // TODO Add translation
+        // TODO Export status report to another component
         if (dataset.status === "uninitialized") {
             return (
                 <Container>
-                    There are no data ...
+                    {getString("s.no_data")}
                 </Container>
             )
         }
@@ -47,7 +46,7 @@ class DatasetDetailViewComponent extends React.Component {
         if (dataset.status === "fetching") {
             return (
                 <Container>
-                    Loading ...
+                    {getString("s.fetching")}
                 </Container>
             )
         }

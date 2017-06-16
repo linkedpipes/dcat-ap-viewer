@@ -2,6 +2,7 @@ import React from "react";
 import {PropTypes} from "prop-types";
 import {ListGroup, ListGroupItem} from "reactstrap";
 import {formatNumber} from "../services/formats"
+import {getString} from "./../application/strings"
 
 class FacetFilter extends React.Component {
 
@@ -49,9 +50,9 @@ class FacetFilter extends React.Component {
         if (props.values.length > 7) {
             let label;
             if (this.state.showAll) {
-                label = "Zobrazit pouze populární";
+                label = getString("s.show_popular");
             } else {
-                label = "Zobrazit další";
+                label = getString("s.show_more");
             }
             const html = (
                 <ListGroupItem
@@ -77,7 +78,7 @@ class FacetFilter extends React.Component {
             <div style={{"marginTop": "1em"}}>
                 <h3 style={{
                     "padding": "0.2em 0em 0.2em 1em"
-                }}>{props.label}</h3>
+                }}>{getString(props.label)}</h3>
                 <ListGroup>
                     {items}
                 </ListGroup>

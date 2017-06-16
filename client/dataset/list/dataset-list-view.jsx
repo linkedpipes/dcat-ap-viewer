@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Row, Col, Container, Button, Collapse} from "reactstrap";
+import {Row, Col, Container, Button} from "reactstrap";
 import FacetFilter from "../../components/facet-filter";
 import SearchBox from "../../components/search-box";
 import DatasetList from "./dataset-list";
@@ -18,20 +18,19 @@ import {
     getQuery,
     FORMAT_QUERY,
     STRING_QUERY,
-    ORGANISATION_LIST_URL,
     KEYWORDS_QUERY,
     PAGE_QUERY,
     PUBLISHER_QUERY
 } from "../../application/navigation";
-import getString from "../../application/strings"
-import setPageTitle from "../../services/page-title"
+import {getString} from "../../application/strings";
+import setPageTitle from "../../services/page-title";
 
 const QueryStatusLine = ({resultSize, query}) => (
     <div>
         <h4>
-            {formatNumber(resultSize)} datových sad nalezeno
+            {formatNumber(resultSize)} {getString("s.datasets_found")}
             {query.search &&
-            " na dotaz: \"" + query.search + "\""
+             getString("s.with_query") + ": \"" + query.search + "\""
             }
         </h4>
         <TagLine values={query.publisher}/>
@@ -42,14 +41,13 @@ const QueryStatusLine = ({resultSize, query}) => (
 
 class DatasetListViewComponent extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.toggleFacets = this.toggleFacets.bind(this);
         this.state = {
             "areFacetsOpen": false
         };
     }
-
 
     componentDidMount() {
         this.props.fetchData(this.props.query);
@@ -83,10 +81,10 @@ class DatasetListViewComponent extends React.Component {
         let facetClassName;
         let toggleButtonLabel;
         if (this.state.areFacetsOpen) {
-            toggleButtonLabel = "Skrýt filtry";
+            toggleButtonLabel = getString("s.hide_facets");
             facetClassName = "collapse-sm-down show";
         } else {
-            toggleButtonLabel = "Zobrazit filtry";
+            toggleButtonLabel = getString("s.show_facets");
             facetClassName = "collapse-sm-down";
         }
 
@@ -95,25 +93,26 @@ class DatasetListViewComponent extends React.Component {
                 <Row>
                     <Col xs={12} md={3}>
                         <div className="hidden-sm-up">
-                            <Button onClick={this.toggleFacets} style={{"margin":"1em"}}>
+                            <Button onClick={this.toggleFacets}
+                                    style={{"margin": "1em"}}>
                                 {toggleButtonLabel}
                             </Button>
                         </div>
                         <div className={facetClassName}>
                             <FacetFilter
-                                label="Poskytovatelé"
+                                label="s.publishers"
                                 values={props.publisher}
                                 active={props.query.publisher}
                                 onChange={props.setPublisherFacet}
                             />
                             <FacetFilter
-                                label="Klíčová slova"
+                                label="s.keywords"
                                 values={props.keyword}
                                 active={props.query.keyword}
                                 onChange={props.setKeywordsFacet}
                             />
                             <FacetFilter
-                                label="Formát"
+                                label="s.formats"
                                 values={props.format}
                                 active={props.query.format}
                                 onChange={props.setFormatFacet}

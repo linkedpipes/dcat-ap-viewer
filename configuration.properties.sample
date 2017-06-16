@@ -24,6 +24,3 @@ client.title_suffix = - NKOD
 
 # Sentry error report URL.
 sentry.url =
-
-# Language.
-client.default_language = cs

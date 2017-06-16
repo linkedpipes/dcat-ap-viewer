@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import {getUrl, DATASET_LIST_URL, ORGANISATION_LIST_URL} from "./navigation";
 import {Link} from "react-router";
+import {getString} from "./strings"
 
 class Header extends React.Component {
 
@@ -56,41 +57,41 @@ class Header extends React.Component {
                                 <Link to={getUrl(DATASET_LIST_URL)}
                                       className="nav-link"
                                       activeClassName="active">
-                                    Datové sady
+                                    {getString("h.datasets")}
                                 </Link>
                             </NavItem>
                             <NavItem>
                                 <Link to={getUrl(ORGANISATION_LIST_URL)}
                                       className="nav-link"
                                       activeClassName="active">
-                                    Poskytovatelé
+                                    {getString("h.publishers")}
                                 </Link>
                             </NavItem>
                             <NavItem>
                                 <NavLink href="/">
-                                    Aplikace
+                                    {getString("h.applications")}
                                 </NavLink>
                             </NavItem>
                             <NavItem>
                                 <Dropdown isOpen={this.state.dropDownOpen}
                                           toggle={this.toggleDropDown}>
                                     <DropdownToggle caret nav>
-                                        Další
+                                        {getString("h.more")}
                                     </DropdownToggle>
                                     <DropdownMenu>
                                         <DropdownItem>
                                             <NavLink href="/">
-                                                Pro zájemce o otevírání dat
+                                                {getString("h.for_interested_in_open_data")}
                                             </NavLink>
                                         </DropdownItem>
                                         <DropdownItem>
                                             <NavLink href="/">
-                                                Pro uživatele a programátory
+                                                {getString("h.for_programmes")}
                                             </NavLink>
                                         </DropdownItem>
                                         <DropdownItem>
                                             <NavLink href="/">
-                                                Pro poskytovatele dat
+                                                {getString("h.for_publishers")}
                                             </NavLink>
                                         </DropdownItem>
                                     </DropdownMenu>
