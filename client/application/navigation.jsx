@@ -56,7 +56,7 @@ NAVIGATION["en"][QUERY][PAGE_QUERY] = "page";
 
 
 function getLanguage() {
-    return "cs";
+    return DEFAULT_LANGUAGE;
 }
 
 export const getUrl = (page, query) => {

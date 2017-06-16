@@ -32,7 +32,8 @@
         "CONST_TITLE_SUFFIX": properties.get("client.title_suffix"),
         "REPOSITORY_TYPE": repositoryType,
         "SENTRY_REPORT": isEmptyOrUnset(properties.get("sentry.url")),
-        "SENTRY_URL": properties.get("sentry.url")
+        "SENTRY_URL": properties.get("sentry.url"),
+        "DEFAULT_LANGUAGE": properties.get("client.default_language")
     };
 })();
 
