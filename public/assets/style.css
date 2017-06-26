@@ -29,3 +29,48 @@ a {
         display: block;
     }
 }
+
+/* Indeterminate-loader */
+
+.indeterminate-loader {
+    width: 100%;
+    height: 5px;
+    background-color: #FFFFFF;
+    overflow: hidden;
+}
+
+.indeterminate-loader .progress {
+    background-color: #057fa5;
+    height: 5px;
+    width: 0%;
+    -webkit-animation: indeterminate-loader-animation 3.0s infinite 0.7s linear;
+    animation: indeterminate-loader-animation 3.0s infinite 0.7s linear;
+}
+
+@keyframes indeterminate-loader-animation {
+    0% {
+        margin-left: -5%;
+        width: 5%;
+    }
+    75% {
+        width: 50%;
+        margin-left: 50%;
+    }
+    100% {
+        margin-left: 100%;
+    }
+}
+
+@-webkit-keyframes indeterminate-loader-animation {
+    0% {
+        margin-left: -5%;
+        width: 5%;
+    }
+    75% {
+        width: 50%;
+        margin-left: 50%;
+    }
+    100% {
+        margin-left: 100%;
+    }
+}
