@@ -1,4 +1,5 @@
-import {fetchJsonAndDispatch} from "../../services/http-request";
+import {fetchJson} from "../../services/http-request";
+import {setApplicationLoader} from "../../application/app-action";
 
 export const FETCH_LIST_PAGE_REQUEST = "FETCH_ORGANISATION_LIST_PAGE_REQUEST";
 export const FETCH_LIST_PAGE_SUCCESS = "FETCH_ORGANISATION_LIST_PAGE_SUCCESS";
@@ -20,7 +21,14 @@ export function fetchDataRequest() {
             "type": FETCH_LIST_PAGE_REQUEST,
         });
         const url = constructQueryUrl();
-        fetchJsonAndDispatch(url, dispatch, fetchDataSuccess, fetchDataFailed);
+        dispatch(setApplicationLoader(true));
+        fetchJson(url, (json) => {
+            dispatch(setApplicationLoader(false));
+            dispatch(fetchDataSuccess(json));
+        }, (error) => {
+            dispatch(setApplicationLoader(false));
+            dispatch(fetchDataFailed(error));
+        });
     };
 }
 

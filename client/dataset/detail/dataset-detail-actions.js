@@ -2,7 +2,8 @@ import {
     convertDatasetJsonLd,
     convertDistributionJsonLd
 } from "../../services/rdf-to-entity";
-import {fetchJsonAndDispatch} from "../../services/http-request";
+import {fetchJson, fetchJsonAndDispatch} from "../../services/http-request";
+import {setApplicationLoader} from "../../application/app-action";
 
 export const FETCH_DATASET_REQUEST = "FETCH_DATASET_REQUEST";
 export function fetchDataset(iri) {
@@ -12,15 +13,20 @@ export function fetchDataset(iri) {
             "iri": iri
         });
         let url = "/api/v1/resource/dataset?iri=" + encodeURI(iri);
-        fetchJsonAndDispatch(url, dispatch, (data) => {
+
+        dispatch(setApplicationLoader(true));
+        fetchJson(url, (json) => {
+            dispatch(setApplicationLoader(false));
             // TODO Extractor to another layer.
             if (REPOSITORY_TYPE == "COUCHDB") {
-                data = {"@graph": data["jsonld"]}
+                dispatch(fetchDatasetSuccess({"@graph": json["jsonld"]}));
             } else {
-                data = data;
+                dispatch(fetchDatasetSuccess(json));
             }
-            return fetchDatasetSuccess(data)
-        }, fetchDatasetFailed);
+        }, (error) => {
+            dispatch(setApplicationLoader(false));
+            dispatch(fetchDatasetFailed(error));
+        });
     };
 }
 
