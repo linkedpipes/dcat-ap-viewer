@@ -1,14 +1,17 @@
 import React from "react";
 import Header from "./header";
-import Footer from "./footer"
-import {LanguageReRouter} from "./navigation"
+import Footer from "./footer";
+import {LanguageReRouter} from "./navigation";
+import {IndeterminateLoader} from "../components/loader";
+import {connect} from "react-redux";
 
-class App extends React.Component {
-
+class AppComponent extends React.Component {
     render() {
         return (
-            <LanguageReRouter location={this.props.location} router={this.props.router}>
+            <LanguageReRouter location={this.props.location}
+                              router={this.props.router}>
                 <div>
+                    <IndeterminateLoader active={this.props.loaderActive}/>
                     <Header/>
                     {/* TODO Remove DIV element. */}
                     <div>
@@ -21,4 +24,8 @@ class App extends React.Component {
     };
 }
 
-export default App;
+const mapStateToProps = (state, ownProps) => ({
+    "loaderActive": state.loader.active
+});
+
+export const App = connect(mapStateToProps)(AppComponent);
