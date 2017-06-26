@@ -1,19 +1,19 @@
 import Raven from "raven-js";
 
-export const fetchJsonAndDispatch = (url, dispatch, onSuccess, onFailure) => {
+export const fetchJson = (url, onSuccess, onFailure) => {
     fetch(url).then((response) => {
         return response.json();
     }).then((json) => {
         if (doesRequestFailed(json)) {
             const exception = new Error("Request failed.");
             handleException(exception, {"url": url, "json": json});
-            dispatchWithCheck(dispatch, onFailure(exception));
+            callWithCheck(onFailure, json);
             return;
         }
-        dispatchWithCheck(dispatch, onSuccess(json));
+        callWithCheck(onSuccess, json);
     }).catch((exception) => {
         handleException(exception, {"url": url});
-        dispatchWithCheck(dispatch, onFailure(exception));
+        callWithCheck(onFailure, exception);
     });
 };
 
@@ -35,6 +35,14 @@ function handleException(exception, extra) {
     });
 }
 
+function callWithCheck(functionToCall, argument) {
+    try {
+        functionToCall(argument)
+    } catch (exception) {
+        handleException(exception);
+    }
+}
+
 function dispatchWithCheck(dispatch, call) {
     try {
         dispatch(call);
@@ -42,3 +50,20 @@ function dispatchWithCheck(dispatch, call) {
         handleException(exception);
     }
 }
+
+export const fetchJsonAndDispatch = (url, dispatch, onSuccess, onFailure) => {
+    fetch(url).then((response) => {
+        return response.json();
+    }).then((json) => {
+        if (doesRequestFailed(json)) {
+            const exception = new Error("Request failed.");
+            handleException(exception, {"url": url, "json": json});
+            dispatchWithCheck(dispatch, onFailure(exception));
+            return;
+        }
+        dispatchWithCheck(dispatch, onSuccess(json));
+    }).catch((exception) => {
+        handleException(exception, {"url": url});
+        dispatchWithCheck(dispatch, onFailure(exception));
+    });
+};
