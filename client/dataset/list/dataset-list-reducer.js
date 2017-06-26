@@ -121,8 +121,14 @@ function asArray(value) {
 export const datasetListReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_LIST_PAGE_REQUEST:
-            // TODO Add loading indicator.
-            return state;
+            return {
+                ...state,
+                "data": {
+                    ...state.data,
+                    // TODO Use constant from DAO..
+                    "status": "fetching"
+                }
+            };
         case FETCH_LIST_PAGE_SUCCESS:
             return parseSolrResponse(state, action.data);
         case FETCH_LIST_PAGE_FAILED:

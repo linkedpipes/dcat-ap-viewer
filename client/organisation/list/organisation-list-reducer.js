@@ -34,8 +34,13 @@ function parseSolrResponse(state, json) {
 export const organisationListReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_LIST_PAGE_REQUEST:
-            // TODO Add loading indicator.
-            return state;
+            return {
+                ...state,
+                "data": {
+                    ...state.data,
+                    "status": "status"
+                }
+            };
         case FETCH_LIST_PAGE_SUCCESS:
             return parseSolrResponse(state, action.data);
         case FETCH_LIST_PAGE_FAILED:
