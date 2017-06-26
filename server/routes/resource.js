@@ -4,42 +4,41 @@
     const configuration = require('./../configuration');
     const router = express.Router();
 
+    // TODO We can remove the condition by conditional initialization.
+
     router.get("/dataset", function (req, res) {
         // TODO Update content-type
         // TODO Add error handling
+        const datasetIri = req.query.iri;
         if (configuration.REPOSITORY_TYPE == "COUCHDB") {
-            queryDataFromCouchDB(configuration, request, req, res);
+            queryDataFromCouchDB(configuration, request, res, datasetIri);
         } else {
-            queryDataFromSparql(configuration, request, req, res);
+            const sparql = getDatasetSparqlQuery(
+                datasetIri, configuration.sparql.profile);
+            queryDataFromSparql(configuration, request, res, sparql);
         }
     });
 
     router.get("/distribution", function (req, res) {
-        const datasetIri = req.query.iri;
-        const url = configuration.sparql.url + "/?" +
-            "format=application%2Fx-json%2Bld&" +
-            "timeout=0&" +
-            "query=" + encodeURIComponent(
-                getDistributionSparqlQuery(datasetIri));
-        // TODO Update content-type
-        // TODO Add error handling
-        request.get({"url": url}).pipe(res);
+        // TODO Same as /dataset
+        const distributionIri = req.query.iri;
+        if (configuration.REPOSITORY_TYPE == "COUCHDB") {
+            queryDataFromCouchDB(configuration, request, res, distributionIri);
+        } else {
+            const sparql = getDistributionSparqlQuery(
+                distributionIri, configuration.sparql.profile);
+            queryDataFromSparql(configuration, request, res, sparql);
+        }
     });
-
     module.exports = router;
 })();
 
-function queryDataFromCouchDB(configuration, request, req, res) {
-    const datasetIri = req.query.iri;
-    const url = configuration.couchdb.url + "/" +
-        encodeURIComponent(datasetIri);
+function queryDataFromCouchDB(configuration, request, res, iri) {
+    const url = configuration.couchdb.url + "/" + encodeURIComponent(iri);
     request.get({"url": url}).pipe(res);
 }
 
-function queryDataFromSparql(configuration, request, req, res) {
-    const datasetIri = req.query.iri;
-    const sparql = getDatasetSparqlQuery(
-        datasetIri, configuration.sparql.profile);
+function queryDataFromSparql(configuration, request, res, sparql) {
     const url = configuration.sparql.url + "/?" +
         "format=application%2Fx-json%2Bld&" +
         "timeout=0&" +
