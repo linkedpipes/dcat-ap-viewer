@@ -1,3 +1,5 @@
+import {RDF} from "./vocabulary"
+
 export const graph = {};
 
 graph.getByType = (data, type) => {
@@ -53,11 +55,14 @@ triples.getId = (entity) => {
 };
 
 triples.getType = (entity) => {
-    if (entity["@type"] === undefined) {
-        return [];
-    } else {
-        return entity["@type"];
+    if (entity["@type"] !== undefined) {
+        return entityentity["@type"];
     }
+    if (entity[RDF.type] !== undefined) {
+        // As a fallback for invalid json-ld
+        return triples.getResources(entity, RDF.type);
+    }
+    return [];
 };
 
 triples.getValues = (entity, predicate) => {
