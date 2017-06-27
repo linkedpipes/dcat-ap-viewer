@@ -54,8 +54,15 @@ export function fetchDistribution(iri) {
             "iri": iri
         });
         let url = "/api/v1/resource/distribution?iri=" + encodeURI(iri);
-        fetchJsonAndDispatch(url, dispatch,
-            (data) => fetchDistributionSuccess(iri, data),
+        fetchJsonAndDispatch(url, dispatch, (json) => {
+                // TODO Extractor to another layer.
+                if (REPOSITORY_TYPE == "COUCHDB") {
+                    dispatch(fetchDistributionSuccess(iri,
+                        {"@graph": json["jsonld"]}));
+                } else {
+                    dispatch(fetchDistributionSuccess(iri, json));
+                }
+            },
             (error) => fetchDistributionFailed(iri, error));
     };
 }
