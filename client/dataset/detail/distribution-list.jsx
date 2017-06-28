@@ -116,7 +116,7 @@ class DistributionList extends React.Component {
                 <Table>
                     <thead>
                     <tr>
-                        <th>{getString("s.name")}</th>
+                        <th>{getString("s.file")}</th>
                         <th>{getString("s.format")}</th>
                         <th>{getString("s.structure")}</th>
                         <th>{getString("s.licence")}</th>
