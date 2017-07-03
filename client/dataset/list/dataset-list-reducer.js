@@ -143,12 +143,13 @@ export const datasetListReducer = (state = initialState, action) => {
                 }
             };
         case "@@router/LOCATION_CHANGE":
+            const queryString = action.payload.query[getQuery(STRING_QUERY)];
             return {
                 ...state,
                 "query": locationToQuery(action.payload.query),
                 "ui": {
                     ...state.ui,
-                    "searchQuery": undefinedAsEmpty(action.payload.query.search)
+                    "searchQuery": undefinedAsEmpty(queryString)
                 }
             };
         default:
