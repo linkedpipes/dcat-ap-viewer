@@ -44,6 +44,7 @@ class DatasetListViewComponent extends React.Component {
     constructor(props) {
         super(props);
         this.toggleFacets = this.toggleFacets.bind(this);
+        this.callIfNotFetching= this.callIfNotFetching.bind(this);
         this.state = {
             "areFacetsOpen": false
         };
@@ -64,6 +65,15 @@ class DatasetListViewComponent extends React.Component {
         this.setState({
             "areFacetsOpen": !this.state.areFacetsOpen
         });
+    }
+
+    callIfNotFetching(action) {
+        const isLoading = this.props.status === "fetching";
+        if (isLoading) {
+            return () => {};
+        } else {
+            return action;
+        }
     }
 
     render() {
@@ -87,7 +97,7 @@ class DatasetListViewComponent extends React.Component {
             toggleButtonLabel = getString("s.show_facets");
             facetClassName = "collapse-sm-down";
         }
-
+        const isLoading = props.status === "fetching";
         return (
             <Container>
                 <Row>
@@ -103,19 +113,19 @@ class DatasetListViewComponent extends React.Component {
                                 label="s.publishers"
                                 values={props.publisher}
                                 active={props.query.publisher}
-                                onChange={props.setPublisherFacet}
+                                onChange={this.callIfNotFetching(props.setPublisherFacet)}
                             />
                             <FacetFilter
                                 label="s.keywords"
                                 values={props.keyword}
                                 active={props.query.keyword}
-                                onChange={props.setKeywordsFacet}
+                                onChange={this.callIfNotFetching(props.setKeywordsFacet)}
                             />
                             <FacetFilter
                                 label="s.formats"
                                 values={props.format}
                                 active={props.query.format}
-                                onChange={props.setFormatFacet}
+                                onChange={this.callIfNotFetching(props.setFormatFacet)}
                             />
                         </div>
                     </Col>
@@ -124,23 +134,29 @@ class DatasetListViewComponent extends React.Component {
                             <SearchBox
                                 value={props.searchQuery}
                                 onChange={props.setQueryString}
-                                onSearch={props.setQueryFilter}/>
+                                onSearch={this.callIfNotFetching(props.setQueryFilter)}/>
                             <br/>
+                            { !isLoading &&
                             <QueryStatusLine
                                 resultSize={props.datasetCount}
                                 query={props.query}
                             />
-                            <br/>
-                            <DatasetList
+                            }
+                            < br/>
+                            { !isLoading &&
+                            < DatasetList
                                 values={props.datasets}
                                 showPublisher={showPublisher}
                             />
+                            }
                             <br/>
+                            { !isLoading &&
                             <Paginator
                                 start={0}
                                 end={Math.floor(props.datasetCount / 10)}
                                 value={props.query.page}
                                 onChange={this.props.setPage}/>
+                            }
                         </div>
                     </Col>
                 </Row>
@@ -157,6 +173,7 @@ const mapStateToProps = (state, ownProps) => ({
     "datasets": state.dataset.list.data.datasets,
     "datasetCount": state.dataset.list.data.datasetCount,
     "query": state.dataset.list.query,
+    "status": state.dataset.list.data.status
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
