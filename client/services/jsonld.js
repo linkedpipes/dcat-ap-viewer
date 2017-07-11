@@ -56,7 +56,7 @@ triples.getId = (entity) => {
 
 triples.getType = (entity) => {
     if (entity["@type"] !== undefined) {
-        return entityentity["@type"];
+        return entity["@type"];
     }
     if (entity[RDF.type] !== undefined) {
         // As a fallback for invalid json-ld
