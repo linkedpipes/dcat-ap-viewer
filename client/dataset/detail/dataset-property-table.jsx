@@ -32,9 +32,14 @@ const Temporal = ({label, value}) => {
     )
 };
 
-// TODO Add better date handling, the format is YYYY-MM-DD+02:00
+// TODO Add better date handling, the format is YYYY-MM-DD+02:00 or YYYY-MM-DD
 function updateDate(value) {
-    return value.substr(0, value.indexOf("+"));
+    const plusIndex = value.indexOf("+");
+    if (plusIndex === -1) {
+        return value;
+    } else {
+        return value.substr(0, value.indexOf("+"));
+    }
 }
 
 const ContactPoint = ({value}) => {
