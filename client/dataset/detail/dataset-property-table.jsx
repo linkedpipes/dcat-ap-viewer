@@ -18,7 +18,7 @@ const Temporal = ({label, value}) => {
         }
     } else {
         if (value.endDate === undefined) {
-            valueNode = updateDate(value.endDate) + " - ";
+            valueNode = updateDate(value.startDate) + " - ";
         } else {
             valueNode = updateDate(value.startDate) + " - " +
                 updateDate(value.endDate);
