@@ -11,7 +11,8 @@
         // TODO Add error handling
         const datasetIri = req.query.iri;
         if (configuration.REPOSITORY_TYPE == "COUCHDB") {
-            queryDataFromCouchDB(configuration, request, res, datasetIri);
+            queryDataFromCouchDB(configuration, "datasets",
+                request, res, datasetIri);
         } else {
             const sparql = getDatasetSparqlQuery(
                 datasetIri, configuration.sparql.profile);
@@ -23,7 +24,8 @@
         // TODO Same as /dataset
         const distributionIri = req.query.iri;
         if (configuration.REPOSITORY_TYPE == "COUCHDB") {
-            queryDataFromCouchDB(configuration, request, res, distributionIri);
+            queryDataFromCouchDB(configuration, "distributions",
+                request, res, distributionIri);
         } else {
             const sparql = getDistributionSparqlQuery(
                 distributionIri, configuration.sparql.profile);
@@ -33,8 +35,9 @@
     module.exports = router;
 })();
 
-function queryDataFromCouchDB(configuration, request, res, iri) {
-    const url = configuration.couchdb.url + "/" + encodeURIComponent(iri);
+function queryDataFromCouchDB(configuration, dataset, request, res, iri) {
+    const url = configuration.couchdb.url + "/"
+        + dataset + "/" + encodeURIComponent(iri);
     request.get({"url": url}).pipe(res);
 }
 

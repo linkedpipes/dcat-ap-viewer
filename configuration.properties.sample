@@ -10,10 +10,10 @@ virtuoso.sparql.url =
 # Options
 # SINGLE-GRAPH - dataset query is restricted to a single graph
 # MULTI-GRAPH - no graph restriction is used
-virtuoso.sparql.type = SINGLE-GRAPH
+# virtuoso.sparql.type = SINGLE-GRAPH
 
 # Path to CouchDB database.
-couchdb.dataset.url =
+# couchdb.url = http://127.0.0.1:5984
 
 # Port used by DCAT-AP viewer.
 port = 3000

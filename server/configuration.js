@@ -6,7 +6,7 @@
     console.log("Using configuration: ", propertyFilePath);
 
     const sparql = properties.get("virtuoso.sparql.url");
-    const couchdb = properties.get("couchdb.dataset.url");
+    const couchdb = properties.get("couchdb.url");
 
     let repositoryType;
     if (isEmptyOrUnset(couchdb)) {
