@@ -54,7 +54,7 @@ export function fetchDistribution(iri) {
             "iri": iri
         });
         let url = "/api/v1/resource/distribution?iri=" + encodeURI(iri);
-        fetchJsonAndDispatch(url, dispatch, (json) => {
+        fetchJson(url, (json) => {
                 // TODO Extractor to another layer.
                 if (REPOSITORY_TYPE == "COUCHDB") {
                     dispatch(fetchDistributionSuccess(iri,
