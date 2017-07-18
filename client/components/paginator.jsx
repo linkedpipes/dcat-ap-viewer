@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types";
 import {Pagination, PaginationItem, PaginationLink} from "reactstrap";
 
 const Paginator = ({start, end, value, onChange}) => {
-    if (start === end) {
+    if (start === end || start + 1 === end) {
         return null;
     }
     const pages = createPageList(start, end, value);
