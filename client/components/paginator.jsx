@@ -21,13 +21,14 @@ function createPageList(start, end, value) {
         return createArrayWithRangeOfValues(start, end);
     }
     const output = [0, 1];
+    const lastPage = end - 1;
     const rangeValueStart = Math.max(value - 2, start);
-    const rangeValueEnd = Math.min(value + 2, end);
+    const rangeValueEnd = Math.min(value + 2, lastPage);
     for (let index = rangeValueStart; index <= rangeValueEnd; ++index) {
         appendIfGreaterThenLast(output, index);
     }
-    appendIfGreaterThenLast(output, end - 2);
-    appendIfGreaterThenLast(output, end - 1);
+    appendIfGreaterThenLast(output, lastPage - 1);
+    appendIfGreaterThenLast(output, lastPage);
     return output;
 }
 

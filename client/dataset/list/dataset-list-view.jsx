@@ -153,7 +153,7 @@ class DatasetListViewComponent extends React.Component {
                             { !isLoading &&
                             <Paginator
                                 start={0}
-                                end={Math.floor(props.datasetCount / 10)}
+                                end={Math.ceil(props.datasetCount / 10)}
                                 value={props.query.page}
                                 onChange={this.props.setPage}/>
                             }

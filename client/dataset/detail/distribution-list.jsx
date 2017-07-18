@@ -108,7 +108,7 @@ class DistributionList extends React.Component {
             ));
         }
 
-        const pageCount = Math.floor(this.props.keys.length / pageSize);
+        const pageCount = Math.ceil(this.props.keys.length / pageSize);
 
         return (
             <div>
