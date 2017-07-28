@@ -68,11 +68,6 @@ class Header extends React.Component {
                                 </Link>
                             </NavItem>
                             <NavItem>
-                                <NavLink href="/">
-                                    {getString("h.applications")}
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
                                 <Dropdown isOpen={this.state.dropDownOpen}
                                           toggle={this.toggleDropDown}>
                                     <DropdownToggle caret nav>
@@ -80,17 +75,17 @@ class Header extends React.Component {
                                     </DropdownToggle>
                                     <DropdownMenu>
                                         <DropdownItem>
-                                            <NavLink href="/">
+                                            <NavLink href="https://opendata.gov.cz/development:zajemci">
                                                 {getString("h.for_interested_in_open_data")}
                                             </NavLink>
                                         </DropdownItem>
                                         <DropdownItem>
-                                            <NavLink href="/">
+                                            <NavLink href="https://opendata.gov.cz/development:programatori">
                                                 {getString("h.for_programmes")}
                                             </NavLink>
                                         </DropdownItem>
                                         <DropdownItem>
-                                            <NavLink href="/">
+                                            <NavLink href="https://opendata.gov.cz/development:poskytovatele">
                                                 {getString("h.for_publishers")}
                                             </NavLink>
                                         </DropdownItem>
