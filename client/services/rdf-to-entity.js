@@ -113,6 +113,7 @@ export function convertDatasetJsonLd(jsonld) {
         "modified": triples.getValue(dataset, DCTERMS.modified),
         "version": triples.getValue(dataset, OWL.versionInfo),
         "versionNotes": triples.getValue(dataset, ADMS.versionNotes),
+        "catalog": triples.getId(catalogRecord),
         "catalogSource": triples.getResource(catalogRecord, DCTERMS.source)
     }
 }
