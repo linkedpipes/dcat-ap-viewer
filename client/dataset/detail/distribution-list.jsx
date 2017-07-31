@@ -24,8 +24,7 @@ class DistributionRow extends React.Component {
                     </td>
                 </tr>
             )
-        }
-        if (dist.status === "error") {
+        } else if (dist.status === "failed") {
             return (
                 <tr>
                     <td colSpan={3}>

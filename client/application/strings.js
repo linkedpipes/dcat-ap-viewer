@@ -70,7 +70,9 @@ const STRINGS = {
         "s.formats": "Formáty",
         "s.show_popular": "Zobrazit pouze populární",
         "s.show_more": "Zobrazit další",
-        "s.search_query_placeholder": "Vyhledat datové sady ..."
+        "s.search_query_placeholder": "Vyhledat datové sady ...",
+        "e.serviceOffline": "Služba není dosuptná.",
+        "s.failed": "Nepodařilo se načíst data."
     },
     "en": {
         "title.datasets": "Datasets",
@@ -141,7 +143,9 @@ const STRINGS = {
         "s.formats": "Format",
         "s.show_popular": "Show popular only",
         "s.show_more": "Show more",
-        "s.search_query_placeholder": "Search datasets ..."
+        "s.search_query_placeholder": "Search datasets ...",
+        "e.serviceOffline": "Service is not available.",
+        "s.failed": "Data loading failed."
     }
 };
 

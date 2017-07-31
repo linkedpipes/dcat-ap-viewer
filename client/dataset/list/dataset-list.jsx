@@ -8,6 +8,7 @@ import {
     DATASET_LIST_URL,
     PUBLISHER_QUERY
 } from "../../application/navigation";
+import {getString} from "../../application/strings";
 
 const DatasetListItem = ({value, showPublisher}) => {
     const datasetUrl = getUrl(DATASET_DETAIL_URL, {

@@ -41,7 +41,7 @@ class DatasetMetadataComponent extends React.Component {
             '"creator":{\n' +
             ' "@type":"Organization",\n' +
             ' "url": "' + dataset["publisher"]["iri"] + '",\n' +
-            ' "name":"' + dataset["publisher"]["label"] +  '"\n' +
+            ' "name":"' + dataset["publisher"]["label"] + '"\n' +
             ' }\n' +
             '}\n';
 
@@ -72,17 +72,21 @@ class DatasetDetailViewComponent extends React.Component {
         // TODO Export status report to another component
         if (dataset.status === "uninitialized") {
             return (
-                <Container>
+                <div style={{"textAlign": "center", "fontSize": "2em"}}>
                     {getString("s.no_data")}
-                </Container>
+                </div>
             )
-        }
-
-        if (dataset.status === "fetching") {
+        } else if (dataset.status === "fetching") {
             return (
-                <Container>
+                <div style={{"textAlign": "center", "fontSize": "2em"}}>
                     {getString("s.fetching")}
-                </Container>
+                </div>
+            )
+        } else if (dataset.status === "failed") {
+            return (
+                <div style={{"textAlign": "center", "fontSize": "2em"}}>
+                    {getString("s.failed")}
+                </div>
             )
         }
 

@@ -30,7 +30,7 @@ const QueryStatusLine = ({resultSize, query}) => (
         <h4>
             {formatNumber(resultSize)} {getString("s.datasets_found")}
             {query.search &&
-             getString("s.with_query") + ": \"" + query.search + "\""
+            getString("s.with_query") + ": \"" + query.search + "\""
             }
         </h4>
         <TagLine values={query.publisher}/>
@@ -39,12 +39,60 @@ const QueryStatusLine = ({resultSize, query}) => (
     </div>
 );
 
+const DatasetListLoaded = ({datasetCount, query, datasets, setPage}) => (
+    <div>
+        <QueryStatusLine
+            resultSize={datasetCount}
+            query={query}
+        />
+        <br/>
+        <DatasetList
+            values={datasets}
+            showPublisher={showPublisher}
+        />
+        <br/>
+        <Paginator
+            start={0}
+            end={Math.ceil(datasetCount / 10)}
+            value={query.page}
+            onChange={setPage}/>
+    </div>
+);
+
+const DatasetListNotLoaded = ({status}) => {
+    // TODO Export status report to another component
+    if (status === "uninitialized") {
+        return (
+            <div style={{"textAlign": "center", "fontSize": "2em"}}>
+                {getString("s.no_data")}
+            </div>
+        )
+    } else if (status === "fetching") {
+        return (
+            <div style={{"textAlign": "center", "fontSize": "2em"}}>
+                {getString("s.fetching")}
+            </div>
+        )
+    } else if (status === "failed") {
+        return (
+            <div style={{"textAlign": "center", "fontSize": "2em"}}>
+                {getString("s.failed")}
+            </div>
+        )
+    } else {
+        console.error("DatasetListNotLoaded used with invalid status:", status);
+        return (
+            <div></div>
+        )
+    }
+};
+
 class DatasetListViewComponent extends React.Component {
 
     constructor(props) {
         super(props);
         this.toggleFacets = this.toggleFacets.bind(this);
-        this.callIfNotFetching= this.callIfNotFetching.bind(this);
+        this.callIfNotFetching = this.callIfNotFetching.bind(this);
         this.state = {
             "areFacetsOpen": false
         };
@@ -70,7 +118,8 @@ class DatasetListViewComponent extends React.Component {
     callIfNotFetching(action) {
         const isLoading = this.props.status === "fetching";
         if (isLoading) {
-            return () => {};
+            return () => {
+            };
         } else {
             return action;
         }
@@ -97,7 +146,7 @@ class DatasetListViewComponent extends React.Component {
             toggleButtonLabel = getString("s.show_facets");
             facetClassName = "collapse-sm-down";
         }
-        const isLoading = props.status === "fetching";
+        const areDataActual = props.status === "actual";
         return (
             <Container>
                 <Row>
@@ -136,26 +185,14 @@ class DatasetListViewComponent extends React.Component {
                                 onChange={props.setQueryString}
                                 onSearch={this.callIfNotFetching(props.setQueryFilter)}/>
                             <br/>
-                            { !isLoading &&
-                            <QueryStatusLine
-                                resultSize={props.datasetCount}
-                                query={props.query}
-                            />
+                            { areDataActual &&
+                            <DatasetListLoaded datasetCount={props.datasetCount}
+                                               query={props.query}
+                                               datasets={props.datasets}
+                                               setPage={props.setPage}/>
                             }
-                            < br/>
-                            { !isLoading &&
-                            < DatasetList
-                                values={props.datasets}
-                                showPublisher={showPublisher}
-                            />
-                            }
-                            <br/>
-                            { !isLoading &&
-                            <Paginator
-                                start={0}
-                                end={Math.ceil(props.datasetCount / 10)}
-                                value={props.query.page}
-                                onChange={this.props.setPage}/>
+                            { !areDataActual &&
+                            <DatasetListNotLoaded status={props.status}/>
                             }
                         </div>
                     </Col>

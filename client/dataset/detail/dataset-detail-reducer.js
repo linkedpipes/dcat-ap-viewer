@@ -38,8 +38,13 @@ export const datasetDetailReducer = (state = initialState, action) => {
                 }
             };
         case FETCH_DATASET_FAILED:
-            // TODO Implement
-            return state;
+            return {
+                ...state,
+                "dataset": {
+                    ...action.data,
+                    "status": "failed"
+                }
+            };
         case FETCH_DISTRIBUTION_REQUEST:
             return {
                 ...state,
@@ -55,7 +60,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
                     ...state,
                     "distributions": copyAndAdd(state.distributions, action.iri,
                         {
-                            "status": "error"
+                            "status": "failed"
                         })
                 };
             } else {

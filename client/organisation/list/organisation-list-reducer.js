@@ -38,14 +38,20 @@ export const organisationListReducer = (state = initialState, action) => {
                 ...state,
                 "data": {
                     ...state.data,
-                    "status": "status"
+                    // TODO Use constant from DAO.
+                    "status": "fetching"
                 }
             };
         case FETCH_LIST_PAGE_SUCCESS:
             return parseSolrResponse(state, action.data);
         case FETCH_LIST_PAGE_FAILED:
-            // TODO Implement.
-            return state;
+            return {
+                ...state,
+                "data": {
+                    ...state.data,
+                    "status": "failed"
+                }
+            };
         default:
             return state
     }

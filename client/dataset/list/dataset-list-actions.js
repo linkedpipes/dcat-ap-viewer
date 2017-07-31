@@ -1,5 +1,7 @@
 import {fetchJson} from "../../services/http-request";
 import {setApplicationLoader} from "../../application/app-action";
+import Notifications from "react-notification-system-redux";
+import {getString} from "./../../application/strings";
 
 export const FETCH_LIST_PAGE_REQUEST = "FETCH_LIST_PAGE_REQUEST";
 export const FETCH_LIST_PAGE_SUCCESS = "FETCH_LIST_PAGE_SUCCESS";
@@ -9,7 +11,6 @@ export const SET_LIST_QUERY_STRING = "SET_LIST_QUERY_STRING";
 function constructSearchQueryUrl(query) {
     let url = "api/v1/solr/query?" +
         "facet.field=keyword&" +
-        "facet.field=publisherName&" +
         "facet.field=formatName&" +
         "facet=true&" +
         "facet.mincount=1&";
@@ -57,6 +58,13 @@ export function fetchDataRequest(query) {
         }, (error) => {
             dispatch(setApplicationLoader(false));
             dispatch(fetchDataFailed(error));
+            // TODO Move to fetchJson service
+            dispatch(Notifications.error({
+                "uid": "e.serviceOffline",
+                "title": getString("e.serviceOffline"),
+                "position": "tr",
+                "autoDismiss": 4,
+            }));
         });
     };
 }

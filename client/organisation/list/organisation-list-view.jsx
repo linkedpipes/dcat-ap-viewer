@@ -9,8 +9,8 @@ import {
     DATASET_LIST_URL,
     PUBLISHER_QUERY
 } from "../../application/navigation";
-import {getString} from "../../application/strings"
-import setPageTitle from "../../services/page-title"
+import {getString} from "../../application/strings";
+import setPageTitle from "../../services/page-title";
 
 const OrganisationListItem = ({value}) => {
     let datasetCountLabel;
@@ -66,6 +66,27 @@ class OrganisationListViewComponent extends React.Component {
 
         setPageTitle(getString("title.organisations"));
 
+        // TODO Export status report to another component
+        if (this.props.status === "uninitialized") {
+            return (
+                <div style={{"textAlign": "center", "fontSize": "2em"}}>
+                    {getString("s.no_data")}
+                </div>
+            )
+        } else if (this.props.status === "fetching") {
+            return (
+                <div style={{"textAlign": "center", "fontSize": "2em"}}>
+                    {getString("s.fetching")}
+                </div>
+            )
+        } else if (this.props.status === "failed") {
+            return (
+                <div style={{"textAlign": "center", "fontSize": "2em"}}>
+                    {getString("s.failed")}
+                </div>
+            )
+        }
+
         // TODO Extract "organisations.length", update label
         return (
             <Container>
@@ -86,6 +107,7 @@ class OrganisationListViewComponent extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
+    "status": state.organisation.list.data.status,
     "organisations": state.organisation.list.data.organisations
 });
 

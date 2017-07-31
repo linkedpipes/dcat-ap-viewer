@@ -1,5 +1,7 @@
 import {fetchJson} from "../../services/http-request";
 import {setApplicationLoader} from "../../application/app-action";
+import Notifications from "react-notification-system-redux";
+import {getString} from "./../../application/strings";
 
 export const FETCH_LIST_PAGE_REQUEST = "FETCH_ORGANISATION_LIST_PAGE_REQUEST";
 export const FETCH_LIST_PAGE_SUCCESS = "FETCH_ORGANISATION_LIST_PAGE_SUCCESS";
@@ -28,6 +30,13 @@ export function fetchDataRequest() {
         }, (error) => {
             dispatch(setApplicationLoader(false));
             dispatch(fetchDataFailed(error));
+            // TODO Move to fetchJson service
+            dispatch(Notifications.error({
+                "uid": "e.serviceOffline",
+                "title": getString("e.serviceOffline"),
+                "position": "tr",
+                "autoDismiss": 4,
+            }));
         });
     };
 }

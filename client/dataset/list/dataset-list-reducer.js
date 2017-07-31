@@ -13,6 +13,7 @@ import {
     PAGE_QUERY
 } from "../../application/navigation";
 
+
 // TODO Isolate changes to minimize rendering.
 //  For example paginator re-render on every change of string query.
 
@@ -125,15 +126,21 @@ export const datasetListReducer = (state = initialState, action) => {
                 ...state,
                 "data": {
                     ...state.data,
-                    // TODO Use constant from DAO..
+                    // TODO Use constant from DAO.
                     "status": "fetching"
                 }
             };
         case FETCH_LIST_PAGE_SUCCESS:
             return parseSolrResponse(state, action.data);
         case FETCH_LIST_PAGE_FAILED:
-            // TODO Implement.
-            return state;
+            return {
+                ...state,
+                "data": {
+                    ...state.data,
+                    // TODO Use constant from DAO.
+                    "status": "failed"
+                }
+            };
         case SET_LIST_QUERY_STRING:
             return {
                 ...state,

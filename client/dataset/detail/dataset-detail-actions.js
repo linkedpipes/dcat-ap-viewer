@@ -2,8 +2,10 @@ import {
     convertDatasetJsonLd,
     convertDistributionJsonLd
 } from "../../services/rdf-to-entity";
-import {fetchJson, fetchJsonAndDispatch} from "../../services/http-request";
+import {fetchJson} from "../../services/http-request";
 import {setApplicationLoader} from "../../application/app-action";
+import Notifications from "react-notification-system-redux";
+import {getString} from "./../../application/strings";
 
 export const FETCH_DATASET_REQUEST = "FETCH_DATASET_REQUEST";
 export function fetchDataset(iri) {
@@ -26,6 +28,13 @@ export function fetchDataset(iri) {
         }, (error) => {
             dispatch(setApplicationLoader(false));
             dispatch(fetchDatasetFailed(error));
+            // TODO Move to fetchJson service
+            dispatch(Notifications.error({
+                "uid": "e.serviceOffline",
+                "title": getString("e.serviceOffline"),
+                "position": "tr",
+                "autoDismiss": 4,
+            }));
         });
     };
 }
@@ -63,7 +72,16 @@ export function fetchDistribution(iri) {
                     dispatch(fetchDistributionSuccess(iri, json));
                 }
             },
-            (error) => fetchDistributionFailed(iri, error));
+            (error) => {
+                // TODO Move to fetchJson service
+                dispatch(Notifications.error({
+                    "uid": "e.serviceOffline",
+                    "title": getString("e.serviceOffline"),
+                    "position": "tr",
+                    "autoDismiss": 4,
+                }));
+                return fetchDistributionFailed(iri, error);
+            });
     };
 }
 
