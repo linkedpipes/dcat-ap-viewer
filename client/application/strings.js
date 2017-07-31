@@ -71,7 +71,7 @@ const STRINGS = {
         "s.show_popular": "Zobrazit pouze populární",
         "s.show_more": "Zobrazit další",
         "s.search_query_placeholder": "Vyhledat datové sady ...",
-        "e.serviceOffline": "Služba není dosuptná.",
+        "e.serviceOffline": "Služba není dostupná.",
         "s.failed": "Nepodařilo se načíst data."
     },
     "en": {
