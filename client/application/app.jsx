@@ -4,6 +4,7 @@ import Footer from "./footer";
 import {LanguageReRouter} from "./navigation";
 import {IndeterminateLoader} from "../components/loader";
 import {connect} from "react-redux";
+import Notifications from "react-notification-system-redux";
 
 class AppComponent extends React.Component {
     render() {
@@ -18,6 +19,7 @@ class AppComponent extends React.Component {
                         {React.cloneElement(this.props.children, this.props)}
                     </div>
                     <Footer/>
+                    <Notifications notifications={this.props.notifications}/>
                 </div>
             </LanguageReRouter>
         );
@@ -25,7 +27,8 @@ class AppComponent extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    "loaderActive": state.loader.active
+    "loaderActive": state.loader.active,
+    "notifications": state.notifications
 });
 
 export const App = connect(mapStateToProps)(AppComponent);
