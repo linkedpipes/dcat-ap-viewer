@@ -20,6 +20,41 @@ import {Link} from "react-router";
 import {getString} from "../../application/strings";
 import setPageTitle from "../../services/page-title";
 
+class DatasetMetadataComponent extends React.Component {
+    render() {
+        const dataset = this.props.dataset;
+        let content = '\n{\n' +
+            '"@context":"http://schema.org/",\n' +
+            '"@type":"Dataset",\n' +
+            '"name":"' + dataset["title"] + '",\n' +
+            '"description":"' + dataset["description"] + '",\n' +
+            '"url":"' + dataset["iri"] + '",\n' +
+            '"temporalCoverage":"' + dataset["temporal"]["startDate"] + "/" + dataset["temporal"]["endDate"] + '",\n' +
+            '"spatialCoverage":"' + dataset["spatial"] + '",\n' +
+            '"includedInDataCatalog": "' + dataset["catalog"] + '",\n';
+
+        if (dataset["keywords"] !== undefined) {
+            content += '"keywords":' + JSON.stringify(dataset["keywords"]) + '",\n';
+        }
+
+        content += '' +
+            '"creator":{\n' +
+            ' "@type":"Organization",\n' +
+            ' "url": "' + dataset["publisher"]["iri"] + '",\n' +
+            ' "name":"' + dataset["publisher"]["label"] +  '"\n' +
+            ' }\n' +
+            '}\n';
+
+        content += '}';
+
+        return (
+            <script type="application/ld+json">
+                {content}
+            </script>
+        )
+    }
+}
+
 class DatasetDetailViewComponent extends React.Component {
 
     componentWillMount() {
@@ -80,6 +115,7 @@ class DatasetDetailViewComponent extends React.Component {
                         page={ui.distributionsPageIndex}
                     />
                 </div>
+                <DatasetMetadataComponent dataset={dataset}/>
             </Container>
         );
     }
