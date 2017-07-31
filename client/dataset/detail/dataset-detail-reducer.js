@@ -52,7 +52,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
                     ...action.data,
                     "status": "fetching"
                 })
-            }
+            };
             return state;
         case FETCH_DISTRIBUTION_SUCCESS:
             if (action.data === undefined) {
