@@ -9,6 +9,7 @@
     router.get("/dataset", function (req, res) {
         // TODO Update content-type
         // TODO Add error handling
+        // TODO Set COUCHDB or VIRTUOSO at startup (save if statement).
         const datasetIri = req.query.iri;
         if (configuration.REPOSITORY_TYPE == "COUCHDB") {
             queryDataFromCouchDB(configuration, "datasets",
@@ -32,13 +33,32 @@
             queryDataFromSparql(configuration, request, res, sparql);
         }
     });
+
+    router.get("/codelist", function (req, res) {
+        // TODO Same as /dataset
+        const itemIri = req.query.iri;
+        if (configuration.REPOSITORY_TYPE == "COUCHDB") {
+            queryDataFromCouchDB(configuration, "codelists",
+                request, res, itemIri);
+        } else {
+            // TODO Add missing implementation !
+
+        }
+    });
+
     module.exports = router;
 })();
 
 function queryDataFromCouchDB(configuration, dataset, request, res, iri) {
     const url = configuration.couchdb.url + "/"
         + dataset + "/" + encodeURIComponent(iri);
-    request.get({"url": url}).pipe(res);
+    request.get({"url": url}).on("error", (error) => {
+        // TODO Use better logging.
+        console.log("error", error);
+        res.status(500).json({
+            "error": "Call of backend service failed."
+        });
+    }).pipe(res);
 }
 
 function queryDataFromSparql(configuration, request, res, sparql) {
@@ -46,7 +66,14 @@ function queryDataFromSparql(configuration, request, res, sparql) {
         "format=application%2Fx-json%2Bld&" +
         "timeout=0&" +
         "query=" + encodeURIComponent(sparql);
-    request.get({"url": url}).pipe(res);
+    request.get({"url": url}).on("error", (error) => {
+        // TODO Use better logging.
+        console.log("error", error);
+        res.status(500).json({
+            "error": "Call of backend service failed."
+        });
+    }).pipe(res);
+
 }
 
 function getDatasetSparqlQuery(iri, profile) {

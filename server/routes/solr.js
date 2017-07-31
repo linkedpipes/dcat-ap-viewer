@@ -13,15 +13,17 @@
         request(options, function (error, response, body) {
             if (error === null && response && response.statusCode == 200) {
                 const content = JSON.parse(body);
+                // TODO Export to some solar mapping function.
                 res.json({
                     "data": {
                         "numberOfDatasets": content.response.numFound
                     }
                 });
             } else {
-                res.status(500);
-                res.json({
-                    "error": error
+                // TODO Use better logging.
+                console.log("error", error);
+                res.status(500).json({
+                    "error": "Call of backend service failed."
                 });
             }
         });
@@ -33,7 +35,15 @@
         const options = {
             "url": url
         };
-        request.get(options).pipe(res);
+
+        request.get(options).on("error", (error) => {
+            // TODO Use better logging.
+            console.log("error", error);
+            res.status(500).json({
+                "error": "Call of backend service failed."
+            });
+        }).pipe(res);
+
     });
 
     module.exports = router;
