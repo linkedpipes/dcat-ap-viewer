@@ -12,6 +12,7 @@ function constructSearchQueryUrl(query) {
     let url = "api/v1/solr/query?" +
         "facet.field=keyword&" +
         "facet.field=formatName&" +
+        "facet.field=publisherName&" +
         "facet=true&" +
         "facet.mincount=1&";
 
