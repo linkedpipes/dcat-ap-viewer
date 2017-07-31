@@ -80,7 +80,7 @@ export function fetchDistribution(iri) {
                     "position": "tr",
                     "autoDismiss": 4,
                 }));
-                return fetchDistributionFailed(iri, error);
+                dispatch(fetchDistributionFailed(iri, error));
             });
     };
 }
