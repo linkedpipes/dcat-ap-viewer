@@ -39,7 +39,7 @@ const QueryStatusLine = ({resultSize, query}) => (
     </div>
 );
 
-const DatasetListLoaded = ({datasetCount, query, datasets, setPage}) => (
+const DatasetListLoaded = ({datasetCount, query, datasets, setPage, showPublisher}) => (
     <div>
         <QueryStatusLine
             resultSize={datasetCount}
@@ -189,7 +189,9 @@ class DatasetListViewComponent extends React.Component {
                             <DatasetListLoaded datasetCount={props.datasetCount}
                                                query={props.query}
                                                datasets={props.datasets}
-                                               setPage={props.setPage}/>
+                                               setPage={props.setPage}
+                                               showPublisher={showPublisher}
+                            />
                             }
                             { !areDataActual &&
                             <DatasetListNotLoaded status={props.status}/>
