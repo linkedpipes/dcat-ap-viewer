@@ -121,7 +121,7 @@ const STRINGS = {
         "s.type": "Type",
         "s.version": "Version",
         "s.version_notes": "Version notes",
-        "s.catalog_source": "Source catalog",
+        "s.catalog_source": "Source",
         "s.distribution": "Distribution",
         "s.name": "Label",
         "s.file": "File",
