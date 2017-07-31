@@ -146,7 +146,10 @@ class DatasetListViewComponent extends React.Component {
             toggleButtonLabel = getString("s.show_facets");
             facetClassName = "collapse-sm-down";
         }
-        const areDataActual = props.status === "actual";
+
+        const showDatasetList = props.status === "actual" ||
+            (props.status === "fetching" && props.datasets.length > 0);
+
         return (
             <Container>
                 <Row>
@@ -185,7 +188,7 @@ class DatasetListViewComponent extends React.Component {
                                 onChange={props.setQueryString}
                                 onSearch={this.callIfNotFetching(props.setQueryFilter)}/>
                             <br/>
-                            { areDataActual &&
+                            { showDatasetList &&
                             <DatasetListLoaded datasetCount={props.datasetCount}
                                                query={props.query}
                                                datasets={props.datasets}
@@ -193,7 +196,7 @@ class DatasetListViewComponent extends React.Component {
                                                showPublisher={showPublisher}
                             />
                             }
-                            { !areDataActual &&
+                            { !showDatasetList &&
                             <DatasetListNotLoaded status={props.status}/>
                             }
                         </div>
