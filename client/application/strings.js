@@ -72,7 +72,11 @@ const STRINGS = {
         "s.show_more": "Zobrazit další",
         "s.search_query_placeholder": "Vyhledat datové sady ...",
         "e.serviceOffline": "Služba není dostupná.",
-        "s.failed": "Nepodařilo se načíst data."
+        "s.failed": "Nepodařilo se načíst data.",
+        "s.404_title": "404 stránka nenalezena",
+        "s.404_text_before": "Zkuste hledat na stránce ",
+        "s.404_link": "datových sad",
+        "s.404_text_after" : "."
     },
     "en": {
         "title.datasets": "Datasets",
@@ -145,7 +149,11 @@ const STRINGS = {
         "s.show_more": "Show more",
         "s.search_query_placeholder": "Search datasets ...",
         "e.serviceOffline": "Service is not available.",
-        "s.failed": "Data loading failed."
+        "s.failed": "Data loading failed.",
+        "s.404_title": "404 page not found",
+        "s.404_text_before": "You can try to search on the ",
+        "s.404_link": "datasets",
+        "s.404_text_after": " page.",
     }
 };
 

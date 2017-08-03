@@ -4,6 +4,7 @@ import {Route, IndexRoute} from "react-router";
 import {DatasetListView} from "../dataset/list/dataset-list-view";
 import {DatasetDetailView} from "../dataset/detail/dataset-detail-view";
 import {OrganisationListView} from "../organisation/list/organisation-list-view";
+import {PageNotFound} from "../system/page-not-found"
 
 // Define application navigation properties
 export const DATASET_LIST_URL = "DATASET_LIST";
@@ -113,6 +114,7 @@ export const createRoutes = () => (
                        key={page.id}/>
             )
         }
+        <Route path="*" component={PageNotFound} />
     </Route>
 );
 
@@ -154,6 +156,7 @@ function getLanguageForUrl(value) {
             }
         }
     }
+    return getDefaultLanguage();
 }
 
 /**
@@ -216,20 +219,39 @@ export class LanguageReRouter extends React.Component {
     }
 
     handleLanguagesAreDifferent(location, pathname, targetLanguage) {
-        const path = translate(decodeURI(pathname), PAGE, targetLanguage);
-        const query = {}
-        for (let param in location.query) {
-            if (param === "lang") {
-                continue;
-            }
-            query[translate(param, QUERY, targetLanguage)] =
-                location.query[param];
-        }
+        let path = this.translatePathName(pathname, targetLanguage);
+        const query = this.translateQuery(location, targetLanguage);
         setLanguage(targetLanguage);
         this.props.router.push({
             "pathname": path,
             "query": query
         });
+    }
+
+    translatePathName(pathname, targetLanguage) {
+        const path = translate(decodeURI(pathname), PAGE, targetLanguage);
+        // Stay on the same site if the translation is missing.
+        if (path === undefined) {
+            return "/" + pathname;
+        } else {
+            return path;
+        }
+    }
+
+    translateQuery(location, targetLanguage) {
+        const query = {};
+        for (let param in location.query) {
+            if (param === "lang") {
+                continue;
+            }
+            let translated = translate(param, QUERY, targetLanguage);
+            if (translated === undefined) {
+                translated = param;
+            }
+            query[translated] = location.query[param];
+
+        }
+        return query;
     }
 
     render() {
