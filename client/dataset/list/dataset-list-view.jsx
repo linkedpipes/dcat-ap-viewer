@@ -230,7 +230,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             value = undefined;
         }
         ownProps.router.push({
-            "pathname": ownProps.router.pathname,
+            "pathname": ownProps.router.location.pathname,
             "query": {
                 ...ownProps.router.location.query,
                 [getQuery(STRING_QUERY)]: value,
