@@ -6,6 +6,17 @@ import {syncHistoryWithStore} from "react-router-redux";
 import {configureStore} from "./store";
 import {createRoutes} from "./application/navigation";
 import Raven from "raven-js";
+import "./components/google-analytics";
+import Promise from "es6-promise";
+import "isomorphic-fetch";
+
+function backwardCompatibility() {
+    if (!window.Promise) {
+        window.Promise = Promise;
+    }
+}
+
+backwardCompatibility();
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);
