@@ -5,6 +5,7 @@ import {LanguageReRouter} from "./navigation";
 import {IndeterminateLoader} from "../components/loader";
 import {connect} from "react-redux";
 import Notifications from "react-notification-system-redux";
+import GoogleTagManager from "../components/google-tag-manager"
 
 class AppComponent extends React.Component {
     render() {
@@ -12,6 +13,7 @@ class AppComponent extends React.Component {
             <LanguageReRouter location={this.props.location}
                               router={this.props.router}>
                 <div>
+                    <GoogleTagManager/>
                     <IndeterminateLoader active={this.props.loaderActive}/>
                     <Header/>
                     {/* TODO Remove DIV element. */}

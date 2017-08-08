@@ -33,7 +33,8 @@
         "REPOSITORY_TYPE": repositoryType,
         "SENTRY_REPORT": isEmptyOrUnset(properties.get("sentry.url")),
         "SENTRY_URL": properties.get("sentry.url"),
-        "IS_PRODUCTION_ENV":  process.env.NODE_ENV === "production"
+        "IS_PRODUCTION_ENV":  process.env.NODE_ENV === "production",
+        "GOOGLE_TAG_MANAGER_ID" : properties.get("google_tag_manager.id") || false
     };
 })();
 
@@ -65,3 +66,4 @@ function readProgramArgument(name) {
 function isEmptyOrUnset(value) {
     return value === 0 || value !== null;
 }
+

@@ -24,3 +24,6 @@ client.title_suffix = - NKOD
 
 # Sentry error report URL.
 sentry.url =
+
+# Google tag manager ID.
+google_tag_manager.id =

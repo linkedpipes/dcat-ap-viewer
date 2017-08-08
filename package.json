@@ -25,6 +25,7 @@
     "react-addons-css-transition-group": "^15.5.2",
     "react-addons-transition-group": "^15.5.2",
     "react-dom": "^15.4.2",
+    "react-google-tag-manager": "^2.1.0",
     "react-notification-system": "^0.2.14",
     "react-notification-system-redux": "^1.1.4",
     "react-redux": "^5.0.3",
