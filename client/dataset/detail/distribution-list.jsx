@@ -60,7 +60,7 @@ class DistributionRow extends React.Component {
         return (
             <tr>
                 <td>
-                    <a href={url}>{title}</a>
+                    <a href={url} className="distribution-link">{title}</a>
                 </td>
                 <td>
                     {dist.format !== undefined &&
