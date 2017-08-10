@@ -67,6 +67,11 @@ export function convertDatasetJsonLd(jsonld) {
         catalogRecord = {};
     }
 
+    let catalog = graph.getByType(jsonld, DCAT.Catalog);
+    if (catalog === undefined) {
+        catalog = {};
+    }
+
     // TODO Add labels for all fields
 
     return {
@@ -113,7 +118,7 @@ export function convertDatasetJsonLd(jsonld) {
         "modified": triples.getValue(dataset, DCTERMS.modified),
         "version": triples.getValue(dataset, OWL.versionInfo),
         "versionNotes": triples.getValue(dataset, ADMS.versionNotes),
-        "catalog": triples.getId(catalogRecord),
+        "catalog": triples.getId(catalog),
         "catalogSource": triples.getResource(catalogRecord, DCTERMS.source)
     }
 }
