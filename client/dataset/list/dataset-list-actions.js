@@ -27,7 +27,6 @@ function constructSearchQueryUrl(query) {
 
     query.keyword.forEach((item) => {
         url += "&fq=keyword:\"" + encodeURI(item) + "\""
-
     });
 
     query.publisher.forEach((item) => {
@@ -37,6 +36,12 @@ function constructSearchQueryUrl(query) {
     query.format.forEach((item) => {
         url += "&fq=formatName:\"" + encodeURI(item) + "\""
     });
+
+    if (query.sort === undefined) {
+        url += "&sort=modified desc";
+    } else {
+        url += "&sort=" + query.sort;
+    }
 
     return url;
 }

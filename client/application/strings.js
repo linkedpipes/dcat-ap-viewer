@@ -76,7 +76,11 @@ const STRINGS = {
         "s.404_title": "404 stránka nenalezena",
         "s.404_text_before": "Zkuste hledat na stránce ",
         "s.404_link": "datových sad",
-        "s.404_text_after" : "."
+        "s.404_text_after" : ".",
+        "title asc": "Název vzestupně",
+        "title desc": "Název sestupně",
+        "issued desc": "Datum vydání",
+        "modified desc": "Datum aktualizace"
     },
     "en": {
         "title.datasets": "Datasets",
@@ -154,6 +158,10 @@ const STRINGS = {
         "s.404_text_before": "You can try to search on the ",
         "s.404_link": "datasets",
         "s.404_text_after": " page.",
+        "title asc": "Title Ascending",
+        "title desc": "Title Descending",
+        "issued desc": "Issued",
+        "modified desc": "Modified"
     }
 };
 

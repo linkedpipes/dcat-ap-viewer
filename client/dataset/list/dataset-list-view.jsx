@@ -1,6 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
-import {Row, Col, Container, Button} from "reactstrap";
+import {
+    Row,
+    Col,
+    Container,
+    Button,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem,
+    UncontrolledDropdown
+} from "reactstrap";
 import FacetFilter from "../../components/facet-filter";
 import SearchBox from "../../components/search-box";
 import DatasetList from "./dataset-list";
@@ -20,7 +29,8 @@ import {
     STRING_QUERY,
     KEYWORDS_QUERY,
     PAGE_QUERY,
-    PUBLISHER_QUERY
+    PUBLISHER_QUERY,
+    SORT_QUERY
 } from "../../application/navigation";
 import {getString} from "../../application/strings";
 import setPageTitle from "../../services/page-title";
@@ -87,6 +97,46 @@ const DatasetListNotLoaded = ({status}) => {
     }
 };
 
+class SortSelector extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        let {value, onChange} = this.props;
+        return (
+            <div style={{"float": "right"}}>
+                <UncontrolledDropdown>
+                    <DropdownToggle caret>
+                        {getString(value)}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        { value !== "title asc" &&
+                        <DropdownItem onClick={() => onChange("title asc")}>
+                            {getString("title asc")}
+                        </DropdownItem>
+                        }
+                        { value !== "title desc" &&
+                        <DropdownItem onClick={() => onChange("title desc")}>
+                            {getString("title desc")}
+                        </DropdownItem>
+                        }
+                        { value !== "issued desc" &&
+                        <DropdownItem onClick={() => onChange("issued desc")}>
+                            {getString("issued desc")}
+                        </DropdownItem>
+                        }
+                        { value !== "modified desc" &&
+                        <DropdownItem onClick={() => onChange("modified desc")}>
+                            {getString("modified desc")}
+                        </DropdownItem>
+                        }
+                    </DropdownMenu>
+                </UncontrolledDropdown>
+            </div>
+        );
+    }
+}
 class DatasetListViewComponent extends React.Component {
 
     constructor(props) {
@@ -188,6 +238,10 @@ class DatasetListViewComponent extends React.Component {
                                 onChange={props.setQueryString}
                                 onSearch={this.callIfNotFetching(props.setQueryFilter)}/>
                             <br/>
+                            <SortSelector
+                                value={props.query.sort}
+                                onChange={this.callIfNotFetching(props.setSort)}/>
+                            <br/>
                             { showDatasetList &&
                             <DatasetListLoaded datasetCount={props.datasetCount}
                                                query={props.query}
@@ -280,6 +334,16 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             "query": {
                 ...ownProps.router.location.query,
                 [getQuery(PAGE_QUERY)]: page
+            }
+        });
+    },
+    "setSort": (value) => {
+        console.log(value);
+        ownProps.router.push({
+            "pathname": ownProps.router.location.pathname,
+            "query": {
+                ...ownProps.router.location.query,
+                [getQuery(SORT_QUERY)]: value
             }
         });
     }

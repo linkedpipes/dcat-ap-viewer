@@ -10,7 +10,8 @@ import {
     KEYWORDS_QUERY,
     FORMAT_QUERY,
     STRING_QUERY,
-    PAGE_QUERY
+    PAGE_QUERY,
+    SORT_QUERY
 } from "../../application/navigation";
 
 
@@ -28,7 +29,8 @@ const initialState = {
         "datasets": [],
         "keyword": [],
         "publisher": [],
-        "format": []
+        "format": [],
+        "sort": "modified"
     },
     // Mirror of location.
     "query": {
@@ -37,7 +39,8 @@ const initialState = {
         "search": "",
         "keyword": [],
         "publisher": [],
-        "format": []
+        "format": [],
+        "sort": "modified"
     }
 };
 
@@ -90,22 +93,29 @@ function parseSolrResponse(state, json) {
             })),
             "keyword": keywords_list,
             "publisher": publisher_list,
-            "format": format_list
+            "format": format_list,
+            "sort": json.responseHeader.params.sort
         }
     };
 }
 
 function locationToQuery(location) {
+    // TODO Move to other layer
     let page = parseInt(location[getQuery(PAGE_QUERY)]);
     if (isNaN(page)) {
         page = 0;
+    }
+    let order =  location[getQuery(SORT_QUERY)];
+    if (order === undefined) {
+        order = "modified desc";
     }
     return {
         "page": page,
         "search": location[getQuery(STRING_QUERY)],
         "keyword": asArray(location[getQuery(KEYWORDS_QUERY)]),
         "publisher": asArray(location[getQuery(PUBLISHER_QUERY)]),
-        "format": asArray(location[getQuery(FORMAT_QUERY)])
+        "format": asArray(location[getQuery(FORMAT_QUERY)]),
+        "sort": order
     };
 }
 
