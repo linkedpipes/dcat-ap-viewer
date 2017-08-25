@@ -1,4 +1,4 @@
-import {fetchJson} from "../../services/http-request";
+import {fetchJsonCallback} from "../../services/http-request";
 import {setApplicationLoader} from "../../application/app-action";
 import Notifications from "react-notification-system-redux";
 import {getString} from "./../../application/strings";
@@ -79,7 +79,7 @@ export function fetchDataRequest(query) {
         });
         const url = constructSearchQueryUrl(query);
         dispatch(setApplicationLoader(true));
-        fetchJson(url, (json) => {
+        fetchJsonCallback(url, (json) => {
             dispatch(setApplicationLoader(false));
             dispatch(fetchDataSuccess(json));
         }, (error) => {

@@ -2,7 +2,7 @@ import {
     convertDatasetJsonLd,
     convertDistributionJsonLd
 } from "../../services/rdf-to-entity";
-import {fetchJson} from "../../services/http-request";
+import {fetchJsonCallback} from "../../services/http-request";
 import {setApplicationLoader} from "../../application/app-action";
 import Notifications from "react-notification-system-redux";
 import {getString} from "./../../application/strings";
@@ -17,7 +17,7 @@ export function fetchDataset(iri) {
         let url = "/api/v1/resource/dataset?iri=" + encodeURI(iri);
 
         dispatch(setApplicationLoader(true));
-        fetchJson(url, (json) => {
+        fetchJsonCallback(url, (json) => {
             dispatch(setApplicationLoader(false));
             // TODO Extractor to another layer.
             if (REPOSITORY_TYPE == "COUCHDB") {
@@ -63,7 +63,7 @@ export function fetchDistribution(iri) {
             "iri": iri
         });
         let url = "/api/v1/resource/distribution?iri=" + encodeURI(iri);
-        fetchJson(url, (json) => {
+        fetchJsonCallback(url, (json) => {
                 // TODO Extractor to another layer.
                 if (REPOSITORY_TYPE == "COUCHDB") {
                     dispatch(fetchDistributionSuccess(iri,

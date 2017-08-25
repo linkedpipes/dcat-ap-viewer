@@ -2,7 +2,7 @@ import Raven from "raven-js";
 
 // TODO Move to data access layer (service).
 
-export const fetchJson = (url, onSuccess, onFailure) => {
+export const fetchJsonCallback = (url, onSuccess, onFailure) => {
     fetch(url).then((response) => {
         return response.json();
     }).then((json) => {
