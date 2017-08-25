@@ -1,5 +1,7 @@
 import Raven from "raven-js";
 
+// TODO Rename to data-access.
+
 export const STATUS_INITIAL = "initial";
 
 export const STATUS_FETCHING = "fetching";
@@ -7,6 +9,16 @@ export const STATUS_FETCHING = "fetching";
 export const STATUS_FETCHED = "fetched";
 
 export const STATUS_FAILED = "failed";
+
+export const fetchJson = (url) => {
+    return fetch(url).then(json);
+};
+
+function json(response) {
+    return response.json();
+}
+
+// TODO Use Raven in nicer way.
 
 // TODO Move to data access layer (service).
 
