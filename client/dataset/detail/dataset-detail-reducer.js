@@ -16,6 +16,7 @@ import {
 } from "./../../services/http-request";
 
 const initialState = {
+    // TODO Extract UI to another reducer.
     "ui": {
         "distributionsPageIndex": 0
     },
@@ -25,6 +26,7 @@ const initialState = {
     "distributions": {}
 };
 
+// TODO Extract state transforming functions.
 export const datasetDetailReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_DATASET_REQUEST:

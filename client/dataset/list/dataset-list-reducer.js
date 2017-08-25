@@ -162,6 +162,7 @@ export const datasetListReducer = (state = initialState, action) => {
                 }
             };
         case "@@router/LOCATION_CHANGE":
+            // TODO Use only if we are on the right page.
             const queryString = action.payload.query[getQuery(STRING_QUERY)];
             return {
                 ...state,

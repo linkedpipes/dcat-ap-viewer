@@ -34,6 +34,7 @@
         }
     });
 
+    // TODO Transform into general "label" source service.
     router.get("/codelist", function (req, res) {
         // TODO Same as /dataset
         const itemIri = req.query.iri;
@@ -41,8 +42,7 @@
             queryDataFromCouchDB(configuration, "codelists",
                 request, res, itemIri);
         } else {
-            // TODO Add missing implementation !
-
+            // TODO Add implementation for Virtuoso !
         }
     });
 

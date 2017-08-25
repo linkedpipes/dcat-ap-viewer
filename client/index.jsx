@@ -9,6 +9,7 @@ import Raven from "raven-js";
 import Promise from "es6-promise";
 import "isomorphic-fetch";
 
+// TODO Move to extra file with together with "isomorphic-fetch"
 function backwardCompatibility() {
     if (!window.Promise) {
         window.Promise = Promise;
