@@ -13,7 +13,12 @@ import {
     PAGE_QUERY,
     SORT_QUERY
 } from "../../application/navigation";
-
+import {
+    STATUS_INITIAL,
+    STATUS_FETCHING,
+    STATUS_FETCHED,
+    STATUS_FAILED
+} from "./../../services/http-request";
 
 // TODO Isolate changes to minimize rendering.
 //  For example paginator re-render on every change of string query.
@@ -23,8 +28,7 @@ const initialState = {
         "searchQuery": "",
     },
     "data": {
-        // TODO Replace with "status" in "DAO" layer
-        "status": "uninitialized",
+        "status": STATUS_INITIAL,
         "datasetCount": 0,
         "datasets": [],
         "keyword": [],
@@ -76,7 +80,7 @@ function parseSolrResponse(state, json) {
     return {
         ...state,
         "data": {
-            "status": "actual",
+            "status": STATUS_FETCHED,
             "datasetCount": json.response.numFound,
             "datasets": json.response.docs.map((item) => ({
                 "id": item.id,
@@ -136,8 +140,7 @@ export const datasetListReducer = (state = initialState, action) => {
                 ...state,
                 "data": {
                     ...state.data,
-                    // TODO Use constant from DAO.
-                    "status": "fetching"
+                    "status": STATUS_FETCHING
                 }
             };
         case FETCH_LIST_PAGE_SUCCESS:
@@ -147,8 +150,7 @@ export const datasetListReducer = (state = initialState, action) => {
                 ...state,
                 "data": {
                     ...state.data,
-                    // TODO Use constant from DAO.
-                    "status": "failed"
+                    "status": STATUS_FAILED
                 }
             };
         case SET_LIST_QUERY_STRING:

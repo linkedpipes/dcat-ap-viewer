@@ -7,14 +7,19 @@ import {
     FETCH_DISTRIBUTION_FAILED,
     SET_DISTRIBUTION_PAGE_INDEX
 } from "./dataset-detail-actions";
+import {
+    STATUS_INITIAL,
+    STATUS_FETCHING,
+    STATUS_FETCHED,
+    STATUS_FAILED
+} from "./../../services/http-request";
 
 const initialState = {
     "ui": {
         "distributionsPageIndex": 0
     },
     "dataset": {
-        // TODO Replace with "status" in "DAO" layer
-        "status": "uninitialized"
+        "status": STATUS_INITIAL
     },
     "distributions": {}
 };
@@ -25,8 +30,8 @@ export const datasetDetailReducer = (state = initialState, action) => {
             return {
                 ...state,
                 "dataset": {
-                    "iri": action.iri,
-                    "status": "fetching"
+                    "@id": action.iri,
+                    "status": STATUS_FETCHING
                 }
             };
         case FETCH_DATASET_SUCCESS:
@@ -34,7 +39,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
                 ...state,
                 "dataset": {
                     ...action.data,
-                    "status": "actual"
+                    "status": STATUS_FETCHED
                 }
             };
         case FETCH_DATASET_FAILED:
@@ -42,7 +47,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
                 ...state,
                 "dataset": {
                     ...action.data,
-                    "status": "failed"
+                    "status": STATUS_FAILED
                 }
             };
         case FETCH_DISTRIBUTION_REQUEST:
@@ -50,7 +55,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
                 ...state,
                 "distributions": copyAndAdd(state.distributions, action.iri, {
                     ...action.data,
-                    "status": "fetching"
+                    "status": STATUS_FETCHING
                 })
             };
             return state;
@@ -60,7 +65,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
                     ...state,
                     "distributions": copyAndAdd(state.distributions, action.iri,
                         {
-                            "status": "failed"
+                            "status": STATUS_FAILED
                         })
                 };
             } else {
@@ -69,7 +74,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
                     "distributions": copyAndAdd(state.distributions, action.iri,
                         {
                             ...action.data,
-                            "status": "actual"
+                            "status": STATUS_FETCHED
                         })
                 };
             }
@@ -78,7 +83,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
                 ...state,
                 "distributions": copyAndAdd(state.distributions, action.iri,
                     {
-                        "status": "failed"
+                        "status": STATUS_FAILED
                     })
             };
         case SET_DISTRIBUTION_PAGE_INDEX:

@@ -34,6 +34,12 @@ import {
 } from "../../application/navigation";
 import {getString} from "../../application/strings";
 import setPageTitle from "../../services/page-title";
+import {
+    STATUS_INITIAL,
+    STATUS_FETCHING,
+    STATUS_FETCHED,
+    STATUS_FAILED
+} from "./../../services/http-request";
 
 const QueryStatusLine = ({resultSize, query}) => (
     <div>
@@ -71,19 +77,19 @@ const DatasetListLoaded = ({datasetCount, query, datasets, setPage, showPublishe
 
 const DatasetListNotLoaded = ({status}) => {
     // TODO Export status report to another component
-    if (status === "uninitialized") {
+    if (status === STATUS_INITIAL) {
         return (
             <div style={{"textAlign": "center", "fontSize": "2em"}}>
                 {getString("s.no_data")}
             </div>
         )
-    } else if (status === "fetching") {
+    } else if (status === STATUS_FETCHING) {
         return (
             <div style={{"textAlign": "center", "fontSize": "2em"}}>
                 {getString("s.fetching")}
             </div>
         )
-    } else if (status === "failed") {
+    } else if (status === STATUS_FAILED) {
         return (
             <div style={{"textAlign": "center", "fontSize": "2em"}}>
                 {getString("s.failed")}
@@ -137,6 +143,7 @@ class SortSelector extends React.Component {
         );
     }
 }
+
 class DatasetListViewComponent extends React.Component {
 
     constructor(props) {
@@ -166,7 +173,7 @@ class DatasetListViewComponent extends React.Component {
     }
 
     callIfNotFetching(action) {
-        const isLoading = this.props.status === "fetching";
+        const isLoading = this.props.status === STATUS_FETCHING;
         if (isLoading) {
             return () => {
             };
@@ -197,8 +204,9 @@ class DatasetListViewComponent extends React.Component {
             facetClassName = "collapse-sm-down";
         }
 
-        const showDatasetList = props.status === "actual" ||
-            (props.status === "fetching" && props.datasets.length > 0);
+        // TODO Export as a selector.
+        const showDatasetList = props.status === STATUS_FETCHED ||
+            (props.status === STATUS_FETCHED && props.datasets.length > 0);
 
         return (
             <Container>

@@ -3,10 +3,16 @@ import {
     FETCH_LIST_PAGE_SUCCESS,
     FETCH_LIST_PAGE_FAILED
 } from "./organisation-list-action";
+import {
+    STATUS_INITIAL,
+    STATUS_FETCHING,
+    STATUS_FETCHED,
+    STATUS_FAILED
+} from "./../../services/http-request";
 
 const initialState = {
     "data": {
-        "status": "uninitialized",
+        "status": STATUS_INITIAL,
         "organisationsCount": 0,
         "organisations": [],
     }
@@ -25,7 +31,7 @@ function parseSolrResponse(state, json) {
     return {
         ...state,
         "data": {
-            "status": "actual",
+            "status": STATUS_FETCHED,
             "organisations": publisher_list
         }
     };
@@ -38,8 +44,7 @@ export const organisationListReducer = (state = initialState, action) => {
                 ...state,
                 "data": {
                     ...state.data,
-                    // TODO Use constant from DAO.
-                    "status": "fetching"
+                    "status": STATUS_FETCHING
                 }
             };
         case FETCH_LIST_PAGE_SUCCESS:
@@ -49,7 +54,7 @@ export const organisationListReducer = (state = initialState, action) => {
                 ...state,
                 "data": {
                     ...state.data,
-                    "status": "failed"
+                    "status": STATUS_FAILED
                 }
             };
         default:

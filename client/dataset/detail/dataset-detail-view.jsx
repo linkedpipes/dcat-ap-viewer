@@ -19,6 +19,12 @@ import {
 import {Link} from "react-router";
 import {getString} from "../../application/strings";
 import setPageTitle from "../../services/page-title";
+import {
+    STATUS_INITIAL,
+    STATUS_FETCHING,
+    STATUS_FETCHED,
+    STATUS_FAILED
+} from "./../../services/http-request";
 
 class DatasetMetadataComponent extends React.Component {
     render() {
@@ -73,19 +79,19 @@ class DatasetDetailViewComponent extends React.Component {
         const ui = this.props.ui;
 
         // TODO Export status report to another component
-        if (dataset.status === "uninitialized") {
+        if (dataset.status === STATUS_INITIAL) {
             return (
                 <div style={{"textAlign": "center", "fontSize": "2em"}}>
                     {getString("s.no_data")}
                 </div>
             )
-        } else if (dataset.status === "fetching") {
+        } else if (dataset.status === STATUS_FETCHING) {
             return (
                 <div style={{"textAlign": "center", "fontSize": "2em"}}>
                     {getString("s.fetching")}
                 </div>
             )
-        } else if (dataset.status === "failed") {
+        } else if (dataset.status === STATUS_FAILED) {
             return (
                 <div style={{"textAlign": "center", "fontSize": "2em"}}>
                     {getString("s.failed")}

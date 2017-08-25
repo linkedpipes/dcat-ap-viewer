@@ -1,5 +1,13 @@
 import Raven from "raven-js";
 
+export const STATUS_INITIAL = "initial";
+
+export const STATUS_FETCHING = "fetching";
+
+export const STATUS_FETCHED = "fetched";
+
+export const STATUS_FAILED = "failed";
+
 // TODO Move to data access layer (service).
 
 export const fetchJsonCallback = (url, onSuccess, onFailure) => {

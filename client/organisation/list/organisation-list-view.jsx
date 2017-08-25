@@ -11,6 +11,11 @@ import {
 } from "../../application/navigation";
 import {getString} from "../../application/strings";
 import setPageTitle from "../../services/page-title";
+import {
+    STATUS_INITIAL,
+    STATUS_FETCHING,
+    STATUS_FAILED
+} from "./../../services/http-request";
 
 const OrganisationListItem = ({value}) => {
     let datasetCountLabel;
@@ -67,19 +72,19 @@ class OrganisationListViewComponent extends React.Component {
         setPageTitle(getString("title.organisations"));
 
         // TODO Export status report to another component
-        if (this.props.status === "uninitialized") {
+        if (this.props.status === STATUS_INITIAL) {
             return (
                 <div style={{"textAlign": "center", "fontSize": "2em"}}>
                     {getString("s.no_data")}
                 </div>
             )
-        } else if (this.props.status === "fetching") {
+        } else if (this.props.status === STATUS_FETCHING) {
             return (
                 <div style={{"textAlign": "center", "fontSize": "2em"}}>
                     {getString("s.fetching")}
                 </div>
             )
-        } else if (this.props.status === "failed") {
+        } else if (this.props.status === STATUS_FAILED) {
             return (
                 <div style={{"textAlign": "center", "fontSize": "2em"}}>
                     {getString("s.failed")}
