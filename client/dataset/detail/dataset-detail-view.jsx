@@ -33,10 +33,10 @@ class DatasetMetadataComponent extends React.Component {
         let content = '\n{\n' +
             '"@context":"http://schema.org/",\n' +
             '"@type":"Dataset",\n' +
-            '"name":"' + dataset["title"] + '",\n' +
-            '"description":"' + dataset["description"] + '",\n' +
-            '"url":"' + dataset["iri"] + '",\n' +
-            '"spatialCoverage":"' + dataset["spatial"] + '",\n' +
+            '"name":"' + selectLabel(dataset["title"]) + '",\n' +
+            '"description":"' + selectLabel(dataset["description"]) + '",\n' +
+            '"url":"' + dataset["@id"] + '",\n' +
+            '"spatialCoverage":"' + dataset["spatial"]["@id"] + '",\n' +
             '"includedInDataCatalog": "' + dataset["catalog"] + '",\n';
 
         if (dataset["temporal"] !== undefined) {
@@ -44,14 +44,14 @@ class DatasetMetadataComponent extends React.Component {
         }
 
         if (dataset["keywords"] !== undefined) {
-            content += '"keywords":' + JSON.stringify(dataset["keywords"]) + '",\n';
+            content += '"keywords":' + JSON.stringify(selectLabels(dataset["keywords"])) + '",\n';
         }
 
         content += '' +
             '"creator":{\n' +
             ' "@type":"Organization",\n' +
-            ' "url": "' + dataset["publisher"]["iri"] + '",\n' +
-            ' "name":"' + dataset["publisher"]["label"] + '"\n' +
+            ' "url": "' + dataset["publisher"]["@id"] + '",\n' +
+            ' "name":"' + selectLabel(dataset["publisher"]) + '"\n' +
             ' }\n' +
             '}\n';
 
@@ -130,8 +130,7 @@ class DatasetDetailViewComponent extends React.Component {
                         page={ui.distributionsPageIndex}
                     />
                 </div>
-                {/* TODO !!!*/}
-                {/*<DatasetMetadataComponent dataset={dataset}/>*/}
+                <DatasetMetadataComponent dataset={dataset}/>
             </Container>
         );
     }
