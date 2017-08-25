@@ -1,14 +1,16 @@
-import {RDF} from "./vocabulary"
+import {RDF} from "./vocabulary";
 
+// TODO Merge to single object with triples use names to distinct.
 export const graph = {};
 
+// TODO Rename to more reflect return type (entity object).
 graph.getByType = (data, type) => {
     const graph = data["@graph"];
     if (graph === undefined || graph.length === undefined) {
         return undefined;
     }
     for (let index = 0; index < graph.length; ++index) {
-        if (triples.getType(graph[index]).indexOf(type) > -1) {
+        if (triples.type(graph[index]).indexOf(type) > -1) {
             return graph[index];
         }
     }
@@ -20,7 +22,7 @@ graph.getByResources = (data, iris) => {
     const graph = data["@graph"];
     const result = [];
     for (let index = 0; index < graph.length; ++index) {
-        if (iriList.indexOf(triples.getId(graph[index])) > -1) {
+        if (iriList.indexOf(triples.id(graph[index])) > -1) {
             result.push(graph[index]);
         }
     }
@@ -33,7 +35,7 @@ graph.getByResource = (data, iri) => {
     }
     const graph = data["@graph"];
     for (let index = 0; index < graph.length; ++index) {
-        if (triples.getId(graph[index]) === iri) {
+        if (triples.id(graph[index]) === iri) {
             return graph[index];
         }
     }
@@ -42,7 +44,7 @@ graph.getByResource = (data, iri) => {
 
 export const triples = {};
 
-triples.getId = (entity) => {
+triples.id = (entity) => {
     if (entity === undefined) {
         return undefined;
     } else if (entity["@id"]) {
@@ -54,19 +56,19 @@ triples.getId = (entity) => {
     }
 };
 
-triples.getType = (entity) => {
+triples.type = (entity) => {
     if (entity["@type"] !== undefined) {
         return entity["@type"];
     }
     if (entity[RDF.type] !== undefined) {
         // As a fallback for invalid json-ld
-        return triples.getResources(entity, RDF.type);
+        return triples.resources(entity, RDF.type);
     }
     return [];
 };
 
-triples.getValues = (entity, predicate) => {
-    let values = asArray(getValueForPredicate(entity,predicate));
+triples.values = (entity, predicate) => {
+    let values = asArray(getValueForPredicate(entity, predicate));
     const result = [];
     values.forEach((item) => {
         if (item["@value"] === undefined) {
@@ -78,14 +80,6 @@ triples.getValues = (entity, predicate) => {
     return result;
 };
 
-function getValueForPredicate(entity, predicate) {
-    if (entity === undefined) {
-        return undefined;
-    } else {
-        return entity[predicate];
-    }
-}
-
 function asArray(values) {
     if (values === undefined || values === null) {
         return [];
@@ -96,8 +90,16 @@ function asArray(values) {
     }
 }
 
-triples.getValue = (entity, predicate) => {
-    const values = triples.getValues(entity, predicate);
+function getValueForPredicate(entity, predicate) {
+    if (entity === undefined) {
+        return undefined;
+    } else {
+        return entity[predicate];
+    }
+}
+
+triples.value = (entity, predicate) => {
+    const values = triples.values(entity, predicate);
     if (values.length === 0) {
         return undefined;
     } else {
@@ -105,10 +107,10 @@ triples.getValue = (entity, predicate) => {
     }
 };
 
-triples.getResources = (entity, predicate) => {
-    let values = asArray(getValueForPredicate(entity,predicate));
+triples.resources = (entity, predicate) => {
+    let values = asArray(getValueForPredicate(entity, predicate));
     return values.map((item) => {
-        const id = triples.getId(item);
+        const id = triples.id(item);
         if (id === undefined) {
             console.warn("Missing resource @id: ", item);
             return undefined;
@@ -118,8 +120,8 @@ triples.getResources = (entity, predicate) => {
     });
 };
 
-triples.getResource = (entity, predicate) => {
-    const values = triples.getResources(entity, predicate);
+triples.resource = (entity, predicate) => {
+    const values = triples.resources(entity, predicate);
     if (values.length === 0) {
         return undefined;
     } else {
@@ -127,5 +129,33 @@ triples.getResource = (entity, predicate) => {
     }
 };
 
+triples.string = (entity, predicate) => {
+    let values = asArray(getValueForPredicate(entity, predicate));
+    const result = {};
+    values.forEach((item) => {
+        const lang = item["@language"] || "";
+        if (result[lang] === undefined) {
+            result[lang] = [];
+        }
+        result[lang].push(item["@value"]);
+    });
+    return result;
+};
 
+// Return resource as an empty jsonld object with @id
+triples.entity = (entity, predicate) => {
+    const iri = triples.resource(entity, predicate);
+    if (iri === undefined) {
+        return undefined;
+    } else {
+        return {
+            "@id": iri
+        }
+    }
+};
 
+triples.entities = (entity, predicate) => {
+    return triples.resources(entity, predicate).map((iri) => ({
+        "@id": iri
+    }));
+};
