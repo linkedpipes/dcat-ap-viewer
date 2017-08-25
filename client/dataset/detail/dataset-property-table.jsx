@@ -58,11 +58,11 @@ const ContactPoint = ({value}) => {
             iri = "mailto:" + value.email;
         }
         return (
-            <a href={iri}>{label}</a>
+            <a href={iri}>{selectLabel(label)}</a>
         );
     } else {
         return (
-            <a href={value}>{value}</a>
+            <a href={value}>{selectLabel(value)}</a>
         );
     }
 };
@@ -191,7 +191,7 @@ const DatasetPropertyTable = ({dataset}) => (
     <Table>
         <tbody>
         <UrlRow label="s.dataset_iri" value={dataset["@id"]}/>
-        <ContactPoints label="s.contact_point" value={dataset.contactPoint}/>
+        <ContactPoints label="s.contact_point" value={dataset.contactPoints}/>
         <LabeledUrlRow label="s.publisher" value={dataset.publisher}/>
         <LabeledUrlRow label="s.topic" value={dataset.theme}/>
         <UrlRow label="s.access_right" value={dataset.accessRights}/>
