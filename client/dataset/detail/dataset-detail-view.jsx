@@ -25,6 +25,7 @@ import {
     STATUS_FETCHED,
     STATUS_FAILED
 } from "./../../services/http-request";
+import {selectLabel, selectLabels} from "./../../services/labels"
 
 class DatasetMetadataComponent extends React.Component {
     render() {
@@ -99,36 +100,38 @@ class DatasetDetailViewComponent extends React.Component {
             )
         }
 
+        // TODO Use IRI as a filter.
         const publisherUrl = getUrl(DATASET_LIST_URL, {
-            [PUBLISHER_QUERY]: dataset.publisher.label
+            [PUBLISHER_QUERY]: selectLabel(dataset.publisher)
         });
 
-        setPageTitle(dataset.title);
+        const title = selectLabel(dataset.title);
+        setPageTitle(title);
 
         return (
             <Container>
                 <div style={{"marginTop": "2em"}}>
-                    <h3>{dataset.title}</h3>
+                    <h3>{title}</h3>
                     <h4>
-                        {/* TODO Replace with link component integrated with navigation */}
-                        <Link to={publisherUrl}>{dataset.publisher.label}</Link>
+                        <Link to={publisherUrl}>{selectLabel(dataset.publisher)}</Link>
                     </h4>
-                    <p>{dataset.description}</p>
-                    <TagLine values={dataset.keyword}/>
+                    <p>{selectLabel(dataset.description)}</p>
+                    <TagLine values={selectLabels(dataset.keywords)}/>
                 </div>
                 <div style={{"marginTop": "2em"}}>
                     <DatasetPropertyTable dataset={dataset}/>
                 </div>
                 <div style={{"marginTop": "2em"}}>
                     <DistributionList
-                        keys={dataset.distribution}
+                        keys={dataset.distributions}
                         values={distributions}
                         fetchDistribution={this.props.fetchDistribution}
                         setPage={this.props.setDistributionPageIndex}
                         page={ui.distributionsPageIndex}
                     />
                 </div>
-                <DatasetMetadataComponent dataset={dataset}/>
+                {/* TODO !!!*/}
+                {/*<DatasetMetadataComponent dataset={dataset}/>*/}
             </Container>
         );
     }

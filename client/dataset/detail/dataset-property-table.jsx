@@ -1,6 +1,9 @@
 import React from "react";
 import {Table} from "reactstrap";
 import {getString} from "../../application/strings";
+import {selectLabel} from "./../../services/labels"
+
+// TODO Extract components and add property specification.
 
 // TODO Add component that test for empty value and only provide value as children.
 const Temporal = ({label, value}) => {
@@ -64,6 +67,7 @@ const ContactPoint = ({value}) => {
     }
 };
 
+// TODO Check usage.
 const ContactPoints = ({label, value}) => {
     if (value === undefined) {
         return null;
@@ -134,6 +138,40 @@ const UrlRow = ({label, value}) => {
     )
 };
 
+const LabeledUrlRow = ({label, value}) => {
+    if (value === undefined) {
+        return null;
+    }
+    let valuesAsArray;
+    if (value.constructor === Array) {
+        valuesAsArray = value;
+    } else {
+        valuesAsArray = [value];
+    }
+    if (valuesAsArray.length === 0) {
+        return null;
+    }
+    return (
+        <tr>
+            <td>{getString(label)}</td>
+            <td>
+                {
+                    valuesAsArray.map((item) => (
+                        <LabeledUrlValue key={item} value={item} />
+                    ))
+                }
+            </td>
+        </tr>
+    )
+};
+
+const LabeledUrlValue = ({value}) => {
+    return (
+        <a href={value["@id"]}>{selectLabel(value)}</a>
+    );
+};
+
+
 const ValueRow = ({label, value}) => {
     if (value === undefined) {
         return null;
@@ -152,14 +190,14 @@ const ValueRow = ({label, value}) => {
 const DatasetPropertyTable = ({dataset}) => (
     <Table>
         <tbody>
-        <UrlRow label="s.dataset_iri" value={dataset.iri}/>
+        <UrlRow label="s.dataset_iri" value={dataset["@id"]}/>
         <ContactPoints label="s.contact_point" value={dataset.contactPoint}/>
-        <UrlRow label="s.publisher" value={dataset.publisher}/>
-        <UrlRow label="s.topic" value={dataset.theme}/>
+        <LabeledUrlRow label="s.publisher" value={dataset.publisher}/>
+        <LabeledUrlRow label="s.topic" value={dataset.theme}/>
         <UrlRow label="s.access_right" value={dataset.accessRights}/>
         <UrlRow label="s.conforms_to" value={dataset.conformsTo}/>
         <UrlRow label="s.documentation" value={dataset.documentation}/>
-        <UrlRow label="s.frequency" value={dataset.frequency}/>
+        <LabeledUrlRow label="s.frequency" value={dataset.frequency}/>
         <UrlRow label="s.has_version" value={dataset.hasVersion}/>
         <UrlRow label="s.is_version_of" value={dataset.isVersionOf}/>
         <UrlRow label="s.identifier" value={dataset.identifier}/>
@@ -172,7 +210,7 @@ const DatasetPropertyTable = ({dataset}) => (
         <ValueRow label="s.modified" value={dataset.modified}/>
         <UrlRow label="s.sample" value={dataset.sample}/>
         <UrlRow label="s.source" value={dataset.source}/>
-        <UrlRow label="s.spatial" value={dataset.spatial}/>
+        <LabeledUrlRow label="s.spatial" value={dataset.spatial}/>
         <Temporal label="s.temporal" value={dataset.temporal}/>
         <ValueRow label="s.type" value={dataset.type}/>
         <ValueRow label="s.version" value={dataset.version}/>

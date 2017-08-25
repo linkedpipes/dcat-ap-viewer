@@ -1,11 +1,12 @@
-import {
-    convertDatasetJsonLd,
-    convertDistributionJsonLd
-} from "../../services/rdf-to-entity";
 import {fetchJsonCallback} from "../../services/http-request";
 import {setApplicationLoader} from "../../application/app-action";
 import Notifications from "react-notification-system-redux";
 import {getString} from "./../../application/strings";
+import {jsonLdToDataset, requestLabelsForDataset} from "./jsonld-to-dataset";
+import {
+    jsonLdToDistribution,
+    requestLabelsForDistribution
+} from "./jsonld-to-distribution";
 
 export const FETCH_DATASET_REQUEST = "FETCH_DATASET_REQUEST";
 export function fetchDataset(iri) {
@@ -15,16 +16,18 @@ export function fetchDataset(iri) {
             "iri": iri
         });
         let url = "/api/v1/resource/dataset?iri=" + encodeURI(iri);
-
         dispatch(setApplicationLoader(true));
         fetchJsonCallback(url, (json) => {
             dispatch(setApplicationLoader(false));
             // TODO Extractor to another layer.
+            let data;
             if (REPOSITORY_TYPE == "COUCHDB") {
-                dispatch(fetchDatasetSuccess({"@graph": json["jsonld"]}));
+                data = jsonLdToDataset({"@graph": json["jsonld"]});
             } else {
-                dispatch(fetchDatasetSuccess(json));
+                data = jsonLdToDataset(json);
             }
+            dispatch(fetchDatasetSuccess(data));
+            requestLabelsForDataset(data, dispatch);
         }, (error) => {
             dispatch(setApplicationLoader(false));
             dispatch(fetchDatasetFailed(error));
@@ -40,10 +43,10 @@ export function fetchDataset(iri) {
 }
 
 export const FETCH_DATASET_SUCCESS = "FETCH_DATASET_SUCCESS";
-function fetchDatasetSuccess(jsonld) {
+function fetchDatasetSuccess(data) {
     return {
         "type": FETCH_DATASET_SUCCESS,
-        "data": convertDatasetJsonLd(jsonld)
+        "data": data
     }
 }
 
@@ -65,12 +68,14 @@ export function fetchDistribution(iri) {
         let url = "/api/v1/resource/distribution?iri=" + encodeURI(iri);
         fetchJsonCallback(url, (json) => {
                 // TODO Extractor to another layer.
+                let data;
                 if (REPOSITORY_TYPE == "COUCHDB") {
-                    dispatch(fetchDistributionSuccess(iri,
-                        {"@graph": json["jsonld"]}));
+                    data = jsonLdToDistribution({"@graph": json["jsonld"]});
                 } else {
-                    dispatch(fetchDistributionSuccess(iri, json));
+                    data = jsonLdToDistribution(json);
                 }
+                dispatch(fetchDistributionSuccess(iri, data));
+                requestLabelsForDistribution(data, dispatch);
             },
             (error) => {
                 // TODO Move to fetchJson service
@@ -86,11 +91,11 @@ export function fetchDistribution(iri) {
 }
 
 export const FETCH_DISTRIBUTION_SUCCESS = "FETCH_DISTRIBUTION_SUCCESS";
-function fetchDistributionSuccess(iri, jsonld) {
+function fetchDistributionSuccess(iri, data) {
     return {
         "type": FETCH_DISTRIBUTION_SUCCESS,
         "iri": iri,
-        "data": convertDistributionJsonLd(jsonld)
+        "data": data
     }
 }
 

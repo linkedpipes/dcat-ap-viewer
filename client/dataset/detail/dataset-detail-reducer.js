@@ -7,6 +7,7 @@ import {
     FETCH_DISTRIBUTION_FAILED,
     SET_DISTRIBUTION_PAGE_INDEX
 } from "./dataset-detail-actions";
+import {FETCH_LABEL_SUCCESS} from "./../../services/labels";
 import {
     STATUS_INITIAL,
     STATUS_FETCHING,
@@ -50,6 +51,37 @@ export const datasetDetailReducer = (state = initialState, action) => {
                     "status": STATUS_FAILED
                 }
             };
+        case FETCH_LABEL_SUCCESS:
+            // TODO Add support for arrays.
+            // TODO Extract into a function in "labels".
+            if (action.identifier.target === "dataset") {
+                return {
+                    ...state,
+                    "dataset": {
+                        ...state.dataset,
+                        [action.identifier.key]: {
+                            ...state.dataset[action.identifier.key],
+                            ...action.data
+                        }
+                    }
+                };
+            } else if (action.identifier.target === "distribution") {
+                return {
+                    ...state,
+                    "distributions": {
+                        ...state.distributions,
+                        [action.identifier.iri]: {
+                            ...state.distributions[action.identifier.iri],
+                            [action.identifier.key]: {
+                                ...state.distributions[action.identifier.iri][action.identifier.key],
+                                ...action.data
+                            }
+                        }
+                    }
+                };
+            } else {
+                return state;
+            }
         case FETCH_DISTRIBUTION_REQUEST:
             return {
                 ...state,
@@ -104,3 +136,5 @@ function copyAndAdd(dictionary, key, item) {
     copy[key] = item;
     return copy;
 }
+
+// TODO Add selectors.

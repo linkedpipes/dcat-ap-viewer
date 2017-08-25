@@ -2,6 +2,7 @@ import React from "react";
 import {Table} from "reactstrap";
 import Paginator from "../../components/paginator";
 import {getString} from "../../application/strings";
+import {selectLabel} from "./../../services/labels";
 
 class DistributionRow extends React.Component {
 
@@ -50,11 +51,7 @@ class DistributionRow extends React.Component {
         if (dist.format === undefined) {
             formatLabel = undefined;
         } else {
-            if (dist.format.prefLabel === undefined) {
-                formatLabel = dist.format.iri;
-            } else {
-                formatLabel = dist.format.prefLabel;
-            }
+            formatLabel = selectLabel(dist.format);
         }
 
         return (
@@ -85,8 +82,14 @@ class DistributionRow extends React.Component {
 class DistributionList extends React.Component {
 
     render() {
-        const distributions = this.props.values;
+        const distributionIris = this.props.keys;
+        if (distributionIris === undefined) {
+            return (
+                <div></div>
+            )
+        }
 
+        const distributions = this.props.values;
         const pageSize = 10;
         let rows = [];
         const iterStart = this.props.page * pageSize;
