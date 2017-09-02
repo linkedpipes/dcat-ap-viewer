@@ -36,7 +36,8 @@ class DistributionRow extends React.Component {
         }
 
         let title = dist.title;
-        if (title === undefined || title === "") {
+        // TODO Move to helper class.
+        if (title === undefined || title.length === 0) {
             title = getString("s.unnamed_distribution");
         }
 
