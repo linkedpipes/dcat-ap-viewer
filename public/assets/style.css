@@ -84,3 +84,18 @@ a {
 .navbar-light .navbar-nav .nav-link:hover {
     color: #014c8c;
 }
+
+/* Interactive button (links). */
+
+.page-button {
+
+}
+
+.active > .page-button {
+    background-color: #057fa5;
+    color: #ffffff;
+}
+
+.filter-button:focus {
+    outline: 0;
+}

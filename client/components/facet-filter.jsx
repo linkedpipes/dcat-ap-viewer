@@ -39,9 +39,9 @@ class FacetFilter extends React.Component {
                     key={value.label}
                     onClick={() => props.onChange(value, !isActive)}
                     action
+                    className="filter-button"
                     active={isActive}
-                    href="javascript:void(0)"
-                    tag="a">
+                    tag="button">
                     {value.label} ({formatNumber(value.count)})
                 </ListGroupItem >
             );
@@ -59,8 +59,8 @@ class FacetFilter extends React.Component {
                     key="ShowNext"
                     onClick={() => this.toggle()}
                     action
-                    href="javascript:void(0)"
-                    tag="a">
+                    className="filter-button"
+                    tag="button">
                     <strong>{label}</strong>
                 </ListGroupItem >
             );

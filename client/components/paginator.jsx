@@ -1,6 +1,6 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import {Pagination, PaginationItem, PaginationLink} from "reactstrap";
+import {Pagination, PaginationItem, Button} from "reactstrap";
 
 const Paginator = ({start, end, value, onChange}) => {
     if (start === end || start + 1 === end) {
@@ -64,10 +64,9 @@ function createPageItemsList(pages, active, onChange) {
 function createPageItem(index, isActive, onChange) {
     return (
         <PaginationItem active={isActive} key={index}>
-            <PaginationLink href="javascript:void(0)"
-                            onClick={() => onChange(index)}>
+            <Button className="page-button" onClick={() => onChange(index)}>
                 {index + 1}
-            </PaginationLink>
+            </Button>
         </PaginationItem>
     )
 }
