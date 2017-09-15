@@ -48,24 +48,48 @@ function updateDate(value) {
 const ContactPoint = ({value}) => {
     if (typeof value === "object") {
         let label = value.label;
-        if (label === undefined || label.length === 0) {
-            label = value.iri;
+        let email = getEmail(value);
+        // TODO Use more readable approach.
+        if (labelIsEmpty(label)) {
+            if (email === undefined) {
+                label = value.iri;
+            } else {
+                label = email;
+            }
+        } else {
+            label = selectLabel(label);
         }
         let iri;
-        if (value.email === undefined || value.email.length === 0) {
+        if (email === undefined) {
             iri = value.iri;
         } else {
             iri = "mailto:" + value.email;
         }
+        //
         return (
-            <a href={iri}>{selectLabel(label)}</a>
+            <a href={iri}>{label}</a>
         );
     } else {
+        // TODO Check if this branch is ever needed.
         return (
             <a href={value}>{selectLabel(value)}</a>
         );
     }
 };
+
+// TODO Move to utility functions?
+function labelIsEmpty(label) {
+    return label === undefined || Object.keys(label).length === 0;
+}
+
+function getEmail(value) {
+    if (value.email === undefined || value.email.length === 0) {
+        return undefined;
+    } else {
+        return value.email[0];
+    }
+}
+
 
 // TODO Check usage.
 const ContactPoints = ({label, value}) => {
