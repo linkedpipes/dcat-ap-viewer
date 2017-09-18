@@ -19,7 +19,7 @@ export function jsonLdToDataset(jsonld) {
     const mandatory = {
         "@id": triples.id(dataset),
         "title": triples.string(dataset, DCTERMS.title),
-        "description": triples.string(dataset, DCTERMS.description),
+        "description": triples.string(dataset, DCTERMS.description)
     };
 
     const recommended = {
