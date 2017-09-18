@@ -30,7 +30,8 @@ import {
     KEYWORDS_QUERY,
     PAGE_QUERY,
     PUBLISHER_QUERY,
-    SORT_QUERY
+    SORT_QUERY,
+    PAGE_SIZE_QUERY
 } from "../../application/navigation";
 import {getString} from "../../application/strings";
 import setPageTitle from "../../services/page-title";
@@ -55,7 +56,7 @@ const QueryStatusLine = ({resultSize, query}) => (
     </div>
 );
 
-const DatasetListLoaded = ({datasetCount, query, datasets, setPage, showPublisher}) => (
+const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPageSize, showPublisher}) => (
     <div>
         <QueryStatusLine
             resultSize={datasetCount}
@@ -68,10 +69,12 @@ const DatasetListLoaded = ({datasetCount, query, datasets, setPage, showPublishe
         />
         <br/>
         <Paginator
-            start={0}
-            end={Math.ceil(datasetCount / 10)}
-            value={query.page}
-            onChange={setPage}/>
+            recordsCount={datasetCount}
+            pageIndex={query.page}
+            pageSize={query.pageSize}
+            onIndexChange={setPageIndex}
+            onSizeChange={setPageSize}
+        />
     </div>
 );
 
@@ -254,7 +257,8 @@ class DatasetListViewComponent extends React.Component {
                             <DatasetListLoaded datasetCount={props.datasetCount}
                                                query={props.query}
                                                datasets={props.datasets}
-                                               setPage={props.setPage}
+                                               setPageIndex={props.setPageIndex}
+                                               setPageSize={props.setPageSize}
                                                showPublisher={showPublisher}
                             />
                             }
@@ -333,7 +337,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             }
         });
     },
-    "setPage": (page) => {
+    "setPageIndex": (page) => {
         if (page == 0) {
             page = undefined;
         }
@@ -345,13 +349,28 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             }
         });
     },
+    "setPageSize": (pageSize) => {
+        // TODO Export as some default constants to make this visible.
+        if (pageSize == 10) {
+            pageSize = undefined;
+        }
+        ownProps.router.push({
+            "pathname": ownProps.router.location.pathname,
+            "query": {
+                ...ownProps.router.location.query,
+                [getQuery(PAGE_SIZE_QUERY)]: pageSize,
+                [getQuery(PAGE_QUERY)]: undefined
+            }
+        });
+    },
     "setSort": (value) => {
         console.log(value);
         ownProps.router.push({
             "pathname": ownProps.router.location.pathname,
             "query": {
                 ...ownProps.router.location.query,
-                [getQuery(SORT_QUERY)]: value
+                [getQuery(SORT_QUERY)]: value,
+                [getQuery(PAGE_QUERY)]: undefined
             }
         });
     }

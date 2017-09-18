@@ -3,7 +3,8 @@ import {connect} from "react-redux";
 import {
     fetchDataset,
     fetchDistribution,
-    setDistributionPageIndex
+    setDistributionPageIndex,
+    setDistributionPageSize
 } from "./dataset-detail-actions";
 import {Container} from "reactstrap";
 import DistributionList from "./distribution-list";
@@ -130,7 +131,9 @@ class DatasetDetailViewComponent extends React.Component {
                         values={distributions}
                         fetchDistribution={this.props.fetchDistribution}
                         setPage={this.props.setDistributionPageIndex}
-                        page={ui.distributionsPageIndex}
+                        setPageSize={this.props.setDistributionPageSize}
+                        pageIndex={ui.distributionsPageIndex}
+                        pageSize={ui.distributionsPageSize}
                     />
                 </div>
                 <DatasetMetadataComponent dataset={dataset}/>
@@ -154,6 +157,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     "setDistributionPageIndex": (page) => {
         dispatch(setDistributionPageIndex(page));
+    },
+    "setDistributionPageSize": (page) => {
+        dispatch(setDistributionPageSize(page));
     }
 });
 

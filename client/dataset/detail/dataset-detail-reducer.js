@@ -5,7 +5,8 @@ import {
     FETCH_DISTRIBUTION_REQUEST,
     FETCH_DISTRIBUTION_SUCCESS,
     FETCH_DISTRIBUTION_FAILED,
-    SET_DISTRIBUTION_PAGE_INDEX
+    SET_DISTRIBUTION_PAGE_INDEX,
+    SET_DISTRIBUTION_PAGE_SIZE
 } from "./dataset-detail-actions";
 import {FETCH_LABEL_SUCCESS} from "./../../services/labels";
 import {
@@ -18,7 +19,8 @@ import {
 const initialState = {
     // TODO Extract UI to another reducer.
     "ui": {
-        "distributionsPageIndex": 0
+        "distributionsPageIndex": 0,
+        "distributionsPageSize" : 10
     },
     "dataset": {
         "status": STATUS_INITIAL
@@ -84,6 +86,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
             } else {
                 return state;
             }
+        // TODO Extract to common list management reducer?
         case FETCH_DISTRIBUTION_REQUEST:
             return {
                 ...state,
@@ -120,6 +123,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
                         "status": STATUS_FAILED
                     })
             };
+        // TODO Extract to common reducer.
         case SET_DISTRIBUTION_PAGE_INDEX:
             return {
                 ...state,
@@ -127,7 +131,16 @@ export const datasetDetailReducer = (state = initialState, action) => {
                     ...state.ui,
                     "distributionsPageIndex": action.page
                 }
-            }
+            };
+        case SET_DISTRIBUTION_PAGE_SIZE:
+            return {
+                ...state,
+                "ui": {
+                    ...state.ui,
+                    "distributionsPageIndex": 0,
+                    "distributionsPageSize": action.size
+                }
+            };
         default:
             return state
     }

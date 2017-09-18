@@ -17,6 +17,7 @@ export const STRING_QUERY = "STRING_QUERY";
 export const DATASET_QUERY = "DATASET_QUERY";
 export const PAGE_QUERY = "PAGE_QUERY";
 export const SORT_QUERY = "SORT_QUERY";
+export const PAGE_SIZE_QUERY = "PAGE_SIZE_QUERY";
 
 // TODO Extract to a new file as a mapping
 const COMPONENTS = {};
@@ -45,6 +46,7 @@ NAVIGATION["cs"][QUERY][STRING_QUERY] = "dotaz";
 NAVIGATION["cs"][QUERY][DATASET_QUERY] = "iri";
 NAVIGATION["cs"][QUERY][PAGE_QUERY] = "stránka";
 NAVIGATION["cs"][QUERY][SORT_QUERY] = "pořadí";
+NAVIGATION["cs"][QUERY][PAGE_SIZE_QUERY] = "velikost stránky";
 
 NAVIGATION["en"][PAGE] = {};
 NAVIGATION["en"][PAGE][DATASET_LIST_URL] = "datasets";
@@ -58,6 +60,7 @@ NAVIGATION["en"][QUERY][STRING_QUERY] = "query";
 NAVIGATION["en"][QUERY][DATASET_QUERY] = "iri";
 NAVIGATION["en"][QUERY][PAGE_QUERY] = "page";
 NAVIGATION["en"][QUERY][SORT_QUERY] = "sort";
+NAVIGATION["en"][QUERY][PAGE_SIZE_QUERY] = "pageSize";
 
 //
 // TODO Split to multiple files

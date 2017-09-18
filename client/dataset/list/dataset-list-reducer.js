@@ -11,7 +11,8 @@ import {
     FORMAT_QUERY,
     STRING_QUERY,
     PAGE_QUERY,
-    SORT_QUERY
+    SORT_QUERY,
+    PAGE_SIZE_QUERY
 } from "../../application/navigation";
 import {
     STATUS_INITIAL,
@@ -44,7 +45,8 @@ const initialState = {
         "keyword": [],
         "publisher": [],
         "format": [],
-        "sort": "modified"
+        "sort": "modified",
+        "pageSize": 10
     }
 };
 
@@ -113,13 +115,18 @@ function locationToQuery(location) {
     if (order === undefined) {
         order = "modified desc";
     }
+    let pageSize = parseInt(location[getQuery(PAGE_SIZE_QUERY)]);
+    if (isNaN(pageSize)) {
+        pageSize = 10;
+    }
     return {
         "page": page,
         "search": location[getQuery(STRING_QUERY)],
         "keyword": asArray(location[getQuery(KEYWORDS_QUERY)]),
         "publisher": asArray(location[getQuery(PUBLISHER_QUERY)]),
         "format": asArray(location[getQuery(FORMAT_QUERY)]),
-        "sort": order
+        "sort": order,
+        "pageSize": pageSize
     };
 }
 

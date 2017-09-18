@@ -16,7 +16,7 @@ function constructSearchQueryUrl(query) {
         "facet=true&" +
         "facet.mincount=1&";
 
-    const start = query.page * 10;
+    const start = query.page * query.pageSize;
     url += "start=" + start + "&";
 
     if (query.search === undefined || query.search === "") {
@@ -42,6 +42,8 @@ function constructSearchQueryUrl(query) {
     } else {
         url += "&sort=" + query.sort;
     }
+
+    url += "&rows=" + query.pageSize;
 
     return url;
 }

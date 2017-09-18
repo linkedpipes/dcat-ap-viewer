@@ -91,11 +91,10 @@ class DistributionList extends React.Component {
         }
 
         const distributions = this.props.values;
-        const pageSize = 10;
         let rows = [];
-        const iterStart = this.props.page * pageSize;
+        const iterStart = this.props.pageIndex * this.props.pageSize;
         const iterEnd = Math.min(
-            (this.props.page + 1) * pageSize,
+            (this.props.pageIndex + 1) * this.props.pageSize,
             this.props.keys.length);
 
         for (let index = iterStart; index < iterEnd; ++index) {
@@ -110,8 +109,6 @@ class DistributionList extends React.Component {
                 />
             ));
         }
-
-        const pageCount = Math.ceil(this.props.keys.length / pageSize);
 
         return (
             <div>
@@ -130,10 +127,12 @@ class DistributionList extends React.Component {
                     </tbody>
                 </Table>
                 <Paginator
-                    start={0}
-                    value={this.props.page}
-                    end={pageCount}
-                    onChange={this.props.setPage}/>
+                    recordsCount={this.props.keys.length}
+                    pageIndex={this.props.pageIndex}
+                    pageSize={this.props.pageSize}
+                    onIndexChange={this.props.setPage}
+                    onSizeChange={this.props.setPageSize}
+                />
             </div>
         );
     }

@@ -115,3 +115,11 @@ export function setDistributionPageIndex(page) {
         "page": page
     }
 }
+
+export const SET_DISTRIBUTION_PAGE_SIZE = "SET_DISTRIBUTION_PAGE_SIZE";
+export function setDistributionPageSize(size) {
+    return {
+        "type": SET_DISTRIBUTION_PAGE_SIZE,
+        "size": size
+    }
+}
