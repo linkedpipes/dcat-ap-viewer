@@ -29,6 +29,10 @@ export const selectLabel = (value, languages) => {
 };
 
 export const selectLabels = (value, languages) => {
+    // TODO Remove checks and make sure that the data model is ok,or include only in some modes?
+    if (value === undefined) {
+        return [];
+    }
     if (languages === undefined) {
         languages = getLanguagePreferences();
     }
