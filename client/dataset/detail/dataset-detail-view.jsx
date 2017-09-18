@@ -36,8 +36,11 @@ class DatasetMetadataComponent extends React.Component {
             '"name":"' + selectLabel(dataset["title"]) + '",\n' +
             '"description":"' + selectLabel(dataset["description"]) + '",\n' +
             '"url":"' + dataset["@id"] + '",\n' +
-            '"spatialCoverage":"' + dataset["spatial"]["@id"] + '",\n' +
             '"includedInDataCatalog": "' + dataset["catalog"] + '",\n';
+
+        if (dataset["spatial"] !== undefined) {
+            content += '"spatialCoverage":"' + dataset["spatial"]["@id"] + '",\n';
+        }
 
         if (dataset["temporal"] !== undefined) {
             content += '"temporalCoverage":"' + dataset["temporal"]["startDate"] + "/" + dataset["temporal"]["endDate"] + '",\n';
