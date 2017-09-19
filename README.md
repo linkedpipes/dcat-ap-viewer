@@ -2,14 +2,14 @@
 
 ## Requirements
 - [Node.js] & npm
-- Solr 
+- [Apache Solr]
+- [Apache CouchDB]
 
 ## Installation
 Install dependencies:
 ```
 npm install
 ```
-
 You need to copy and edit the configuration file.
 
 Prepare Solr schema before loading the data:
@@ -34,6 +34,12 @@ curl http://localhost:{solr_port}/solr/{core_name}/schema -X POST -H 'Content-ty
 }'
 ```
 
+CouchDB needs to contain the datasets, distributions and, optionally, the code list labels.
+
+We do it by using [LinkedPipes ETL] with a custom pipeline, which has the DCAT-AP catalog on the input.
+The pipeline is still WIP, so if you are interested to run DCAT-AP Viewer now, please contact us.
+We will provide the pipeline and the CouchDB records descriptions shortly.
+
 ## Running DCAT-AP Viewer
 ```
 node server -configFileLocation=configuration.properties
@@ -41,3 +47,8 @@ node server -configFileLocation=configuration.properties
 
 ## Known issues
 - Internet Explorer is not supported as it is missing implementation of fetch API
+
+[Node.js]: <https://nodejs.org>
+[Apache Solr]: <http://lucene.apache.org/solr/>
+[Apache CouchDB]: <http://couchdb.apache.org/>
+[LinkedPipes ETL]: <https://etl.linkedpipes.com>
