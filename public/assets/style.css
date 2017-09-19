@@ -99,3 +99,16 @@ a {
 .filter-button:focus {
     outline: 0;
 }
+
+/* Remove min width from navigation bar. */
+
+.language-drop-down {
+    min-width: 2rem;
+    width: 3rem;
+    height: 3rem;
+
+}
+
+.language-drop-down button {
+    padding: 0px;
+}

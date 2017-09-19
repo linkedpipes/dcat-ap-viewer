@@ -80,7 +80,10 @@ const STRINGS = {
         "title asc": "Název vzestupně",
         "title desc": "Název sestupně",
         "issued desc": "Datum vydání",
-        "modified desc": "Datum aktualizace"
+        "modified desc": "Datum aktualizace",
+        // TODO Extract languages as they are same for every language.
+        "en": "English",
+        "cs": "Čeština"
     },
     "en": {
         "title.datasets": "Datasets",
@@ -161,7 +164,9 @@ const STRINGS = {
         "title asc": "Title Ascending",
         "title desc": "Title Descending",
         "issued desc": "Issued",
-        "modified desc": "Modified"
+        "modified desc": "Modified",
+        "en": "English",
+        "cs": "Čeština"
     }
 };
 

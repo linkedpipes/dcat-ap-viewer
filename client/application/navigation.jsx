@@ -241,7 +241,7 @@ export class LanguageReRouter extends React.Component {
         if (path === undefined) {
             return "/" + pathname;
         } else {
-            return path;
+            return encodeURI(path);
         }
     }
 

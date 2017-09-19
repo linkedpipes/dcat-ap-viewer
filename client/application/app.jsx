@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "./header";
+import {Header} from "./header";
 import Footer from "./footer";
 import {LanguageReRouter} from "./navigation";
 import {IndeterminateLoader} from "../components/loader";
@@ -15,7 +15,7 @@ class AppComponent extends React.Component {
                 <div>
                     <GoogleTagManager/>
                     <IndeterminateLoader active={this.props.loaderActive}/>
-                    <Header/>
+                    <Header router={this.props.router}/>
                     {/* TODO Remove DIV element. */}
                     <div>
                         {React.cloneElement(this.props.children, this.props)}
