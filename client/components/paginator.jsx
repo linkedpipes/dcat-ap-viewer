@@ -9,6 +9,7 @@ import {
     DropdownMenu,
     DropdownItem
 } from "reactstrap";
+import {getString} from "./../application/strings";
 
 const PAGE_SIZES = [10, 20, 40, 80];
 
@@ -29,11 +30,12 @@ class Paginator extends React.Component {
         return (
             <div>
                 { pageItems.length > 0 &&
-                    <Pagination style={{float: "left"}}>
-                        {pageItems}
-                    </Pagination>
+                <Pagination style={{float: "left"}}>
+                    {pageItems}
+                </Pagination>
                 }
                 <div style={{float: "right"}}>
+                    {getString("s_paginator")} &nbsp;
                     <ComboBox
                         activeValue={pageSize}
                         values={PAGE_SIZES}
@@ -52,7 +54,8 @@ Paginator.propTypes = {
     "pageIndex": PropTypes.number.isRequired,
     "pageSize": PropTypes.number.isRequired,
     "onIndexChange": PropTypes.func.isRequired,
-    "onSizeChange": PropTypes.func.isRequired
+    "onSizeChange": PropTypes.func.isRequired,
+    "paginatorLabel": PropTypes.string
 };
 
 export default Paginator;
@@ -147,8 +150,7 @@ class ComboBox extends React.Component {
     render() {
         const {activeValue, values} = this.props;
         return (
-            <ButtonDropdown style={{float: "right"}}
-                            isOpen={this.state.open}
+            <ButtonDropdown isOpen={this.state.open}
                             toggle={this.toggle}
                             dropup>
                 <DropdownToggle caret>
@@ -156,7 +158,8 @@ class ComboBox extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu>
                     {values.map((value, index) => (
-                        <DropdownItem key={index} onClick={() => this.onSelect(index)}>
+                        <DropdownItem key={index}
+                                      onClick={() => this.onSelect(index)}>
                             {value}
                         </DropdownItem>
                     ))}

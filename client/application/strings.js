@@ -83,7 +83,8 @@ const STRINGS = {
         "modified desc": "Datum aktualizace",
         // TODO Extract languages as they are same for every language.
         "en": "English",
-        "cs": "Čeština"
+        "cs": "Čeština",
+        "s_paginator": "Položek na stránce:"
     },
     "en": {
         "title.datasets": "Datasets",
@@ -166,7 +167,8 @@ const STRINGS = {
         "issued desc": "Issued",
         "modified desc": "Modified",
         "en": "English",
-        "cs": "Čeština"
+        "cs": "Čeština",
+        "s_paginator": "Items per page:"
     }
 };
 
