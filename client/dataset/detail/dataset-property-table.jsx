@@ -1,7 +1,7 @@
 import React from "react";
 import {Table} from "reactstrap";
 import {getString} from "../../application/strings";
-import {selectLabel} from "./../../services/labels"
+import {selectLabel} from "./../../services/labels";
 
 // TODO Extract components and add property specification.
 
@@ -181,7 +181,10 @@ const LabeledUrlRow = ({label, value}) => {
             <td>
                 {
                     valuesAsArray.map((item) => (
-                        <LabeledUrlValue key={item} value={item} />
+                        <span key={item["@id"]}>
+                            <LabeledUrlValue value={item}/>
+                            {valuesAsArray.length > 0 && <br/> }
+                        </span>
                     ))
                 }
             </td>
@@ -217,7 +220,7 @@ const DatasetPropertyTable = ({dataset}) => (
         <UrlRow label="s.dataset_iri" value={dataset["@id"]}/>
         <ContactPoints label="s.contact_point" value={dataset.contactPoints}/>
         <LabeledUrlRow label="s.publisher" value={dataset.publisher}/>
-        <LabeledUrlRow label="s.topic" value={dataset.theme}/>
+        <LabeledUrlRow label="s.topic" value={dataset.themes}/>
         <UrlRow label="s.access_right" value={dataset.accessRights}/>
         <UrlRow label="s.conforms_to" value={dataset.conformsTo}/>
         <UrlRow label="s.documentation" value={dataset.documentation}/>
