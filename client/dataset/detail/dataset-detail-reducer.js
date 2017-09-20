@@ -20,7 +20,7 @@ const initialState = {
     // TODO Extract UI to another reducer.
     "ui": {
         "distributionsPageIndex": 0,
-        "distributionsPageSize" : 10
+        "distributionsPageSize": 10
     },
     "dataset": {
         "status": STATUS_INITIAL
@@ -56,33 +56,19 @@ export const datasetDetailReducer = (state = initialState, action) => {
                 }
             };
         case FETCH_LABEL_SUCCESS:
-            // TODO Add support for arrays.
-            // TODO Extract into a function in "labels".
+            // TODO Extract into "labels".
             if (action.identifier.target === "dataset") {
                 return {
                     ...state,
-                    "dataset": {
-                        ...state.dataset,
-                        [action.identifier.key]: {
-                            ...state.dataset[action.identifier.key],
-                            ...action.data
-                        }
-                    }
-                };
+                    "dataset": addLabelToDataset(
+                        state["dataset"], action)
+                }
             } else if (action.identifier.target === "distribution") {
                 return {
                     ...state,
-                    "distributions": {
-                        ...state.distributions,
-                        [action.identifier.iri]: {
-                            ...state.distributions[action.identifier.iri],
-                            [action.identifier.key]: {
-                                ...state.distributions[action.identifier.iri][action.identifier.key],
-                                ...action.data
-                            }
-                        }
-                    }
-                };
+                    "distributions": addLabelToDistributions(
+                        state["distributions"], action)
+                }
             } else {
                 return state;
             }
@@ -146,10 +132,61 @@ export const datasetDetailReducer = (state = initialState, action) => {
     }
 };
 
+function addLabelToDataset(dataset, action) {
+    if (action.identifier.index) {
+        return addLabelToDatasetArray(dataset, action);
+    } else {
+        return addLabelToDatasetObject(dataset, action);
+    }
+}
+
+function addLabelToDatasetObject(dataset, action) {
+    const {key} = action.identifier;
+    return {
+        ...dataset,
+        [key]: {
+            ...dataset[key],
+            ...action.data
+        }
+    }
+}
+
+function addLabelToDatasetArray(dataset, action) {
+    const {key, index} = action.identifier;
+    return {
+        ...dataset,
+        [key]: addToArrayItem(index, dataset[key], action.data)
+    };
+}
+
+function addToArrayItem(index, arrayToUpdate, toAdd) {
+    const output = arrayToUpdate.slice();
+    output[index] = {
+        ...output[index],
+        ...toAdd
+    };
+    return output;
+}
+
+function addLabelToDistributions(distributions, action) {
+    const {iri, key} = action.identifier;
+    return {
+        ...distributions,
+        [iri]: {
+            ...distributions[iri],
+            [key]: {
+                ...distributions[iri][key],
+                ...action.data
+            }
+        }
+    };
+}
+
 function copyAndAdd(dictionary, key, item) {
     const copy = {...dictionary};
     copy[key] = item;
     return copy;
 }
+
 
 // TODO Add selectors.
