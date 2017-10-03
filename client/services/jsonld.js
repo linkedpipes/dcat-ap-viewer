@@ -137,7 +137,8 @@ triples.string = (entity, predicate) => {
         if (result[lang] === undefined) {
             result[lang] = [];
         }
-        result[lang].push(item["@value"]);
+        const value = item["@value"] === undefined ? item : item["@value"];
+        result[lang].push(value);
     });
     return result;
 };
