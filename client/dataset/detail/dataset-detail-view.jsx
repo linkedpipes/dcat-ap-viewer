@@ -36,28 +36,33 @@ class DatasetMetadataComponent extends React.Component {
             '"@type":"Dataset",\n' +
             '"name":"' + selectLabel(dataset["title"]) + '",\n' +
             '"description":"' + selectLabel(dataset["description"]) + '",\n' +
-            '"url":"' + dataset["@id"] + '",\n' +
-            '"includedInDataCatalog": "' + dataset["catalog"] + '",\n';
+            '"url":"' + dataset["@id"] + '"\n';
+
+        if (dataset["catalog"] !== undefined) {
+            content += ',"includedInDataCatalog": "' + dataset["catalog"] + '"\n';
+        }
 
         if (dataset["spatial"] !== undefined) {
-            content += '"spatialCoverage":"' + dataset["spatial"]["@id"] + '",\n';
+            content += ',"spatialCoverage":"' + dataset["spatial"]["@id"] + '"\n';
         }
 
         if (dataset["temporal"] !== undefined) {
-            content += '"temporalCoverage":"' + dataset["temporal"]["startDate"] + "/" + dataset["temporal"]["endDate"] + '",\n';
+            content += ',"temporalCoverage":"' + dataset["temporal"]["startDate"] + "/" + dataset["temporal"]["endDate"] + '"\n';
         }
 
         if (dataset["keywords"] !== undefined) {
-            content += '"keywords":' + JSON.stringify(selectLabels(dataset["keywords"])) + '",\n';
+            content += ',"keywords":' + JSON.stringify(selectLabels(dataset["keywords"])) + '\n';
         }
 
-        content += '' +
-            '"creator":{\n' +
-            ' "@type":"Organization",\n' +
-            ' "url": "' + dataset["publisher"]["@id"] + '",\n' +
-            ' "name":"' + selectLabel(dataset["publisher"]) + '"\n' +
-            ' }\n' +
-            '}\n';
+        if (dataset["publisher"] !== undefined) {
+            content += ',' +
+                '"creator":{\n' +
+                ' "@type":"Organization",\n' +
+                ' "url": "' + dataset["publisher"]["@id"] + '",\n' +
+                ' "name":"' + selectLabel(dataset["publisher"]) + '"\n' +
+                ' }\n' +
+                '}\n';
+        }
 
         content += '}';
 

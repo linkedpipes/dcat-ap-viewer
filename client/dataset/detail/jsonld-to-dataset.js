@@ -81,8 +81,10 @@ function loadContactPoint(jsonld, contactPointIri) {
 
 function loadPublisher(jsonld, dataset) {
     const publisherIri = triples.resource(dataset, DCTERMS.publisher);
+    if (publisherIri === undefined) {
+        return undefined;
+    }
     const publisher = graph.getByResource(jsonld, publisherIri) || {};
-
     return {
         "@id": triples.resource(dataset, DCTERMS.publisher),
         ...triples.string(publisher, "http://xmlns.com/foaf/0.1/name")
