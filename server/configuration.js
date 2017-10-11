@@ -15,6 +15,11 @@
         repositoryType = "SPARQL";
     }
 
+    let footerPath = properties.get("footer_file_path");
+    if (footerPath === 0 || footerPath === null) {
+        footerPath = undefined;
+    }
+
     module.exports = {
         "solr": {
             "url": properties.get("solr.url")
@@ -34,7 +39,8 @@
         "SENTRY_REPORT": isEmptyOrUnset(properties.get("sentry.url")),
         "SENTRY_URL": properties.get("sentry.url"),
         "IS_PRODUCTION_ENV":  process.env.NODE_ENV === "production",
-        "GOOGLE_TAG_MANAGER_ID" : properties.get("google_tag_manager.id") || false
+        "GOOGLE_TAG_MANAGER_ID" : properties.get("google_tag_manager.id") || false,
+        "FOOTER_FILE_PATH" : footerPath
     };
 })();
 

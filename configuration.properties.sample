@@ -27,3 +27,6 @@ sentry.url =
 
 # Google tag manager ID.
 google_tag_manager.id =
+
+# Path to custom footer, see "Customization" on wiki for more information
+# footer_file_path =
