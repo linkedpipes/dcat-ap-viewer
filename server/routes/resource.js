@@ -1,59 +1,38 @@
-(() => {
-    const express = require("express");
-    const request = require("request"); // https://github.com/request/request
-    const configuration = require('./../configuration');
+const express = require("express");
+const request = require("request"); // https://github.com/request/request
+const configuration = require('./../configuration');
+
+(function initialize() {
     const router = express.Router();
 
-    // TODO We can remove the condition by conditional initialization.
-
-    router.get("/dataset", function (req, res) {
-        // TODO Update content-type
-        // TODO Add error handling
-        // TODO Set COUCHDB or VIRTUOSO at startup (save if statement).
-        const datasetIri = req.query.iri;
-        if (configuration.REPOSITORY_TYPE == "COUCHDB") {
-            queryDataFromCouchDB(configuration, "datasets",
-                request, res, datasetIri);
-        } else {
-            const sparql = getDatasetSparqlQuery(
-                datasetIri, configuration.sparql.profile);
-            queryDataFromSparql(configuration, request, res, sparql);
-        }
-    });
-
-    router.get("/distribution", function (req, res) {
-        // TODO Same as /dataset
-        const distributionIri = req.query.iri;
-        if (configuration.REPOSITORY_TYPE == "COUCHDB") {
-            queryDataFromCouchDB(configuration, "distributions",
-                request, res, distributionIri);
-        } else {
-            const sparql = getDistributionSparqlQuery(
-                distributionIri, configuration.sparql.profile);
-            queryDataFromSparql(configuration, request, res, sparql);
-        }
-    });
-
+    router.get("/dataset", createFetchDatasetsFunction());
+    router.get("/distribution", createFetchDistributionsFunction());
     // TODO Transform into general "label" source service.
-    router.get("/codelist", function (req, res) {
-        // TODO Same as /dataset
-        const itemIri = req.query.iri;
-        if (configuration.REPOSITORY_TYPE == "COUCHDB") {
-            queryDataFromCouchDB(configuration, "codelists",
-                request, res, itemIri);
-        } else {
-            // TODO Add implementation for Virtuoso !
-        }
-    });
+    router.get("/codelist", createFetchCodelistFunction());
 
     module.exports = router;
 })();
 
-function queryDataFromCouchDB(configuration, dataset, request, res, iri) {
+function createFetchDatasetsFunction() {
+    if (configuration.REPOSITORY_TYPE == "COUCHDB") {
+        return fetchDatasetsCouchdb;
+    } else {
+        return fetchDatasetsSparql;
+    }
+}
+
+function fetchDatasetsCouchdb(req, res) {
+    const datasetIri = req.query.iri;
+    queryDataFromCouchDB("datasets", res, datasetIri);
+}
+
+function queryDataFromCouchDB(dataset, res, iri) {
+    // TODO Update response content-type.
+    // TODO Add error handling.
     const url = configuration.couchdb.url + "/"
         + dataset + "/" + encodeURIComponent(iri);
     request.get({"url": url}).on("error", (error) => {
-        // TODO Use better logging.
+        // TODO Improve logging and error handling #38.
         console.log("error", error);
         res.status(500).json({
             "error": "Call of backend service failed."
@@ -61,22 +40,13 @@ function queryDataFromCouchDB(configuration, dataset, request, res, iri) {
     }).pipe(res);
 }
 
-function queryDataFromSparql(configuration, request, res, sparql) {
-    const url = configuration.sparql.url + "/?" +
-        "format=application%2Fx-json%2Bld&" +
-        "timeout=0&" +
-        "query=" + encodeURIComponent(sparql);
-    request.get({"url": url}).on("error", (error) => {
-        // TODO Use better logging.
-        console.log("error", error);
-        res.status(500).json({
-            "error": "Call of backend service failed."
-        });
-    }).pipe(res);
-
+function fetchDatasetsSparql(req, res) {
+    const datasetIri = req.query.iri;
+    const sparql = createDatasetSparqlQuery(datasetIri);
+    queryDataFromSparql(res, sparql);
 }
 
-function getDatasetSparqlQuery(iri, profile) {
+function createDatasetSparqlQuery(iri) {
     let query = "" +
         "PREFIX dcat: <http://www.w3.org/ns/dcat#> " +
         "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " +
@@ -109,7 +79,7 @@ function getDatasetSparqlQuery(iri, profile) {
         "} WHERE {  ";
 
     // TODO Prepare template on start instead on every query
-    if (profile === "SINGLE-GRAPH") {
+    if (configuration.sparql.profile === "SINGLE-GRAPH") {
         query += "GRAPH ?g { "
     }
 
@@ -146,7 +116,7 @@ function getDatasetSparqlQuery(iri, profile) {
         "    dcterms:source ?source ." +
         "} ";
 
-    if (profile === "SINGLE-GRAPH") {
+    if (configuration.sparql.profile === "SINGLE-GRAPH") {
         query += "} "
     }
 
@@ -156,7 +126,41 @@ function getDatasetSparqlQuery(iri, profile) {
     return query;
 }
 
-function getDistributionSparqlQuery(iri) {
+function queryDataFromSparql(res, sparql) {
+    const url = configuration.sparql.url + "/?" +
+        "format=application%2Fx-json%2Bld&" +
+        "timeout=0&" +
+        "query=" + encodeURIComponent(sparql);
+    request.get({"url": url}).on("error", (error) => {
+        // TODO Use better logging.
+        console.log("error", error);
+        res.status(500).json({
+            "error": "Call of backend service failed."
+        });
+    }).pipe(res);
+
+}
+
+function createFetchDistributionsFunction() {
+    if (configuration.REPOSITORY_TYPE == "COUCHDB") {
+        return fetchDistributionsCouchdb;
+    } else {
+        return fetchDistributionsSparql;
+    }
+}
+
+function fetchDistributionsCouchdb(req, res) {
+    const distributionIri = req.query.iri;
+    queryDataFromCouchDB("distributions", res, distributionIri);
+}
+
+function fetchDistributionsSparql(req, res) {
+    const distributionIri = req.query.iri;
+    const sparql = createDistributionSparqlQuery(distributionIri);
+    queryDataFromSparql(res, sparql);
+}
+
+function createDistributionSparqlQuery(iri) {
     return "" +
         "PREFIX skos: <http://www.w3.org/2004/02/skos/core#> " +
         "PREFIX dcterms: <http://purl.org/dc/terms/> " +
@@ -172,4 +176,17 @@ function getDistributionSparqlQuery(iri) {
         "   ?format skos:prefLabel ?formatLabel. " +
         "} " +
         "}";
+}
+
+function createFetchCodelistFunction() {
+    if (configuration.REPOSITORY_TYPE == "COUCHDB") {
+        return fetchCodelistCouchdb;
+    } else {
+        // TODO Provide implementation #39.
+    }
+}
+
+function fetchCodelistCouchdb(req, res) {
+    const itemIri = req.query.iri;
+    queryDataFromCouchDB("codelists", res, itemIri);
 }
