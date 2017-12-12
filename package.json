@@ -37,7 +37,8 @@
     "request": "^2.81.0",
     "thunk": "0.0.1",
     "webpack": "^2.3.3",
-    "webpack-dev-middleware": "^1.10.1"
+    "webpack-dev-middleware": "^1.10.1",
+    "react-tag-cloud": "^1.0.1"
   },
   "devDependencies": {}
 }
