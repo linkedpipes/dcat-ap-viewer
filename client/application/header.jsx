@@ -17,6 +17,7 @@ import {
     getUrl,
     DATASET_LIST_URL,
     ORGANISATION_LIST_URL,
+    KEYWORDS_LIST_URL,
     getLanguage
 } from "./navigation";
 import {Link} from "react-router";
@@ -148,6 +149,13 @@ class HeaderComponent extends React.Component {
                                       className="nav-link"
                                       activeClassName="active">
                                     {getString("h.publishers")}
+                                </Link>
+                            </NavItem>
+                            <NavItem>
+                                <Link to={getUrl(KEYWORDS_LIST_URL)}
+                                      className="nav-link"
+                                      activeClassName="active">
+                                    {getString("h.keywords")}
                                 </Link>
                             </NavItem>
                             <NavItem>
