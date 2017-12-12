@@ -65,13 +65,13 @@ class KeywordsViewComponent extends React.Component {
             )
         }
 
-        // const data = [];
-        // this.props.keywords.forEach((item) => data.push({
-        //     "value": item["label"],
-        //     "count": item["count"]
-        // }));
+        const data = [];
+        this.props.keywords.forEach((item) => data.push({
+            "value": item["label"],
+            "count": item["count"]
+        }));
 
-        let data = [
+        let data_publishers = [
             {"value": "rozpočet", "count": "6"},
             {"value": "faktury", "count": "6"},
             {"value": "výdaje", "count": "4"},
@@ -120,6 +120,26 @@ class KeywordsViewComponent extends React.Component {
                                           maxSize={52}
                                           shuffle={false}
                                           tags={data}
+                                          colorOptions={{
+                                              "luminosity": "dark",
+                                              "hue": "random"
+                                          }}
+                                          renderer={customRenderer}
+                                />
+                            </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm="12" md={{"size": 9, "offset": 1 }}>
+                            <div  style={{
+                                "margin": "4em 1em 1em 1em",
+                                "textAlign": "center",
+                                "display":"block"
+                            }}>
+                                <TagCloud minSize={20}
+                                          maxSize={52}
+                                          shuffle={false}
+                                          tags={data_publishers}
                                           colorOptions={{
                                               "luminosity": "dark",
                                               "hue": "random"
