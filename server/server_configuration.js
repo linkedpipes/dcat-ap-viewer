@@ -1,4 +1,4 @@
-(() => {
+(function initialize() {
     const propertiesReader = require("properties-reader");
     const propertyFilePath = readProperty("configFileLocation");
     const properties = propertiesReader(propertyFilePath);
@@ -7,18 +7,6 @@
 
     const sparql = properties.get("virtuoso.sparql.url");
     const couchdb = properties.get("couchdb.url");
-
-    let repositoryType;
-    if (isEmptyOrUnset(couchdb)) {
-        repositoryType = "COUCHDB";
-    } else {
-        repositoryType = "SPARQL";
-    }
-
-    let footerPath = properties.get("footer_file_path");
-    if (footerPath === 0 || footerPath === null) {
-        footerPath = undefined;
-    }
 
     module.exports = {
         "solr": {
@@ -31,16 +19,7 @@
         "couchdb": {
             "url": couchdb
         },
-        "port": properties.get("port"),
-        // CLIENT OPTIONS
-        "CONST_TITLE_PREFIX": properties.get("client.title_prefix"),
-        "CONST_TITLE_SUFFIX": properties.get("client.title_suffix"),
-        "REPOSITORY_TYPE": repositoryType,
-        "SENTRY_REPORT": isEmptyOrUnset(properties.get("sentry.url")),
-        "SENTRY_URL": properties.get("sentry.url"),
-        "IS_PRODUCTION_ENV":  process.env.NODE_ENV === "production",
-        "GOOGLE_TAG_MANAGER_ID" : properties.get("google_tag_manager.id") || false,
-        "FOOTER_FILE_PATH" : footerPath
+        "port": properties.get("port")
     };
 })();
 

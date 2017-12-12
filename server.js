@@ -46,7 +46,7 @@ function initializeRoutesForStaticResources(app) {
 }
 
 function startServer(app) {
-    const configuration = require('./server/configuration');
+    const configuration = require('./server/server_configuration');
     const port = configuration.port;
     app.listen(port, function onStart(err) {
         if (err) {

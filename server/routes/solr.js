@@ -1,6 +1,6 @@
 const express = require("express");
 const request = require("request"); // https://github.com/request/request
-const configuration = require('./../configuration');
+const configuration = require('./../server_configuration');
 
 (function initialize() {
     const router = express.Router();

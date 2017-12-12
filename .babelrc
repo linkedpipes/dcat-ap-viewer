@@ -7,7 +7,7 @@
   "plugins": [
     [
       "transform-define",
-      "./server/configuration.js"
+      "./client/client_configuration.js"
     ]
   ]
 }
