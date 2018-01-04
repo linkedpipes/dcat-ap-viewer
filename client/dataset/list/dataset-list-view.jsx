@@ -130,9 +130,19 @@ class SortSelector extends React.Component {
                             {getString("title desc")}
                         </DropdownItem>
                         }
+                        { value !== "issued asc" &&
+                        <DropdownItem onClick={() => onChange("issued asc")}>
+                            {getString("issued asc")}
+                        </DropdownItem>
+                        }
                         { value !== "issued desc" &&
                         <DropdownItem onClick={() => onChange("issued desc")}>
                             {getString("issued desc")}
+                        </DropdownItem>
+                        }
+                        { value !== "modified asc" &&
+                        <DropdownItem onClick={() => onChange("modified asc")}>
+                            {getString("modified asc")}
                         </DropdownItem>
                         }
                         { value !== "modified desc" &&
