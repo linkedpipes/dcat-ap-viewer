@@ -73,12 +73,12 @@ class FacetFilter extends React.Component {
     render() {
         const props = this.props;
         const items = this.generateListItems();
-
+        const label = getString(props.label) + " (" + props.values.length + ")";
         return (
             <div style={{"marginTop": "1em"}}>
                 <h3 style={{
                     "padding": "0.2em 0em 0.2em 1em"
-                }}>{getString(props.label)}</h3>
+                }}>{label}</h3>
                 <ListGroup>
                     {items}
                 </ListGroup>
