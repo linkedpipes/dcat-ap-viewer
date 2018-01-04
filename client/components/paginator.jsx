@@ -26,27 +26,34 @@ class Paginator extends React.Component {
 
         const pages = createPageList(recordsCount, pageIndex, pageSize);
         const pageItems = createPageItemsList(pages, pageIndex, onIndexChange);
+        const showPaginator = pageItems.length > 0;
         // TODO Remove current value from the page list.
-        return (
-            <div>
-                { pageItems.length > 0 &&
-                <Pagination style={{float: "left"}}>
-                    {pageItems}
-                </Pagination>
-                }
-                <div style={{float: "right"}}>
-                    {getString("s_paginator")} &nbsp;
-                    <ComboBox
-                        activeValue={pageSize}
-                        values={PAGE_SIZES}
-                        onChange={(index) => onSizeChange(PAGE_SIZES[index])}/>
+        if (showPaginator) {
+            return (
+                <div>
+                    <Pagination style={{float: "left"}}>
+                        {pageItems}
+                    </Pagination>
+                    <div style={{float: "right"}}>
+                        {getString("s_paginator")} &nbsp;
+                        <ComboBox
+                            activeValue={pageSize}
+                            values={PAGE_SIZES}
+                            onChange={(index) => onSizeChange(PAGE_SIZES[index])}/>
+                    </div>
+                    <br/>
+                    <br/>
                 </div>
-                <br/>
-                <br/>
-            </div>
-        )
+            )
+        } else {
+            return (
+                <div>
+                    <br/>
+                    <br/>
+                </div>
+            );
+        }
     }
-
 }
 
 Paginator.propTypes = {
