@@ -8,6 +8,13 @@
     const sparql = properties.get("virtuoso.sparql.url");
     const couchdb = properties.get("couchdb.url");
 
+    let repositoryType;
+    if (isEmptyOrUnset(couchdb)) {
+        repositoryType = "COUCHDB";
+    } else {
+        repositoryType = "SPARQL";
+    }
+
     module.exports = {
         "solr": {
             "url": properties.get("solr.url")
@@ -19,7 +26,8 @@
         "couchdb": {
             "url": couchdb
         },
-        "port": properties.get("port")
+        "port": properties.get("port"),
+        "repository": repositoryType
     };
 })();
 

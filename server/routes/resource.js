@@ -14,7 +14,7 @@ const configuration = require('./../server_configuration');
 })();
 
 function createFetchDatasetsFunction() {
-    if (configuration.REPOSITORY_TYPE == "COUCHDB") {
+    if (configuration.repository == "COUCHDB") {
         return fetchDatasetsCouchdb;
     } else {
         return fetchDatasetsSparql;
@@ -33,7 +33,7 @@ function queryDataFromCouchDB(dataset, res, iri) {
         + dataset + "/" + encodeURIComponent(iri);
     request.get({"url": url}).on("error", (error) => {
         // TODO Improve logging and error handling #38.
-        console.log("error", error);
+        console.error("CouchDB request failed!", error);
         res.status(500).json({
             "error": "Call of backend service failed."
         });
@@ -142,7 +142,7 @@ function queryDataFromSparql(res, sparql) {
 }
 
 function createFetchDistributionsFunction() {
-    if (configuration.REPOSITORY_TYPE == "COUCHDB") {
+    if (configuration.repository == "COUCHDB") {
         return fetchDistributionsCouchdb;
     } else {
         return fetchDistributionsSparql;
