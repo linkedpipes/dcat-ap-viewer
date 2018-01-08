@@ -7,22 +7,12 @@ export const FETCH_KEYWORDS_REQUEST = "FETCH_KEYWORDS_REQUEST";
 export const FETCH_KEYWORDS_SUCCESS = "FETCH_KEYWORDS_SUCCESS";
 export const FETCH_KEYWORDS_FAILED = "FETCH_KEYWORDS_FAILED";
 
-function constructQueryUrl() {
-    let url = "api/v1/solr/query?" +
-        "facet.field=keyword&" +
-        "facet=true&" +
-        "facet.mincount=" + KEYWORD_CLOUD_MIN_COUNT + "&" +
-        "q=*:*&" +
-        "facet.limit=-1";
-    return url;
-}
-
 export function fetchKeywordsRequest() {
     return (dispatch) => {
         dispatch({
             "type": FETCH_KEYWORDS_REQUEST,
         });
-        const url = constructQueryUrl();
+        let url = "/api/v1/resource/static?id=keywords_by_publishers";
         dispatch(setApplicationLoader(true));
         fetchJsonCallback(url, (json) => {
             dispatch(setApplicationLoader(false));

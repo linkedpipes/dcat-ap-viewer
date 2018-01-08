@@ -9,52 +9,35 @@ import {
 } from "./../../services/http-request";
 
 const initialState = {
-    "data": {
-        "status": STATUS_INITIAL,
-        "keywords": [],
-    }
+    "status": STATUS_INITIAL,
+    "data": [],
 };
-
-function parseSolrResponse(state, json) {
-    const keywords = json.facet_counts.facet_fields.keyword;
-    const keywordsList = [];
-    for (let index = 0; index < keywords.length; index += 2) {
-        keywordsList.push({
-            "label": keywords[index],
-            "count": keywords[index + 1]
-        });
-    }
-    keywordsList.sort((left, right) => right.count - left.count);
-    return {
-        ...state,
-        "data": {
-            "status": STATUS_FETCHED,
-            "keywords": keywordsList
-        }
-    };
-}
 
 export const keywordsTagCloudReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_KEYWORDS_REQUEST:
             return {
                 ...state,
-                "data": {
-                    ...state.data,
-                    "status": STATUS_FETCHING
-                }
+                "data": undefined,
+                "status": STATUS_FETCHING
             };
         case FETCH_KEYWORDS_SUCCESS:
-            return parseSolrResponse(state, action.data);
+            return onKeywordsRequestSuccess(state, action);
         case FETCH_KEYWORDS_FAILED:
             return {
                 ...state,
-                "data": {
-                    ...state.data,
-                    "status": STATUS_FAILED
-                }
+                "data": undefined,
+                "status": STATUS_FAILED
             };
         default:
             return state
     }
 };
+
+function onKeywordsRequestSuccess(state, action) {
+    return {
+        ...state,
+        "data" : action.data.json,
+        "status": STATUS_FETCHED
+    };
+}

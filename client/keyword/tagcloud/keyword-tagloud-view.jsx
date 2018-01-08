@@ -65,45 +65,6 @@ class KeywordsViewComponent extends React.Component {
             )
         }
 
-        const data = [];
-        this.props.keywords.forEach((item) => data.push({
-            "value": item["label"],
-            "count": item["count"]
-        }));
-
-        let data_publishers = [
-            {"value": "rozpočet", "count": "6"},
-            {"value": "faktury", "count": "6"},
-            {"value": "výdaje", "count": "4"},
-            {"value": "sport", "count": "4"},
-            {"value": "objednávky", "count": "4"},
-            {"value": "smlouvy", "count": "4"},
-            {"value": "příjmy", "count": "3"},
-            {"value": "veřejná doprava", "count": "3"},
-            {"value": "číselník", "count": "3"},
-            {"value": "kontroly", "count": "3"},
-            {"value": "ceny", "count": "3"},
-            {"value": "zaměstnanci", "count": "3"},
-            {"value": "věk", "count": "3"},
-            {"value": "zařízení", "count": "2"},
-            {"value": "Počet obyvatel", "count": "2"},
-            {"value": "zastávka", "count": "2"},
-            {"value": "volební okrsky", "count": "2"},
-            {"value": "investice", "count": "2"},
-            {"value": "zima", "count": "2"},
-            {"value": "Katastrální mapa", "count": "2"},
-            {"value": "Adresy", "count": "2"},
-            {"value": "MHD", "count": "2"},
-            {"value": "SMS", "count": "2"},
-            {"value": "turistika", "count": "2"},
-            {"value": "kontrola", "count": "2"},
-            {"value": "zeleň", "count": "2"},
-            {"value": "odpad", "count": "2"},
-            {"value": "petice", "count": "2"},
-            {"value": "fluktuace", "count": "2"},
-            {"value": "veřejná správa", "count": "2"}
-        ];
-
         // https://www.npmjs.com/package/react-tagcloud
         // "wordWrap": "break-word"
         return (
@@ -119,27 +80,7 @@ class KeywordsViewComponent extends React.Component {
                                 <TagCloud minSize={20}
                                           maxSize={52}
                                           shuffle={false}
-                                          tags={data}
-                                          colorOptions={{
-                                              "luminosity": "dark",
-                                              "hue": "random"
-                                          }}
-                                          renderer={customRenderer}
-                                />
-                            </div>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col sm="12" md={{"size": 9, "offset": 1 }}>
-                            <div  style={{
-                                "margin": "4em 1em 1em 1em",
-                                "textAlign": "center",
-                                "display":"block"
-                            }}>
-                                <TagCloud minSize={20}
-                                          maxSize={52}
-                                          shuffle={false}
-                                          tags={data_publishers}
+                                          tags={this.props.data}
                                           colorOptions={{
                                               "luminosity": "dark",
                                               "hue": "random"
@@ -157,8 +98,8 @@ class KeywordsViewComponent extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    "status": state.keywords.data.status,
-    "keywords": state.keywords.data.keywords
+    "status": state.keywords.status,
+    "data": state.keywords.data
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -9,6 +9,7 @@ const configuration = require('./../server_configuration');
     router.get("/distribution", createFetchDistributionsFunction());
     // TODO Transform into general "label" source service.
     router.get("/codelist", createFetchCodeListFunction());
+    router.get("/static", createStaticFunction());
 
     module.exports = router;
 })();
@@ -190,4 +191,17 @@ function createFetchCodeListFunction() {
 function fetchCodeListCouchdb(req, res) {
     const itemIri = req.query.iri;
     queryDataFromCouchDB("codelists", res, itemIri);
+}
+
+function createStaticFunction() {
+    if (configuration.repository == "COUCHDB") {
+        return fetchStaticCouchdb;
+    } else {
+        return  (req, res) => res.json({"error": "Not supported!"});;
+    }
+}
+
+function fetchStaticCouchdb(req, res) {
+    const itemId = req.query.id;
+    queryDataFromCouchDB("static", res, itemId);
 }
