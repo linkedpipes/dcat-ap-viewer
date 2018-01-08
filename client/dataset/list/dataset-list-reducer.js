@@ -50,7 +50,36 @@ const initialState = {
     }
 };
 
-function parseSolrResponse(state, json) {
+export const datasetListReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case FETCH_LIST_PAGE_REQUEST:
+            return onListRequest(state);
+        case FETCH_LIST_PAGE_SUCCESS:
+            return onListRequestSuccess(state, action);
+        case FETCH_LIST_PAGE_FAILED:
+            return onListRequestFailed(state, action);
+        case SET_LIST_QUERY_STRING:
+            return onSetQueryString(state, action);
+        case "@@router/LOCATION_CHANGE":
+            // TODO Use only if we are on the "datasets" page.
+            return onLocationChange(state, action);
+        default:
+            return state
+    }
+};
+
+function onListRequest(state) {
+    return {
+        ...state,
+        "data": {
+            ...state.data,
+            "status": STATUS_FETCHING
+        }
+    };
+}
+
+function onListRequestSuccess(state, action) {
+    const json = action.data;
 
     const keywords = json.facet_counts.facet_fields.keyword;
     const keywords_list = [];
@@ -105,13 +134,45 @@ function parseSolrResponse(state, json) {
     };
 }
 
+function onListRequestFailed(state, action) {
+    return {
+        ...state,
+        "data": {
+            ...state.data,
+            "status": action.status
+        }
+    };
+}
+
+function onSetQueryString(state, action) {
+    return {
+        ...state,
+        "ui": {
+            ...state.ui,
+            "searchQuery": action.value
+        }
+    };
+}
+
+function onLocationChange(state, action) {
+    const queryString = action.payload.query[getQuery(STRING_QUERY)];
+    return {
+        ...state,
+        "query": locationToQuery(action.payload.query),
+        "ui": {
+            ...state.ui,
+            "searchQuery": undefinedAsEmpty(queryString)
+        }
+    };
+}
+
 function locationToQuery(location) {
     // TODO Move to other layer
     let page = parseInt(location[getQuery(PAGE_QUERY)]);
     if (isNaN(page)) {
         page = 0;
     }
-    let order =  location[getQuery(SORT_QUERY)];
+    let order = location[getQuery(SORT_QUERY)];
     if (order === undefined) {
         order = "modified desc";
     }
@@ -140,50 +201,6 @@ function asArray(value) {
     }
 }
 
-export const datasetListReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case FETCH_LIST_PAGE_REQUEST:
-            return {
-                ...state,
-                "data": {
-                    ...state.data,
-                    "status": STATUS_FETCHING
-                }
-            };
-        case FETCH_LIST_PAGE_SUCCESS:
-            return parseSolrResponse(state, action.data);
-        case FETCH_LIST_PAGE_FAILED:
-            return {
-                ...state,
-                "data": {
-                    ...state.data,
-                    "status": STATUS_FAILED
-                }
-            };
-        case SET_LIST_QUERY_STRING:
-            return {
-                ...state,
-                "ui": {
-                    ...state.ui,
-                    "searchQuery": action.value
-                }
-            };
-        case "@@router/LOCATION_CHANGE":
-            // TODO Use only if we are on the right page.
-            const queryString = action.payload.query[getQuery(STRING_QUERY)];
-            return {
-                ...state,
-                "query": locationToQuery(action.payload.query),
-                "ui": {
-                    ...state.ui,
-                    "searchQuery": undefinedAsEmpty(queryString)
-                }
-            };
-        default:
-            return state
-    }
-};
-
 function undefinedAsEmpty(value) {
     if (value === undefined) {
         return "";
@@ -191,3 +208,5 @@ function undefinedAsEmpty(value) {
         return value;
     }
 }
+
+// TODO Add selectors.

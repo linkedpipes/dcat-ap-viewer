@@ -15,7 +15,7 @@ import SearchBox from "../../components/search-box";
 import DatasetList from "./dataset-list";
 import Paginator from "../../components/paginator";
 import {
-    fetchDataRequest,
+    fetchData,
     setListPage,
     setListFacetFilter,
     setQueryString,
@@ -41,6 +41,8 @@ import {
     STATUS_FETCHED,
     STATUS_FAILED
 } from "./../../services/http-request";
+import {isDataReady} from "./../../services/http-request";
+import {HttpRequestStatus} from "./../../application/http-request-status";
 
 const QueryStatusLine = ({resultSize, query}) => (
     <div>
@@ -77,34 +79,6 @@ const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPage
         />
     </div>
 );
-
-const DatasetListNotLoaded = ({status}) => {
-    // TODO Export status report to another component
-    if (status === STATUS_INITIAL) {
-        return (
-            <div style={{"textAlign": "center", "fontSize": "2em"}}>
-                {getString("s.no_data")}
-            </div>
-        )
-    } else if (status === STATUS_FETCHING) {
-        return (
-            <div style={{"textAlign": "center", "fontSize": "2em"}}>
-                {getString("s.fetching")}
-            </div>
-        )
-    } else if (status === STATUS_FAILED) {
-        return (
-            <div style={{"textAlign": "center", "fontSize": "2em"}}>
-                {getString("s.failed")}
-            </div>
-        )
-    } else {
-        console.error("DatasetListNotLoaded used with invalid status:", status);
-        return (
-            <div></div>
-        )
-    }
-};
 
 class SortSelector extends React.Component {
     constructor(props) {
@@ -218,8 +192,8 @@ class DatasetListViewComponent extends React.Component {
         }
 
         // TODO Export as a selector.
-        const showDatasetList = props.status === STATUS_FETCHED ||
-            (props.status === STATUS_FETCHED && props.datasets.length > 0);
+        const showDatasetList =
+            isDataReady(props.status) && props.datasets.length > 0;
 
         return (
             <Container>
@@ -273,7 +247,7 @@ class DatasetListViewComponent extends React.Component {
                             />
                             }
                             { !showDatasetList &&
-                            <DatasetListNotLoaded status={props.status}/>
+                            <HttpRequestStatus status={props.status}/>
                             }
                         </div>
                     </Col>
@@ -296,7 +270,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     "fetchData": (query) => {
-        dispatch(fetchDataRequest(query));
+        dispatch(fetchData(query));
     },
     "setQueryString": (value) => {
         dispatch(setQueryString(value));

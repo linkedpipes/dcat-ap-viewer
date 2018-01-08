@@ -1,4 +1,4 @@
-import {SET_APPLICATION_LOADER} from "./app-action";
+import {SET_APPLICATION_LOADER_PROPERTY} from "./app-action";
 
 const initialState = {
     "active": false
@@ -6,12 +6,10 @@ const initialState = {
 
 // TODO Move to loader reducer.
 export function indeterminateLoaderReducer(state = initialState, action) {
-    switch (action.type) {
-        case SET_APPLICATION_LOADER:
-            return {
-                "active": action.active
-            };
-        default:
-            return state;
+    if (action[SET_APPLICATION_LOADER_PROPERTY] !== undefined) {
+        return {
+            "active": action[SET_APPLICATION_LOADER_PROPERTY]
+        };
     }
+    return state;
 }

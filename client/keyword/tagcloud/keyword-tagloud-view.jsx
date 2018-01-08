@@ -11,13 +11,14 @@ import {
     DATASET_LIST_URL,
     KEYWORDS_QUERY
 } from "../../application/navigation";
+import {isDataReady} from "./../../services/http-request";
 import {
-    STATUS_INITIAL,
-    STATUS_FETCHING,
-    STATUS_FAILED
-} from "./../../services/http-request";
+    keywordsStatusSelector,
+    keywordsDataSelector
+} from "./keyword-tagloud-reducer";
+import {HttpRequestStatus} from "./../../application/http-request-status";
 
-const customRenderer = (tag, size, color) => {
+const tagRenderer = (tag, size, color) => {
     const url = getUrl(DATASET_LIST_URL, {[KEYWORDS_QUERY]: tag.value});
     const style = {
         "marginLeft": "1REM",
@@ -35,6 +36,20 @@ const customRenderer = (tag, size, color) => {
     )
 };
 
+// https://www.npmjs.com/package/react-tagcloud
+// "wordWrap": "break-word"
+const KeywordTagCloud = ({tags}) => (
+    <TagCloud minSize={20}
+              maxSize={52}
+              shuffle={false}
+              tags={tags}
+              colorOptions={{
+                  "luminosity": "dark",
+                  "hue": "random"
+              }}
+              renderer={tagRenderer}/>
+);
+
 class KeywordsViewComponent extends React.Component {
 
     componentDidMount() {
@@ -44,62 +59,36 @@ class KeywordsViewComponent extends React.Component {
     render() {
         setPageTitle(getString("title.keywords"));
 
-        // TODO Export status report to another component
-        if (this.props.status === STATUS_INITIAL) {
+        if (!isDataReady(this.props.status)) {
             return (
-                <div style={{"textAlign": "center", "fontSize": "2em"}}>
-                    {getString("s.no_data")}
-                </div>
-            )
-        } else if (this.props.status === STATUS_FETCHING) {
-            return (
-                <div style={{"textAlign": "center", "fontSize": "2em"}}>
-                    {getString("s.fetching")}
-                </div>
-            )
-        } else if (this.props.status === STATUS_FAILED) {
-            return (
-                <div style={{"textAlign": "center", "fontSize": "2em"}}>
-                    {getString("s.failed")}
-                </div>
+                <HttpRequestStatus status={this.props.status}/>
             )
         }
 
-        // https://www.npmjs.com/package/react-tagcloud
-        // "wordWrap": "break-word"
+        const style = {
+            "margin": "4em 1em 1em 1em",
+            "textAlign": "center",
+            "display": "block"
+        };
+
         return (
-            <div>
-                <Container>
-                    <Row>
-                        <Col sm="12" md={{"size": 9, "offset": 1 }}>
-                            <div  style={{
-                                "margin": "4em 1em 1em 1em",
-                                "textAlign": "center",
-                                "display":"block"
-                            }}>
-                                <TagCloud minSize={20}
-                                          maxSize={52}
-                                          shuffle={false}
-                                          tags={this.props.data}
-                                          colorOptions={{
-                                              "luminosity": "dark",
-                                              "hue": "random"
-                                          }}
-                                          renderer={customRenderer}
-                                />
-                            </div>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+            <Container>
+                <Row>
+                    <Col sm="12" md={{"size": 9, "offset": 1}}>
+                        <div style={style}>
+                            <KeywordTagCloud tags={this.props.data}/>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    "status": state.keywords.status,
-    "data": state.keywords.data
+    "status": keywordsStatusSelector(state),
+    "data": keywordsDataSelector(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -1,91 +1,116 @@
 import Raven from "raven-js";
 
-// TODO Rename to data-access.
+export const STATUS_INITIAL = "INITIAL";
 
-export const STATUS_INITIAL = "initial";
+export const STATUS_FETCHING = "FETCHING";
 
-export const STATUS_FETCHING = "fetching";
+export const STATUS_FETCHED = "FETCHED";
 
-export const STATUS_FETCHED = "fetched";
+export const ERROR_MISSING = "MISSING";
 
-export const STATUS_FAILED = "failed";
+export const ERROR_SERVER_FAILURE = "SERVER_FAILURE";
 
-export const fetchJson = (url) => {
-    return fetch(url).then(json);
-};
+export const ERROR_RESPONSE = "ERROR_RESPONSE";
 
-function json(response) {
-    return response.json();
+export function isDataReady(status) {
+    return status === STATUS_FETCHED;
 }
 
-// TODO Use Raven in nicer way.
+export function isStatusLoading(status) {
+    return status === STATUS_INITIAL || status === STATUS_FETCHING;
+}
 
-// TODO Move to data access layer (service).
+export function isStatusFailed(status) {
+    return status === ERROR_MISSING ||
+        status === ERROR_SERVER_FAILURE ||
+        status === ERROR_RESPONSE;
+}
 
+function json(response) {
+    return response.json().then((json) => {
+        return {
+            "status": response.status,
+            "json": json
+        };
+    });
+}
+
+// TODO Convert to use promises.
 export const fetchJsonCallback = (url, onSuccess, onFailure) => {
-    fetch(url).then((response) => {
-        return response.json();
-    }).then((json) => {
-        if (doesRequestFailed(json)) {
-            const exception = new Error("Request failed.");
-            handleException(exception, {"url": url, "json": json});
-            callWithCheck(onFailure, json);
-            return;
+    fetch(url).then(json).then((data) => {
+        if (isResourceMissing(data)) {
+            handleMissingResource(onFailure, createExtra(url));
+        } else if (isErrorResponse(data)) {
+            handleErrorResponse(data, onFailure, createExtra(url));
+        } else if (doesRequestFailed(data)) {
+            handleServerFailure(onFailure, createExtra(url));
+        } else {
+            handleOkResponse(data, onSuccess, createExtra(url));
         }
-        callWithCheck(onSuccess, json);
     }).catch((exception) => {
-        handleException(exception, {"url": url});
-        callWithCheck(onFailure, exception);
+        handleRequestException(exception, onFailure, createExtra(url))
     });
 };
 
-function doesRequestFailed(json) {
-    if (json["error"] != undefined) {
-        return true;
-    }
-    if (json["responseHeader"] == undefined) {
-        return false;
-    } else {
-        return json["responseHeader"]["status"] > 399;
-    }
+function createExtra(url) {
+    return {
+        "url": url
+    };
 }
 
-function handleException(exception, extra) {
-    console.error(exception, extra);
+function isResourceMissing(data) {
+    return data.status >= 400 && data.status < 500;
+}
+
+function doesRequestFailed(data) {
+    return data.status >= 500 && data.status < 600;
+}
+
+function isErrorResponse(data) {
+    return data.json !== undefined && data.json.error != undefined;
+}
+
+function handleMissingResource(callback, extra) {
+    callWithCheck(callback, {
+        "status": ERROR_MISSING
+    }, extra);
+}
+
+function handleServerFailure(callback, extra) {
+    callWithCheck(callback, {
+        "status": ERROR_SERVER_FAILURE
+    }, extra);
+}
+
+function handleErrorResponse(data, callback, extra) {
+    callWithCheck(callback, {
+        "status": ERROR_RESPONSE,
+        "error": data.json.error
+    }, extra);
+}
+
+function handleOkResponse(data, callback, extra) {
+    callWithCheck(callback, data.json, extra);
+}
+
+function handleRequestException(exception, callback, extra) {
+    reportException(exception, extra);
+    callWithCheck(callback, {
+        "status": ERROR_SERVER_FAILURE
+    });
+}
+
+function reportException(exception, extra) {
+    console.error("Error", exception, extra);
     Raven.captureException(exception, {
         "extra": extra
     });
 }
 
-function callWithCheck(functionToCall, argument) {
+function callWithCheck(functionToCall, argument, extra) {
     try {
         functionToCall(argument)
     } catch (exception) {
-        handleException(exception);
+        reportException(exception, extra);
     }
 }
-
-function dispatchWithCheck(dispatch, call) {
-    try {
-        dispatch(call);
-    } catch (exception) {
-        handleException(exception);
-    }
-}
-
-export const fetchJsonAndDispatch = (url, dispatch, onSuccess, onFailure) => {
-    fetch(url).then((response) => {
-        return response.json();
-    }).then((json) => {
-        if (doesRequestFailed(json)) {
-            const exception = new Error("Request failed.");
-            handleException(exception, {"url": url, "json": json});
-            dispatchWithCheck(dispatch, onFailure(exception));
-            return;
-        }
-        dispatchWithCheck(dispatch, onSuccess(json));
-    }).catch((exception) => {
-        handleException(exception, {"url": url});
-        dispatchWithCheck(dispatch, onFailure(exception));
-    });
-};

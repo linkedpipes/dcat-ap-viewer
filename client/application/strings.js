@@ -26,6 +26,9 @@ const STRINGS = {
         "s.no_data": "Žádná data nebyla nalezena",
         "s.fetching": "Načítám data ...",
         "s.fetch_failed": "Nepodařilo se načíst data",
+        "s.missing_resource": "Nepodařilo se nalézt hledaná data.",
+        "s.error_response": "Nepodařilo se načíst data.",
+        "s.server_failure": "Nepodařilo se načíst data.",
         "s.unnamed_distribution": "Distribuce",
         "s.dataset_iri": "IRI datové sady",
         "s.contact_point": "Kontaktní bod",
@@ -85,10 +88,11 @@ const STRINGS = {
         "issued desc": "Datum vydání sestupně",
         "modified asc": "Datum aktualizace vzestupně",
         "modified desc": "Datum aktualizace sestupně",
-        // TODO Extract languages as they are same for every language.
         "en": "English",
         "cs": "Čeština",
-        "s_paginator": "Položek na stránce:"
+        "s_paginator": "Položek na stránce:",
+        "service_request_failed": "",
+        "missing_support": ""
     },
     "en": {
         "title.datasets": "Datasets",
@@ -114,7 +118,10 @@ const STRINGS = {
         "h.for_publishers": "For publishers",
         "s.no_data": "No data have been found ",
         "s.fetching": "Loading ...",
-        "s.fetch_failed": "Failed to load data",
+        "s.fetch_failed": "Failed to load data.",
+        "s.missing_resource": "Failed to find data.",
+        "s.error_response": "Failed to load data.",
+        "s.server_failure": "Failed to load data.",
         "s.unnamed_distribution": "Distribution",
         "s.dataset_iri": "Dataset IRI",
         "s.contact_point": "Contact point",

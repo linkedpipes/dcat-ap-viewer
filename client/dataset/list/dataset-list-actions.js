@@ -1,12 +1,32 @@
 import {fetchJsonCallback} from "../../services/http-request";
-import {setApplicationLoader} from "../../application/app-action";
-import Notifications from "react-notification-system-redux";
-import {getString} from "./../../application/strings";
+import {
+    addLoaderStatusOn,
+    addLoaderStatusOff
+} from "../../application/app-action";
 
 export const FETCH_LIST_PAGE_REQUEST = "FETCH_LIST_PAGE_REQUEST";
 export const FETCH_LIST_PAGE_SUCCESS = "FETCH_LIST_PAGE_SUCCESS";
 export const FETCH_LIST_PAGE_FAILED = "FETCH_LIST_PAGE_FAILED";
 export const SET_LIST_QUERY_STRING = "SET_LIST_QUERY_STRING";
+
+export function fetchData(query) {
+    return (dispatch) => {
+        dispatch(fetchDataRequest());
+        const url = constructSearchQueryUrl(query);
+
+        fetchJsonCallback(url, (json) => {
+            dispatch(fetchDataSuccess(json));
+        }, (error) => {
+            dispatch(fetchDataFailed(error));
+        });
+    };
+}
+
+function fetchDataRequest() {
+    return addLoaderStatusOn({
+        "type": FETCH_LIST_PAGE_REQUEST
+    });
+}
 
 function constructSearchQueryUrl(query) {
     let url = "api/v1/solr/query?" +
@@ -62,59 +82,35 @@ function escapeSolrQuery(query) {
     query = query.replace("not", "\\not");
 
     // Update query.
-    const tokens = query.trim().split(" ").filter(value=>value.length > 0);
-    if (tokens.length === 0){
+    const tokens = query.trim().split(" ").filter(value => value.length > 0);
+    if (tokens.length === 0) {
         return "";
     }
     let solrQuery = "*" + tokens[0] + "*";
-    for (let index = 1; index < tokens.length; ++index ) {
+    for (let index = 1; index < tokens.length; ++index) {
         solrQuery += " AND *" + tokens[index] + "*";
     }
 
     return solrQuery;
 }
 
-export function fetchDataRequest(query) {
-    return (dispatch) => {
-        dispatch({
-            "type": FETCH_LIST_PAGE_REQUEST,
-        });
-        const url = constructSearchQueryUrl(query);
-        dispatch(setApplicationLoader(true));
-        fetchJsonCallback(url, (json) => {
-            dispatch(setApplicationLoader(false));
-            dispatch(fetchDataSuccess(json));
-        }, (error) => {
-            dispatch(setApplicationLoader(false));
-            dispatch(fetchDataFailed(error));
-            // TODO Move to fetchJson service
-            dispatch(Notifications.error({
-                "uid": "e.serviceOffline",
-                "title": getString("e.serviceOffline"),
-                "position": "tr",
-                "autoDismiss": 4,
-            }));
-        });
-    };
-}
-
-export function fetchDataSuccess(json) {
-    return {
+function fetchDataSuccess(json) {
+    return addLoaderStatusOff({
         "type": FETCH_LIST_PAGE_SUCCESS,
         "data": json
-    };
+    });
 }
 
-export function fetchDataFailed(error) {
-    return {
+function fetchDataFailed(error) {
+    return addLoaderStatusOff({
         "type": FETCH_LIST_PAGE_FAILED,
         "data": error
-    };
+    });
 }
 
 export function setQueryString(value) {
-    return {
+    return addLoaderStatusOff({
         "type": SET_LIST_QUERY_STRING,
         "value": value
-    };
+    });
 }

@@ -3,6 +3,7 @@ import {Table} from "reactstrap";
 import Paginator from "../../components/paginator";
 import {getString} from "../../application/strings";
 import {selectLabel} from "./../../services/labels";
+import {isStatusLoading, isStatusFailed} from "./../../services/http-request";
 
 class DistributionRow extends React.Component {
 
@@ -17,7 +18,7 @@ class DistributionRow extends React.Component {
         const dist = this.props.distribution;
 
         // TODO Introduce some general handling of fetching - DAO. Children can be wrapped as a properties.
-        if (dist === undefined || dist.status === "fetching") {
+        if (dist === undefined || isStatusLoading(dist.status)) {
             return (
                 <tr>
                     <td colSpan={3}>
@@ -25,7 +26,7 @@ class DistributionRow extends React.Component {
                     </td>
                 </tr>
             )
-        } else if (dist.status === "failed") {
+        } else if (isStatusFailed(dist.status)) {
             return (
                 <tr>
                     <td colSpan={3}>
@@ -44,7 +45,12 @@ class DistributionRow extends React.Component {
         // TODO Handle multiple values.
         let url;
         if (dist.downloadURL === undefined || dist.downloadURL.length === 0) {
-            url = dist.accessURL[0];
+            if (dist.accessURL === undefined || dist.accessURL.length === 0) {
+                // TODO Handle missing URL - ie. invalid data.
+                console.log("Invalid data, missing accessURL", dist);
+            } else {
+                url = dist.accessURL[0];
+            }
         } else {
             url = dist.downloadURL[0];
         }

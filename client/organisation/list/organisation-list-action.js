@@ -1,14 +1,12 @@
 import {fetchJsonCallback} from "../../services/http-request";
-import {setApplicationLoader} from "../../application/app-action";
-import Notifications from "react-notification-system-redux";
-import {getString} from "./../../application/strings";
+import {addLoaderStatusOn, addLoaderStatusOff} from "../../application/app-action";
 
 export const FETCH_LIST_PAGE_REQUEST = "FETCH_ORGANISATION_LIST_PAGE_REQUEST";
 export const FETCH_LIST_PAGE_SUCCESS = "FETCH_ORGANISATION_LIST_PAGE_SUCCESS";
 export const FETCH_LIST_PAGE_FAILED = "FETCH_ORGANISATION_LIST_PAGE_FAILED";
 
 function constructQueryUrl() {
-    let url = "api/v1/solr/query?" +
+    const url = "api/v1/solr/query?" +
         "facet.field=publisherName&" +
         "facet=true&" +
         "facet.mincount=1&" +
@@ -19,38 +17,33 @@ function constructQueryUrl() {
 
 export function fetchDataRequest() {
     return (dispatch) => {
-        dispatch({
-            "type": FETCH_LIST_PAGE_REQUEST,
-        });
+        dispatch(fetchKeywords());
         const url = constructQueryUrl();
-        dispatch(setApplicationLoader(true));
         fetchJsonCallback(url, (json) => {
-            dispatch(setApplicationLoader(false));
             dispatch(fetchDataSuccess(json));
         }, (error) => {
-            dispatch(setApplicationLoader(false));
             dispatch(fetchDataFailed(error));
-            // TODO Move to fetchJson service
-            dispatch(Notifications.error({
-                "uid": "e.serviceOffline",
-                "title": getString("e.serviceOffline"),
-                "position": "tr",
-                "autoDismiss": 4,
-            }));
         });
     };
 }
 
-export function fetchDataSuccess(json) {
-    return {
-        "type": FETCH_LIST_PAGE_SUCCESS,
-        "data": json
-    };
+function fetchKeywords() {
+    return addLoaderStatusOn({
+        "type": FETCH_LIST_PAGE_REQUEST
+    });
 }
 
-export function fetchDataFailed(error) {
-    return {
+
+function fetchDataSuccess(json) {
+    return addLoaderStatusOff({
+        "type": FETCH_LIST_PAGE_SUCCESS,
+        "data": json
+    });
+}
+
+function fetchDataFailed(error) {
+    return addLoaderStatusOff({
         "type": FETCH_LIST_PAGE_FAILED,
-        "data": error
-    };
+        "error": error
+    });
 }

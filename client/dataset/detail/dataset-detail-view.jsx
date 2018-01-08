@@ -20,13 +20,9 @@ import {
 import {Link} from "react-router";
 import {getString} from "../../application/strings";
 import setPageTitle from "../../services/page-title";
-import {
-    STATUS_INITIAL,
-    STATUS_FETCHING,
-    STATUS_FETCHED,
-    STATUS_FAILED
-} from "./../../services/http-request";
-import {selectLabel, selectLabels} from "./../../services/labels"
+import {isDataReady} from "./../../services/http-request";
+import {selectLabel, selectLabels} from "./../../services/labels";
+import {HttpRequestStatus} from "./../../application/http-request-status";
 
 class DatasetMetadataComponent extends React.Component {
     render() {
@@ -85,29 +81,15 @@ class DatasetDetailViewComponent extends React.Component {
         setPageTitle(getString("title.dataset"));
 
         const dataset = this.props.dataset;
-        const distributions = this.props.distributions;
-        const ui = this.props.ui;
 
-        // TODO Export status report to another component
-        if (dataset.status === STATUS_INITIAL) {
+        if (!isDataReady(dataset.status)) {
             return (
-                <div style={{"textAlign": "center", "fontSize": "2em"}}>
-                    {getString("s.no_data")}
-                </div>
-            )
-        } else if (dataset.status === STATUS_FETCHING) {
-            return (
-                <div style={{"textAlign": "center", "fontSize": "2em"}}>
-                    {getString("s.fetching")}
-                </div>
-            )
-        } else if (dataset.status === STATUS_FAILED) {
-            return (
-                <div style={{"textAlign": "center", "fontSize": "2em"}}>
-                    {getString("s.failed")}
-                </div>
+                <HttpRequestStatus status={dataset.status}/>
             )
         }
+
+        const distributions = this.props.distributions;
+        const ui = this.props.ui;
 
         // TODO Use IRI as a filter.
         const publisherUrl = getUrl(DATASET_LIST_URL, {
@@ -122,7 +104,8 @@ class DatasetDetailViewComponent extends React.Component {
                 <div style={{"marginTop": "2em"}}>
                     <h3>{title}</h3>
                     <h4>
-                        <Link to={publisherUrl}>{selectLabel(dataset.publisher)}</Link>
+                        <Link
+                            to={publisherUrl}>{selectLabel(dataset.publisher)}</Link>
                     </h4>
                     <p>{selectLabel(dataset.description)}</p>
                     <TagLine values={selectLabels(dataset.keywords)}/>

@@ -6,8 +6,7 @@ import {
 import {
     STATUS_INITIAL,
     STATUS_FETCHING,
-    STATUS_FETCHED,
-    STATUS_FAILED
+    STATUS_FETCHED
 } from "./../../services/http-request";
 
 const initialState = {
@@ -18,8 +17,31 @@ const initialState = {
     }
 };
 
-function parseSolrResponse(state, json) {
-    const publisher = json.facet_counts.facet_fields.publisherName;
+export const organisationListReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case FETCH_LIST_PAGE_REQUEST:
+            return onKeywordsRequest(state);
+        case FETCH_LIST_PAGE_SUCCESS:
+            return onRequestSuccess(state, action);
+        case FETCH_LIST_PAGE_FAILED:
+            return onKeywordsRequestFailed(state, action);
+        default:
+            return state
+    }
+};
+
+function onKeywordsRequest(state) {
+    return {
+        ...state,
+        "data": {
+            ...state.data,
+            "status": STATUS_FETCHING
+        }
+    };
+}
+
+function onRequestSuccess(state, action) {
+    const publisher = action.data.facet_counts.facet_fields.publisherName;
     const publisher_list = [];
     for (let index = 0; index < publisher.length; index += 2) {
         publisher_list.push({
@@ -37,27 +59,14 @@ function parseSolrResponse(state, json) {
     };
 }
 
-export const organisationListReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case FETCH_LIST_PAGE_REQUEST:
-            return {
-                ...state,
-                "data": {
-                    ...state.data,
-                    "status": STATUS_FETCHING
-                }
-            };
-        case FETCH_LIST_PAGE_SUCCESS:
-            return parseSolrResponse(state, action.data);
-        case FETCH_LIST_PAGE_FAILED:
-            return {
-                ...state,
-                "data": {
-                    ...state.data,
-                    "status": STATUS_FAILED
-                }
-            };
-        default:
-            return state
-    }
-};
+function onKeywordsRequestFailed(state, action) {
+    return {
+        ...state,
+        "data": {
+            ...state.data,
+            "status": action.error.status
+        }
+    };
+}
+
+// TODO Add selectors.

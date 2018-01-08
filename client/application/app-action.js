@@ -1,9 +1,15 @@
-export const SET_APPLICATION_LOADER = "SET_APPLICATION_LOADER";
+export const SET_APPLICATION_LOADER_PROPERTY = "application-loader";
 
-// TODO Turn into action property, so it can be used with other actions.
-export function setApplicationLoader(isActive) {
+export function addLoaderStatusOn(event) {
     return {
-        "type": SET_APPLICATION_LOADER,
-        "active": isActive
-    }
+        ...event,
+        [SET_APPLICATION_LOADER_PROPERTY]: true
+    };
+}
+
+export function addLoaderStatusOff(event) {
+    return {
+        ...event,
+        [SET_APPLICATION_LOADER_PROPERTY]: false
+    };
 }

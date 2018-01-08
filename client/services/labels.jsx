@@ -1,23 +1,8 @@
 import React from "react";
-import {fetchJson} from "./http-request"
+import {fetchJsonCallback} from "./http-request"
 import {triples, graph} from "./../services/jsonld"
 import {SKOS} from "./../services/vocabulary"
 import {getLanguage} from "./../application/navigation"
-
-/*
-Use @label property to store object with labels and @id to store object IRI.
-*/
-
-// export const SelectLabel = (WrappedComponent) => {
-//     return class SelectLabelWrap extends React.Component {
-//         render() {
-//             console.log("SelectLabelWrap", this.props);
-//             return (
-//                 <WrappedComponent {...this.props}/>
-//             );
-//         }
-//     }
-// };
 
 // TODO Remove default languages and use application option.
 export const selectLabel = (value, languages) => {
@@ -64,16 +49,10 @@ function getLanguagePreferences() {
 }
 
 export function fetchLabel(iri, identifier) {
-    return (dispatch, getState) => {
-        // TODO Use caching (getState).
-        // dispatch(fetchLabelRequest(iri, identifier));
+    return (dispatch) => {
+        // TODO Use caching.
         const url = "api/v1/resource/codelist?iri=" + encodeURI(iri);
-        fetchJson(url).then((data) => {
-            // TODO Move error handling to another layer or backend?
-            if (data === undefined || data.error) {
-                console.warn("No data found for: ", iri);
-                return;
-            }
+        fetchJsonCallback(url, (data) => {
             // TODO Extract to another layer.
             if (REPOSITORY_TYPE == "COUCHDB") {
                 data = {"@graph": data["jsonld"]};
@@ -84,6 +63,8 @@ export function fetchLabel(iri, identifier) {
             } else {
                 dispatch(fetchLabelSuccess(iri, identifier, labels));
             }
+        }, (error) => {
+            console.warn("No data found for: ", iri, error);
         });
     };
 }
@@ -96,15 +77,6 @@ function extractLabels(jsonld, entityIri) {
     return triples.string(entity, SKOS.prefLabel);
 }
 
-// const FETCH_REQUEST = "FETCH_REQUEST";
-// function fetchLabelRequest(iri, identifier) {
-//     return {
-//         "type": FETCH_REQUEST,
-//         "iri": iri,
-//         "identifier": identifier
-//     }
-// }
-
 export const FETCH_LABEL_SUCCESS = "FETCH_LABEL_SUCCESS";
 function fetchLabelSuccess(iri, identifier, data) {
     return {
@@ -115,16 +87,3 @@ function fetchLabelSuccess(iri, identifier, data) {
     }
 }
 
-const initialState = {
-    // TODO Watch for active requests.
-    // TODO Use local caching.
-};
-
-export const labelsReducer = (state = initialState, action) => {
-    switch (action.type) {
-        // case FETCH_REQUEST:
-        //     return state;
-        case FETCH_LABEL_SUCCESS:
-            return state;
-    }
-};
