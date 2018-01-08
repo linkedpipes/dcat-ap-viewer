@@ -41,11 +41,12 @@ class DistributionRow extends React.Component {
             title = getString("s.unnamed_distribution");
         }
 
+        // TODO Handle multiple values.
         let url;
-        if (dist.downloadURL === undefined) {
-            url = dist.accessURL;
+        if (dist.downloadURL === undefined || dist.downloadURL.length === 0) {
+            url = dist.accessURL[0];
         } else {
-            url = dist.downloadURL;
+            url = dist.downloadURL[0];
         }
 
         let formatLabel;

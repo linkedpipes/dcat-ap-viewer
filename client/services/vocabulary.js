@@ -37,7 +37,8 @@ export const DCAT = {
     "mediaType": DCAT_PREFIX + "mediaType",
     "issued": DCAT_PREFIX + "issued",
     "CatalogRecord" : DCAT_PREFIX + "CatalogRecord",
-    "Catalog": DCAT_PREFIX + "Catalog"
+    "Catalog": DCAT_PREFIX + "Catalog",
+    "accessURL": DCAT_PREFIX + "accessURL"
 };
 
 const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";
