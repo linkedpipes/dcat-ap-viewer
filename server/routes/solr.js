@@ -16,18 +16,18 @@ function getStatistics(req, res) {
     const options = {
         "url": url
     };
-    request(options, function (error, response, body) {
-        if (error === null && response && response.statusCode == 200) {
+    request(options, (error, response, body) => {
+        if (isRequestOk(error, response)) {
             const content = JSON.parse(body);
             res.json(solrToStatistics(content));
         } else {
-            // TODO Improve logging and error handling #38.
-            console.log("error", error);
-            res.status(500).json({
-                "error": "Solr request failed."
-            });
+            handleError(res, error);
         }
     });
+}
+
+function isRequestOk(error, response) {
+    return error === null && response && response.statusCode == 200;
 }
 
 function solrToStatistics(content) {
@@ -38,16 +38,20 @@ function solrToStatistics(content) {
     }
 }
 
+function handleError(res, error) {
+    // TODO Improve logging and error handling #38.
+    console.log("Request failed: ", error);
+    res.status(500).json({
+        "error": "service_request_failed"
+    });
+}
+
 function forwardSolrQuery(req, res) {
     const url = configuration.solr.url + req.url;
     const options = {
         "url": url
     };
     request.get(options).on("error", (error) => {
-        // TODO Improve logging and error handling #38.
-        console.log("error", error);
-        res.status(500).json({
-            "error": "Call of backend service failed."
-        });
+        handleError(res, error);
     }).pipe(res);
 }

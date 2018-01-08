@@ -7,7 +7,6 @@ const configuration = require('./../server_configuration');
 
     router.get("/dataset", createFetchDatasetsFunction());
     router.get("/distribution", createFetchDistributionsFunction());
-    // TODO Transform into general "label" source service.
     router.get("/codelist", createFetchCodeListFunction());
     router.get("/static", createStaticFunction());
 
@@ -33,12 +32,16 @@ function queryDataFromCouchDB(database, res, id) {
     const url = configuration.couchdb.url + "/"
         + database + "/" + encodeURIComponent(id);
     request.get({"url": url}).on("error", (error) => {
-        // TODO Improve logging and error handling #38.
-        console.error("CouchDB request failed!", error);
-        res.status(500).json({
-            "error": "Call of backend service failed."
-        });
+        handleError(res, error);
     }).pipe(res);
+}
+
+function handleError(res, error) {
+    // TODO Improve logging and error handling #38.
+    console.log("Request failed: ", error);
+    res.status(500).json({
+        "error": "service_request_failed"
+    });
 }
 
 function fetchDatasetsSparql(req, res) {
@@ -133,11 +136,7 @@ function queryDataFromSparql(res, sparql) {
         "timeout=0&" +
         "query=" + encodeURIComponent(sparql);
     request.get({"url": url}).on("error", (error) => {
-        // TODO Use better logging.
-        console.log("error", error);
-        res.status(500).json({
-            "error": "Call of backend service failed."
-        });
+        handleError(res, error);
     }).pipe(res);
 
 }
@@ -180,11 +179,11 @@ function createDistributionSparqlQuery(iri) {
 }
 
 function createFetchCodeListFunction() {
-    if (configuration.REPOSITORY_TYPE == "COUCHDB") {
+    if (configuration.repository == "COUCHDB") {
         return fetchCodeListCouchdb;
     } else {
         // TODO Provide implementation #39.
-        return (req, res) => res.json({"error": "Not supported!"});
+        return (req, res) => res.json({"error": "missing_support"});
     }
 }
 
@@ -197,7 +196,8 @@ function createStaticFunction() {
     if (configuration.repository == "COUCHDB") {
         return fetchStaticCouchdb;
     } else {
-        return  (req, res) => res.json({"error": "Not supported!"});;
+        // TODO Provide implementation #39.
+        return (req, res) => res.json({"error": "missing_support"});
     }
 }
 
