@@ -8,7 +8,7 @@ const configuration = require('./../server_configuration');
     router.get("/dataset", createFetchDatasetsFunction());
     router.get("/distribution", createFetchDistributionsFunction());
     // TODO Transform into general "label" source service.
-    router.get("/codelist", createFetchCodelistFunction());
+    router.get("/codelist", createFetchCodeListFunction());
 
     module.exports = router;
 })();
@@ -26,11 +26,11 @@ function fetchDatasetsCouchdb(req, res) {
     queryDataFromCouchDB("datasets", res, datasetIri);
 }
 
-function queryDataFromCouchDB(dataset, res, iri) {
+function queryDataFromCouchDB(database, res, id) {
     // TODO Update response content-type.
     // TODO Add error handling.
     const url = configuration.couchdb.url + "/"
-        + dataset + "/" + encodeURIComponent(iri);
+        + database + "/" + encodeURIComponent(id);
     request.get({"url": url}).on("error", (error) => {
         // TODO Improve logging and error handling #38.
         console.error("CouchDB request failed!", error);
@@ -178,16 +178,16 @@ function createDistributionSparqlQuery(iri) {
         "}";
 }
 
-function createFetchCodelistFunction() {
+function createFetchCodeListFunction() {
     if (configuration.REPOSITORY_TYPE == "COUCHDB") {
-        return fetchCodelistCouchdb;
+        return fetchCodeListCouchdb;
     } else {
         // TODO Provide implementation #39.
-        return (req, res) => res.json({"error": "Missing implementation"});
+        return (req, res) => res.json({"error": "Not supported!"});
     }
 }
 
-function fetchCodelistCouchdb(req, res) {
+function fetchCodeListCouchdb(req, res) {
     const itemIri = req.query.iri;
     queryDataFromCouchDB("codelists", res, itemIri);
 }
