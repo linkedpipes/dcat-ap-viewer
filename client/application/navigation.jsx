@@ -4,8 +4,8 @@ import {Route, IndexRoute} from "react-router";
 import {DatasetListView} from "../dataset/list/dataset-list-view";
 import {DatasetDetailView} from "../dataset/detail/dataset-detail-view";
 import {OrganisationListView} from "../organisation/list/organisation-list-view";
-import {KeywordsViewView} from "../keyword/tagcloud/keyword-tagloud-view"
-import {PageNotFound} from "../system/page-not-found"
+import {KeywordsViewView} from "../keyword/tagcloud/keyword-tagloud-view";
+import {PageNotFound} from "../system/page-not-found";
 
 // Define application navigation properties
 export const DATASET_LIST_URL = "DATASET_LIST";
@@ -95,14 +95,14 @@ function setLanguage(language) {
 //
 
 export const getUrl = (page, query) => {
-    let url = "/" + encodeURI(NAVIGATION[getLanguage()][PAGE][page]);
+    let url = "/" + NAVIGATION[getLanguage()][PAGE][page];
     if (query === undefined) {
         return url;
     }
     const keys = Object.keys(query);
     url += "?" + getQuery(keys[0]) + "=" + encodeURIComponent(query[keys[0]]);
     for (let index = 1; index < keys.length; ++index) {
-        const value = encodeURIComponent(query[keys[index]])
+        const value = encodeURIComponent(query[keys[index]]);
         url += "&" + getQuery(keys[index]) + "=" + value;
     }
     return url;
@@ -134,9 +134,20 @@ function getRouteObjects() {
     const routes = [];
     Object.keys(NAVIGATION).map(function (language) {
         Object.keys(NAVIGATION[language][PAGE]).map(function (component) {
+            // Some browsers (IE, Edge) does not escape national characters,
+            // while others (Firefox, Chrome) do, therefore we need to be ready
+            // to handle both variants. So we add escaped version for all
+            // but english.
+            if (language !== "en") {
+                routes.push({
+                    "id": component + "-" + language,
+                    "link": encodeURI(NAVIGATION[language][PAGE][component]),
+                    "component": COMPONENTS[component]
+                });
+            }
             routes.push({
                 "id": component + "-" + language,
-                "link": encodeURI(NAVIGATION[language][PAGE][component]),
+                "link": (NAVIGATION[language][PAGE][component]),
                 "component": COMPONENTS[component]
             });
         });
