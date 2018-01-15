@@ -80,6 +80,22 @@ const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPage
     </div>
 );
 
+class FilterBox extends React.Component {
+
+    render() {
+        return (
+            <Row>
+                <Col>
+                    <Button onClick={this.props.onClearFilters}>
+                        {getString("s.clear_filters")}
+                    </Button>
+                </Col>
+            </Row>
+        )
+    }
+
+}
+
 class SortSelector extends React.Component {
     constructor(props) {
         super(props);
@@ -233,6 +249,8 @@ class DatasetListViewComponent extends React.Component {
                                 onChange={props.setQueryString}
                                 onSearch={this.callIfNotFetching(props.setQueryFilter)}/>
                             <br/>
+                            <FilterBox onClearFilters={this.props.clearFilters}/>
+                            <br/>
                             <SortSelector
                                 value={props.query.sort}
                                 onChange={this.callIfNotFetching(props.setSort)}/>
@@ -356,6 +374,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 [getQuery(SORT_QUERY)]: value,
                 [getQuery(PAGE_QUERY)]: undefined
             }
+        });
+    },
+    "clearFilters" : () => {
+        ownProps.router.push({
+            "pathname": ownProps.router.location.pathname,
+            "query": { }
         });
     }
 });
