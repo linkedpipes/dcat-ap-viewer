@@ -98,7 +98,9 @@ const STRINGS = {
         "s.to": "do",
         "s.search": "Vyhledat:",
         "s.searching": "Vyhledávám data ...",
-        "s.no_data_found" : "Dotazu neodpovídají žádná data."
+        "s.no_data_found" : "Dotazu neodpovídají žádná data.",
+        "s.hide_filters" : "Skrýt pokročilé filtry",
+        "s.show_filters" : "Zobrazit pokročilé filtry"
     },
     "en": {
         "title.datasets": "Datasets",
@@ -195,7 +197,9 @@ const STRINGS = {
         "s.to": "to",
         "s.search": "Query:",
         "s.searching": "Searching ...",
-        "s.no_data_found" : "No data found."
+        "s.no_data_found" : "No data found.",
+        "s.hide_filters" : "Hide advanced filters",
+        "s.show_filters" : "Show advanced filters"
     }
 };
 

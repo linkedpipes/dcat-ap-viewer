@@ -87,6 +87,23 @@ const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPage
 
 class FilterBox extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = this.getInitialStatus();
+        this.toggleVisibility = this.toggleVisibility.bind(this);
+    }
+
+    getInitialStatus() {
+        // TODO Make filters visible on first opening if they are used.
+        return {
+            "visible" : false
+        }
+    }
+
+    toggleVisibility() {
+        this.setState({"visible": !this.state.visible});
+    }
+
     render() {
         const {onClearFilters, setTemporalStart, setTemporalEnd, temporalStart, temporalEnd, searchQuery, setQueryString, onSearch, onFetchOptions} = this.props;
         return (
@@ -102,7 +119,8 @@ class FilterBox extends React.Component {
                     onValueChange={setQueryString}
                     onSearch={onSearch}
                     onFetchOptions={onFetchOptions}/>
-                <div style={{"margin": "1REM 1REM 1REM 2REM"}}>
+                {this.state.visible &&
+                <div style={{"margin": "1REM 1REM 0REM 2REM"}}>
                     <Row style={{"lineHeight": "2.5REM"}}>
                         <span style={{"marginRight": "0.5REM"}}>
                             {getString("s.temporal")}
@@ -126,9 +144,22 @@ class FilterBox extends React.Component {
                                style={{"width": "12REM"}}/>
                     </Row>
                 </div>
-                <Button onClick={onClearFilters}>
-                    {getString("s.clear_filters")}
-                </Button>
+                }
+                <Row style={{"marginTop": "1REM"}}>
+                    <Col>
+                        <Button onClick={this.toggleVisibility}>
+                            {this.state.toggleVisibility ? getString("s.hide_filters") : getString("s.show_filters")}
+                        </Button>
+                    </Col>
+                    <Col>
+                        <div className="float-right">
+                            <Button onClick={onClearFilters}>
+                                {getString("s.clear_filters")}
+                            </Button>
+                        </div>
+                    </Col>
+                </Row>
+
             </div>
         )
     }
