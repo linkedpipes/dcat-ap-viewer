@@ -87,29 +87,37 @@ const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPage
 class FilterBox extends React.Component {
 
     render() {
-        const {onClearFilters, setTemporalStart, setTemporalEnd, temporalStart, temporalEnd} = this.props;
+        const {onClearFilters, setTemporalStart, setTemporalEnd, temporalStart, temporalEnd, searchQuery, setQueryString, onSearch} = this.props;
         return (
-            <div>
-                <Form>
-                    <FormGroup>
-                        <Label for="temporal-start">Temporal start</Label>
+            <div style={{"borderStyle": "solid", "borderWidth":"1px", "borderColor": "#E0E0E0", "padding":"0.5REM", "marginBottom": "1REM"}}>
+                <SearchBox
+                    value={searchQuery}
+                    onChange={setQueryString}
+                    onSearch={onSearch}/>
+                <div style={{"margin": "1REM 1REM 1REM 2REM"}}>
+                    <Row style={{"lineHeight": "2.5REM"}}>
+                        <span style={{"marginRight":"0.5REM"}}>
+                            {getString("s.temporal")}
+                        </span>
+                        <span style={{"marginRight":"0.5REM"}}>
+                            {getString("s.from")}
+                        </span>
                         <Input type="date" id="temporal-start"
                                onChange={setTemporalStart}
-                               value={temporalStart}/>
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="temporal-end">Temporal end</Label>
+                               value={temporalStart}
+                               style={{"width":"12REM"}}/>
+                        <span style={{"marginRight":"0.5REM", "marginLeft": "0.5REM"}}>
+                            {getString("s.to")}
+                        </span>
                         <Input type="date" id="temporal-end"
-                               onChange={setTemporalEnd} value={temporalEnd}/>
-                    </FormGroup>
-                </Form>
-                <Row>
-                    <Col>
-                        <Button onClick={onClearFilters}>
-                            {getString("s.clear_filters")}
-                        </Button>
-                    </Col>
-                </Row>
+                               onChange={setTemporalEnd}
+                               value={temporalEnd}
+                               style={{"width":"12REM"}}/>
+                    </Row>
+                </div>
+                <Button onClick={onClearFilters}>
+                    {getString("s.clear_filters")}
+                </Button>
             </div>
         )
     }
@@ -264,18 +272,15 @@ class DatasetListViewComponent extends React.Component {
                     </Col>
                     <Col xs={12} md={9}>
                         <div style={{"margin": "1em 1em 1em 1em"}}>
-                            <SearchBox
-                                value={props.searchQuery}
-                                onChange={props.setQueryString}
-                                onSearch={this.callIfNotFetching(props.setQueryFilter)}/>
-                            <br/>
                             <FilterBox
+                                searchQuery={props.searchQuery}
+                                setQueryString={props.setQueryString}
+                                onSearch={this.callIfNotFetching(props.setQueryFilter)}
                                 temporalStart={this.props.query.temporalStart}
                                 temporalEnd={this.props.query.temporalEnd}
                                 setTemporalStart={this.callIfNotFetching(this.props.setTemporalStart)}
                                 setTemporalEnd={this.callIfNotFetching(this.props.setTemporalEnd)}
                                 onClearFilters={this.callIfNotFetching(this.props.clearFilters)}/>
-                            <br/>
                             <SortSelector
                                 value={props.query.sort}
                                 onChange={this.callIfNotFetching(props.setSort)}/>

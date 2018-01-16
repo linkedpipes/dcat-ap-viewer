@@ -93,7 +93,9 @@ const STRINGS = {
         "s_paginator": "Položek na stránce:",
         "service_request_failed": "",
         "missing_support": "",
-        "s.clear_filters": "Smaž filtry"
+        "s.clear_filters": "Smaž filtry",
+        "s.from": "od",
+        "s.to": "do"
     },
     "en": {
         "title.datasets": "Datasets",
@@ -185,7 +187,9 @@ const STRINGS = {
         "en": "English",
         "cs": "Čeština",
         "s_paginator": "Items per page:",
-        "s.clear_filters": "Clear filters"
+        "s.clear_filters": "Clear filters",
+        "s.from": "from",
+        "s.to": "to"
     }
 };
 
