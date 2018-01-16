@@ -12,7 +12,9 @@ import {
     STRING_QUERY,
     PAGE_QUERY,
     SORT_QUERY,
-    PAGE_SIZE_QUERY
+    PAGE_SIZE_QUERY,
+    TEMPORAL_START,
+    TEMPORAL_END
 } from "../../application/navigation";
 import {
     STATUS_INITIAL,
@@ -35,7 +37,9 @@ const initialState = {
         "keyword": [],
         "publisher": [],
         "format": [],
-        "sort": "modified"
+        "sort": "modified",
+        "temporalStart": "",
+        "temporalEnd": ""
     },
     // Mirror of location.
     "query": {
@@ -46,7 +50,9 @@ const initialState = {
         "publisher": [],
         "format": [],
         "sort": "modified",
-        "pageSize": 10
+        "pageSize": 10,
+        "temporalStart": "",
+        "temporalEnd": ""
     }
 };
 
@@ -187,7 +193,9 @@ function locationToQuery(location) {
         "publisher": asArray(location[getQuery(PUBLISHER_QUERY)]),
         "format": asArray(location[getQuery(FORMAT_QUERY)]),
         "sort": order,
-        "pageSize": pageSize
+        "pageSize": pageSize,
+        "temporalStart": undefinedAsEmpty(location[getQuery(TEMPORAL_START)]),
+        "temporalEnd": undefinedAsEmpty(location[getQuery(TEMPORAL_END)])
     };
 }
 

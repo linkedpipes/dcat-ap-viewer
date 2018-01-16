@@ -65,6 +65,23 @@ function constructSearchQueryUrl(query) {
 
     url += "&rows=" + query.pageSize;
 
+    if (query.temporalStart === "") {
+        if (query.temporalEnd === "") {
+            // No temporal limits.
+        } else {
+            // Only temporal end is set.
+            url += "&fq=temporal-start:%5B+*+TO+" + query.temporalEnd + "T00%5C:00%5C:00Z+%5D";
+        }
+    } else {
+        if (query.temporalEnd === "") {
+            // Only temporal start is set.
+            url += "&fq=temporal-end:%5B+" + query.temporalStart+ "T00%5C:00%5C:00Z+TO+*+%5D";
+        } else {
+            // Both temporal values are set.
+            url += "&fq=temporal-start:%5B+*+TO+" + query.temporalStart + "T00%5C:00%5C:00Z+%5D";
+            url += "&fq=temporal-end:%5B+" + query.temporalEnd + "T00%5C:00%5C:00Z+TO+*+%5D";
+        }
+    }
     return url;
 }
 

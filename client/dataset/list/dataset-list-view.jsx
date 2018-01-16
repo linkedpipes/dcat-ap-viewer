@@ -1,9 +1,13 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
+    FormGroup,
+    Label,
+    Input,
     Row,
     Col,
     Container,
+    Form,
     Button,
     DropdownToggle,
     DropdownMenu,
@@ -31,17 +35,17 @@ import {
     PAGE_QUERY,
     PUBLISHER_QUERY,
     SORT_QUERY,
-    PAGE_SIZE_QUERY
+    PAGE_SIZE_QUERY,
+    TEMPORAL_START,
+    TEMPORAL_END
 } from "../../application/navigation";
 import {getString} from "../../application/strings";
 import setPageTitle from "../../services/page-title";
 import {
-    STATUS_INITIAL,
     STATUS_FETCHING,
-    STATUS_FETCHED,
-    STATUS_FAILED
+    STATUS_FAILED,
+    isDataReady
 } from "./../../services/http-request";
-import {isDataReady} from "./../../services/http-request";
 import {HttpRequestStatus} from "./../../application/http-request-status";
 
 const QueryStatusLine = ({resultSize, query}) => (
@@ -83,14 +87,30 @@ const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPage
 class FilterBox extends React.Component {
 
     render() {
+        const {onClearFilters, setTemporalStart, setTemporalEnd, temporalStart, temporalEnd} = this.props;
         return (
-            <Row>
-                <Col>
-                    <Button onClick={this.props.onClearFilters}>
-                        {getString("s.clear_filters")}
-                    </Button>
-                </Col>
-            </Row>
+            <div>
+                <Form>
+                    <FormGroup>
+                        <Label for="temporal-start">Temporal start</Label>
+                        <Input type="date" id="temporal-start"
+                               onChange={setTemporalStart}
+                               value={temporalStart}/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="temporal-end">Temporal end</Label>
+                        <Input type="date" id="temporal-end"
+                               onChange={setTemporalEnd} value={temporalEnd}/>
+                    </FormGroup>
+                </Form>
+                <Row>
+                    <Col>
+                        <Button onClick={onClearFilters}>
+                            {getString("s.clear_filters")}
+                        </Button>
+                    </Col>
+                </Row>
+            </div>
         )
     }
 
@@ -249,7 +269,12 @@ class DatasetListViewComponent extends React.Component {
                                 onChange={props.setQueryString}
                                 onSearch={this.callIfNotFetching(props.setQueryFilter)}/>
                             <br/>
-                            <FilterBox onClearFilters={this.props.clearFilters}/>
+                            <FilterBox
+                                temporalStart={this.props.query.temporalStart}
+                                temporalEnd={this.props.query.temporalEnd}
+                                setTemporalStart={this.callIfNotFetching(this.props.setTemporalStart)}
+                                setTemporalEnd={this.callIfNotFetching(this.props.setTemporalEnd)}
+                                onClearFilters={this.callIfNotFetching(this.props.clearFilters)}/>
                             <br/>
                             <SortSelector
                                 value={props.query.sort}
@@ -366,7 +391,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         });
     },
     "setSort": (value) => {
-        console.log(value);
         ownProps.router.push({
             "pathname": ownProps.router.location.pathname,
             "query": {
@@ -376,11 +400,55 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
             }
         });
     },
-    "clearFilters" : () => {
+    "clearFilters": () => {
         ownProps.router.push({
             "pathname": ownProps.router.location.pathname,
-            "query": { }
+            "query": {}
         });
+    },
+    "setTemporalStart": (event) => {
+        const value = event.target.value;
+        if (value === "") {
+            ownProps.router.push({
+                "pathname": ownProps.router.location.pathname,
+                "query": {
+                    ...ownProps.router.location.query,
+                    [getQuery(TEMPORAL_START)]: undefined,
+                    [getQuery(PAGE_QUERY)]: undefined
+                }
+            });
+        } else {
+            ownProps.router.push({
+                "pathname": ownProps.router.location.pathname,
+                "query": {
+                    ...ownProps.router.location.query,
+                    [getQuery(TEMPORAL_START)]: value,
+                    [getQuery(PAGE_QUERY)]: undefined
+                }
+            });
+        }
+    },
+    "setTemporalEnd": (event) => {
+        const value = event.target.value;
+        if (value === "") {
+            ownProps.router.push({
+                "pathname": ownProps.router.location.pathname,
+                "query": {
+                    ...ownProps.router.location.query,
+                    [getQuery(TEMPORAL_END)]: undefined,
+                    [getQuery(PAGE_QUERY)]: undefined
+                }
+            });
+        } else {
+            ownProps.router.push({
+                "pathname": ownProps.router.location.pathname,
+                "query": {
+                    ...ownProps.router.location.query,
+                    [getQuery(TEMPORAL_END)]: value,
+                    [getQuery(PAGE_QUERY)]: undefined
+                }
+            });
+        }
     }
 });
 
