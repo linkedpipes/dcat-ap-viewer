@@ -211,15 +211,19 @@ export class LanguageReRouter extends React.Component {
             this.redirectToHome();
         } else {
             const pathLanguage = getLanguageForUrl(pathname);
-            setLanguage(pathLanguage);
-            // Dataset list parse query from URL, as we change the language we
-            // need to update this - in order to trigger the update
-            // we change the router.
-            // TODO Solve this in other way which does not require redraw.
-            this.props.router.push({
-                "pathname": location.pathname,
-                "query": location.query
-            });
+            if (getLanguage() == pathLanguage) {
+                // Do nothing.
+            } else {
+                setLanguage(pathLanguage);
+                // Dataset list parse query from URL, as we change the language we
+                // need to update this - in order to trigger the update
+                // we change the router.
+                // TODO Solve this in other way which does not require redraw.
+                this.props.router.push({
+                    "pathname": location.pathname,
+                    "query": location.query
+                });
+            }
         }
     }
 
