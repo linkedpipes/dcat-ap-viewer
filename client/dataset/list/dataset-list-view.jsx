@@ -148,7 +148,7 @@ class FilterBox extends React.Component {
                 <Row style={{"marginTop": "1REM"}}>
                     <Col>
                         <Button onClick={this.toggleVisibility}>
-                            {this.state.toggleVisibility ? getString("s.hide_filters") : getString("s.show_filters")}
+                            {this.state.visible ? getString("s.hide_filters") : getString("s.show_filters")}
                         </Button>
                     </Col>
                     <Col>
