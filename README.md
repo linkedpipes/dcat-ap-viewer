@@ -30,7 +30,10 @@ curl http://localhost:{solr_port}/solr/{core_name}/schema -X POST -H 'Content-ty
     "delete-copy-field":{ "source" : "*", "dest" : "_text_" },
     "add-copy-field" : { "source" : "description", "dest" : "_text_" },
     "add-copy-field" : { "source" : "title", "dest" : "_text_" },
-    "add-copy-field" : { "source" : "keyword", "dest" : "_text_" }
+    "add-copy-field" : { "source" : "keyword", "dest" : "_text_" },
+    "add-field" : { "name" : "temporal-start", "type" : "tdate", "docValues" : true },
+    "add-field" : { "name" : "temporal-end", "type" : "tdate", "docValues" : true },
+    "add-field" : { "name" : "spatial", "type" : "string" }
 }'
 ```
 
