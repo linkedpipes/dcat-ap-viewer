@@ -14,7 +14,6 @@ export function fetchData(query) {
     return (dispatch) => {
         dispatch(fetchDataRequest());
         const url = constructSearchQueryUrl(query);
-
         fetchJsonCallback(url, (json) => {
             dispatch(fetchDataSuccess(json));
         }, (error) => {

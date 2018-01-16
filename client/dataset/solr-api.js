@@ -26,7 +26,6 @@ function escapeSolrQuery(query) {
     if (tokens.length === 0) {
         return "";
     }
-    console.log("tokens", tokens);
 
     let solrQuery = "*" + tokens[0] + "*";
     for (let index = 1; index < tokens.length; ++index) {
@@ -57,8 +56,6 @@ export function constructSearchQueryUrl(query) {
 
     const start = query.page * query.pageSize;
     url += "start=" + start + "&";
-
-    console.log("QUERY:", query.search, "->", escapeSolrQuery(query.search));
 
     if (query.search === undefined || query.search === "") {
         url += "q=*:*";
