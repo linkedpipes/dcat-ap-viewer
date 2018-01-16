@@ -4,8 +4,8 @@ import {reducer as notificationReducer} from "react-notification-system-redux";
 import {datasetListReducer} from "./dataset/list/dataset-list-reducer";
 import {datasetDetailReducer} from "./dataset/detail/dataset-detail-reducer";
 import {organisationListReducer} from "./organisation/list/organisation-list-reducer";
-import {indeterminateLoaderReducer} from "./application/app-reducer"
 import {keywordsTagCloudReducer} from "./keyword/tagcloud/keyword-tagloud-reducer"
+import {reducer as loadingIndicator} from "./components/loading-indicator"
 
 // http://redux.js.org/docs/api/combineReducers.html
 const reducers = combineReducers({
@@ -18,7 +18,7 @@ const reducers = combineReducers({
     "organisation": combineReducers({
         "list": organisationListReducer
     }),
-    "loader": indeterminateLoaderReducer,
+    [loadingIndicator.name] : loadingIndicator.reducer,
     "keywords": keywordsTagCloudReducer
 });
 

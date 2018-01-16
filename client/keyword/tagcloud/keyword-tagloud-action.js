@@ -2,7 +2,7 @@ import {fetchJsonCallback} from "../../services/http-request";
 import {
     addLoaderStatusOn,
     addLoaderStatusOff
-} from "../../application/app-action";
+} from "../../components/loading-indicator";
 
 export const FETCH_KEYWORDS_REQUEST = "FETCH_KEYWORDS_REQUEST";
 export const FETCH_KEYWORDS_SUCCESS = "FETCH_KEYWORDS_SUCCESS";

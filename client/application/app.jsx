@@ -2,7 +2,7 @@ import React from "react";
 import {Header} from "./header";
 import Footer from "./footer";
 import {LanguageReRouter} from "./navigation";
-import {IndeterminateLoader} from "../components/loader";
+import {LoaderIndicator} from "../components/loading-indicator/index";
 import {connect} from "react-redux";
 import Notifications from "react-notification-system-redux";
 import GoogleTagManager from "../components/google-tag-manager"
@@ -14,7 +14,7 @@ class AppComponent extends React.Component {
                               router={this.props.router}>
                 <div>
                     <GoogleTagManager/>
-                    <IndeterminateLoader active={this.props.loaderActive}/>
+                    <LoaderIndicator/>
                     <Header router={this.props.router}/>
                     {/* TODO Remove DIV element. */}
                     <div>
@@ -29,7 +29,6 @@ class AppComponent extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    "loaderActive": state.loader.active,
     "notifications": state.notifications
 });
 

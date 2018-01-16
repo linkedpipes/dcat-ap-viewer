@@ -7,7 +7,7 @@ import {
 import {
     addLoaderStatusOn,
     addLoaderStatusOff
-} from "../../application/app-action";
+} from "../../components/loading-indicator";
 
 export const FETCH_DATASET_REQUEST = "FETCH_DATASET_REQUEST";
 export const FETCH_DATASET_SUCCESS = "FETCH_DATASET_SUCCESS";
