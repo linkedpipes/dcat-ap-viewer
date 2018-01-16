@@ -35,9 +35,13 @@ function json(response) {
     });
 }
 
+export function fetchJson(url) {
+    return fetch(url).then(json);
+}
+
 // TODO Convert to use promises.
 export const fetchJsonCallback = (url, onSuccess, onFailure) => {
-    fetch(url).then(json).then((data) => {
+    fetchJson(url).then((data) => {
         if (isResourceMissing(data)) {
             handleMissingResource(onFailure, createExtra(url));
         } else if (isErrorResponse(data)) {

@@ -95,7 +95,10 @@ const STRINGS = {
         "missing_support": "",
         "s.clear_filters": "Smaž filtry",
         "s.from": "od",
-        "s.to": "do"
+        "s.to": "do",
+        "s.search": "Vyhledat:",
+        "s.searching": "Vyhledávám data ...",
+        "s.no_data_found" : "Dotazu neodpovídají žádná data."
     },
     "en": {
         "title.datasets": "Datasets",
@@ -189,7 +192,10 @@ const STRINGS = {
         "s_paginator": "Items per page:",
         "s.clear_filters": "Clear filters",
         "s.from": "from",
-        "s.to": "to"
+        "s.to": "to",
+        "s.search": "Query:",
+        "s.searching": "Searching ...",
+        "s.no_data_found" : "No data found."
     }
 };
 

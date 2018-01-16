@@ -1,13 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 import {
-    FormGroup,
-    Label,
     Input,
     Row,
     Col,
     Container,
-    Form,
     Button,
     DropdownToggle,
     DropdownMenu,
@@ -44,9 +41,11 @@ import setPageTitle from "../../services/page-title";
 import {
     STATUS_FETCHING,
     STATUS_FAILED,
-    isDataReady
+    isDataReady,
+    fetchJson
 } from "./../../services/http-request";
 import {HttpRequestStatus} from "./../../application/http-request-status";
+import {constructTypeaheadUrl} from "./../solr-api";
 
 const QueryStatusLine = ({resultSize, query}) => (
     <div>
@@ -62,11 +61,13 @@ const QueryStatusLine = ({resultSize, query}) => (
     </div>
 );
 
-const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPageSize, showPublisher}) => (
+const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPageSize, showPublisher, onSearch, onFetchOptions}) => (
     <div>
         <QueryStatusLine
             resultSize={datasetCount}
             query={query}
+            onSearch={onSearch}
+            onFetchOptions={onFetchOptions}
         />
         <br/>
         <DatasetList
@@ -87,32 +88,42 @@ const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPage
 class FilterBox extends React.Component {
 
     render() {
-        const {onClearFilters, setTemporalStart, setTemporalEnd, temporalStart, temporalEnd, searchQuery, setQueryString, onSearch} = this.props;
+        const {onClearFilters, setTemporalStart, setTemporalEnd, temporalStart, temporalEnd, searchQuery, setQueryString, onSearch, onFetchOptions} = this.props;
         return (
-            <div style={{"borderStyle": "solid", "borderWidth":"1px", "borderColor": "#E0E0E0", "padding":"0.5REM", "marginBottom": "1REM"}}>
+            <div style={{
+                "borderStyle": "solid",
+                "borderWidth": "1px",
+                "borderColor": "#E0E0E0",
+                "padding": "0.5REM",
+                "marginBottom": "1REM"
+            }}>
                 <SearchBox
                     value={searchQuery}
-                    onChange={setQueryString}
-                    onSearch={onSearch}/>
+                    onValueChange={setQueryString}
+                    onSearch={onSearch}
+                    onFetchOptions={onFetchOptions}/>
                 <div style={{"margin": "1REM 1REM 1REM 2REM"}}>
                     <Row style={{"lineHeight": "2.5REM"}}>
-                        <span style={{"marginRight":"0.5REM"}}>
+                        <span style={{"marginRight": "0.5REM"}}>
                             {getString("s.temporal")}
                         </span>
-                        <span style={{"marginRight":"0.5REM"}}>
+                        <span style={{"marginRight": "0.5REM"}}>
                             {getString("s.from")}
                         </span>
                         <Input type="date" id="temporal-start"
                                onChange={setTemporalStart}
                                value={temporalStart}
-                               style={{"width":"12REM"}}/>
-                        <span style={{"marginRight":"0.5REM", "marginLeft": "0.5REM"}}>
+                               style={{"width": "12REM"}}/>
+                        <span style={{
+                            "marginRight": "0.5REM",
+                            "marginLeft": "0.5REM"
+                        }}>
                             {getString("s.to")}
                         </span>
                         <Input type="date" id="temporal-end"
                                onChange={setTemporalEnd}
                                value={temporalEnd}
-                               style={{"width":"12REM"}}/>
+                               style={{"width": "12REM"}}/>
                     </Row>
                 </div>
                 <Button onClick={onClearFilters}>
@@ -204,6 +215,7 @@ class DatasetListViewComponent extends React.Component {
     }
 
     callIfNotFetching(action) {
+        // TODO Move to http-request service ?
         const isLoading = this.props.status === STATUS_FETCHING;
         if (isLoading) {
             return () => {
@@ -235,9 +247,7 @@ class DatasetListViewComponent extends React.Component {
             facetClassName = "collapse-sm-down";
         }
 
-        // TODO Export as a selector.
-        const showDatasetList =
-            isDataReady(props.status) && props.datasets.length > 0;
+        const showDatasetList = isDataReady(props.status);
 
         return (
             <Container>
@@ -280,7 +290,8 @@ class DatasetListViewComponent extends React.Component {
                                 temporalEnd={this.props.query.temporalEnd}
                                 setTemporalStart={this.callIfNotFetching(this.props.setTemporalStart)}
                                 setTemporalEnd={this.callIfNotFetching(this.props.setTemporalEnd)}
-                                onClearFilters={this.callIfNotFetching(this.props.clearFilters)}/>
+                                onClearFilters={this.callIfNotFetching(this.props.clearFilters)}
+                                onFetchOptions={this.props.onFetchOptions}/>
                             <SortSelector
                                 value={props.query.sort}
                                 onChange={this.callIfNotFetching(props.setSort)}/>
@@ -454,6 +465,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
                 }
             });
         }
+    },
+    "onFetchOptions": (query, onSuccess, onFail) => {
+        const url = constructTypeaheadUrl(query);
+        return fetchJson(url).then((data) => {
+            onSuccess(data.json.response.docs.map((item) => item.title));
+        }).catch(onFail);
     }
 });
 
