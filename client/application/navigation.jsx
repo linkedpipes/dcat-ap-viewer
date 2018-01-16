@@ -219,7 +219,7 @@ export class LanguageReRouter extends React.Component {
                 // need to update this - in order to trigger the update
                 // we change the router.
                 // TODO Solve this in other way which does not require redraw.
-                this.props.router.push({
+                this.props.router.replace({
                     "pathname": location.pathname,
                     "query": location.query
                 });
@@ -228,7 +228,7 @@ export class LanguageReRouter extends React.Component {
     }
 
     redirectToHome() {
-        this.props.router.push({
+        this.props.router.replace({
             "pathname": getUrl(DATASET_LIST_URL),
             "query": location.query
         });
@@ -253,7 +253,7 @@ export class LanguageReRouter extends React.Component {
             "lang": undefined
         };
         setLanguage(targetLanguage);
-        this.props.router.push({
+        this.props.router.replace({
             "pathname": path,
             "query": query
         });
@@ -263,7 +263,7 @@ export class LanguageReRouter extends React.Component {
         let path = this.translatePathName(pathname, targetLanguage);
         const query = this.translateQuery(location, targetLanguage);
         setLanguage(targetLanguage);
-        this.props.router.push({
+        this.props.router.replace({
             "pathname": path,
             "query": query
         });
