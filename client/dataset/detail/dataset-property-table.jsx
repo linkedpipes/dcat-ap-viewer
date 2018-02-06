@@ -242,7 +242,7 @@ const DatasetPropertyTable = ({dataset}) => (
         <ValueRow label="s.type" value={dataset.type}/>
         <ValueRow label="s.version" value={dataset.version}/>
         <ValueRow label="s.version_notes" value={dataset.versionNotes}/>
-        <UrlRow label="s.catalog_source" value={dataset.catalogSource}/>
+        {/*<UrlRow label="s.catalog_source" value={dataset.catalogSource}/>*/}
         </tbody>
     </Table>
 );
