@@ -2,8 +2,8 @@
 
 ## Requirements
 - [Node.js] & npm
-- [Apache Solr]
-- [Apache CouchDB]
+- [Apache Solr] 7
+- [Apache CouchDB] 2.1.1
 
 ## Installation
 Install dependencies:
@@ -12,12 +12,12 @@ npm install
 ```
 You need to copy and edit the configuration file.
 
-Prepare Solr schema before loading the data:
+Prepare Solr schema before loading the data (here the Solr core is called ```dcat-ap-viewer```:
 ```
-curl http://localhost:{solr_port}/solr/{core_name}/schema -X POST -H 'Content-type:application/json' --data-binary '{
+curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:application/json' --data-binary '{
     "add-field" : { "name" : "iri", "type" : "string" , "indexed" : false },
-    "add-field" : { "name" : "modified", "type" : "tdate", "docValues" : true },
-    "add-field" : { "name" : "issued", "type" : "tdate", "docValues" : true },
+    "add-field" : { "name" : "modified", "type" : "pdate", "docValues" : true , "multiValued" : false},
+    "add-field" : { "name" : "issued", "type" : "pdate", "docValues" : true },
     "add-field" : { "name" : "accrualPeriodicity", "type" : "string" },
     "add-field" : { "name" : "description", "type" : "string" },
     "add-field" : { "name" : "publisher", "type" : "string" , "indexed" : false },
@@ -27,16 +27,21 @@ curl http://localhost:{solr_port}/solr/{core_name}/schema -X POST -H 'Content-ty
     "add-field" : { "name" : "formatName", "type" : "strings" },
     "add-field" : { "name" : "license", "type" : "strings", "indexed" : false },
     "add-field" : { "name" : "keyword", "type" : "strings" },
-    "delete-copy-field":{ "source" : "*", "dest" : "_text_" },
     "add-copy-field" : { "source" : "description", "dest" : "_text_" },
     "add-copy-field" : { "source" : "title", "dest" : "_text_" },
     "add-copy-field" : { "source" : "keyword", "dest" : "_text_" },
-    "add-field" : { "name" : "temporal-start", "type" : "tdate", "docValues" : true },
-    "add-field" : { "name" : "temporal-end", "type" : "tdate", "docValues" : true },
+    "add-field" : { "name" : "temporal-start", "type" : "pdate", "docValues" : true },
+    "add-field" : { "name" : "temporal-end", "type" : "pdate", "docValues" : true },
     "add-field" : { "name" : "spatial", "type" : "string" }
 }'
 ```
-
+And then:
+```
+curl http://localhost:8983/solr/dcat-ap-viewer/config -H 'Content-type:application/json' -d'{
+    "set-property" : {"requestDispatcher.requestParsers.enableRemoteStreaming":true},
+    "set-property" : {"requestDispatcher.requestParsers.enableStreamBody":true}
+}'
+```
 CouchDB needs to contain the datasets, distributions and, optionally, the code list labels.
 
 We do it by using [LinkedPipes ETL] with a custom pipeline, which has the DCAT-AP catalog on the input.
