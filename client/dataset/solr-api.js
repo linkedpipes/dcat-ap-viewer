@@ -6,12 +6,14 @@ export function constructTypeaheadUrl(query) {
 }
 
 function escapeSolrQuery(query) {
-    // Convert to lowe case.
+    // Convert to lower case.
     query = query.toLocaleLowerCase();
 
-    // Escape control characters
-    const pattern = /([\!\*\+\-\=\<\>\&\|\(\)\[\]\{\}\^\~\?\:\\/"])/g;
-    query = query.replace(pattern, "\\$1");
+    const charactersToRemove = /[\:\-]/g;
+    query = query.replace(charactersToRemove, " ");
+
+    const charactersToEscape = /([\!\*\+\=\<\>\&\|\[\]\{\}\^\~\?\\/"])/g;
+    query = query.replace(charactersToEscape, "\\$1");
 
     // Escape control words (and, or, not).
     query = query.replace("and", "\\and");
