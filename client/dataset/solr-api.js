@@ -9,11 +9,13 @@ function escapeSolrQuery(query) {
     // Convert to lower case.
     query = query.toLocaleLowerCase();
 
-    const charactersToRemove = /[\:\-]/g;
+    const charactersToRemove = /[\:\-\\\.\/]/g;
     query = query.replace(charactersToRemove, " ");
 
-    const charactersToEscape = /([\!\*\+\=\<\>\&\|\[\]\{\}\^\~\?\\/"])/g;
+    const charactersToEscape = /([\!\*\+\=\<\>\&\|\{\}\^\~\?/"])/g;
     query = query.replace(charactersToEscape, "\\$1");
+
+    const charactersToIgnore = /\(\)\[\]/g;
 
     // Escape control words (and, or, not).
     query = query.replace("and", "\\and");
