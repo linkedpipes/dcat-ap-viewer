@@ -65,21 +65,21 @@ class DistributionRow extends React.Component {
         return (
             <tr>
                 <td>
-                    <a href={url} className="distribution-link">{title}</a>
+                    <a href={url} rel="nofollow" className="distribution-link">{title}</a>
                 </td>
                 <td>
                     {dist.format !== undefined &&
-                    <a href={dist.format.iri}>{formatLabel}</a>
+                    <a href={dist.format.iri} rel="nofollow">{formatLabel}</a>
                     }
                 </td>
                 <td>
                     {dist.conformsTo !== undefined &&
-                    <a href={dist.conformsTo}>{dist.conformsTo}</a>
+                    <a href={dist.conformsTo} rel="nofollow">{dist.conformsTo}</a>
                     }
                 </td>
                 <td>
                     {dist.license !== undefined &&
-                    <a href={dist.license}>{dist.license}</a>
+                    <a href={dist.license} rel="nofollow">{dist.license}</a>
                     }
                 </td>
             </tr>

@@ -14,7 +14,7 @@ const Temporal = ({label, value}) => {
     if (value.startDate === undefined) {
         if (value.endDate === undefined) {
             valueNode = (
-                <a href={value.iri}>{value.iri}</a>
+                <a href={value.iri} rel="nofollow">{value.iri}</a>
             );
         } else {
             valueNode = " - " + updateDate(value.endDate);
@@ -67,12 +67,12 @@ const ContactPoint = ({value}) => {
         }
         //
         return (
-            <a href={iri}>{label}</a>
+            <a href={iri} rel="nofollow">{label}</a>
         );
     } else {
         // TODO Check if this branch is ever needed.
         return (
-            <a href={value}>{selectLabel(value)}</a>
+            <a href={value} rel="nofollow">{selectLabel(value)}</a>
         );
     }
 };
@@ -126,11 +126,11 @@ const UrlValue = ({value}) => {
             label = value.iri;
         }
         return (
-            <a href={value.iri}>{label}</a>
+            <a href={value.iri} rel="nofollow">{label}</a>
         );
     } else {
         return (
-            <a href={value}>{value}</a>
+            <a href={value} rel="nofollow">{value}</a>
         );
     }
 };
@@ -194,10 +194,9 @@ const LabeledUrlRow = ({label, value}) => {
 
 const LabeledUrlValue = ({value}) => {
     return (
-        <a href={value["@id"]}>{selectLabel(value)}</a>
+        <a href={value["@id"]} rel="nofollow">{selectLabel(value)}</a>
     );
 };
-
 
 const ValueRow = ({label, value}) => {
     if (value === undefined) {
