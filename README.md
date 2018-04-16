@@ -1,4 +1,4 @@
-# DCAT-AP Viewer
+# LinkedPipes DCAT-AP Viewer
 
 This is a native DCAT-AP v1.1 catalog viewer. 
 It is originally developed for OpenData.cz projects, however, it is completely open-source and resuable. 
