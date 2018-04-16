@@ -3,10 +3,10 @@
 This is a native DCAT-AP v1.1 catalog viewer. 
 It is originally developed for OpenData.cz projects, however, it is completely open-source and resuable. 
 It addresses the most painful disadvantages of CKAN when it comes to representing DCAT compatible data such as
-- native DCAT-AP v1.1 input
+- native [DCAT-AP v1.1](https://joinup.ec.europa.eu/release/dcat-ap-v11) input
 - handles large numbers of distributions of a single dataset
 - handles licenses attached to distributions
-- supports EU MDR NAL codelists
+- supports [EU MDR NAL](http://publications.europa.eu/mdr/authority/) codelists
 
 ## Requirements
 - [Node.js] & npm
