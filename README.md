@@ -18,14 +18,14 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 
 ## Installation
 
-- Clone the repository
-- Install dependencies:
-```
-npm install
-```
-- You need to copy and edit the configuration file.
-
-- Install Solr and prepare Solr schema before loading the data (here the Solr core is called ```dcat-ap-viewer```:
+[Install Solr](https://lucene.apache.org/solr/guide/7_3/installing-solr.html). 
+It will contain the search index. 
+For instance, you may proceed like this:
+- [Download Apache Solr](http://lucene.apache.org/solr/) - e.g. ```solr-7.3.0.tgz```
+- Extract the service installer ```tar xzf solr-7.3.0.tgz solr-7.3.0/bin/install_solr_service.sh --strip-components=2```
+- Run the service installer ```sudo bash ./install_solr_service.sh solr-7.3.0.tgz```
+- Create Solr core ```sudo -u solr /opt/solr/bin/solr create -c dcat-ap-viewer```
+- Prepare Solr schema:
 ```
 curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:application/json' --data-binary '{
     "add-field" : { "name" : "iri", "type" : "string" , "indexed" : false },
@@ -55,9 +55,20 @@ curl http://localhost:8983/solr/dcat-ap-viewer/config -H 'Content-type:applicati
     "set-property" : {"requestDispatcher.requestParsers.enableStreamBody":true}
 }'
 ```
-- Install CouchDB. It will contain the datasets, distributions and, optionally, the code list labels.
 
-- To prepare data, install [LinkedPipes ETL] and import, configure and run the [preparation pipeline]. It has the DCAT-AP catalog (its RDF representation) on the input. It assumes that Solr is running on ```localhost:8983``` and CouchDB is running on ```localhost:5984```.
+Install [Apache CouchDB], e.g. via a package manager.
+It will contain the datasets, distributions and, optionally, the code list labels.
+
+Install LinkedPipes DCAT-AP viewer
+- Clone the repository
+- Install dependencies:
+```
+npm install
+```
+- Copy and edit the configuration file: ```cp configuration.properties.sample configuration.properties```
+
+Load the data
+- Install [LinkedPipes ETL] and import, configure and run the [preparation pipeline]. It has the DCAT-AP catalog (its RDF representation) on the input, this is where you provide your DCAT-AP dump. The pipeline assumes that Solr is running on ```localhost:8983``` and CouchDB is running on ```localhost:5984```.
 
 ## Running DCAT-AP Viewer
 ```
