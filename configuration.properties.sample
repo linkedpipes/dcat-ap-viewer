@@ -20,7 +20,7 @@ port = 3000
 
 # Page title configuration.
 client.title_prefix =
-client.title_suffix = - NKOD
+client.title_suffix = - LP-DAV
 
 # Sentry error report URL.
 sentry.url =
