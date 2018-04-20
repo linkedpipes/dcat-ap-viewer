@@ -3,7 +3,7 @@
 #
 
 # Path to Solr Core (collection) with DCAT-AP data.
-solr.url = http://localhost:8983/solr/nkod
+solr.url = http://localhost:8983/solr/dcat-ap-viewer
 
 # Path to Virtuoso instance with data.
 virtuoso.sparql.url =
@@ -20,7 +20,7 @@ port = 3000
 
 # Page title configuration.
 client.title_prefix =
-client.title_suffix = - NKOD
+client.title_suffix = - LP-DAV
 
 # Sentry error report URL.
 sentry.url =
