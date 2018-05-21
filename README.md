@@ -69,6 +69,7 @@ npm install
 
 Load the data
 - Install [LinkedPipes ETL] and import, configure and run the [preparation pipeline]. It has the DCAT-AP catalog (its RDF representation) on the input, this is where you provide your DCAT-AP dump. The pipeline assumes that Solr is running on ```localhost:8983``` and CouchDB is running on ```localhost:5984```.
+- To enable support for the European Metadata Registry Named Authority Lists (EU MDR NALs) linked from DCAT-AP records, configure and run the [codelist pipeline]. It will populate the Apache CouchDB instance with the codelists.
 
 ## Running DCAT-AP Viewer
 ```
@@ -80,3 +81,4 @@ node server -configFileLocation=configuration.properties
 [Apache CouchDB]: <http://couchdb.apache.org/>
 [LinkedPipes ETL]: <https://etl.linkedpipes.com>
 [preparation pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/pipeline/dcatap2lpdav.jsonld>
+[codelist pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/pipeline/eumdrnals2couchdb.jsonld>
