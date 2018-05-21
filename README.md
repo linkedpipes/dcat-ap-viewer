@@ -14,7 +14,7 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 - [Apache CouchDB] 2.1.1
 
 ### Requirements for data preparation
-- [LinkedPipes ETL] and the [preparation pipeline]
+- [LinkedPipes ETL], the [preparation pipeline] and the [codelist pipeline]
 
 ## Installation
 
