@@ -12,7 +12,8 @@ const configuration = require('./../server_configuration');
 })();
 
 function getStatistics(req, res) {
-    const url = configuration.solr.url + "/query?q=*:*";
+    const url = configuration.solr.url + "/query?q=*:*&rows=0&facet=true" +
+        "&facet.field=keyword&facet.field=publisherName";
     const options = {
         "url": url
     };
@@ -31,9 +32,12 @@ function isRequestOk(error, response) {
 }
 
 function solrToStatistics(content) {
+    const facetFields = content.facet_counts.facet_fields;
     return {
         "data": {
-            "numberOfDatasets": content.response.numFound
+            "numberOfDatasets": content.response.numFound,
+            "numberOfPublishers": facetFields["publisherName"].length / 2,
+            "numberOfKeywords": facetFields["keyword"].length / 2
         }
     }
 }
