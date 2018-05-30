@@ -13,7 +13,7 @@ const configuration = require('./../server_configuration');
 
 function getStatistics(req, res) {
     const url = configuration.solr.url + "/query?q=*:*&rows=0&facet=true" +
-        "&facet.field=keyword&facet.field=publisherName";
+        "&facet.field=keyword&facet.field=publisherName&facet.limit=-1";
     const options = {
         "url": url
     };
