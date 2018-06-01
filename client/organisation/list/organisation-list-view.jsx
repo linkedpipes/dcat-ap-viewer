@@ -3,16 +3,16 @@ import {Link} from "react-router";
 import {connect} from "react-redux";
 import {Row, Col, Container} from "reactstrap";
 import {fetchDataRequest} from "./organisation-list-action";
-import {formatNumber} from "../../services/formats";
+import {formatNumber} from "../../app-services/formats";
 import {
     getUrl,
     DATASET_LIST_URL,
     PUBLISHER_QUERY
-} from "../../application/navigation";
-import {getString} from "../../application/strings";
-import setPageTitle from "../../services/page-title";
-import {isDataReady} from "./../../services/http-request";
-import {HttpRequestStatus} from "./../../application/http-request-status";
+} from "../../app/navigation";
+import {getString} from "../../app/strings";
+import setPageTitle from "../../app-services/page-title";
+import {isDataReady} from "../../app-services/http-request";
+import {HttpRequestStatus} from "../../app/http-request-status";
 
 const OrganisationListItem = ({value}) => {
     let datasetCountLabel;

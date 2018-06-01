@@ -2,21 +2,21 @@ import React from "react";
 import {connect} from "react-redux";
 import {Row, Col, Container} from "reactstrap";
 import {fetchKeywordsRequest} from "./keyword-tagloud-action";
-import {getString} from "../../application/strings";
-import setPageTitle from "../../services/page-title";
+import {getString} from "../../app/strings";
+import setPageTitle from "../../app-services/page-title";
 import {TagCloud} from "react-tagcloud";
 import {Link} from "react-router";
 import {
     getUrl,
     DATASET_LIST_URL,
     KEYWORDS_QUERY
-} from "../../application/navigation";
-import {isDataReady} from "./../../services/http-request";
+} from "../../app/navigation";
+import {isDataReady} from "../../app-services/http-request";
 import {
     keywordsStatusSelector,
     keywordsDataSelector
 } from "./keyword-tagloud-reducer";
-import {HttpRequestStatus} from "./../../application/http-request-status";
+import {HttpRequestStatus} from "../../app/http-request-status";
 
 const tagRenderer = (tag, size, color) => {
     const url = getUrl(DATASET_LIST_URL, {[KEYWORDS_QUERY]: tag.value});

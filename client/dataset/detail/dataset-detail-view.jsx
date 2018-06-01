@@ -8,7 +8,7 @@ import {
 } from "./dataset-detail-actions";
 import {Container} from "reactstrap";
 import DistributionList from "./distribution-list";
-import TagLine from "../../components/tag-line";
+import TagLine from "../../app-components/tag-line";
 import DatasetPropertyTable from "./dataset-property-table";
 import {
     getUrl,
@@ -16,13 +16,13 @@ import {
     DATASET_LIST_URL,
     PUBLISHER_QUERY,
     DATASET_QUERY
-} from "../../application/navigation";
+} from "../../app/navigation";
 import {Link} from "react-router";
-import {getString} from "../../application/strings";
-import setPageTitle from "../../services/page-title";
-import {isDataReady} from "./../../services/http-request";
-import {selectLabel, selectLabels} from "./../../services/labels";
-import {HttpRequestStatus} from "./../../application/http-request-status";
+import {getString} from "../../app/strings";
+import setPageTitle from "../../app-services/page-title";
+import {isDataReady} from "../../app-services/http-request";
+import {selectLabel, selectLabels} from "../../app-services/labels";
+import {HttpRequestStatus} from "../../app/http-request-status";
 
 class DatasetMetadataComponent extends React.Component {
     render() {

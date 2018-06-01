@@ -6,7 +6,7 @@ import {
     ERROR_MISSING,
     ERROR_RESPONSE,
     ERROR_SERVER_FAILURE
-} from "./../services/http-request";
+} from "../app-services/http-request";
 
 export const HttpRequestStatus = ({status}) => {
     return (

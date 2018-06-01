@@ -1,14 +1,14 @@
 import React from "react";
 import {Link} from "react-router";
-import TagLine from "../../components/tag-line";
+import TagLine from "../../app-components/tag-line";
 import {
     getUrl,
     DATASET_DETAIL_URL,
     DATASET_QUERY,
     DATASET_LIST_URL,
     PUBLISHER_QUERY
-} from "../../application/navigation";
-import {getString} from "../../application/strings";
+} from "../../app/navigation";
+import {getString} from "../../app/strings";
 
 const DatasetListItem = ({value, showPublisher}) => {
     const datasetUrl = getUrl(DATASET_DETAIL_URL, {

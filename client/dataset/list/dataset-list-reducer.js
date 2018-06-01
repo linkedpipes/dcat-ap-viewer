@@ -15,13 +15,13 @@ import {
     PAGE_SIZE_QUERY,
     TEMPORAL_START,
     TEMPORAL_END
-} from "../../application/navigation";
+} from "../../app/navigation";
 import {
     STATUS_INITIAL,
     STATUS_FETCHING,
     STATUS_FETCHED,
     STATUS_FAILED
-} from "./../../services/http-request";
+} from "../../app-services/http-request";
 
 // TODO Isolate changes to minimize rendering.
 //  For example paginator re-render on every change of string query.

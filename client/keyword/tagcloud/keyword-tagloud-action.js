@@ -1,8 +1,8 @@
-import {fetchJsonCallback} from "../../services/http-request";
+import {fetchJsonCallback} from "../../app-services/http-request";
 import {
     addLoaderStatusOn,
     addLoaderStatusOff
-} from "../../components/loading-indicator";
+} from "../../app-components/loading-indicator";
 
 export const FETCH_KEYWORDS_REQUEST = "FETCH_KEYWORDS_REQUEST";
 export const FETCH_KEYWORDS_SUCCESS = "FETCH_KEYWORDS_SUCCESS";

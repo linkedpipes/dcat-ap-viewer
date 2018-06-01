@@ -1,8 +1,8 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {ListGroup, ListGroupItem} from "reactstrap";
-import {formatNumber} from "../services/formats"
-import {getString} from "./../application/strings"
+import {formatNumber} from "../app-services/formats"
+import {getString} from "../app/strings"
 
 class FacetFilter extends React.Component {
 

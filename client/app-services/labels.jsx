@@ -1,8 +1,8 @@
 import React from "react";
 import {fetchJsonCallback} from "./http-request"
-import {triples, graph} from "./../services/jsonld"
-import {SKOS} from "./../services/vocabulary"
-import {getLanguage} from "./../application/navigation"
+import {triples, graph} from ".//jsonld"
+import {SKOS} from ".//vocabulary"
+import {getLanguage} from "../app/navigation"
 
 // TODO Remove default languages and use application option.
 export const selectLabel = (value, languages) => {

@@ -1,4 +1,4 @@
-import {graph, triples} from "./../../services/jsonld";
+import {graph, triples} from "../../app-services/jsonld";
 import {
     DCAT,
     DCTERMS,
@@ -7,8 +7,8 @@ import {
     ADMS,
     VCARD,
     SCHEMA
-} from "./../../services/vocabulary";
-import {fetchLabel} from "./../../services/labels";
+} from "../../app-services/vocabulary";
+import {fetchLabel} from "../../app-services/labels";
 
 // TODO Merge with action or leave in separated file.
 

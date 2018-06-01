@@ -11,10 +11,10 @@ import {
     DropdownItem,
     UncontrolledDropdown
 } from "reactstrap";
-import FacetFilter from "../../components/facet-filter";
-import SearchBox from "../../components/search-box";
+import FacetFilter from "../../app-components/facet-filter";
+import SearchBox from "../../app-components/search-box";
 import DatasetList from "./dataset-list";
-import Paginator from "../../components/paginator";
+import Paginator from "../../app-components/paginator";
 import {
     fetchData,
     setListPage,
@@ -22,8 +22,8 @@ import {
     setQueryString,
     setListQueryFilter
 } from "./dataset-list-actions";
-import TagLine from "../../components/tag-line";
-import {formatNumber} from "../../services/formats";
+import TagLine from "../../app-components/tag-line";
+import {formatNumber} from "../../app-services/formats";
 import {
     getQuery,
     FORMAT_QUERY,
@@ -35,16 +35,16 @@ import {
     PAGE_SIZE_QUERY,
     TEMPORAL_START,
     TEMPORAL_END
-} from "../../application/navigation";
-import {getString} from "../../application/strings";
-import setPageTitle from "../../services/page-title";
+} from "../../app/navigation";
+import {getString} from "../../app/strings";
+import setPageTitle from "../../app-services/page-title";
 import {
     STATUS_FETCHING,
     STATUS_FAILED,
     isDataReady,
     fetchJson
-} from "./../../services/http-request";
-import {HttpRequestStatus} from "./../../application/http-request-status";
+} from "../../app-services/http-request";
+import {HttpRequestStatus} from "../../app/http-request-status";
 import {constructTypeaheadUrl} from "./../solr-api";
 
 const QueryStatusLine = ({resultSize, query}) => (

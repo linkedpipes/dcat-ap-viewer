@@ -1,7 +1,7 @@
 import React from "react";
 import {Table} from "reactstrap";
-import {getString} from "../../application/strings";
-import {selectLabel} from "./../../services/labels";
+import {getString} from "../../app/strings";
+import {selectLabel} from "../../app-services/labels";
 
 // TODO Extract components and add property specification.
 

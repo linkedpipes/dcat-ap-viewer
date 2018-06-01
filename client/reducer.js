@@ -5,7 +5,7 @@ import {datasetListReducer} from "./dataset/list/dataset-list-reducer";
 import {datasetDetailReducer} from "./dataset/detail/dataset-detail-reducer";
 import {organisationListReducer} from "./organisation/list/organisation-list-reducer";
 import {keywordsTagCloudReducer} from "./keyword/tagcloud/keyword-tagloud-reducer"
-import {reducer as loadingIndicator} from "./components/loading-indicator"
+import {reducer as loadingIndicator} from "./app-components/loading-indicator"
 
 // http://redux.js.org/docs/api/combineReducers.html
 const reducers = combineReducers({

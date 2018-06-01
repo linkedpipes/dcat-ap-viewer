@@ -1,6 +1,6 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import {getString} from "./../application/strings";
+import {getString} from "../app/strings";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
 
 /**

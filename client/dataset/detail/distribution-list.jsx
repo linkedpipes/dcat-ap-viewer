@@ -1,9 +1,9 @@
 import React from "react";
 import {Table} from "reactstrap";
-import Paginator from "../../components/paginator";
-import {getString} from "../../application/strings";
-import {selectLabel} from "./../../services/labels";
-import {isStatusLoading, isStatusFailed} from "./../../services/http-request";
+import Paginator from "../../app-components/paginator";
+import {getString} from "../../app/strings";
+import {selectLabel} from "../../app-services/labels";
+import {isStatusLoading, isStatusFailed} from "../../app-services/http-request";
 
 class DistributionRow extends React.Component {
 

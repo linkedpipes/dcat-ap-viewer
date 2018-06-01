@@ -9,7 +9,7 @@ import {
     DropdownMenu,
     DropdownItem
 } from "reactstrap";
-import {getString} from "./../application/strings";
+import {getString} from "../app/strings";
 
 const PAGE_SIZES = [10, 20, 40, 80];
 

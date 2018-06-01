@@ -1,4 +1,4 @@
-import {fetchJsonCallback} from "../../services/http-request";
+import {fetchJsonCallback} from "../../app-services/http-request";
 import {jsonLdToDataset, requestLabelsForDataset} from "./jsonld-to-dataset";
 import {
     jsonLdToDistribution,
@@ -7,7 +7,7 @@ import {
 import {
     addLoaderStatusOn,
     addLoaderStatusOff
-} from "../../components/loading-indicator";
+} from "../../app-components/loading-indicator";
 
 export const FETCH_DATASET_REQUEST = "FETCH_DATASET_REQUEST";
 export const FETCH_DATASET_SUCCESS = "FETCH_DATASET_SUCCESS";

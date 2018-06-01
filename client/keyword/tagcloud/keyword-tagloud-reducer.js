@@ -7,7 +7,7 @@ import {
     STATUS_INITIAL,
     STATUS_FETCHING,
     STATUS_FETCHED
-} from "./../../services/http-request";
+} from "../../app-services/http-request";
 
 const initialState = {
     "status": STATUS_INITIAL,

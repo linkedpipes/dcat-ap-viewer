@@ -8,12 +8,12 @@ import {
     SET_DISTRIBUTION_PAGE_INDEX,
     SET_DISTRIBUTION_PAGE_SIZE
 } from "./dataset-detail-actions";
-import {FETCH_LABEL_SUCCESS} from "./../../services/labels";
+import {FETCH_LABEL_SUCCESS} from "../../app-services/labels";
 import {
     STATUS_INITIAL,
     STATUS_FETCHING,
     STATUS_FETCHED
-} from "./../../services/http-request";
+} from "../../app-services/http-request";
 
 const initialState = {
     // TODO Extract UI to another reducer.

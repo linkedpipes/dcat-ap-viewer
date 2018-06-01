@@ -1,8 +1,8 @@
-import {fetchJsonCallback} from "../../services/http-request";
+import {fetchJsonCallback} from "../../app-services/http-request";
 import {
     addLoaderStatusOn,
     addLoaderStatusOff
-} from "../../components/loading-indicator";
+} from "../../app-components/loading-indicator";
 
 export const FETCH_LIST_PAGE_REQUEST = "FETCH_ORGANISATION_LIST_PAGE_REQUEST";
 export const FETCH_LIST_PAGE_SUCCESS = "FETCH_ORGANISATION_LIST_PAGE_SUCCESS";
