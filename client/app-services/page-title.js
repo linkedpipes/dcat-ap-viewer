@@ -1,4 +1,4 @@
-const setPageTitle = (value) => {
+export default function setPageTitle(value) {
     let title = "";
     if (CONST_TITLE_PREFIX !== undefined && CONST_TITLE_PREFIX !== 0) {
         title += CONST_TITLE_PREFIX + " ";
@@ -8,6 +8,5 @@ const setPageTitle = (value) => {
         title += " " + CONST_TITLE_SUFFIX;
     }
     document.title = title;
-};
+}
 
-export default setPageTitle;
