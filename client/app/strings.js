@@ -212,7 +212,7 @@ export const getLanguages = () => {
 };
 
 // TODO Add support for arguments in the string function
-export  const getString = (name) => {
+export const getString = (name) => {
     if (IS_PRODUCTION_ENV) {
         return STRINGS[getLanguage()][name];
     } else {
