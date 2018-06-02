@@ -1,4 +1,6 @@
 import {
+    MOUNT_KEYWORDS_LIST,
+    UNMOUNT_KEYWORDS_LIST,
     FETCH_KEYWORDS_FAILED,
     FETCH_KEYWORDS_SUCCESS,
     FETCH_KEYWORDS_REQUEST
@@ -9,15 +11,14 @@ import {
     STATUS_FETCHED
 } from "../../app-services/http-request";
 
-const initialState = {
-    "status": STATUS_INITIAL,
-    "data": [],
-};
-
 const reducerName = "keyword-tagcloud";
 
-function reducer(state = initialState, action) {
+function reducer(state = {}, action) {
     switch (action.type) {
+        case MOUNT_KEYWORDS_LIST:
+            return onMount();
+        case UNMOUNT_KEYWORDS_LIST:
+            return {};
         case FETCH_KEYWORDS_REQUEST:
             return onKeywordsRequest();
         case FETCH_KEYWORDS_SUCCESS:
@@ -29,26 +30,33 @@ function reducer(state = initialState, action) {
     }
 }
 
+function onMount() {
+    return {
+        "status": STATUS_INITIAL,
+        "keywords": undefined,
+    }
+}
+
 function onKeywordsRequest() {
     return {
         "status": STATUS_FETCHING,
-        "data": []
+        "keywords": []
     };
 }
 
 function onKeywordsRequestSuccess(state, action) {
     return {
         ...state,
-        "data": action.data.json,
-        "status": STATUS_FETCHED
+        "status": STATUS_FETCHED,
+        "keywords": action.keywords
     };
 }
 
 function onKeywordsRequestFailed(state, action) {
     return {
         ...state,
-        "data": [],
-        "status": action.error.status
+        "status": action.error.status,
+        "keywords": undefined,
     };
 }
 
@@ -59,10 +67,10 @@ export default reducer = {
 
 const reducerSelector = (state) => state[reducerName];
 
-export function keywordsStatusSelector(state) {
+export function statusSelector(state) {
     return reducerSelector(state).status;
 }
 
-export function keywordsDataSelector(state) {
-    return reducerSelector(state).data;
+export function keywordsSelector(state) {
+    return reducerSelector(state).keywords;
 }

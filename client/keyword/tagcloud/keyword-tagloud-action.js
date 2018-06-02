@@ -1,39 +1,52 @@
-import {fetchJsonCallback} from "../../app-services/http-request";
 import {
     addLoaderStatusOn,
     addLoaderStatusOff
-} from "../../app-components/loading-indicator";
+} from "app-components/loading-indicator";
+import {fetchKeywordsByPublishers} from "../keyword-api";
 
+export const MOUNT_KEYWORDS_LIST = "MOUNT_KEYWORDS_LIST";
+export const UNMOUNT_KEYWORDS_LIST = "UNMOUNT_KEYWORDS_LIST";
 export const FETCH_KEYWORDS_REQUEST = "FETCH_KEYWORDS_REQUEST";
 export const FETCH_KEYWORDS_SUCCESS = "FETCH_KEYWORDS_SUCCESS";
 export const FETCH_KEYWORDS_FAILED = "FETCH_KEYWORDS_FAILED";
 
-export function fetchKeywordsRequest() {
-    return (dispatch) => {
-        dispatch(fetchKeywords());
-        const url = "/api/v1/resource/static?id=keywords_by_publishers";
-        fetchJsonCallback(url, (json) => {
-            dispatch(fetchKeywordsSuccess(json));
-        }, (error) => {
-            dispatch(fetchKeywordsFailed(error));
-        });
+export function onMount() {
+    return {
+        "type": MOUNT_KEYWORDS_LIST
     };
 }
 
-function fetchKeywords() {
+export function onUnMount() {
+    return {
+        "type": UNMOUNT_KEYWORDS_LIST
+    }
+}
+
+export function fetchKeywords() {
+    return (dispatch) => {
+        dispatch(fetchRequest());
+        fetchKeywordsByPublishers()
+            .then((payload) => dispatch(fetchSuccess(payload)))
+            .catch((error) => dispatch(fetchFailed(error)));
+    };
+}
+
+function fetchRequest() {
     return addLoaderStatusOn({
         "type": FETCH_KEYWORDS_REQUEST
     });
 }
 
-function fetchKeywordsSuccess(json) {
+function fetchSuccess(json) {
     return addLoaderStatusOff({
         "type": FETCH_KEYWORDS_SUCCESS,
-        "data": json
+        "keywords": json
     });
 }
 
-function fetchKeywordsFailed(error) {
+function fetchFailed(error) {
+    // TODO Add API for handling errors!
+    console.error("fetchFailed", error);
     return addLoaderStatusOff({
         "type": FETCH_KEYWORDS_FAILED,
         "error": error
