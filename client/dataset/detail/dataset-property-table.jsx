@@ -1,7 +1,7 @@
 import React from "react";
 import {Table} from "reactstrap";
-import {getString} from "../../app/strings";
-import {selectLabel} from "../../app-services/labels";
+import {getString} from "app/strings";
+import {selectLabel} from "app-services/labels";
 
 // TODO Extract components and add property specification.
 
@@ -45,9 +45,9 @@ function updateDate(value) {
     }
 }
 
-const ContactPoint = ({value}) => {
+const ContactPoint = ({labels, value}) => {
     if (typeof value === "object") {
-        let label = value.label;
+        let label = selectLabel(labels, value.iri);
         let email = getEmail(value);
         // TODO Use more readable approach.
         if (labelIsEmpty(label)) {
@@ -56,8 +56,6 @@ const ContactPoint = ({value}) => {
             } else {
                 label = email;
             }
-        } else {
-            label = selectLabel(label);
         }
         let iri;
         if (email === undefined) {
@@ -72,7 +70,7 @@ const ContactPoint = ({value}) => {
     } else {
         // TODO Check if this branch is ever needed.
         return (
-            <a href={value} rel="nofollow">{selectLabel(value)}</a>
+            <a href={value} rel="nofollow">{selectLabel(labels, value)}</a>
         );
     }
 };
@@ -92,7 +90,7 @@ function getEmail(value) {
 
 
 // TODO Check usage.
-const ContactPoints = ({label, value}) => {
+const ContactPoints = ({labels, label, value}) => {
     if (value === undefined) {
         return null;
     }
@@ -111,7 +109,7 @@ const ContactPoints = ({label, value}) => {
             <td>
                 {
                     valuesAsArray.map((item) => (
-                        <ContactPoint key={item} value={item} />
+                        <ContactPoint labels={labels} key={item} value={item}/>
                     ))
                 }
             </td>
@@ -154,7 +152,7 @@ const UrlRow = ({label, value}) => {
             <td>
                 {
                     valuesAsArray.map((item) => (
-                        <UrlValue key={item} value={item} />
+                        <UrlValue key={item} value={item}/>
                     ))
                 }
             </td>
@@ -162,7 +160,7 @@ const UrlRow = ({label, value}) => {
     )
 };
 
-const LabeledUrlRow = ({label, value}) => {
+const LabeledUrlRow = ({labels, label, value}) => {
     if (value === undefined) {
         return null;
     }
@@ -182,8 +180,8 @@ const LabeledUrlRow = ({label, value}) => {
                 {
                     valuesAsArray.map((item) => (
                         <span key={item["@id"]}>
-                            <LabeledUrlValue value={item}/>
-                            {valuesAsArray.length > 0 && <br/> }
+                            <LabeledUrlValue labels={labels} value={item}/>
+                            {valuesAsArray.length > 0 && <br/>}
                         </span>
                     ))
                 }
@@ -192,9 +190,9 @@ const LabeledUrlRow = ({label, value}) => {
     )
 };
 
-const LabeledUrlValue = ({value}) => {
+const LabeledUrlValue = ({labels, value}) => {
     return (
-        <a href={value["@id"]} rel="nofollow">{selectLabel(value)}</a>
+        <a href={value["@id"]} rel="nofollow">{selectLabel(labels, value)}</a>
     );
 };
 
@@ -213,17 +211,20 @@ const ValueRow = ({label, value}) => {
     )
 };
 
-const DatasetPropertyTable = ({dataset}) => (
+const DatasetPropertyTable = ({labels, dataset}) => (
     <Table>
         <tbody>
         <UrlRow label="s.dataset_iri" value={dataset["@id"]}/>
-        <ContactPoints label="s.contact_point" value={dataset.contactPoints}/>
-        <LabeledUrlRow label="s.publisher" value={dataset.publisher}/>
-        <LabeledUrlRow label="s.topic" value={dataset.themes}/>
+        <ContactPoints labels={labels} label="s.contact_point"
+                       value={dataset.contactPoints}/>
+        <LabeledUrlRow labels={labels} label="s.publisher"
+                       value={dataset.publisher}/>
+        <LabeledUrlRow labels={labels} label="s.topic" value={dataset.themes}/>
         <UrlRow label="s.access_right" value={dataset.accessRights}/>
         <UrlRow label="s.conforms_to" value={dataset.conformsTo}/>
         <UrlRow label="s.documentation" value={dataset.documentation}/>
-        <LabeledUrlRow label="s.frequency" value={dataset.frequency}/>
+        <LabeledUrlRow labels={labels} label="s.frequency"
+                       value={dataset.frequency}/>
         <UrlRow label="s.has_version" value={dataset.hasVersion}/>
         <UrlRow label="s.is_version_of" value={dataset.isVersionOf}/>
         <UrlRow label="s.identifier" value={dataset.identifier}/>
@@ -236,7 +237,8 @@ const DatasetPropertyTable = ({dataset}) => (
         <ValueRow label="s.modified" value={dataset.modified}/>
         <UrlRow label="s.sample" value={dataset.sample}/>
         <UrlRow label="s.source" value={dataset.source}/>
-        <LabeledUrlRow label="s.spatial" value={dataset.spatial}/>
+        <LabeledUrlRow labels={labels} label="s.spatial"
+                       value={dataset.spatial}/>
         <Temporal label="s.temporal" value={dataset.temporal}/>
         <ValueRow label="s.type" value={dataset.type}/>
         <ValueRow label="s.version" value={dataset.version}/>

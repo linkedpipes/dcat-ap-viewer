@@ -8,9 +8,6 @@ import {
     VCARD,
     SCHEMA
 } from "../../app-services/vocabulary";
-import {fetchLabel} from "../../app-services/labels";
-
-// TODO Merge with action or leave in separated file.
 
 export function jsonLdToDataset(jsonld) {
     const dataset = graph.getByType(jsonld, DCAT.Dataset);
@@ -18,7 +15,6 @@ export function jsonLdToDataset(jsonld) {
     // TODO Change to getString with specific structure (object with languages).
     const mandatory = {
         "@id": triples.id(dataset),
-        "title": triples.string(dataset, DCTERMS.title),
         "description": triples.string(dataset, DCTERMS.description)
     };
 
@@ -30,7 +26,6 @@ export function jsonLdToDataset(jsonld) {
         "themes": triples.entities(dataset, DCAT.theme)
     };
 
-    // TODO Check usage of getValue
     const optional = {
         "accessRights": triples.resources(dataset, DCTERMS.accessRights),
         "conformsTo": triples.resources(dataset, DCTERMS.conformsTo),
@@ -74,7 +69,6 @@ function loadContactPoint(jsonld, contactPointIri) {
     const contactPoint = graph.getByResource(jsonld, contactPointIri);
     return {
         "iri": triples.id(contactPoint),
-        "label": triples.string(contactPoint, VCARD.fn),
         "email": triples.values(contactPoint, VCARD.hasEmail)
     };
 }
@@ -87,7 +81,8 @@ function loadPublisher(jsonld, dataset) {
     const publisher = graph.getByResource(jsonld, publisherIri) || {};
     return {
         "@id": triples.resource(dataset, DCTERMS.publisher),
-        ...triples.string(publisher, "http://xmlns.com/foaf/0.1/name")
+        // TODO Check that we need this (use IRI for publishers in search).
+        ...triples.string(publisher, FOAF.name)
     };
 }
 
@@ -103,32 +98,4 @@ function loadTemporal(jsonld, dataset) {
             "endDate": triples.value(temporal, SCHEMA.endDate)
         };
     }
-}
-
-// TODO Export generalized version to other layer.
-export function requestLabelsForDataset(entity, dispatch) {
-    const properties = ["themes", "frequency", "spatial"];
-    properties.forEach((property) => {
-        const value = entity[property];
-        if (value === undefined) {
-            return;
-        } else if (Array.isArray(value)) {
-            for (let index in value) {
-                dispatchLabelRequest(dispatch, value[index]["@id"], {
-                    "target": "dataset",
-                    "key": property,
-                    "index": index
-                });
-            }
-        } else {
-            dispatchLabelRequest(dispatch, value["@id"], {
-                "target": "dataset",
-                "key": property
-            });
-        }
-    });
-}
-
-function dispatchLabelRequest(dispatch, iri, identifier) {
-    dispatch(fetchLabel(iri, identifier));
 }

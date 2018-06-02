@@ -1,4 +1,4 @@
-import {graph, triples} from "../../app-services/jsonld";
+import {graph, triples} from "../../../app-services/jsonld";
 import {
     DCAT,
     DCTERMS,
@@ -8,8 +8,7 @@ import {
     VCARD,
     SCHEMA,
     SPDX
-} from "../../app-services/vocabulary";
-import {fetchLabel} from "../../app-services/labels";
+} from "../../../app-services/vocabulary";
 
 
 // TODO Merge with action or leave in separated file.
@@ -52,35 +51,4 @@ export function jsonLdToDistribution(jsonld) {
     };
 
     return {...mandatory, ...recommended, ...optional, ...extension};
-}
-
-// TODO Export generalized version to other layer.
-export function requestLabelsForDistribution(entity, dispatch) {
-    const iri = entity["@id"];
-    const properties = ["format"];
-    properties.forEach((property) => {
-        const value = entity[property];
-        if (value === undefined) {
-            return;
-        } else if (Array.isArray(value)) {
-            for (let index in value) {
-                dispatchLabelRequest(dispatch, value[index]["@id"], {
-                    "target": "distribution",
-                    "key": property,
-                    "index": index,
-                    "iri": iri
-                });
-            }
-        } else {
-            dispatchLabelRequest(dispatch, value["@id"], {
-                "target": "distribution",
-                "key": property,
-                "iri": iri
-            });
-        }
-    });
-}
-
-function dispatchLabelRequest(dispatch, iri, identifier) {
-    dispatch(fetchLabel(iri, identifier));
 }
