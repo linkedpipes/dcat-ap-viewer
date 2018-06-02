@@ -14,7 +14,9 @@ const initialState = {
     "data": [],
 };
 
-export const keywordsTagCloudReducer = (state = initialState, action) => {
+const reducerName = "keyword-tagcloud";
+
+function reducer(state = initialState, action) {
     switch (action.type) {
         case FETCH_KEYWORDS_REQUEST:
             return onKeywordsRequest();
@@ -25,7 +27,7 @@ export const keywordsTagCloudReducer = (state = initialState, action) => {
         default:
             return state
     }
-};
+}
 
 function onKeywordsRequest() {
     return {
@@ -50,10 +52,17 @@ function onKeywordsRequestFailed(state, action) {
     };
 }
 
+export default reducer = {
+    "name": reducerName,
+    "reducer": reducer
+};
+
+const reducerSelector = (state) => state[reducerName];
+
 export function keywordsStatusSelector(state) {
-    return state.keywords.status;
+    return reducerSelector(state).status;
 }
 
 export function keywordsDataSelector(state) {
-    return state.keywords.data;
+    return reducerSelector(state).data;
 }

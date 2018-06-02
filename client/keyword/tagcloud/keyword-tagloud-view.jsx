@@ -97,7 +97,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
 });
 
-export const KeywordsViewView = connect(
+export const KeywordsView = connect(
     mapStateToProps,
     mapDispatchToProps
 )(KeywordsViewComponent);

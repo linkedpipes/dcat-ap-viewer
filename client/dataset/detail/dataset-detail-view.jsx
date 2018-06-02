@@ -131,9 +131,9 @@ class DatasetDetailViewComponent extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    "ui": state.dataset.detail.ui,
-    "dataset": state.dataset.detail.dataset,
-    "distributions": state.dataset.detail.distributions
+    "ui": state["dataset-detail"].ui,
+    "dataset": state["dataset-detail"].dataset,
+    "distributions": state["dataset-detail"].distributions
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

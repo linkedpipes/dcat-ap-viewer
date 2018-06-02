@@ -348,14 +348,14 @@ class DatasetListViewComponent extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    "searchQuery": state.dataset.list.ui.searchQuery,
-    "keyword": state.dataset.list.data.keyword,
-    "publisher": state.dataset.list.data.publisher,
-    "format": state.dataset.list.data.format,
-    "datasets": state.dataset.list.data.datasets,
-    "datasetCount": state.dataset.list.data.datasetCount,
-    "query": state.dataset.list.query,
-    "status": state.dataset.list.data.status
+    "searchQuery": state["dataset-list"].ui.searchQuery,
+    "keyword": state["dataset-list"].data.keyword,
+    "publisher": state["dataset-list"].data.publisher,
+    "format": state["dataset-list"].data.format,
+    "datasets": state["dataset-list"].data.datasets,
+    "datasetCount": state["dataset-list"].data.datasetCount,
+    "query": state["dataset-list"].query,
+    "status": state["dataset-list"].data.status
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

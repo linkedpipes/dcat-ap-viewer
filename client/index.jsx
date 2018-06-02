@@ -3,11 +3,12 @@ import ReactDOM from "react-dom";
 import {Router, browserHistory} from "react-router";
 import {Provider} from "react-redux";
 import {syncHistoryWithStore} from "react-router-redux";
-import {configureStore} from "./store";
+import {create} from "./app/store";
 import {createRoutes} from "./app/navigation";
 import Raven from "raven-js";
 import Promise from "es6-promise";
 import "isomorphic-fetch";
+
 
 // TODO Move to extra file with together with "isomorphic-fetch"
 function backwardCompatibility() {
@@ -18,7 +19,7 @@ function backwardCompatibility() {
 
 backwardCompatibility();
 
-const store = configureStore();
+const store = create(browserHistory);
 const history = syncHistoryWithStore(browserHistory, store);
 
 // TODO Add Raven component for exception handling

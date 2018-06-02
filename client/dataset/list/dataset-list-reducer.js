@@ -56,7 +56,9 @@ const initialState = {
     }
 };
 
-export const datasetListReducer = (state = initialState, action) => {
+const reducerName = "dataset-list";
+
+function reducer(state = initialState, action) {
     switch (action.type) {
         case FETCH_LIST_PAGE_REQUEST:
             return onListRequest(state);
@@ -72,7 +74,7 @@ export const datasetListReducer = (state = initialState, action) => {
         default:
             return state
     }
-};
+}
 
 function onListRequest(state) {
     return {
@@ -217,4 +219,9 @@ function undefinedAsEmpty(value) {
     }
 }
 
-// TODO Add selectors.
+export default reducer = {
+    "name": reducerName,
+    "reducer": reducer
+};
+
+const reducerSelector = (state) => state[reducerName];

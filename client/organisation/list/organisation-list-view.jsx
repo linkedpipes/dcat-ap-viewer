@@ -94,8 +94,8 @@ class OrganisationListViewComponent extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    "status": state.organisation.list.data.status,
-    "organisations": state.organisation.list.data.organisations
+    "status": state["organisation-list"].data.status,
+    "organisations": state["organisation-list"].data.organisations
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -27,10 +27,12 @@ const initialState = {
     "distributions": {}
 };
 
+const reducerName = "dataset-detail";
+
 // TODO Extract "labels" service?
 
 // TODO Extract state transforming functions.
-export const datasetDetailReducer = (state = initialState, action) => {
+function reducer(state = initialState, action){
     switch (action.type) {
         case FETCH_DATASET_REQUEST:
             return onDatasetRequest(state, action);
@@ -53,7 +55,7 @@ export const datasetDetailReducer = (state = initialState, action) => {
         default:
             return state
     }
-};
+}
 
 function onDatasetRequest(state, action) {
     return {
@@ -210,4 +212,9 @@ function onSetDistributionPageSize(state, action) {
     };
 }
 
-// TODO Add selectors.
+export default reducer = {
+    "name": reducerName,
+    "reducer": reducer
+};
+
+const reducerSelector = (state) => state[reducerName];

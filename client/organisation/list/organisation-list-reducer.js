@@ -17,7 +17,9 @@ const initialState = {
     }
 };
 
-export const organisationListReducer = (state = initialState, action) => {
+const reducerName = "organisation-list";
+
+function reducer(state = initialState, action) {
     switch (action.type) {
         case FETCH_LIST_PAGE_REQUEST:
             return onKeywordsRequest(state);
@@ -28,7 +30,7 @@ export const organisationListReducer = (state = initialState, action) => {
         default:
             return state
     }
-};
+}
 
 function onKeywordsRequest(state) {
     return {
@@ -69,4 +71,9 @@ function onKeywordsRequestFailed(state, action) {
     };
 }
 
-// TODO Add selectors.
+export default reducer = {
+    "name": reducerName,
+    "reducer": reducer
+};
+
+const reducerSelector = (state) => state[reducerName];
