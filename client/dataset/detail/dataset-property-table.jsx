@@ -227,7 +227,7 @@ const DatasetPropertyTable = ({labels, dataset}) => (
                        value={dataset.frequency}/>
         <UrlRow label="s.has_version" value={dataset.hasVersion}/>
         <UrlRow label="s.is_version_of" value={dataset.isVersionOf}/>
-        <UrlRow label="s.identifier" value={dataset.identifier}/>
+        <ValueRow label="s.identifier" value={dataset.identifier}/>
         <UrlRow label="s.other_identifier" value={dataset.otherIdentifier}/>
         <UrlRow label="s.landing_page" value={dataset.landingPage}/>
         <UrlRow label="s.language" value={dataset.language}/>
