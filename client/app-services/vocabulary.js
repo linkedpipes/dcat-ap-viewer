@@ -43,7 +43,8 @@ export const DCAT = {
 
 const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";
 export const FOAF  = {
-    "page" : FOAF_PREFIX + "page"
+    "page" : FOAF_PREFIX + "page",
+    "name": FOAF_PREFIX + "name"
 };
 
 const ADMS_PREFIX = "http://www.w3.org/ns/adms#";
@@ -83,4 +84,4 @@ export const SKOS = {
 
 export const RDF = {
     "type" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#type"
-}
+};
