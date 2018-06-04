@@ -110,5 +110,9 @@ a {
 }
 
 .language-drop-down button {
-    padding: 0px;
+    padding: 0;
+}
+
+dd {
+    overflow-wrap: break-word;
 }
