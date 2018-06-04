@@ -83,7 +83,7 @@ class HeaderLanguageSelector extends React.Component {
         return languages;
     }
 
-    createDropdownItem(baseUrl, lang){
+    createDropdownItem(baseUrl, lang) {
         return (
             <DropdownItem key={lang}>
                 <NavLink href={baseUrl + "lang=" + lang}>
