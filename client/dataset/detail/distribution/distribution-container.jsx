@@ -2,13 +2,13 @@ import React from "react";
 import {connect} from "react-redux";
 import {
     fetchDistribution
-} from "../distribution-action";
+} from "./distribution-action";
 import {
     distributionDataSelector,
     distributionStatusSelector
-} from "../distribution-reducer";
+} from "./distribution-reducer";
 import {isDataReady} from "app-services/http-request";
-import {labelsSelector} from "app-services/labels";
+import {labelsSelector} from "app-services/labels/index";
 
 class _DistributionContainer extends React.Component {
 

@@ -1,8 +1,8 @@
 import React from "react";
 import {getString} from "app/strings";
-import {selectLabel} from "app-services/labels";
+import {selectLabel} from "app-services/labels/index";
 
-export class Distribution extends React.Component {
+export class DistributionTableEntry extends React.Component {
 
     render() {
         if (this.props.isLoading) {
@@ -46,7 +46,9 @@ export class Distribution extends React.Component {
         return (
             <tr>
                 <td>
-                    <a href={url} rel="nofollow" className="distribution-link">{title}</a>
+                    <a href={url} rel="nofollow" className="distribution-link">
+                        {title}
+                    </a>
                 </td>
                 <td>
                     {dist.format !== undefined &&
@@ -55,7 +57,9 @@ export class Distribution extends React.Component {
                 </td>
                 <td>
                     {dist.conformsTo !== undefined &&
-                    <a href={dist.conformsTo} rel="nofollow">{dist.conformsTo}</a>
+                    <a href={dist.conformsTo} rel="nofollow">
+                        {dist.conformsTo}
+                    </a>
                     }
                 </td>
                 <td>

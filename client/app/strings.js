@@ -100,7 +100,9 @@ const STRINGS = {
         "s.searching": "Vyhledávám data ...",
         "s.no_data_found" : "Dotazu neodpovídají žádná data.",
         "s.hide_filters" : "Skrýt pokročilé filtry",
-        "s.show_filters" : "Zobrazit pokročilé filtry"
+        "s.show_filters" : "Zobrazit pokročilé filtry",
+        "s.download": "Stáhnout",
+        "s.schema": "Schéma"
     },
     "en": {
         "title.datasets": "Datasets",
@@ -199,7 +201,9 @@ const STRINGS = {
         "s.searching": "Searching ...",
         "s.no_data_found" : "No data found.",
         "s.hide_filters" : "Hide advanced filters",
-        "s.show_filters" : "Show advanced filters"
+        "s.show_filters" : "Show advanced filters",
+        "s.download": "Download",
+        "s.schema": "Schema"
     }
 };
 

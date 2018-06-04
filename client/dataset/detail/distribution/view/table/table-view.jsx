@@ -1,11 +1,11 @@
 import React from "react";
 import {Table} from "reactstrap";
-import Paginator from "../../../app-components/paginator";
-import {getString} from "../../../app/strings";
-import {DistributionContainer} from "./entry/distribution-container";
-import {Distribution} from "./entry/distribution";
+import Paginator from "app-components/paginator";
+import {getString} from "app/strings";
+import {DistributionContainer} from "../../distribution-container";
+import {DistributionTableEntry} from "./table-view-entry";
 
-export default class DistributionList extends React.PureComponent {
+export class DistributionTableView extends React.PureComponent {
 
     render() {
         const {distributions} = this.props;
@@ -30,7 +30,9 @@ export default class DistributionList extends React.PureComponent {
                     <tbody>
                     {distributions.map((iri) => (
                         <DistributionContainer
-                            key={iri} iri={iri} component={Distribution}/>
+                            key={iri}
+                            iri={iri}
+                            component={DistributionTableEntry}/>
                     ))}
                     </tbody>
                 </Table>
@@ -40,6 +42,7 @@ export default class DistributionList extends React.PureComponent {
                     pageSize={pageSize}
                     onIndexChange={setPage}
                     onSizeChange={setPageSize}
+                    sizes={[4,20,30,40]}
                 />
             </div>
         );

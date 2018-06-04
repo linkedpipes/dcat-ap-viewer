@@ -10,7 +10,9 @@ import {
     pageSelector,
     pageSizeSelector,
 } from "./distribution-reducer";
-import DistributionList from "./distribution-list";
+
+// TODO Read from configuration.
+const DistributionList = require("./view/nkod").default;
 
 class _DistributionListContainer extends React.Component {
 
@@ -35,7 +37,6 @@ class _DistributionListContainer extends React.Component {
         this.setState({
             "distributions": visibleDistributions
         });
-
     }
 
     componentWillReceiveProps(nextProps) {
@@ -80,15 +81,3 @@ export const DistributionListContainer = connect(
     mapStateToProps,
     mapDispatchToProps
 )(_DistributionListContainer);
-
-`
-<DistributionList
-    keys={dataset.distributions}
-    values={distributions}
-    fetchDistribution={this.props.fetchDistribution}
-    setPage={this.props.setDistributionPageIndex}
-    setPageSize={this.props.setDistributionPageSize}
-    pageIndex={ui.distributionsPageIndex}
-    pageSize={ui.distributionsPageSize}
-/>
-`

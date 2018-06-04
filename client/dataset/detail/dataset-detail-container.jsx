@@ -18,9 +18,11 @@ import setPageTitle from "app-services/page-title";
 import {isDataReady} from "app-services/http-request";
 import {selectLabel, labelsSelector} from "app-services/labels";
 import {HttpRequestStatus} from "app/http-request-status";
-import {DatasetDetail} from "./dataset-detail";
 import {DatasetWebPageMetadata} from "./webpage-metadata";
 import {DistributionListContainer} from "./distribution";
+
+// TODO Load from configuration.
+const DatasetDetail = require("./view/nkod").default;
 
 class _DatasetDetailContainer extends React.Component {
 

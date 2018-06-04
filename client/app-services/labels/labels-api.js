@@ -7,6 +7,9 @@ export const selectLabel = (labelState, resource) => {
     if (labels.length > 1) {
         console.warn("Using only one label for:", value, "->", labels[0]);
     }
+    if (labels.length === 0) {
+        return undefined;
+    }
     return labels[0];
 };
 

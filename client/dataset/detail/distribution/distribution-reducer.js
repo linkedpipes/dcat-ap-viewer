@@ -14,12 +14,18 @@ import {
 
 const reducerName = "dataset-detail-distribution";
 
-function reducer(state = {}, action) {
+const initialState = {
+    "page": 0,
+    "pageSize": 4,
+    "distributions": []
+};
+
+function reducer(state = initialState, action) {
     switch (action.type) {
         case MOUNT_DISTRIBUTION:
-            return onMount();
+            return state;
         case UNMOUNT_DISTRIBUTION:
-            return {};
+            return onUnMount(state);
         case FETCH_DISTRIBUTION_REQUEST:
             return onDistributionRequest(state, action);
         case FETCH_DISTRIBUTION_SUCCESS:
@@ -35,10 +41,10 @@ function reducer(state = {}, action) {
     }
 }
 
-function onMount() {
+function onUnMount(state) {
     return {
+        ...state,
         "page": 0,
-        "pageSize": 10,
         "distributions": []
     }
 }
@@ -84,7 +90,7 @@ function onDistributionRequestFailed(state, action) {
 function onSetDistributionPage(state, action) {
     return {
         ...state,
-        "pageIndex": action.page
+        "page": action.page
     };
 }
 
