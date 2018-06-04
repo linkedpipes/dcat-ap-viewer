@@ -7,13 +7,11 @@ import {
     ButtonDropdown,
     DropdownToggle,
     DropdownMenu,
-    DropdownItem
+    DropdownItem,
+    UncontrolledDropdown
 } from "reactstrap";
-import {getString} from "../app/strings";
 
-const PAGE_SIZES = [10, 20, 40, 80];
-
-class Paginator extends React.Component {
+class Paginator extends React.PureComponent {
 
     render() {
         const {
@@ -21,38 +19,30 @@ class Paginator extends React.Component {
             pageIndex,
             pageSize,
             onIndexChange,
-            onSizeChange
+            onSizeChange,
+            sizes
         } = this.props;
+
+        if (recordsCount < pageSize) {
+            return null;
+        }
 
         const pages = createPageList(recordsCount, pageIndex, pageSize);
         const pageItems = createPageItemsList(pages, pageIndex, onIndexChange);
-        const showPaginator = pageItems.length > 0;
-        // TODO Remove current value from the page list.
-        if (showPaginator) {
-            return (
-                <div>
-                    <Pagination style={{float: "left"}}>
-                        {pageItems}
-                    </Pagination>
-                    <div style={{float: "right"}}>
-                        {getString("s_paginator")} &nbsp;
-                        <ComboBox
-                            activeValue={pageSize}
-                            values={PAGE_SIZES}
-                            onChange={(index) => onSizeChange(PAGE_SIZES[index])}/>
-                    </div>
-                    <br/>
-                    <br/>
+
+        return (
+            <div>
+                <ul className="pagination float-left">
+                    {pageItems}
+                </ul>
+                <div className="float-right">
+                    <ComboBox
+                        activeValue={pageSize}
+                        values={sizes}
+                        onChange={onSizeChange}/>
                 </div>
-            )
-        } else {
-            return (
-                <div>
-                    <br/>
-                    <br/>
-                </div>
-            );
-        }
+            </div>
+        )
     }
 }
 
@@ -62,7 +52,8 @@ Paginator.propTypes = {
     "pageSize": PropTypes.number.isRequired,
     "onIndexChange": PropTypes.func.isRequired,
     "onSizeChange": PropTypes.func.isRequired,
-    "paginatorLabel": PropTypes.string
+    "paginatorLabel": PropTypes.string,
+    "sizes": PropTypes.array.isRequired
 };
 
 export default Paginator;
@@ -121,58 +112,51 @@ function createPageItemsList(pages, active, onChange) {
 }
 
 function createPageItem(index, isActive, onChange) {
+    let className = "page-item";
+    if (isActive) {
+        className += " active";
+    }
     return (
-        <PaginationItem active={isActive} key={index}>
-            <Button className="page-button" onClick={() => onChange(index)}>
+        <li className={className} key={index}>
+            <a className="page-link" onClick={() => onChange(index)}>
                 {index + 1}
-            </Button>
-        </PaginationItem>
-    )
+            </a>
+        </li>
+    );
 }
 
 function createItemForIndexGap(index) {
     return (
-        <PaginationItem key={"stub_" + index}>
-            <div style={{"padding": "0.5rem 0.75rem"}}>
-                ...
-            </div>
-        </PaginationItem>
+        <li className="page-item px-3" key={"stub_" + index}>
+            ...
+        </li>
     )
 }
 
-// TODO Extract to other file.
 class ComboBox extends React.Component {
 
     constructor(props) {
         super(props);
-        this.toggle = this.toggle.bind(this);
         this.onSelect = this.onSelect.bind(this);
-        this.state = {"open": false};
-    }
-
-    toggle() {
-        this.setState({"open": !this.state.open});
     }
 
     render() {
         const {activeValue, values} = this.props;
         return (
-            <ButtonDropdown isOpen={this.state.open}
-                            toggle={this.toggle}
-                            dropup>
+            <UncontrolledDropdown>
                 <DropdownToggle caret>
                     {activeValue}
                 </DropdownToggle>
                 <DropdownMenu>
                     {values.map((value, index) => (
                         <DropdownItem key={index}
-                                      onClick={() => this.onSelect(index)}>
+                                      onClick={() => this.onSelect(value)}>
                             {value}
                         </DropdownItem>
                     ))}
                 </DropdownMenu>
-            </ButtonDropdown>
-        )
+            </UncontrolledDropdown>
+        );
     }
 
     onSelect(value) {

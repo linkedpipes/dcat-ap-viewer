@@ -81,6 +81,7 @@ const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPage
             pageSize={query.pageSize}
             onIndexChange={setPageIndex}
             onSizeChange={setPageSize}
+            sizes={[10,20,40,80]}
         />
     </div>
 );
