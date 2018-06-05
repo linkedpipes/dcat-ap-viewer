@@ -160,7 +160,7 @@ function documentation(entities) {
     if (!Array.isArray(entities)) {
         entities = [entities];
     }
-    const label = getString("s.download");
+    const label = getString("s.documentation_download");
     return entities.map((iri) => (
         <dd key={iri}>
             <a href={iri} rel="nofollow">
