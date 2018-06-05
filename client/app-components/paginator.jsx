@@ -31,7 +31,7 @@ class Paginator extends React.PureComponent {
         const pageItems = createPageItemsList(pages, pageIndex, onIndexChange);
 
         return (
-            <div>
+            <div style={{"height": "2rem"}}>
                 <ul className="pagination float-left">
                     {pageItems}
                 </ul>
