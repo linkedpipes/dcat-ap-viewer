@@ -128,13 +128,13 @@ class HeaderComponent extends React.Component {
     render() {
         return (
             <Container>
-                <Navbar toggleable="md" className="navbar-light">
+                <Navbar expand="md" className="navbar-light">
                     <NavbarBrand href="https://data.gov.cz/">
                         <img width="174" height="30"
                              className="d-inline-block align-top"
                              src="/assets/images/opendata-logo.png"/>
                     </NavbarBrand>
-                    <NavbarToggler right onClick={this.toggleNavbar}/>
+                    <NavbarToggler onClick={this.toggleNavbar}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
