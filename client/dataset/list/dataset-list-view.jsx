@@ -17,10 +17,7 @@ import DatasetList from "./dataset-list";
 import Paginator from "../../app-components/paginator";
 import {
     fetchData,
-    setListPage,
-    setListFacetFilter,
     setQueryString,
-    setListQueryFilter
 } from "./dataset-list-actions";
 import TagLine from "../../app-components/tag-line";
 import {formatNumber} from "../../app-services/formats";
@@ -40,7 +37,6 @@ import {getString} from "../../app/strings";
 import setPageTitle from "../../app-services/page-title";
 import {
     STATUS_FETCHING,
-    STATUS_FAILED,
     isDataReady,
     fetchJson
 } from "../../app-services/http-request";
@@ -262,7 +258,7 @@ class DatasetListViewComponent extends React.Component {
         const showPublisher = props.query.publisher === undefined ||
             props.query.publisher.length === 0;
 
-        if (props.query.publisher != "") {
+        if (props.query.publisher !== "") {
             setPageTitle(props.query.publisher);
         } else {
             setPageTitle(getString("title.datasets"));
