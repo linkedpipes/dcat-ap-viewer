@@ -128,3 +128,8 @@ a {
 dd {
     overflow-wrap: break-word;
 }
+
+.badge-info {
+    background-color: #057fa5;
+    color: white;
+}

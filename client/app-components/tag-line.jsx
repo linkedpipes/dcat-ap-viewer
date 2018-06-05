@@ -13,7 +13,7 @@ const TagLine = ({values, size=1}) => {
             {values.map((item) => (
                 <Badge
                     style={{"marginLeft": "1em", "marginBottom":"0.5em", "fontSize": size + "em"}}
-                    color="default"
+                    color="info"
                     pill
                     key={item}>
                     {item}
