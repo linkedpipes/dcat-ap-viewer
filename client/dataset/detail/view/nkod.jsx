@@ -62,7 +62,7 @@ const Properties = ({labels, dataset}) => {
 
 function firstColumn(labels, dataset) {
     const hasThemes = containsData(dataset.themes);
-    if(!hasThemes) {
+    if (!hasThemes) {
         return null;
     }
     return (
@@ -102,7 +102,7 @@ function secondColumn(labels, dataset) {
 function thirdColumn(labels, dataset) {
     const hasDocumentation = containsData(dataset.documentation);
     const hasContacts = containsData(dataset.contactPoints);
-    if(!hasDocumentation && !hasContacts) {
+    if (!hasDocumentation && !hasContacts) {
         return null;
     }
     return (
@@ -119,7 +119,7 @@ function thirdColumn(labels, dataset) {
 
 function fourthColumn(labels, dataset) {
     const hasFrequency = containsData(dataset.frequency);
-    if(!hasFrequency) {
+    if (!hasFrequency) {
         return null;
     }
     return (
