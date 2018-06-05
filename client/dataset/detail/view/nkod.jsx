@@ -118,7 +118,8 @@ function thirdColumn(labels, dataset) {
 }
 
 function fourthColumn(labels, dataset) {
-    if(containsData(dataset.frequency)) {
+    const hasFrequency = containsData(dataset.frequency);
+    if(!hasFrequency) {
         return null;
     }
     return (
@@ -132,13 +133,6 @@ function fourthColumn(labels, dataset) {
 }
 
 function labeledLinkEntitiesAsDd(labels, entities) {
-    if (entities === undefined) {
-        return (
-            <dd>
-                <span className="badge badge-warning">N/A</span>
-            </dd>
-        )
-    }
     if (!Array.isArray(entities)) {
         entities = [entities];
     }
@@ -153,13 +147,6 @@ function labeledLinkEntitiesAsDd(labels, entities) {
 }
 
 function documentation(entities) {
-    if (entities === undefined || entities.length === 0) {
-        return (
-            <dd>
-                <span className="badge badge-warning">N/A</span>
-            </dd>
-        )
-    }
     if (!Array.isArray(entities)) {
         entities = [entities];
     }
@@ -175,13 +162,6 @@ function documentation(entities) {
 }
 
 function temporal(temporal) {
-    if (temporal === undefined) {
-        return (
-            <dd>
-                <span className="badge badge-warning">N/A</span>
-            </dd>
-        );
-    }
     let value;
     if (temporal.startDate === undefined) {
         if (temporal.endDate === undefined) {

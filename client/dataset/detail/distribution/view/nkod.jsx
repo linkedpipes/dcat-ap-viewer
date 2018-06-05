@@ -27,7 +27,7 @@ export default class DistributionNkodView extends React.PureComponent {
                     pageSize={pageSize}
                     onIndexChange={setPage}
                     onSizeChange={setPageSize}
-                    sizes={[1,4,16,32]}
+                    sizes={[1, 4, 16, 32]}
                 />
             </div>
         );
@@ -94,7 +94,7 @@ function downloadListItem(distribution) {
     }
 
     if (downloadUrl === undefined) {
-        return notAvailableListItem(getString("s.download"));
+        return null;
     }
 
     return (
@@ -106,21 +106,10 @@ function downloadListItem(distribution) {
     )
 }
 
-function notAvailableListItem(label) {
-    return (
-        <li className="list-group-item">
-            {label}
-            <span className="badge badge-warning">N/A</span>
-        </li>
-    )
-}
-
 function schemaListItem(distribution) {
-
     if (distribution.conformsTo === undefined) {
-        return notAvailableListItem(getString("s.schema"));
+        return null;
     }
-
     return (
         <li className="list-group-item">
             <a href={distribution.conformsTo}
@@ -133,9 +122,8 @@ function schemaListItem(distribution) {
 
 function licenseListItem(distribution) {
     if (distribution.license === undefined) {
-        return notAvailableListItem(getString("s.licence"));
+        return null;
     }
-
     return (
         <li className="list-group-item">
             <a href={distribution.license}
