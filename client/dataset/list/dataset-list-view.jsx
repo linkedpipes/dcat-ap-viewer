@@ -285,7 +285,7 @@ class DatasetListViewComponent extends React.Component {
             <Container>
                 <Row>
                     <Col xs={12} md={3}>
-                        <div className="hidden-sm-up">
+                        <div className="d-sm-none">
                             <Button onClick={this.toggleFacets}
                                     style={{"margin": "1em"}}>
                                 {toggleButtonLabel}
