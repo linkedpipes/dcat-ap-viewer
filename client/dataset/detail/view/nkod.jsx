@@ -49,39 +49,87 @@ const Keywords = (({keywords}) => (
     </div>
 ));
 
-const Properties = (({labels, dataset}) => (
-    <div className="row">
+const Properties = ({labels, dataset}) => {
+    return (
+        <div className="row">
+            {firstColumn(labels, dataset)}
+            {secondColumn(labels, dataset)}
+            {thirdColumn(labels, dataset)}
+            {fourthColumn(labels, dataset)}
+        </div>
+    );
+};
+
+function firstColumn(labels, dataset) {
+    const hasThemes = containsData(dataset.themes);
+    if(!hasThemes) {
+        return null;
+    }
+    return (
         <div className="col-12 col-sm-6 col-md-3">
             <dl>
                 <dt>{getString("s.topic")}</dt>
                 {labeledLinkEntitiesAsDd(labels, dataset.themes)}
             </dl>
         </div>
+    )
+
+}
+
+function containsData(value) {
+    return value !== undefined && value.length !== 0;
+}
+
+
+function secondColumn(labels, dataset) {
+    const hasSpatial = containsData(dataset.spatial);
+    const hasTemporal = containsData(dataset.temporal);
+    if (!hasSpatial && !hasTemporal) {
+        return null;
+    }
+    return (
         <div className="col-12 col-sm-6 col-md-3">
             <dl>
-                <dt>{getString("s.spatial")}</dt>
-                {labeledLinkEntitiesAsDd(labels, dataset.spatial)}
-                <dt>{getString("s.temporal")}</dt>
-                {temporal(dataset.temporal)}
+                {hasSpatial && <dt>{getString("s.spatial")}</dt>}
+                {hasSpatial && labeledLinkEntitiesAsDd(labels, dataset.spatial)}
+                {hasTemporal && <dt>{getString("s.temporal")}</dt>}
+                {hasTemporal && temporal(dataset.temporal)}
             </dl>
         </div>
+    )
+}
+
+function thirdColumn(labels, dataset) {
+    const hasDocumentation = containsData(dataset.documentation);
+    const hasContacts = containsData(dataset.contactPoints);
+    if(!hasDocumentation && !hasContacts) {
+        return null;
+    }
+    return (
         <div className="col-12 col-sm-6 col-md-3">
             <dl>
-                <dt>{getString("s.documentation")}</dt>
-                {documentation(dataset.documentation)}
-                <dt>{getString("s.contact_point")}</dt>
-                {contactPoints(labels, dataset.contactPoints)}
+                {hasDocumentation && <dt>{getString("s.documentation")}</dt>}
+                {hasDocumentation && documentation(dataset.documentation)}
+                {hasContacts && <dt>{getString("s.contact_point")}</dt>}
+                {hasContacts && contactPoints(labels, dataset.contactPoints)}
             </dl>
         </div>
+    )
+}
+
+function fourthColumn(labels, dataset) {
+    if(containsData(dataset.frequency)) {
+        return null;
+    }
+    return (
         <div className="col-12 col-sm-6 col-md-3">
             <dl>
                 <dt>{getString("s.frequency")}</dt>
                 {labeledLinkEntitiesAsDd(labels, dataset.frequency)}
             </dl>
         </div>
-    </div>
-));
-
+    )
+}
 
 function labeledLinkEntitiesAsDd(labels, entities) {
     if (entities === undefined) {
