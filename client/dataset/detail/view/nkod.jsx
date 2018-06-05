@@ -1,16 +1,26 @@
 import React from "react";
 import {selectLabel, selectString} from "app-services/labels";
 import {Link} from "react-router";
-import TagLine from "app-components/tag-line";
-import {Table} from "reactstrap";
 import {getString} from "app/strings";
+import {
+    DATASET_LIST_URL,
+    getUrl,
+    KEYWORDS_QUERY
+} from "../../../app/navigation";
 
 export default class NkodDatasetView extends React.PureComponent {
 
     render() {
         const {dataset, publisherUrl, labels} = this.props;
         const title = selectLabel(labels, this.props.dataset);
+
         const keywords = selectString(labels, dataset.keywords);
+        const keywordsRef = keywords.map((keyword) => (
+            {
+                "label": keyword,
+                "url": getUrl(DATASET_LIST_URL, {[KEYWORDS_QUERY]: keyword})
+            }));
+
         return (
             <div>
                 <h1>{title}
@@ -25,7 +35,7 @@ export default class NkodDatasetView extends React.PureComponent {
                 </h2>
                 <p>{selectString(labels, dataset.description)}</p>
                 <hr/>
-                <Keywords keywords={keywords}/>
+                <Keywords keywords={keywordsRef}/>
                 <hr/>
                 <Properties labels={labels} dataset={dataset}/>
                 <hr/>
@@ -41,9 +51,9 @@ const Keywords = (({keywords}) => (
         <span className="sr-only">{getString("s.keywords") + ":"}</span>
         {keywords.map((keyword) => (
             <a className="btn btn-light mx-1"
-               href="#" role="button"
-               key={keyword}>
-                {keyword}
+               href={keyword.url} role="button"
+               key={keyword.label}>
+                {keyword.label}
             </a>
         ))}
     </div>
