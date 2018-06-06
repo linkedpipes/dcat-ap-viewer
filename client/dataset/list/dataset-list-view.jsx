@@ -79,7 +79,7 @@ const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPage
             pageSize={query.pageSize}
             onIndexChange={setPageIndex}
             onSizeChange={setPageSize}
-            sizes={[10,20,40,80]}
+            sizes={[10, 20, 40, 80]}
         />
     </div>
 );
@@ -95,7 +95,7 @@ class FilterBox extends React.Component {
     getInitialStatus() {
         // TODO Make filters visible on first opening if they are used.
         return {
-            "visible" : false
+            "visible": false
         }
     }
 
@@ -179,32 +179,32 @@ class SortSelector extends React.Component {
                         {getString(value)}
                     </DropdownToggle>
                     <DropdownMenu>
-                        { value !== "title asc" &&
+                        {value !== "title asc" &&
                         <DropdownItem onClick={() => onChange("title asc")}>
                             {getString("title asc")}
                         </DropdownItem>
                         }
-                        { value !== "title desc" &&
+                        {value !== "title desc" &&
                         <DropdownItem onClick={() => onChange("title desc")}>
                             {getString("title desc")}
                         </DropdownItem>
                         }
-                        { value !== "issued asc" &&
+                        {value !== "issued asc" &&
                         <DropdownItem onClick={() => onChange("issued asc")}>
                             {getString("issued asc")}
                         </DropdownItem>
                         }
-                        { value !== "issued desc" &&
+                        {value !== "issued desc" &&
                         <DropdownItem onClick={() => onChange("issued desc")}>
                             {getString("issued desc")}
                         </DropdownItem>
                         }
-                        { value !== "modified asc" &&
+                        {value !== "modified asc" &&
                         <DropdownItem onClick={() => onChange("modified asc")}>
                             {getString("modified asc")}
                         </DropdownItem>
                         }
-                        { value !== "modified desc" &&
+                        {value !== "modified desc" &&
                         <DropdownItem onClick={() => onChange("modified desc")}>
                             {getString("modified desc")}
                         </DropdownItem>
@@ -326,7 +326,7 @@ class DatasetListViewComponent extends React.Component {
                                 value={props.query.sort}
                                 onChange={this.callIfNotFetching(props.setSort)}/>
                             <br/>
-                            { showDatasetList &&
+                            {showDatasetList &&
                             <DatasetListLoaded datasetCount={props.datasetCount}
                                                query={props.query}
                                                datasets={props.datasets}
@@ -335,7 +335,7 @@ class DatasetListViewComponent extends React.Component {
                                                showPublisher={showPublisher}
                             />
                             }
-                            { !showDatasetList &&
+                            {!showDatasetList &&
                             <HttpRequestStatus status={props.status}/>
                             }
                         </div>
@@ -490,7 +490,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 function updateValueList(value, isActive, activeList) {
     activeList = asNewArray(activeList);
     const index = activeList.indexOf(value);
-    if (isActive && index == -1) {
+    if (isActive && index === -1) {
         activeList.push(value);
     } else if (index > -1) {
         activeList.splice(index, 1);

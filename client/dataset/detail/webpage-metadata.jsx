@@ -1,7 +1,6 @@
 import React from "react";
 import {
     selectLabel,
-    selectLabels,
     selectString
 } from "../../app-services/labels";
 
