@@ -430,10 +430,10 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         ));
     },
     "clearFilters": () => {
-        ownProps.router.push({
+        dispatch(push({
             "pathname": ownProps.location.pathname,
-            "query": {}
-        });
+            "search": ""
+        }));
     },
     "setTemporalStart": (event) => {
         const value = event.target.value;
