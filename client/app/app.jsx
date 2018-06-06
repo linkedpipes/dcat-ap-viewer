@@ -5,16 +5,17 @@ import {LanguageReRouter} from "./language-rerouter";
 import {LoaderIndicator} from "../app-components/loading-indicator/index";
 import {connect} from "react-redux";
 import GoogleTagManager from "../app-components/google-tag-manager"
+import {withRouter} from "react-router-dom";
 
 class AppComponent extends React.Component {
     render() {
         return (
-            <LanguageReRouter router={this.props.router}
+            <LanguageReRouter location={this.props.location}
                               dispatch={this.props.dispatch}>
                 <div>
                     <GoogleTagManager/>
                     <LoaderIndicator/>
-                    <Header router={this.props.router}/>
+                    <Header location={location}/>
                     {React.cloneElement(this.props.children, this.props)}
                     <Footer/>
                 </div>
@@ -23,8 +24,4 @@ class AppComponent extends React.Component {
     };
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    "router": state.router
-});
-
-export const App = connect(mapStateToProps)(AppComponent);
+export const App = withRouter(connect()(AppComponent));

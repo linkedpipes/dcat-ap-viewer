@@ -28,7 +28,7 @@ export class LanguageReRouter extends React.Component {
     }
 
     componentWillMount() {
-        const params = parseQueryString(this.props.router.location.search);
+        const params = parseQueryString(this.props.location.search);
         const lang = params["lang"];
         if (lang === undefined) {
             this.handleNoLanguageQuery();
@@ -53,7 +53,7 @@ export class LanguageReRouter extends React.Component {
                 // TODO Solve this in other way which does not require redraw.
                 this.props.dispatch(replace({
                         "pathname": pathname,
-                        "search": this.props.router.location.search
+                        "search": this.props.location.search
                     })
                 );
             }
@@ -61,13 +61,13 @@ export class LanguageReRouter extends React.Component {
     }
 
     getPathName() {
-        return decodeURI(this.props.router.location.pathname.substring(1));
+        return decodeURI(this.props.location.pathname.substring(1));
     }
 
     redirectToHome() {
         this.props.dispatch(replace({
                 "pathname": getUrl(DATASET_LIST_URL),
-                "search": this.props.router.location.search
+                "search": this.props.location.search
             })
         );
     }
@@ -86,9 +86,9 @@ export class LanguageReRouter extends React.Component {
     handleLanguagesAreSame(pathname, params, targetLanguage) {
         setLanguage(targetLanguage);
         this.props.dispatch(replace(createPushObject(
-            this.props.router.location.pathname,
+            this.props.location.pathname,
             {
-                ...parseQueryString(this.props.router.location.search),
+                ...parseQueryString(this.props.location.search),
                 "lang": undefined
             }
         )));

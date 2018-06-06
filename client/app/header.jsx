@@ -24,83 +24,6 @@ import {NavLink as RouterLink} from "react-router-dom";
 import {getString, getLanguages} from "./strings";
 import {connect} from "react-redux";
 
-class HeaderLanguageSelector extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.toggleLanguage = this.toggleLanguage.bind(this);
-        this.getOtherLanguages = this.getOtherLanguages.bind(this);
-        this.state = {
-            "isLanguageOpen": false
-        };
-    }
-
-    render() {
-        // TODO Move to props change handler.
-        const {language, router} = this.props;
-        let baseUrl = this.createBaseUrl(router);
-        const otherLanguages = this.getOtherLanguages(language);
-        //
-        return (
-            <NavItem>
-                <Dropdown isOpen={this.state.isLanguageOpen}
-                          toggle={this.toggleLanguage}>
-                    <DropdownToggle caret nav>
-                        <img src={"/assets/images/flag-" + language + ".png"}
-                             style={{"width": "1.2rem"}}
-                             alt={getString(language)}/>
-                    </DropdownToggle>
-                    <DropdownMenu className="language-drop-down">
-                        {otherLanguages.map((lang) => (
-                            this.createDropdownItem(baseUrl, lang)
-                        ))}
-                    </DropdownMenu>
-                </Dropdown>
-            </NavItem>
-        )
-    }
-
-    toggleLanguage() {
-        this.setState({
-            "isLanguageOpen": !this.state.isLanguageOpen
-        });
-    }
-
-    createBaseUrl(router) {
-        let search = router.location.search;
-        if (search === "") {
-            search = "?"
-        } else {
-            search += "&";
-        }
-        return router.location.pathname + search;
-    }
-
-    getOtherLanguages(active) {
-        const languages = getLanguages();
-        const index = languages.indexOf(active);
-        languages.splice(index, 1)
-        return languages;
-    }
-
-    createDropdownItem(baseUrl, lang) {
-        return (
-            <DropdownItem key={lang}>
-                <NavLink href={baseUrl + "lang=" + lang}>
-                    <img src={"/assets/images/flag-" + lang + ".png"}
-                         style={{
-                             "width": "1.2rem",
-                             "marginLeft": "0.4rem",
-                             "marginBottom": "0.3rem"
-                         }}
-                         alt={getString(lang)}/>
-                </NavLink>
-            </DropdownItem>
-        );
-    }
-
-}
-
 class HeaderComponent extends React.Component {
 
     constructor(props) {
@@ -188,7 +111,7 @@ class HeaderComponent extends React.Component {
                             </NavItem>
                             <HeaderLanguageSelector
                                 language={getLanguage()}
-                                router={this.props.router}/>
+                                location={this.props.location}/>
                         </Nav>
                     </Collapse>
                 </Navbar>
@@ -200,3 +123,80 @@ class HeaderComponent extends React.Component {
 const mapStateToProps = (state, ownProps) => ({});
 
 export const Header = connect(mapStateToProps)(HeaderComponent);
+
+class HeaderLanguageSelector extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.toggleLanguage = this.toggleLanguage.bind(this);
+        this.getOtherLanguages = this.getOtherLanguages.bind(this);
+        this.state = {
+            "isLanguageOpen": false
+        };
+    }
+
+    render() {
+        // TODO Move to props change handler.
+        const {language, location} = this.props;
+        let baseUrl = this.createBaseUrl(location);
+        const otherLanguages = this.getOtherLanguages(language);
+        //
+        return (
+            <NavItem>
+                <Dropdown isOpen={this.state.isLanguageOpen}
+                          toggle={this.toggleLanguage}>
+                    <DropdownToggle caret nav>
+                        <img src={"/assets/images/flag-" + language + ".png"}
+                             style={{"width": "1.2rem"}}
+                             alt={getString(language)}/>
+                    </DropdownToggle>
+                    <DropdownMenu className="language-drop-down">
+                        {otherLanguages.map((lang) => (
+                            this.createDropdownItem(baseUrl, lang)
+                        ))}
+                    </DropdownMenu>
+                </Dropdown>
+            </NavItem>
+        )
+    }
+
+    toggleLanguage() {
+        this.setState({
+            "isLanguageOpen": !this.state.isLanguageOpen
+        });
+    }
+
+    createBaseUrl(location) {
+        let search = location.search;
+        if (search === "") {
+            search = "?"
+        } else {
+            search += "&";
+        }
+        return location.pathname + search;
+    }
+
+    getOtherLanguages(active) {
+        const languages = getLanguages();
+        const index = languages.indexOf(active);
+        languages.splice(index, 1)
+        return languages;
+    }
+
+    createDropdownItem(baseUrl, lang) {
+        return (
+            <DropdownItem key={lang}>
+                <NavLink href={baseUrl + "lang=" + lang}>
+                    <img src={"/assets/images/flag-" + lang + ".png"}
+                         style={{
+                             "width": "1.2rem",
+                             "marginLeft": "0.4rem",
+                             "marginBottom": "0.3rem"
+                         }}
+                         alt={getString(lang)}/>
+                </NavLink>
+            </DropdownItem>
+        );
+    }
+
+}
