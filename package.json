@@ -2,10 +2,12 @@
   "name": "dcat-viewer",
   "version": "0.0.1",
   "description": "DCAT-AP viewer.",
+  "private": true,
   "main": "server.js",
   "author": "",
   "scripts": {},
   "license": "X11",
+  "repository": "github:linkedpipes/dcat-ap-viewer",
   "dependencies": {
     "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",
