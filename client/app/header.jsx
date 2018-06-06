@@ -20,7 +20,7 @@ import {
     KEYWORDS_LIST_URL,
     getLanguage
 } from "./navigation";
-import {Link} from "react-router";
+import {NavLink as RouterLink} from "react-router-dom";
 import {getString, getLanguages} from "./strings";
 import {connect} from "react-redux";
 
@@ -138,25 +138,25 @@ class HeaderComponent extends React.Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <Link to={getUrl(DATASET_LIST_URL)}
-                                      className="nav-link"
-                                      activeClassName="active">
+                                <RouterLink to={getUrl(DATASET_LIST_URL)}
+                                            className="nav-link"
+                                            activeClassName="active">
                                     {getString("h.datasets")}
-                                </Link>
+                                </RouterLink>
                             </NavItem>
                             <NavItem>
-                                <Link to={getUrl(ORGANISATION_LIST_URL)}
-                                      className="nav-link"
-                                      activeClassName="active">
+                                <RouterLink to={getUrl(ORGANISATION_LIST_URL)}
+                                            className="nav-link"
+                                            activeClassName="active">
                                     {getString("h.publishers")}
-                                </Link>
+                                </RouterLink>
                             </NavItem>
                             <NavItem>
-                                <Link to={getUrl(KEYWORDS_LIST_URL)}
-                                      className="nav-link"
-                                      activeClassName="active">
+                                <RouterLink to={getUrl(KEYWORDS_LIST_URL)}
+                                            className="nav-link"
+                                            activeClassName="active">
                                     {getString("h.keywords")}
-                                </Link>
+                                </RouterLink>
                             </NavItem>
                             <NavItem>
                                 <Dropdown isOpen={this.state.isMoreOpen}

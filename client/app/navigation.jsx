@@ -1,6 +1,6 @@
 import React from "react";
 import {App} from "./app";
-import {Route, IndexRoute} from "react-router";
+import {Route, Switch} from "react-router-dom";
 import {DatasetListView} from "../dataset/list/dataset-list-view";
 import {PageNotFound} from "../system/page-not-found";
 import {getRegistered} from "./register";
@@ -21,8 +21,8 @@ export const PAGE_SIZE_QUERY = "PAGE_SIZE_QUERY";
 export const TEMPORAL_START = "TEMPORAL_START";
 export const TEMPORAL_END = "TEMPORAL_END";
 
-const PAGE = "PAGE";
-const QUERY = "QUERY";
+export const PAGE = "PAGE";
+export const QUERY = "QUERY";
 const VALUE = "VALUE";
 const NAVIGATION = {
     "cs": {},
@@ -83,7 +83,7 @@ export function getLanguage() {
     return activeLanguage;
 }
 
-function setLanguage(language) {
+export function setLanguage(language) {
     activeLanguage = language;
 }
 
@@ -113,17 +113,22 @@ export const getQuery = (query) => {
 //
 //
 
-export const createRoutes = () => (
-    <Route path="/" component={App}>
-        <IndexRoute component={DatasetListView}/>
-        {
-            getRouteObjects().map(page =>
-                <Route path={page.link}
-                       component={page.component}
-                       key={page.id}/>
-            )
-        }
-        <Route path="*" component={PageNotFound} />
+export const createRoutes = (history) => (
+    <Route history={history}>
+        <App>
+            <Switch>
+                <Route path="/" component={DatasetListView} exact={true}/>
+                {
+                    getRouteObjects().map(page =>
+                        <Route key={page.id}
+                               path={page.link}
+                               component={page.component}
+                        />
+                    )
+                }
+                <Route path="*" component={PageNotFound}/>
+            </Switch>
+        </App>
     </Route>
 );
 
@@ -144,13 +149,13 @@ function getRouteObjects() {
             if (language !== "en") {
                 routes.push({
                     "id": entry.name + "-" + language,
-                    "link": encodeURI(url),
+                    "link": "/" + encodeURI(url),
                     "component": entry.component
                 });
             }
             routes.push({
                 "id": entry.name + "-" + language,
-                "link": (url),
+                "link": "/" + (url),
                 "component": entry.component
             });
         });
@@ -158,11 +163,7 @@ function getRouteObjects() {
     return routes;
 }
 
-//
-//
-//
-
-function translate(value, type, targetLanguage) {
+export function translate(value, type, targetLanguage) {
     for (let language in NAVIGATION) {
         const value_map = NAVIGATION[language][type];
         for (let key in value_map) {
@@ -173,7 +174,7 @@ function translate(value, type, targetLanguage) {
     }
 }
 
-function getLanguageForUrl(value) {
+export function getLanguageForUrl(value) {
     for (let language in NAVIGATION) {
         const value_map = NAVIGATION[language][PAGE];
         for (let key in value_map) {
@@ -183,117 +184,4 @@ function getLanguageForUrl(value) {
         }
     }
     return getDefaultLanguage();
-}
-
-/**
- * Top level component, does not modify the content.
- * Set the language based on the URL, browser options or perform
- * redirect.
- */
-export class LanguageReRouter extends React.Component {
-
-    componentWillMount() {
-        const lang = this.props.location.query.lang;
-        if (lang === undefined) {
-            this.handleNoLanguageQuery();
-        } else {
-            this.handleLanguageQuery();
-        }
-    }
-
-    handleNoLanguageQuery() {
-        const location = this.props.location;
-        const pathname = decodeURI(location.pathname.substring(1));
-        if (pathname === "") {
-            this.redirectToHome();
-        } else {
-            const pathLanguage = getLanguageForUrl(pathname);
-            if (getLanguage() == pathLanguage) {
-                // Do nothing.
-            } else {
-                setLanguage(pathLanguage);
-                // Dataset list parse query from URL, as we change the language we
-                // need to update this - in order to trigger the update
-                // we change the router.
-                // TODO Solve this in other way which does not require redraw.
-                this.props.router.replace({
-                    "pathname": location.pathname,
-                    "query": location.query
-                });
-            }
-        }
-    }
-
-    redirectToHome() {
-        this.props.router.replace({
-            "pathname": getUrl(DATASET_LIST_URL),
-            "query": location.query
-        });
-    }
-
-    handleLanguageQuery() {
-        const location = this.props.location;
-        const pathname = decodeURI(location.pathname.substring(1));
-        const pathLanguage = getLanguageForUrl(pathname);
-        const queryLanguage = location.query.lang;
-        if (pathLanguage === queryLanguage) {
-            this.handleLanguagesAreSame(location, queryLanguage);
-        } else {
-            this.handleLanguagesAreDifferent(location, pathname, queryLanguage);
-        }
-    }
-
-    handleLanguagesAreSame(location, targetLanguage) {
-        const path = location.pathname;
-        const query = {
-            ...location.query,
-            "lang": undefined
-        };
-        setLanguage(targetLanguage);
-        this.props.router.replace({
-            "pathname": path,
-            "query": query
-        });
-    }
-
-    handleLanguagesAreDifferent(location, pathname, targetLanguage) {
-        let path = this.translatePathName(pathname, targetLanguage);
-        const query = this.translateQuery(location, targetLanguage);
-        setLanguage(targetLanguage);
-        this.props.router.replace({
-            "pathname": path,
-            "query": query
-        });
-    }
-
-    translatePathName(pathname, targetLanguage) {
-        const path = translate(decodeURI(pathname), PAGE, targetLanguage);
-        // Stay on the same site if the translation is missing.
-        if (path === undefined) {
-            return "/" + pathname;
-        } else {
-            return encodeURI(path);
-        }
-    }
-
-    translateQuery(location, targetLanguage) {
-        const query = {};
-        for (let param in location.query) {
-            if (param === "lang") {
-                continue;
-            }
-            let translated = translate(param, QUERY, targetLanguage);
-            if (translated === undefined) {
-                translated = param;
-            }
-            query[translated] = location.query[param];
-
-        }
-        return query;
-    }
-
-    render() {
-        return this.props.children;
-    }
-
 }

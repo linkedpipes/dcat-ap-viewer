@@ -1,6 +1,6 @@
 import React from "react";
-import {DATASET_LIST_URL, getUrl, KEYWORDS_QUERY} from "../../app/navigation";
-import {Link} from "react-router";
+import {DATASET_LIST_URL, getUrl, KEYWORDS_QUERY} from "app/navigation";
+import {Link} from "react-router-dom";
 import {TagCloud} from "react-tagcloud";
 
 // https://www.npmjs.com/package/react-tagcloud

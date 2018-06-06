@@ -1,6 +1,6 @@
 import React from "react";
 import {selectLabel, selectString} from "app-services/labels";
-import {Link} from "react-router";
+import {Link} from "react-router-dom";
 import TagLine from "app-components/tag-line";
 import {Table} from "reactstrap";
 import {getString} from "../../../app/strings";

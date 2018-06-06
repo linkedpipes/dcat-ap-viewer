@@ -20,6 +20,7 @@ import {selectLabel, labelsSelector} from "app-services/labels";
 import {HttpRequestStatus} from "app/http-request-status";
 import {DatasetWebPageMetadata} from "./webpage-metadata";
 import {DistributionListContainer} from "./distribution";
+import {parse as parseQueryString} from "query-string";
 
 // TODO Load from configuration.
 const DatasetDetail = require("./view/nkod").default;
@@ -80,7 +81,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     "onUnMount": () => dispatch(onUnMount()),
     "fetchDataset": () => {
         const queryKey = getQuery(DATASET_QUERY);
-        const iri = ownProps.location.query[queryKey];
+        const params = parseQueryString(ownProps.location.search);
+        const iri = params[queryKey];
         dispatch(fetchDataset(iri));
     }
 });

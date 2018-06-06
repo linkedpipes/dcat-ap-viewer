@@ -42,6 +42,8 @@ import {
 } from "../../app-services/http-request";
 import {HttpRequestStatus} from "../../app/http-request-status";
 import {constructTypeaheadUrl} from "./../solr-api";
+import {parse as parseQueryString} from "query-string";
+import {push} from "react-router-redux";
 
 const QueryStatusLine = ({resultSize, query}) => (
     <div>
@@ -363,90 +365,73 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(setQueryString(value));
     },
     "setQueryFilter": (value) => {
-        if (value == "") {
+        if (value === "") {
             value = undefined;
         }
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(STRING_QUERY)]: value,
-                [getQuery(PAGE_QUERY)]: undefined
-            }
-        });
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [STRING_QUERY]: value,
+                [PAGE_QUERY]: undefined
+            })
+        ));
     },
     "setKeywordsFacet": (facet, isActive) => {
-        let keywords = ownProps.router.location.query[getQuery(KEYWORDS_QUERY)];
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(KEYWORDS_QUERY)]: updateValueList(facet.label, isActive, keywords),
-                [getQuery(PAGE_QUERY)]: undefined
-            }
-        });
+        const params = parseQueryString(ownProps.location.search);
+        let keywords = params[getQuery(KEYWORDS_QUERY)];
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [KEYWORDS_QUERY]: updateValueList(facet.label, isActive, keywords),
+                [PAGE_QUERY]: undefined
+            })
+        ));
     },
     "setPublisherFacet": (facet, isActive) => {
-        let publishers = ownProps.router.location.query[getQuery(PUBLISHER_QUERY)];
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(PUBLISHER_QUERY)]: updateValueList(facet.label, isActive, publishers),
-                [getQuery(PAGE_QUERY)]: undefined
-            }
-        });
+        const params = parseQueryString(ownProps.location.search);
+        let publishers = params[getQuery(PUBLISHER_QUERY)];
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [PUBLISHER_QUERY]: updateValueList(facet.label, isActive, publishers),
+                [PAGE_QUERY]: undefined
+            })
+        ));
     },
     "setFormatFacet": (facet, isActive) => {
-        let formats = ownProps.router.location.query[getQuery(FORMAT_QUERY)];
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(FORMAT_QUERY)]: updateValueList(facet.label, isActive, formats),
-                [getQuery(PAGE_QUERY)]: undefined
-            }
-        });
+        const params = parseQueryString(ownProps.location.search);
+        let formats = params[getQuery(FORMAT_QUERY)];
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [FORMAT_QUERY]: updateValueList(facet.label, isActive, formats),
+                [PAGE_QUERY]: undefined
+            })
+        ));
     },
     "setPageIndex": (page) => {
-        if (page == 0) {
-            page = undefined;
-        }
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(PAGE_QUERY)]: page
-            }
-        });
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [PAGE_QUERY]: page === 0 ? undefined : page
+            })
+        ));
     },
     "setPageSize": (pageSize) => {
-        // TODO Export as some default constants to make this visible.
-        if (pageSize == 10) {
-            pageSize = undefined;
-        }
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(PAGE_SIZE_QUERY)]: pageSize,
-                [getQuery(PAGE_QUERY)]: undefined
-            }
-        });
+        // Extract constant.
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [PAGE_SIZE_QUERY]: pageSize === 10 ? undefined : pageSize,
+                [PAGE_QUERY]: undefined
+            })
+        ));
     },
     "setSort": (value) => {
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(SORT_QUERY)]: value,
-                [getQuery(PAGE_QUERY)]: undefined
-            }
-        });
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [SORT_QUERY]: value,
+                [PAGE_QUERY]: undefined
+            })
+        ));
     },
     "clearFilters": () => {
         ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
+            "pathname": ownProps.location.pathname,
             "query": {}
         });
     },
@@ -454,18 +439,18 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         const value = event.target.value;
         if (value === "") {
             ownProps.router.push({
-                "pathname": ownProps.router.location.pathname,
+                "pathname": ownProps.location.pathname,
                 "query": {
-                    ...ownProps.router.location.query,
+                    ...ownProps.location.query,
                     [getQuery(TEMPORAL_START)]: undefined,
                     [getQuery(PAGE_QUERY)]: undefined
                 }
             });
         } else {
             ownProps.router.push({
-                "pathname": ownProps.router.location.pathname,
+                "pathname": ownProps.location.pathname,
                 "query": {
-                    ...ownProps.router.location.query,
+                    ...ownProps.location.query,
                     [getQuery(TEMPORAL_START)]: value,
                     [getQuery(PAGE_QUERY)]: undefined
                 }
@@ -476,18 +461,18 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         const value = event.target.value;
         if (value === "") {
             ownProps.router.push({
-                "pathname": ownProps.router.location.pathname,
+                "pathname": ownProps.location.pathname,
                 "query": {
-                    ...ownProps.router.location.query,
+                    ...ownProps.location.query,
                     [getQuery(TEMPORAL_END)]: undefined,
                     [getQuery(PAGE_QUERY)]: undefined
                 }
             });
         } else {
             ownProps.router.push({
-                "pathname": ownProps.router.location.pathname,
+                "pathname": ownProps.location.pathname,
                 "query": {
-                    ...ownProps.router.location.query,
+                    ...ownProps.location.query,
                     [getQuery(TEMPORAL_END)]: value,
                     [getQuery(PAGE_QUERY)]: undefined
                 }
@@ -520,6 +505,36 @@ function asNewArray(value) {
         return [...value];
     } else {
         return [value];
+    }
+}
+
+function createPushObject(location, query) {
+    let finalQuery = parseQueryString(location.search);
+    Object.keys(query).map((key) => {
+        const value = query[key];
+        finalQuery[getQuery(key)] = value;
+    });
+    let search = "";
+    Object.keys(finalQuery).map((key) => {
+        let values = finalQuery[key];
+        if (values === undefined || values.length === 0 || values === "") {
+            return;
+        }
+        if (!Array.isArray(values)) {
+            values = [values];
+        }
+        values.forEach((value) => {
+            if (search === "") {
+                search += "?";
+            } else {
+                search += "&";
+            }
+            search += encodeURIComponent(key) + "=" + encodeURIComponent(value);
+        });
+    });
+    return {
+        "pathname": location.pathname,
+        "search": search
     }
 }
 

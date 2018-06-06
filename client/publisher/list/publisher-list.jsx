@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types";
 import {DATASET_LIST_URL, getUrl, PUBLISHER_QUERY} from "../../app/navigation";
 import {getString} from "../../app/strings";
 import {formatNumber} from "../../app-services/formats";
-import {Link} from "react-router";
+import {Link} from "react-router-dom";
 
 export const PublisherList = ({publishers}) => {
     return (

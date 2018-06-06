@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router";
+import {Link} from "react-router-dom";
 import TagLine from "../../app-components/tag-line";
 import {
     getUrl,
@@ -8,7 +8,6 @@ import {
     DATASET_LIST_URL,
     PUBLISHER_QUERY
 } from "../../app/navigation";
-import {getString} from "../../app/strings";
 
 const DatasetListItem = ({value, showPublisher}) => {
     const datasetUrl = getUrl(DATASET_DETAIL_URL, {

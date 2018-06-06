@@ -2,22 +2,20 @@ import "../modules";
 import {combineReducers} from "redux";
 import {routerReducer} from "react-router-redux";
 import {getRegistered} from "./register";
-import {createStore, compose, applyMiddleware} from "redux";
+import {createStore as createReduxStore, compose, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
 import {routerMiddleware} from "react-router-redux";
-import {reducer as notificationReducer} from "react-notification-system-redux";
 
-export function create(history) {
+export function createStore(history) {
     const reducer = prepareReducer();
     const enhancer = prepareEnhancer(history);
     const initialState = {};
-    return createStore(reducer, initialState, enhancer);
+    return createReduxStore(reducer, initialState, enhancer);
 }
 
 function prepareReducer() {
     const configuration = {
-        "routing": routerReducer,
-        "notifications": notificationReducer
+        "router": routerReducer,
     };
     addRegisteredReducers(configuration);
     return combineReducers(configuration);

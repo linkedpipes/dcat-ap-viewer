@@ -1,27 +1,22 @@
 import React from "react";
 import {Header} from "./header";
 import Footer from "./footer";
-import {LanguageReRouter} from "./navigation";
+import {LanguageReRouter} from "./language-rerouter";
 import {LoaderIndicator} from "../app-components/loading-indicator/index";
 import {connect} from "react-redux";
-import Notifications from "react-notification-system-redux";
 import GoogleTagManager from "../app-components/google-tag-manager"
 
 class AppComponent extends React.Component {
     render() {
         return (
-            <LanguageReRouter location={this.props.location}
-                              router={this.props.router}>
+            <LanguageReRouter router={this.props.router}
+                              dispatch={this.props.dispatch}>
                 <div>
                     <GoogleTagManager/>
                     <LoaderIndicator/>
                     <Header router={this.props.router}/>
-                    {/* TODO Remove DIV element. */}
-                    <div>
-                        {React.cloneElement(this.props.children, this.props)}
-                    </div>
+                    {React.cloneElement(this.props.children, this.props)}
                     <Footer/>
-                    <Notifications notifications={this.props.notifications}/>
                 </div>
             </LanguageReRouter>
         );
@@ -29,7 +24,7 @@ class AppComponent extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    "notifications": state.notifications
+    "router": state.router
 });
 
 export const App = connect(mapStateToProps)(AppComponent);

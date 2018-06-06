@@ -1,6 +1,6 @@
 import React from "react";
 import {selectLabel, selectString} from "app-services/labels";
-import {Link} from "react-router";
+import {Link} from "react-router-dom";
 import {getString} from "app/strings";
 import {
     DATASET_LIST_URL,
