@@ -260,8 +260,8 @@ class DatasetListViewComponent extends React.Component {
         const showPublisher = props.query.publisher === undefined ||
             props.query.publisher.length === 0;
 
-        if (props.query.publisher !== "") {
-            setPageTitle(props.query.publisher);
+        if (props.query.publisher.length !== 0) {
+            setPageTitle(props.query.publisher[0]);
         } else {
             setPageTitle(getString("title.datasets"));
         }
