@@ -1,44 +1,41 @@
-import {fetchJsonCallback} from "../../services/http-request";
-import {jsonLdToDataset, requestLabelsForDataset} from "./jsonld-to-dataset";
-import {
-    jsonLdToDistribution,
-    requestLabelsForDistribution
-} from "./jsonld-to-distribution";
 import {
     addLoaderStatusOn,
     addLoaderStatusOff
-} from "../../components/loading-indicator";
+} from "app-components/loading-indicator";
+import {
+    fetchDatasetDetail,
+    fetchLabelsForDataset,
+} from "./dataset-api";
+import {jsonLdToDataset} from "./jsonld-to-dataset";
 
+export const MOUNT_DATASET_DETAIL_LIST = "MOUNT_DATASET_DETAIL_LIST";
+export const UNMOUNT_DATASET_DETAIL_LIST = "UNMOUNT_DATASET_DETAIL_LIST";
 export const FETCH_DATASET_REQUEST = "FETCH_DATASET_REQUEST";
 export const FETCH_DATASET_SUCCESS = "FETCH_DATASET_SUCCESS";
 export const FETCH_DATASET_FAILED = "FETCH_DATASET_FAILED";
-export const FETCH_DISTRIBUTION_REQUEST = "FETCH_DISTRIBUTION_REQUEST";
-export const FETCH_DISTRIBUTION_SUCCESS = "FETCH_DISTRIBUTION_SUCCESS";
-export const FETCH_DISTRIBUTION_FAILED = "FETCH_DISTRIBUTION_FAILED";
-export const SET_DISTRIBUTION_PAGE_INDEX = "SET_DISTRIBUTION_PAGE_INDEX";
-export const SET_DISTRIBUTION_PAGE_SIZE = "SET_DISTRIBUTION_PAGE_SIZE";
+
+
+export function onMount() {
+    return {
+        "type": MOUNT_DATASET_DETAIL_LIST
+    };
+}
+
+export function onUnMount() {
+    return {
+        "type": UNMOUNT_DATASET_DETAIL_LIST
+    }
+}
 
 export function fetchDataset(iri) {
     return (dispatch) => {
         dispatch(fetchDatasetRequest(iri));
-        const url = "/api/v1/resource/dataset?iri=" + encodeURI(iri);
-        fetchJsonCallback(url, (json) => {
-            const data = jsonLdToDataset(normalizeData(json));
-            dispatch(fetchDatasetSuccess(data));
-            requestLabelsForDataset(data, dispatch);
-        }, (error) => {
-            dispatch(fetchDatasetFailed(error));
-        });
+        fetchDatasetDetail(iri).then((jsonld) => {
+            const dataset = jsonLdToDataset(jsonld);
+            dispatch(fetchDatasetSuccess(jsonld, dataset));
+            fetchLabelsForDataset(dataset, dispatch);
+        }).catch((error) => dispatch(fetchDatasetFailed(error)));
     };
-}
-
-// TODO Extract to some API file.
-function normalizeData(data) {
-    if (REPOSITORY_TYPE == "COUCHDB") {
-        return {"@graph": data["jsonld"]};
-    } else {
-        return data;
-    }
 }
 
 function fetchDatasetRequest(iri) {
@@ -48,67 +45,19 @@ function fetchDatasetRequest(iri) {
     });
 }
 
-function fetchDatasetSuccess(data) {
+function fetchDatasetSuccess(jsonld, data) {
     return addLoaderStatusOff({
         "type": FETCH_DATASET_SUCCESS,
+        "jsonld": jsonld,
         "data": data
     });
 }
 
 function fetchDatasetFailed(error) {
+    // TODO Add API for handling errors!
+    console.error("fetchFailed", error);
     return addLoaderStatusOff({
         "type": FETCH_DATASET_FAILED,
         "error": error
     });
-}
-
-export function fetchDistribution(iri) {
-    return (dispatch) => {
-        dispatch(fetchDistributionRequest(iri));
-        let url = "/api/v1/resource/distribution?iri=" + encodeURI(iri);
-        fetchJsonCallback(url, (json) => {
-            const data = jsonLdToDistribution(normalizeData(json));
-            dispatch(fetchDistributionSuccess(iri, data));
-            requestLabelsForDistribution(data, dispatch);
-        }, (error) => {
-            dispatch(fetchDistributionFailed(iri, error));
-        });
-    };
-}
-
-function fetchDistributionRequest(iri) {
-    return {
-        "type": FETCH_DISTRIBUTION_REQUEST,
-        "iri": iri
-    }
-}
-
-function fetchDistributionSuccess(iri, data) {
-    return {
-        "type": FETCH_DISTRIBUTION_SUCCESS,
-        "iri": iri,
-        "data": data
-    }
-}
-
-function fetchDistributionFailed(iri, error) {
-    return {
-        "type": FETCH_DISTRIBUTION_FAILED,
-        "iri": iri,
-        "error": error
-    }
-}
-
-export function setDistributionPageIndex(page) {
-    return {
-        "type": SET_DISTRIBUTION_PAGE_INDEX,
-        "page": page
-    }
-}
-
-export function setDistributionPageSize(size) {
-    return {
-        "type": SET_DISTRIBUTION_PAGE_SIZE,
-        "size": size
-    }
 }

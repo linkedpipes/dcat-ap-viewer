@@ -15,13 +15,13 @@ import {
     PAGE_SIZE_QUERY,
     TEMPORAL_START,
     TEMPORAL_END
-} from "../../application/navigation";
+} from "../../app/navigation";
 import {
     STATUS_INITIAL,
     STATUS_FETCHING,
-    STATUS_FETCHED,
-    STATUS_FAILED
-} from "./../../services/http-request";
+    STATUS_FETCHED
+} from "../../app-services/http-request";
+import {parse as parseQueryString} from "query-string";
 
 // TODO Isolate changes to minimize rendering.
 //  For example paginator re-render on every change of string query.
@@ -56,7 +56,9 @@ const initialState = {
     }
 };
 
-export const datasetListReducer = (state = initialState, action) => {
+const reducerName = "dataset-list";
+
+function reducer(state = initialState, action) {
     switch (action.type) {
         case FETCH_LIST_PAGE_REQUEST:
             return onListRequest(state);
@@ -72,7 +74,7 @@ export const datasetListReducer = (state = initialState, action) => {
         default:
             return state
     }
-};
+}
 
 function onListRequest(state) {
     return {
@@ -161,10 +163,11 @@ function onSetQueryString(state, action) {
 }
 
 function onLocationChange(state, action) {
-    const queryString = action.payload.query[getQuery(STRING_QUERY)];
+    const params = parseQueryString(action.payload.search);
+    const queryString = params[getQuery(STRING_QUERY)];
     return {
         ...state,
-        "query": locationToQuery(action.payload.query),
+        "query": paramsToQuery(params),
         "ui": {
             ...state.ui,
             "searchQuery": undefinedAsEmpty(queryString)
@@ -172,30 +175,30 @@ function onLocationChange(state, action) {
     };
 }
 
-function locationToQuery(location) {
+function paramsToQuery(params) {
     // TODO Move to other layer
-    let page = parseInt(location[getQuery(PAGE_QUERY)]);
+    let page = parseInt(params[getQuery(PAGE_QUERY)]);
     if (isNaN(page)) {
         page = 0;
     }
-    let order = location[getQuery(SORT_QUERY)];
+    let order = params[getQuery(SORT_QUERY)];
     if (order === undefined) {
         order = "modified desc";
     }
-    let pageSize = parseInt(location[getQuery(PAGE_SIZE_QUERY)]);
+    let pageSize = parseInt(params[getQuery(PAGE_SIZE_QUERY)]);
     if (isNaN(pageSize)) {
         pageSize = 10;
     }
     return {
         "page": page,
-        "search": location[getQuery(STRING_QUERY)],
-        "keyword": asArray(location[getQuery(KEYWORDS_QUERY)]),
-        "publisher": asArray(location[getQuery(PUBLISHER_QUERY)]),
-        "format": asArray(location[getQuery(FORMAT_QUERY)]),
+        "search": params[getQuery(STRING_QUERY)],
+        "keyword": asArray(params[getQuery(KEYWORDS_QUERY)]),
+        "publisher": asArray(params[getQuery(PUBLISHER_QUERY)]),
+        "format": asArray(params[getQuery(FORMAT_QUERY)]),
         "sort": order,
         "pageSize": pageSize,
-        "temporalStart": undefinedAsEmpty(location[getQuery(TEMPORAL_START)]),
-        "temporalEnd": undefinedAsEmpty(location[getQuery(TEMPORAL_END)])
+        "temporalStart": undefinedAsEmpty(params[getQuery(TEMPORAL_START)]),
+        "temporalEnd": undefinedAsEmpty(params[getQuery(TEMPORAL_END)])
     };
 }
 
@@ -217,4 +220,9 @@ function undefinedAsEmpty(value) {
     }
 }
 
-// TODO Add selectors.
+export default reducer = {
+    "name": reducerName,
+    "reducer": reducer
+};
+
+const reducerSelector = (state) => state[reducerName];

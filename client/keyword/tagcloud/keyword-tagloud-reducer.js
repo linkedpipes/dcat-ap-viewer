@@ -1,4 +1,6 @@
 import {
+    MOUNT_KEYWORDS_LIST,
+    UNMOUNT_KEYWORDS_LIST,
     FETCH_KEYWORDS_FAILED,
     FETCH_KEYWORDS_SUCCESS,
     FETCH_KEYWORDS_REQUEST
@@ -7,15 +9,16 @@ import {
     STATUS_INITIAL,
     STATUS_FETCHING,
     STATUS_FETCHED
-} from "./../../services/http-request";
+} from "../../app-services/http-request";
 
-const initialState = {
-    "status": STATUS_INITIAL,
-    "data": [],
-};
+const reducerName = "keyword-tagcloud";
 
-export const keywordsTagCloudReducer = (state = initialState, action) => {
+function reducer(state = {}, action) {
     switch (action.type) {
+        case MOUNT_KEYWORDS_LIST:
+            return onMount();
+        case UNMOUNT_KEYWORDS_LIST:
+            return {};
         case FETCH_KEYWORDS_REQUEST:
             return onKeywordsRequest();
         case FETCH_KEYWORDS_SUCCESS:
@@ -25,35 +28,49 @@ export const keywordsTagCloudReducer = (state = initialState, action) => {
         default:
             return state
     }
-};
+}
+
+function onMount() {
+    return {
+        "status": STATUS_INITIAL,
+        "keywords": undefined,
+    }
+}
 
 function onKeywordsRequest() {
     return {
         "status": STATUS_FETCHING,
-        "data": []
+        "keywords": []
     };
 }
 
 function onKeywordsRequestSuccess(state, action) {
     return {
         ...state,
-        "data": action.data.json,
-        "status": STATUS_FETCHED
+        "status": STATUS_FETCHED,
+        "keywords": action.keywords
     };
 }
 
 function onKeywordsRequestFailed(state, action) {
     return {
         ...state,
-        "data": [],
-        "status": action.error.status
+        "status": action.error.status,
+        "keywords": undefined,
     };
 }
 
-export function keywordsStatusSelector(state) {
-    return state.keywords.status;
+export default reducer = {
+    "name": reducerName,
+    "reducer": reducer
+};
+
+const reducerSelector = (state) => state[reducerName];
+
+export function statusSelector(state) {
+    return reducerSelector(state).status;
 }
 
-export function keywordsDataSelector(state) {
-    return state.keywords.data;
+export function keywordsSelector(state) {
+    return reducerSelector(state).keywords;
 }

@@ -11,8 +11,7 @@ const config = {
         "publicPath": "/public/"
     },
     "resolve": {
-        // Enable implicit resolution of jsx files.
-        // Otherwise we would need to specify the jsx extension.
+        "modules": ["client", "node_modules"],
         "extensions": [".js", ".jsx"]
     },
     "module": {

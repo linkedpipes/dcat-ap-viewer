@@ -11,19 +11,16 @@ import {
     DropdownItem,
     UncontrolledDropdown
 } from "reactstrap";
-import FacetFilter from "../../components/facet-filter";
-import SearchBox from "../../components/search-box";
+import FacetFilter from "../../app-components/facet-filter";
+import SearchBox from "../../app-components/search-box";
 import DatasetList from "./dataset-list";
-import Paginator from "../../components/paginator";
+import Paginator from "../../app-components/paginator";
 import {
     fetchData,
-    setListPage,
-    setListFacetFilter,
     setQueryString,
-    setListQueryFilter
 } from "./dataset-list-actions";
-import TagLine from "../../components/tag-line";
-import {formatNumber} from "../../services/formats";
+import TagLine from "../../app-components/tag-line";
+import {formatNumber} from "../../app-services/formats";
 import {
     getQuery,
     FORMAT_QUERY,
@@ -35,17 +32,18 @@ import {
     PAGE_SIZE_QUERY,
     TEMPORAL_START,
     TEMPORAL_END
-} from "../../application/navigation";
-import {getString} from "../../application/strings";
-import setPageTitle from "../../services/page-title";
+} from "../../app/navigation";
+import {getString} from "../../app/strings";
+import setPageTitle from "../../app-services/page-title";
 import {
     STATUS_FETCHING,
-    STATUS_FAILED,
     isDataReady,
     fetchJson
-} from "./../../services/http-request";
-import {HttpRequestStatus} from "./../../application/http-request-status";
+} from "../../app-services/http-request";
+import {HttpRequestStatus} from "../../app/http-request-status";
 import {constructTypeaheadUrl} from "./../solr-api";
+import {parse as parseQueryString} from "query-string";
+import {push} from "react-router-redux";
 
 const QueryStatusLine = ({resultSize, query}) => (
     <div>
@@ -81,6 +79,7 @@ const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPage
             pageSize={query.pageSize}
             onIndexChange={setPageIndex}
             onSizeChange={setPageSize}
+            sizes={[10, 20, 40, 80]}
         />
     </div>
 );
@@ -96,7 +95,7 @@ class FilterBox extends React.Component {
     getInitialStatus() {
         // TODO Make filters visible on first opening if they are used.
         return {
-            "visible" : false
+            "visible": false
         }
     }
 
@@ -180,32 +179,32 @@ class SortSelector extends React.Component {
                         {getString(value)}
                     </DropdownToggle>
                     <DropdownMenu>
-                        { value !== "title asc" &&
+                        {value !== "title asc" &&
                         <DropdownItem onClick={() => onChange("title asc")}>
                             {getString("title asc")}
                         </DropdownItem>
                         }
-                        { value !== "title desc" &&
+                        {value !== "title desc" &&
                         <DropdownItem onClick={() => onChange("title desc")}>
                             {getString("title desc")}
                         </DropdownItem>
                         }
-                        { value !== "issued asc" &&
+                        {value !== "issued asc" &&
                         <DropdownItem onClick={() => onChange("issued asc")}>
                             {getString("issued asc")}
                         </DropdownItem>
                         }
-                        { value !== "issued desc" &&
+                        {value !== "issued desc" &&
                         <DropdownItem onClick={() => onChange("issued desc")}>
                             {getString("issued desc")}
                         </DropdownItem>
                         }
-                        { value !== "modified asc" &&
+                        {value !== "modified asc" &&
                         <DropdownItem onClick={() => onChange("modified asc")}>
                             {getString("modified asc")}
                         </DropdownItem>
                         }
-                        { value !== "modified desc" &&
+                        {value !== "modified desc" &&
                         <DropdownItem onClick={() => onChange("modified desc")}>
                             {getString("modified desc")}
                         </DropdownItem>
@@ -261,8 +260,8 @@ class DatasetListViewComponent extends React.Component {
         const showPublisher = props.query.publisher === undefined ||
             props.query.publisher.length === 0;
 
-        if (props.query.publisher != "") {
-            setPageTitle(props.query.publisher);
+        if (props.query.publisher.length !== 0) {
+            setPageTitle(props.query.publisher[0]);
         } else {
             setPageTitle(getString("title.datasets"));
         }
@@ -284,7 +283,7 @@ class DatasetListViewComponent extends React.Component {
             <Container>
                 <Row>
                     <Col xs={12} md={3}>
-                        <div className="hidden-sm-up">
+                        <div className="d-sm-none">
                             <Button onClick={this.toggleFacets}
                                     style={{"margin": "1em"}}>
                                 {toggleButtonLabel}
@@ -327,7 +326,7 @@ class DatasetListViewComponent extends React.Component {
                                 value={props.query.sort}
                                 onChange={this.callIfNotFetching(props.setSort)}/>
                             <br/>
-                            { showDatasetList &&
+                            {showDatasetList &&
                             <DatasetListLoaded datasetCount={props.datasetCount}
                                                query={props.query}
                                                datasets={props.datasets}
@@ -336,7 +335,7 @@ class DatasetListViewComponent extends React.Component {
                                                showPublisher={showPublisher}
                             />
                             }
-                            { !showDatasetList &&
+                            {!showDatasetList &&
                             <HttpRequestStatus status={props.status}/>
                             }
                         </div>
@@ -348,14 +347,14 @@ class DatasetListViewComponent extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-    "searchQuery": state.dataset.list.ui.searchQuery,
-    "keyword": state.dataset.list.data.keyword,
-    "publisher": state.dataset.list.data.publisher,
-    "format": state.dataset.list.data.format,
-    "datasets": state.dataset.list.data.datasets,
-    "datasetCount": state.dataset.list.data.datasetCount,
-    "query": state.dataset.list.query,
-    "status": state.dataset.list.data.status
+    "searchQuery": state["dataset-list"].ui.searchQuery,
+    "keyword": state["dataset-list"].data.keyword,
+    "publisher": state["dataset-list"].data.publisher,
+    "format": state["dataset-list"].data.format,
+    "datasets": state["dataset-list"].data.datasets,
+    "datasetCount": state["dataset-list"].data.datasetCount,
+    "query": state["dataset-list"].query,
+    "status": state["dataset-list"].data.status
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -366,109 +365,92 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch(setQueryString(value));
     },
     "setQueryFilter": (value) => {
-        if (value == "") {
+        if (value === "") {
             value = undefined;
         }
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(STRING_QUERY)]: value,
-                [getQuery(PAGE_QUERY)]: undefined
-            }
-        });
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [STRING_QUERY]: value,
+                [PAGE_QUERY]: undefined
+            })
+        ));
     },
     "setKeywordsFacet": (facet, isActive) => {
-        let keywords = ownProps.router.location.query[getQuery(KEYWORDS_QUERY)];
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(KEYWORDS_QUERY)]: updateValueList(facet.label, isActive, keywords),
-                [getQuery(PAGE_QUERY)]: undefined
-            }
-        });
+        const params = parseQueryString(ownProps.location.search);
+        let keywords = params[getQuery(KEYWORDS_QUERY)];
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [KEYWORDS_QUERY]: updateValueList(facet.label, isActive, keywords),
+                [PAGE_QUERY]: undefined
+            })
+        ));
     },
     "setPublisherFacet": (facet, isActive) => {
-        let publishers = ownProps.router.location.query[getQuery(PUBLISHER_QUERY)];
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(PUBLISHER_QUERY)]: updateValueList(facet.label, isActive, publishers),
-                [getQuery(PAGE_QUERY)]: undefined
-            }
-        });
+        const params = parseQueryString(ownProps.location.search);
+        let publishers = params[getQuery(PUBLISHER_QUERY)];
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [PUBLISHER_QUERY]: updateValueList(facet.label, isActive, publishers),
+                [PAGE_QUERY]: undefined
+            })
+        ));
     },
     "setFormatFacet": (facet, isActive) => {
-        let formats = ownProps.router.location.query[getQuery(FORMAT_QUERY)];
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(FORMAT_QUERY)]: updateValueList(facet.label, isActive, formats),
-                [getQuery(PAGE_QUERY)]: undefined
-            }
-        });
+        const params = parseQueryString(ownProps.location.search);
+        let formats = params[getQuery(FORMAT_QUERY)];
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [FORMAT_QUERY]: updateValueList(facet.label, isActive, formats),
+                [PAGE_QUERY]: undefined
+            })
+        ));
     },
     "setPageIndex": (page) => {
-        if (page == 0) {
-            page = undefined;
-        }
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(PAGE_QUERY)]: page
-            }
-        });
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [PAGE_QUERY]: page === 0 ? undefined : page
+            })
+        ));
     },
     "setPageSize": (pageSize) => {
-        // TODO Export as some default constants to make this visible.
-        if (pageSize == 10) {
-            pageSize = undefined;
-        }
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(PAGE_SIZE_QUERY)]: pageSize,
-                [getQuery(PAGE_QUERY)]: undefined
-            }
-        });
+        // Extract constant.
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [PAGE_SIZE_QUERY]: pageSize === 10 ? undefined : pageSize,
+                [PAGE_QUERY]: undefined
+            })
+        ));
     },
     "setSort": (value) => {
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {
-                ...ownProps.router.location.query,
-                [getQuery(SORT_QUERY)]: value,
-                [getQuery(PAGE_QUERY)]: undefined
-            }
-        });
+        dispatch(push(
+            createPushObject(ownProps.location, {
+                [SORT_QUERY]: value,
+                [PAGE_QUERY]: undefined
+            })
+        ));
     },
     "clearFilters": () => {
-        ownProps.router.push({
-            "pathname": ownProps.router.location.pathname,
-            "query": {}
-        });
+        dispatch(push({
+            "pathname": ownProps.location.pathname,
+            "search": ""
+        }));
     },
     "setTemporalStart": (event) => {
         const value = event.target.value;
         if (value === "") {
             ownProps.router.push({
-                "pathname": ownProps.router.location.pathname,
+                "pathname": ownProps.location.pathname,
                 "query": {
-                    ...ownProps.router.location.query,
+                    ...ownProps.location.query,
                     [getQuery(TEMPORAL_START)]: undefined,
                     [getQuery(PAGE_QUERY)]: undefined
                 }
             });
         } else {
             ownProps.router.push({
-                "pathname": ownProps.router.location.pathname,
+                "pathname": ownProps.location.pathname,
                 "query": {
-                    ...ownProps.router.location.query,
+                    ...ownProps.location.query,
                     [getQuery(TEMPORAL_START)]: value,
                     [getQuery(PAGE_QUERY)]: undefined
                 }
@@ -479,18 +461,18 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         const value = event.target.value;
         if (value === "") {
             ownProps.router.push({
-                "pathname": ownProps.router.location.pathname,
+                "pathname": ownProps.location.pathname,
                 "query": {
-                    ...ownProps.router.location.query,
+                    ...ownProps.location.query,
                     [getQuery(TEMPORAL_END)]: undefined,
                     [getQuery(PAGE_QUERY)]: undefined
                 }
             });
         } else {
             ownProps.router.push({
-                "pathname": ownProps.router.location.pathname,
+                "pathname": ownProps.location.pathname,
                 "query": {
-                    ...ownProps.router.location.query,
+                    ...ownProps.location.query,
                     [getQuery(TEMPORAL_END)]: value,
                     [getQuery(PAGE_QUERY)]: undefined
                 }
@@ -508,7 +490,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 function updateValueList(value, isActive, activeList) {
     activeList = asNewArray(activeList);
     const index = activeList.indexOf(value);
-    if (isActive && index == -1) {
+    if (isActive && index === -1) {
         activeList.push(value);
     } else if (index > -1) {
         activeList.splice(index, 1);
@@ -523,6 +505,36 @@ function asNewArray(value) {
         return [...value];
     } else {
         return [value];
+    }
+}
+
+function createPushObject(location, query) {
+    let finalQuery = parseQueryString(location.search);
+    Object.keys(query).map((key) => {
+        const value = query[key];
+        finalQuery[getQuery(key)] = value;
+    });
+    let search = "";
+    Object.keys(finalQuery).map((key) => {
+        let values = finalQuery[key];
+        if (values === undefined || values.length === 0 || values === "") {
+            return;
+        }
+        if (!Array.isArray(values)) {
+            values = [values];
+        }
+        values.forEach((value) => {
+            if (search === "") {
+                search += "?";
+            } else {
+                search += "&";
+            }
+            search += encodeURIComponent(key) + "=" + encodeURIComponent(value);
+        });
+    });
+    return {
+        "pathname": location.pathname,
+        "search": search
     }
 }
 

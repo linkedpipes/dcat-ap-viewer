@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {Router, browserHistory} from "react-router";
 import {Provider} from "react-redux";
-import {syncHistoryWithStore} from "react-router-redux";
-import {configureStore} from "./store";
-import {createRoutes} from "./application/navigation";
+import {ConnectedRouter} from "react-router-redux";
+import {createStore} from "./app/store";
+import {createRoutes} from "./app/navigation";
 import Raven from "raven-js";
-import Promise from "es6-promise";
+import {Promise} from "es6-promise";
 import "isomorphic-fetch";
+import createHistory from "history/createBrowserHistory";
 
 // TODO Move to extra file with together with "isomorphic-fetch"
 function backwardCompatibility() {
@@ -18,8 +18,8 @@ function backwardCompatibility() {
 
 backwardCompatibility();
 
-const store = configureStore();
-const history = syncHistoryWithStore(browserHistory, store);
+const history = createHistory();
+const store = createStore(history);
 
 // TODO Add Raven component for exception handling
 //  https://docs.sentry.io/clients/javascript/integrations/react/
@@ -29,6 +29,8 @@ if (SENTRY_REPORT) {
 
 ReactDOM.render((
     <Provider store={store}>
-        <Router history={history} routes={createRoutes()}/>
+        <ConnectedRouter history={history}>
+            {createRoutes(history)}
+        </ConnectedRouter>
     </Provider>
 ), document.getElementById("app"));
