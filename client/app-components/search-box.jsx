@@ -6,9 +6,9 @@ import {AsyncTypeahead} from "react-bootstrap-typeahead";
 /**
  * Wrap AsyncTypeahead component.
  *
- * The AsyncTypeahead use multiple callbacks to handle input change.
- * For our use-case we need to perform search on enter or selection
- * of an item from the typeahead list.
+ * The issue is that we want to perform search for data that are not
+ * suggested, ie. on user pressing enter with any string and the
+ * component is not designed for that.
  */
 class SearchBox extends React.Component {
 
@@ -18,20 +18,13 @@ class SearchBox extends React.Component {
         this.fetchOptions = this.fetchOptions.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onChange = this.onChange.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
         this.submitValue = this.submitValue.bind(this);
-
-        // We use member property as setState does not change fast enough,
-        // because we need to record the change in between calls of member
-        // functions.
-        this.status = {
-            "value": "",
-            "searchExecuted": ""
-        }
+        this.lastSubmitedValue = null;
     }
 
     getInitialState() {
         return {
+            // We start by selecting the value from props.
             "isLoading": false,
             "options": []
         }
@@ -42,31 +35,28 @@ class SearchBox extends React.Component {
             <div>
                 {getString("s.search")}
                 <AsyncTypeahead
-                    promptText={""}
-                    searchText={getString("s.searching")}
+                    minLength={2}
+                    multiple={false}
                     useCache={false}
                     isLoading={this.state.isLoading}
-                    minLength={2}
                     onSearch={this.fetchOptions}
                     options={this.state.options}
                     onChange={this.onChange}
-                    onInputChange={this.onInputChange}
                     onKeyDown={this.onKeyDown}
-                    selected={[this.props.value]}
+                    defaultSelected={[this.props.value]}
+                    searchText={getString("s.searching")}
                     emptyLabel={getString("s.no_data_found")}
                 />
             </div>
         )
     }
 
-    /**
-     * Perform fetch of values that user can select from.
-     */
     fetchOptions(query) {
         if (query === "") {
             this.setState({"options": []});
         }
         this.setState({"isLoading": true});
+        // TODO Covert to promise.
         this.props.onFetchOptions(query, (options) => {
             this.setState({
                 "isLoading": false,
@@ -82,45 +72,37 @@ class SearchBox extends React.Component {
 
     onKeyDown(event) {
         if (event.key === "Enter") {
-            this.submitValue();
+            // This can happen in text box after user input, or
+            // in the expansion with suggestion. Luckily in both
+            // cases the target has the right value by now.
+            this.submitValue(event.target.value);
         }
     }
 
     /**
-     * Called on change of data, which is NOT after every keypress.
+     * Called when use select a suggested value.
      */
     onChange(value) {
-        if (value[0] === undefined) {
+        if (value.length === 0) {
+            // There is change only in text, ignore this.
             return;
         }
-        value = value[0];
-        this.props.onValueChange(value);
-        if (this.props.value === this.status.value) {
-            // This means that user selected new value from list
-            // by pressing enter. In that case we ignore the change.
-        } else {
-            this.submitValue();
+        this.submitValue(value[0]);
+    }
+
+    submitValue(value) {
+        if (this.props.value === value) {
+            // Same value as given by props, ie. no change to the actually
+            // visible results.
+            return
         }
-    }
-
-    /**
-     * This function is called whenever value change, basically after every
-     * key press or value selection.
-     */
-    onInputChange(value) {
-        this.status.value = value;
-        this.status.searchExecuted = false;
-    }
-
-    /**
-     * Handle submit of value ie. user request for search.
-     */
-    submitValue() {
-        if (this.status.searchExecuted) {
+        if (this.lastSubmitedValue === value) {
+            // This can happen when user use enter to select form suggestion,
+            // as in this case the onKeyDown and then onChange are called.
             return;
         }
-        this.status.searchExecuted = true;
-        this.props.onSearch(this.status.value);
+        this.lastSubmitedValue = value;
+        this.props.onSearch(value);
     }
 
 }
@@ -129,6 +111,10 @@ SearchBox.propTypes = {
     "value": PropTypes.string.isRequired,
     "onFetchOptions": PropTypes.func.isRequired,
     "onSearch": PropTypes.func.isRequired,
+    // TODO Remove as not used.
+    // Can be used to synchronize value outside search, enabling
+    // user to change value, click filter and use given value
+    // without submission.
     "onValueChange": PropTypes.func.isRequired
 };
 
