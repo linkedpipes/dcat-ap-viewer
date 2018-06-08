@@ -37,7 +37,7 @@ const initialState = {
         "keyword": [],
         "publisher": [],
         "format": [],
-        "sort": "modified",
+        "sort": "title asc",
         "temporalStart": "",
         "temporalEnd": ""
     },
@@ -49,7 +49,7 @@ const initialState = {
         "keyword": [],
         "publisher": [],
         "format": [],
-        "sort": "modified",
+        "sort": "title asc",
         "pageSize": 10,
         "temporalStart": "",
         "temporalEnd": ""
@@ -183,7 +183,7 @@ function paramsToQuery(params) {
     }
     let order = params[getQuery(SORT_QUERY)];
     if (order === undefined) {
-        order = "modified desc";
+        order = "title asc";
     }
     let pageSize = parseInt(params[getQuery(PAGE_SIZE_QUERY)]);
     if (isNaN(pageSize)) {
