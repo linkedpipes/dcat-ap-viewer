@@ -1,8 +1,8 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {ListGroup, ListGroupItem} from "reactstrap";
-import {formatNumber} from "../app-services/formats"
-import {getString} from "../app/strings"
+import {formatNumber} from "../../../app-services/formats"
+import {getString} from "../../../app/strings"
 
 class FacetFilter extends React.Component {
 
@@ -75,10 +75,8 @@ class FacetFilter extends React.Component {
         const items = this.generateListItems();
         const label = getString(props.label) + " (" + props.values.length + ")";
         return (
-            <div style={{"marginTop": "1em"}}>
-                <h3 style={{
-                    "padding": "0.2em 0em 0.2em 1em"
-                }}>{label}</h3>
+            <div className="mt-2">
+                <h3 className="p-lg-2">{label}</h3>
                 <ListGroup>
                     {items}
                 </ListGroup>

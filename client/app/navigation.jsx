@@ -1,7 +1,6 @@
 import React from "react";
 import {App} from "./app";
 import {Route, Switch} from "react-router-dom";
-import {DatasetListView} from "../dataset/list/dataset-list-view";
 import {PageNotFound} from "../system/page-not-found";
 import {getRegistered} from "./register";
 
@@ -117,12 +116,12 @@ export const createRoutes = (history) => (
     <Route history={history}>
         <App>
             <Switch>
-                <Route path="/" component={DatasetListView} exact={true}/>
                 {
                     getRouteObjects().map(page =>
                         <Route key={page.id}
                                path={page.link}
                                component={page.component}
+                               exact={page.exact}
                         />
                     )
                 }
@@ -150,15 +149,26 @@ function getRouteObjects() {
                 routes.push({
                     "id": entry.name + "-" + language,
                     "link": "/" + encodeURI(url),
-                    "component": entry.component
+                    "component": entry.component,
+                    "exact" : false
                 });
             }
             routes.push({
                 "id": entry.name + "-" + language,
                 "link": "/" + (url),
-                "component": entry.component
+                "component": entry.component,
+                "exact" : false
             });
         });
+        if (entry.homepage) {
+            routes.push({
+                "id": "homepage",
+                "link": "/",
+                "component": entry.component,
+                "exact" : true
+            });
+        }
+
     });
     return routes;
 }

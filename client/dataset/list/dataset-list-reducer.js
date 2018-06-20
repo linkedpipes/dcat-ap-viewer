@@ -27,16 +27,15 @@ import {parse as parseQueryString} from "query-string";
 //  For example paginator re-render on every change of string query.
 
 const initialState = {
-    "ui": {
-        "searchQuery": "",
-    },
     "data": {
         "status": STATUS_INITIAL,
         "datasetCount": 0,
         "datasets": [],
+        // TODO Move to upper level.
         "keyword": [],
         "publisher": [],
         "format": [],
+        // TODO Do we need this properties?
         "sort": "modified",
         "temporalStart": "",
         "temporalEnd": ""
@@ -49,7 +48,7 @@ const initialState = {
         "keyword": [],
         "publisher": [],
         "format": [],
-        "sort": "modified",
+        "sort": "title asc",
         "pageSize": 10,
         "temporalStart": "",
         "temporalEnd": ""
@@ -226,3 +225,31 @@ export default reducer = {
 };
 
 const reducerSelector = (state) => state[reducerName];
+
+export function keywordsSelector(state) {
+    return reducerSelector(state)["data"]["keyword"];
+}
+
+export function publishersSelector(state) {
+    return reducerSelector(state)["data"]["publisher"];
+}
+
+export function formatsSelector(state) {
+    return reducerSelector(state)["data"]["format"];
+}
+
+export function datasetsSelector(state) {
+    return reducerSelector(state)["data"]["datasets"];
+}
+
+export function datasetsTotalCountSelector(state) {
+    return reducerSelector(state)["data"]["datasetCount"];
+}
+
+export function dataStatusSelector(state) {
+    return reducerSelector(state)["data"]["status"];
+}
+
+export function querySelector(state) {
+    return reducerSelector(state)["query"];
+}
