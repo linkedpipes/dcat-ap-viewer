@@ -7,6 +7,7 @@ import {
 } from "./labels-reducer";
 import {
     selectLabel as _selectLabel,
+    selectLabelNoIri as _selectLabelNoIri,
     selectLabels as _selectLabels,
     selectString as _selectString
 } from "./labels-api";
@@ -15,6 +16,7 @@ import {
 
 export const fetchLabel = _fetchLabel;
 export const selectLabel = _selectLabel;
+export const selectLabelNoIri = _selectLabelNoIri;
 export const selectLabels = _selectLabels;
 export const labelsSelector = _labelsSelector;
 export const selectString = _selectString;

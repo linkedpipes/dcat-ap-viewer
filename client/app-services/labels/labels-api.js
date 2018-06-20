@@ -13,6 +13,18 @@ export const selectLabel = (labelState, resource) => {
     return labels[0];
 };
 
+export const selectLabelNoIri = (labelState, resource) => {
+    const label = selectLabel(labelState, resource);
+    if (typeof(resource) === "object") {
+        resource = resource["@id"];
+    }
+    if (label === resource) {
+        return undefined;
+    }
+    console.log("selectLabelNoIri", label, resource)
+    return label;
+};
+
 export const selectLabels = (labelState, resource) => {
     const languages = getLanguagePreferences();
     const labels = selectLabelFromState(labelState, languages, resource);

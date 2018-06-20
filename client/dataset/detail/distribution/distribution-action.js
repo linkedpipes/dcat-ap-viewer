@@ -35,7 +35,7 @@ export function fetchDistribution(iri) {
             const distribution = jsonLdToDistribution(jsonld);
             dispatch(fetchDistributionSuccess(iri, jsonld, distribution));
             fetchLabelsForDistribution(distribution, dispatch);
-        }).catch((error) => dispatch(fetchDistributionFailed(error)));
+        }).catch((error) => dispatch(fetchDistributionFailed(iri, error)));
     };
 }
 
