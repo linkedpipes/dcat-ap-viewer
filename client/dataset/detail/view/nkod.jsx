@@ -56,11 +56,11 @@ function Keywords({labels, keywords}) {
         <div>
             <span className="sr-only">{getString("s.keywords") + ":"}</span>
             {keywordsRef.map((keyword) => (
-                <a className="btn btn-light mx-1"
-                   href={keyword.url} role="button"
-                   key={keyword.label}>
+                <Link className="btn btn-light mx-1"
+                      to={keyword.url} role="button"
+                      key={keyword.label}>
                     {keyword.label}
-                </a>
+                </Link>
             ))}
             <hr/>
         </div>
