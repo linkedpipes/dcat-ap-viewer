@@ -16,105 +16,51 @@ export function isDataReady(status) {
     return status === STATUS_FETCHED;
 }
 
-export function isStatusLoading(status) {
-    return status === STATUS_INITIAL || status === STATUS_FETCHING;
-}
-
-export function isStatusFailed(status) {
-    return status === ERROR_MISSING ||
-        status === ERROR_SERVER_FAILURE ||
-        status === ERROR_RESPONSE;
+export function fetchJson(url) {
+    return fetch(url, {
+        "method": "GET",
+        "headers": {
+            "Accept": "application/json"
+        },
+    }).catch(failureToResponse).then(json);
 }
 
 function json(response) {
-    return response.json().then((json) => {
-        return {
-            "status": response.status,
-            "json": json
-        };
-    });
-}
-
-export function fetchJson(url) {
-    return fetch(url).then(json);
-}
-
-// TODO Convert to use promises.
-export const fetchJsonCallback = (url, onSuccess, onFailure) => {
-    fetchJson(url).then((data) => {
-        if (isResourceMissing(data)) {
-            handleMissingResource(onFailure, createExtra(url));
-        } else if (isErrorResponse(data)) {
-            handleErrorResponse(data, onFailure, createExtra(url));
-        } else if (doesRequestFailed(data)) {
-            handleServerFailure(onFailure, createExtra(url));
+    return response.json().catch(() => {
+        return Promise.reject({
+            "error": "parsing"
+        })
+    }).then((data) => {
+        if (response.ok) {
+            return {
+                "status": response.status,
+                "json": data
+            }
         } else {
-            handleOkResponse(data, onSuccess, createExtra(url));
+            return Promise.reject({
+                "error": "server",
+                "status": response.status,
+                "json": data
+            });
         }
-    }).catch((exception) => {
-        handleRequestException(exception, onFailure, createExtra(url))
-    });
-};
-
-function createExtra(url) {
-    return {
-        "url": url
-    };
+    }).catch((error) => {
+        reportException(error, {
+            "status": response.status,
+            "statusText": response.statusText
+        });
+        throw error;
+    })
 }
 
-function isResourceMissing(data) {
-    return data.status >= 400 && data.status < 500;
-}
-
-function doesRequestFailed(data) {
-    return data.status >= 500 && data.status < 600;
-}
-
-function isErrorResponse(data) {
-    return data.json !== undefined && data.json.error != undefined;
-}
-
-function handleMissingResource(callback, extra) {
-    callWithCheck(callback, {
-        "status": ERROR_MISSING
-    }, extra);
-}
-
-function handleServerFailure(callback, extra) {
-    callWithCheck(callback, {
-        "status": ERROR_SERVER_FAILURE
-    }, extra);
-}
-
-function handleErrorResponse(data, callback, extra) {
-    callWithCheck(callback, {
-        "status": ERROR_RESPONSE,
-        "error": data.json.error
-    }, extra);
-}
-
-function handleOkResponse(data, callback, extra) {
-    callWithCheck(callback, data.json, extra);
-}
-
-function handleRequestException(exception, callback, extra) {
-    reportException(exception, extra);
-    callWithCheck(callback, {
-        "status": ERROR_SERVER_FAILURE
-    });
+function failureToResponse(error) {
+    reportException(error, {});
+    return Promise.reject({
+        "error": "offline"
+    })
 }
 
 function reportException(exception, extra) {
-    console.error("Error", exception, extra);
     Raven.captureException(exception, {
         "extra": extra
     });
-}
-
-function callWithCheck(functionToCall, argument, extra) {
-    try {
-        functionToCall(argument)
-    } catch (exception) {
-        reportException(exception, extra);
-    }
 }

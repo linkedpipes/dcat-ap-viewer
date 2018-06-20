@@ -1,4 +1,4 @@
-import {fetchJsonCallback} from "../http-request";
+import {fetchJson} from "../http-request";
 
 export const FETCH_LABEL_SUCCESS = "FETCH_LABEL_SUCCESS";
 
@@ -6,12 +6,12 @@ export const fetchLabel = (iri) => {
     const url = "api/v1/resource/codelist?iri=" + encodeURI(iri);
     return (dispatch) => {
         // TODO Use caching.
-        // TODO Update to use Promises instead of callbacks.
-        fetchJsonCallback(url, (data) => {
-            const jsonld = normalizeJsonLd(data);
+        fetchJson(url).then((data) => {
+            const jsonld = normalizeJsonLd(data.json);
             dispatch(fetchLabelSuccess(jsonld));
-        }, () => {
-            console.warn("Codelist request failed for : ", iri);
+        }).catch((error) => {
+            console.warn("Codelist request failed for: ", iri,
+                " error:" , error);
         });
     }
 };
