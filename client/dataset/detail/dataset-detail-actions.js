@@ -54,8 +54,7 @@ function fetchDatasetSuccess(jsonld, data) {
 }
 
 function fetchDatasetFailed(error) {
-    // TODO Add API for handling errors!
-    console.error("fetchFailed", error);
+    console.error("Can't fetch dataset.", error);
     return addLoaderStatusOff({
         "type": FETCH_DATASET_FAILED,
         "error": error

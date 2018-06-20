@@ -45,8 +45,7 @@ function fetchSuccess(data) {
 }
 
 function fetchFailed(error) {
-    // TODO Add API for handling errors!
-    console.error("fetchFailed", error);
+    console.error("Can't fetch publishers.", error);
     return addLoaderStatusOff({
         "type": FETCH_LIST_PAGE_FAILED,
         "error": error
