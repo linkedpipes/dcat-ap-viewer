@@ -18,7 +18,7 @@ import {
 } from "./dataset-list-reducer";
 import {connect} from "react-redux";
 import {
-    updateQueryFilters
+    updateQuery
 } from "./dataset-list-actions";
 
 class _DatasetList extends React.Component {
@@ -54,10 +54,10 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    "setPageIndex": (event) => dispatch(updateQueryFilters(
+    "setPageIndex": (value) => dispatch(updateQuery(
         ownProps.location, {[PAGE_QUERY]: value}, []
     )),
-    "setPageSize": (event) => dispatch(updateQueryFilters(
+    "setPageSize": (value) => dispatch(updateQuery(
         ownProps.location, {[PAGE_SIZE_QUERY]: value}, [PAGE_QUERY]
     ))
 });
