@@ -1,10 +1,16 @@
 import Raven from "raven-js";
 
+// Initial status no data available.
 export const STATUS_INITIAL = "INITIAL";
 
+// Fetching from initial state ie. no data available.
 export const STATUS_FETCHING = "FETCHING";
 
+// Data has been fetched successfully.
 export const STATUS_FETCHED = "FETCHED";
+
+// We have some data, but we are fetching again - for an update.
+export const STATUS_FETCHING_UPDATE = "FETCHING_UPDATE";
 
 export const ERROR_MISSING = "MISSING";
 
@@ -12,8 +18,12 @@ export const ERROR_SERVER_FAILURE = "SERVER_FAILURE";
 
 export const ERROR_RESPONSE = "ERROR_RESPONSE";
 
+export function isFetching(status) {
+    return status === STATUS_FETCHING || status === STATUS_FETCHING_UPDATE;
+}
+
 export function isDataReady(status) {
-    return status === STATUS_FETCHED;
+    return status === STATUS_FETCHED || status === STATUS_FETCHING_UPDATE;
 }
 
 export function fetchJson(url) {

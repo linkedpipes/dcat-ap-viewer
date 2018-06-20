@@ -1,6 +1,6 @@
 import {
     fetchJson,
-    STATUS_FETCHING
+    isFetching
 } from "../../app-services/http-request";
 import {
     addLoaderStatusOn,
@@ -88,8 +88,7 @@ function pushIfNotPending(pushObject) {
     return (dispatch, getState) => {
         const state = getState();
         const status = dataStatusSelector(state);
-        const isLoading = status === STATUS_FETCHING;
-        if (isLoading) {
+        if (isFetching(status)) {
             return;
         }
         dispatch(push(pushObject));
