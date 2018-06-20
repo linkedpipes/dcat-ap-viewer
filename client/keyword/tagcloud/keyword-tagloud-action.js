@@ -45,8 +45,7 @@ function fetchSuccess(json) {
 }
 
 function fetchFailed(error) {
-    // TODO Add API for handling errors!
-    console.error("fetchFailed", error);
+    console.error("Can't fetch keywords:", error);
     return addLoaderStatusOff({
         "type": FETCH_KEYWORDS_FAILED,
         "error": error

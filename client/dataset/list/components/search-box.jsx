@@ -1,7 +1,9 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import {getString} from "../app/strings";
+import {getString} from "../../../app/strings";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
+import {constructTypeaheadUrl} from "../../solr-api";
+import {fetchJson} from "app-services/http-request";
 
 /**
  * Wrap AsyncTypeahead component.
@@ -31,6 +33,10 @@ class SearchBox extends React.Component {
     }
 
     render() {
+        let defaultSelected = [];
+        if (this.props.defaultValue !== undefined) {
+            defaultSelected = [this.props.defaultValue];
+        }
         return (
             <div>
                 {getString("s.search")}
@@ -43,7 +49,7 @@ class SearchBox extends React.Component {
                     options={this.state.options}
                     onChange={this.onChange}
                     onKeyDown={this.onKeyDown}
-                    defaultSelected={[this.props.value]}
+                    defaultSelected={defaultSelected}
                     searchText={getString("s.searching")}
                     emptyLabel={getString("s.no_data_found")}
                 />
@@ -56,13 +62,16 @@ class SearchBox extends React.Component {
             this.setState({"options": []});
         }
         this.setState({"isLoading": true});
-        // TODO Covert to promise.
-        this.props.onFetchOptions(query, (options) => {
+
+        // TODO Move to some sort of API/action file?
+        const url = constructTypeaheadUrl(query);
+        return fetchJson(url).then((data) => {
+            const options = data.json.response.docs.map((item) => item.title);
             this.setState({
                 "isLoading": false,
                 "options": options
             });
-        }, () => {
+        }).catch(() => {
             this.setState({
                 "isLoading": false,
                 "options": []
@@ -108,14 +117,8 @@ class SearchBox extends React.Component {
 }
 
 SearchBox.propTypes = {
-    "value": PropTypes.string.isRequired,
-    "onFetchOptions": PropTypes.func.isRequired,
-    "onSearch": PropTypes.func.isRequired,
-    // TODO Remove as not used.
-    // Can be used to synchronize value outside search, enabling
-    // user to change value, click filter and use given value
-    // without submission.
-    "onValueChange": PropTypes.func.isRequired
+    "defaultValue": PropTypes.string,
+    "onSearch": PropTypes.func.isRequired
 };
 
 export default SearchBox;

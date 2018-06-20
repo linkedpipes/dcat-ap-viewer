@@ -1,25 +1,19 @@
 import React from "react";
-import {selectLabel, selectString} from "app-services/labels";
+import {selectLabel, selectString} from "app-services/labels/index";
 import {Link} from "react-router-dom";
 import {getString} from "app/strings";
 import {
     DATASET_LIST_URL,
     getUrl,
     KEYWORDS_QUERY
-} from "../../../app/navigation";
+} from "../../app/navigation";
 
-export default class NkodDatasetView extends React.PureComponent {
+export default class DatasetView extends React.PureComponent {
 
     render() {
         const {dataset, publisherUrl, labels} = this.props;
         const title = selectLabel(labels, this.props.dataset);
 
-        const keywords = selectString(labels, dataset.keywords);
-        const keywordsRef = keywords.map((keyword) => (
-            {
-                "label": keyword,
-                "url": getUrl(DATASET_LIST_URL, {[KEYWORDS_QUERY]: keyword})
-            }));
 
         return (
             <div>
@@ -35,8 +29,7 @@ export default class NkodDatasetView extends React.PureComponent {
                 </h2>
                 <p>{selectString(labels, dataset.description)}</p>
                 <hr/>
-                <Keywords keywords={keywordsRef}/>
-                <hr/>
+                <Keywords labels={labels} keywords={dataset.keywords}/>
                 <Properties labels={labels} dataset={dataset}/>
                 <hr/>
             </div>
@@ -46,18 +39,34 @@ export default class NkodDatasetView extends React.PureComponent {
 }
 
 
-const Keywords = (({keywords}) => (
-    <div>
-        <span className="sr-only">{getString("s.keywords") + ":"}</span>
-        {keywords.map((keyword) => (
-            <a className="btn btn-light mx-1"
-               href={keyword.url} role="button"
-               key={keyword.label}>
-                {keyword.label}
-            </a>
-        ))}
-    </div>
-));
+function Keywords({labels, keywords}) {
+    const hasKeywords = Object.keys(keywords).length > 0;
+    if (!hasKeywords) {
+        return null;
+    }
+
+    const keywordsLabels = selectString(labels, keywords);
+    const keywordsRef = keywordsLabels.map((keyword) => (
+        {
+            "label": keyword,
+            "url": getUrl(DATASET_LIST_URL, {[KEYWORDS_QUERY]: keyword})
+        }));
+
+    return (
+        <div>
+            <span className="sr-only">{getString("s.keywords") + ":"}</span>
+            {keywordsRef.map((keyword) => (
+                <Link className="btn btn-light mx-1"
+                      to={keyword.url} role="button"
+                      key={keyword.label}>
+                    {keyword.label}
+                </Link>
+            ))}
+            <hr/>
+        </div>
+    )
+}
+
 
 const Properties = ({labels, dataset}) => {
     return (
