@@ -19,13 +19,13 @@ class _KeywordsViewContainer extends React.Component {
     }
 
     render() {
-        if (!isDataReady(this.props.status)) {
+        if (isDataReady(this.props.status)) {
             return (
-                <HttpRequestStatus status={this.props.status}/>
+                <KeywordTagCloud tags={this.props.data}/>
             )
         } else {
             return (
-                <KeywordTagCloud tags={this.props.data}/>
+                <HttpRequestStatus status={this.props.status}/>
             )
         }
     }

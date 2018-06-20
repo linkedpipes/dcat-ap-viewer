@@ -56,7 +56,7 @@ function onKeywordsRequestFailed(state, action) {
     return {
         ...state,
         "status": action.error.status,
-        "keywords": undefined,
+        "keywords": undefined
     };
 }
 
