@@ -5,7 +5,7 @@ import {getLanguage} from "app/navigation";
 export const selectLabel = (labelState, resource) => {
     const labels = selectLabels(labelState, resource);
     if (labels.length > 1) {
-        console.warn("Using only one label for:", value, "->", labels[0]);
+        console.warn("Using only first label for:", resource, "->", labels);
     }
     if (labels.length === 0) {
         return undefined;
@@ -49,6 +49,9 @@ export function selectString(languages, value) {
     const anyLanguageLabel = selectAnyLanguageLabel(value);
     if (anyLanguageLabel) {
         return anyLanguageLabel;
+    }
+    if(value["@id"] === undefined) {
+        return []
     }
     return [value["@id"]];
 }
