@@ -1,8 +1,7 @@
 import React from "react";
 import {selectLabel, selectString} from "app-services/labels";
 import {Link} from "react-router-dom";
-import TagLine from "app-components/tag-line";
-import {Table} from "reactstrap";
+import {Table, Badge} from "reactstrap";
 import {getString} from "../../../app/strings";
 
 export default class TableDatasetView extends React.PureComponent {
@@ -257,4 +256,25 @@ function updateDate(value) {
     }
 }
 
-
+const TagLine = ({values, size = 1}) => {
+    if (values === undefined) {
+        return null;
+    }
+    return (
+        <div style={{"marginTop": "0.2em"}}>
+            {values.map((item) => (
+                <Badge
+                    style={{
+                        "marginLeft": "1em",
+                        "marginBottom": "0.5em",
+                        "fontSize": size + "em"
+                    }}
+                    color="info"
+                    pill
+                    key={item}>
+                    {item}
+                </Badge>
+            ))}
+        </div>
+    );
+};
