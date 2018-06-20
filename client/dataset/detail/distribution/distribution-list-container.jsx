@@ -10,9 +10,7 @@ import {
     pageSelector,
     pageSizeSelector,
 } from "./distribution-reducer";
-
-// TODO Read from configuration.
-const DistributionList = require("./view/nkod").default;
+import DistributionList from "./distribution-list";
 
 class _DistributionListContainer extends React.Component {
 

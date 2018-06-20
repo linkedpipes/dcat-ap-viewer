@@ -1,14 +1,14 @@
 import React from "react";
-import {selectLabel, selectString} from "app-services/labels";
+import {selectLabel, selectString} from "app-services/labels/index";
 import {Link} from "react-router-dom";
 import {getString} from "app/strings";
 import {
     DATASET_LIST_URL,
     getUrl,
     KEYWORDS_QUERY
-} from "../../../app/navigation";
+} from "../../app/navigation";
 
-export default class NkodDatasetView extends React.PureComponent {
+export default class DatasetView extends React.PureComponent {
 
     render() {
         const {dataset, publisherUrl, labels} = this.props;

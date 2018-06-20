@@ -21,9 +21,7 @@ import {HttpRequestStatus} from "app/http-request-status";
 import {DatasetWebPageMetadata} from "./webpage-metadata";
 import {DistributionListContainer} from "./distribution";
 import {parse as parseQueryString} from "query-string";
-
-// TODO Load from configuration.
-const DatasetDetail = require("./view/nkod").default;
+import DatasetDetail from "./dataset-detail";
 
 class _DatasetDetailContainer extends React.Component {
 

@@ -1,10 +1,10 @@
 import React from "react";
 import Paginator from "app-components/paginator";
 import {getString} from "app/strings";
-import {DistributionContainer} from "../distribution-container";
-import {selectLabel} from "app-services/labels";
+import {DistributionContainer} from "./distribution-container";
+import {selectLabel} from "app-services/labels/index";
 
-export default class DistributionNkodView extends React.PureComponent {
+export default class DistributionList extends React.PureComponent {
     render() {
         const {distributions} = this.props;
         if (distributions.length === 0) {
