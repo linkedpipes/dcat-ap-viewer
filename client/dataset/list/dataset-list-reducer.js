@@ -19,6 +19,7 @@ import {
 import {
     STATUS_INITIAL,
     STATUS_FETCHING,
+    STATUS_FETCHING_UPDATE,
     STATUS_FETCHED
 } from "../../app-services/http-request";
 import {parse as parseQueryString} from "query-string";
@@ -75,11 +76,17 @@ function reducer(state = initialState, action) {
 }
 
 function onListRequest(state) {
+    let status;
+    if (state.status === STATUS_INITIAL) {
+        status = STATUS_FETCHING;
+    } else {
+        status = STATUS_FETCHING_UPDATE;
+    }
     return {
         ...state,
         "data": {
             ...state.data,
-            "status": STATUS_FETCHING
+            "status": status
         }
     };
 }

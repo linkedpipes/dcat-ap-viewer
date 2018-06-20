@@ -11,7 +11,7 @@ export default class DatasetColumn extends React.Component {
         let datasetComponent;
         if (isDataReady(this.props.status)) {
             datasetComponent = (
-                <DatasetList/>
+                <DatasetList location={this.props.location}/>
             );
         } else {
             datasetComponent = (

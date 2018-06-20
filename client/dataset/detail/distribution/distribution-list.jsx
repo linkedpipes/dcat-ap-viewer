@@ -2,7 +2,7 @@ import React from "react";
 import Paginator from "app-components/paginator";
 import {getString} from "app/strings";
 import {DistributionContainer} from "./distribution-container";
-import {selectLabel} from "app-services/labels/index";
+import {selectLabel, selectLabelNoIri} from "app-services/labels/index";
 
 export default class DistributionList extends React.PureComponent {
     render() {
@@ -43,7 +43,7 @@ class Distribution extends React.PureComponent {
             return null;
         }
 
-        let title = selectLabel(labels, distribution);
+        let title = selectLabelNoIri(labels, distribution);
         if (title === undefined) {
             title = getString("s.unnamed_distribution");
         }
@@ -107,12 +107,12 @@ function downloadListItem(distribution) {
 }
 
 function schemaListItem(distribution) {
-    if (distribution.conformsTo === undefined) {
+    if (distribution.conformsTo.length === 0) {
         return null;
     }
     return (
         <li className="list-group-item">
-            <a href={distribution.conformsTo}
+            <a href={distribution.conformsTo[1]}
                className="card-link">
                 {getString("s.schema")}
             </a>
