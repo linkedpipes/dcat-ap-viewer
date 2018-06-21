@@ -21,7 +21,6 @@ export const selectLabelNoIri = (labelState, resource) => {
     if (label === resource) {
         return undefined;
     }
-    console.log("selectLabelNoIri", label, resource)
     return label;
 };
 
