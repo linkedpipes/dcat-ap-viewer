@@ -44,14 +44,9 @@ class Distribution extends React.PureComponent {
         }
 
         let title = selectLabelNoIri(labels, distribution);
-        if (title === undefined) {
-            title = getString("s.unnamed_distribution");
-        }
 
-        let formatLabel;
-        if (distribution.format === undefined) {
-            formatLabel = "";
-        } else {
+        let formatLabel = undefined;
+        if (distribution.format !== undefined) {
             formatLabel = selectLabel(labels, distribution.format);
         }
 
@@ -59,12 +54,20 @@ class Distribution extends React.PureComponent {
             <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
                 <div className="card" style={{"height": "100%"}}>
                     <div className="card-body">
-                        <h5 className="card-title">
-                            {title}
-                        </h5>
+                        {title === undefined ?
+                            <span className="sr-only">
+                            {getString("s.unnamed_distribution")}
+                            </span>
+                            :
+                            <h5 className="card-title">
+                                {title}
+                            </h5>
+                        }
+                        {formatLabel &&
                         <h6 className="card-subtitle mb-2 text-muted">
                             {formatLabel}
                         </h6>
+                        }
                     </div>
                     <ul className="list-group list-group-flush">
                         {downloadListItem(distribution)}
