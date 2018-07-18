@@ -74,5 +74,5 @@ function getUrlPrefix(properties) {
     if (!value) {
         return "";
     }
-    return value;
+    return "/" + value;
 }
