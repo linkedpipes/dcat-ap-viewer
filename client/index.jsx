@@ -5,20 +5,10 @@ import {ConnectedRouter} from "react-router-redux";
 import {createStore} from "./app/store";
 import {createRoutes} from "./app/navigation";
 import Raven from "raven-js";
-import {Promise} from "es6-promise";
-import "isomorphic-fetch";
 import createHistory from "history/createBrowserHistory";
+import "./backward-compatibility";
 
 import "./index.style.css";
-
-// TODO Move to extra file with together with "isomorphic-fetch"
-function backwardCompatibility() {
-    if (!window.Promise) {
-        window.Promise = Promise;
-    }
-}
-
-backwardCompatibility();
 
 const history = createHistory();
 const store = createStore(history);

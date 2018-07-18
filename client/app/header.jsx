@@ -55,7 +55,7 @@ class HeaderComponent extends React.Component {
                     <NavbarBrand href="https://data.gov.cz/">
                         <img width="174" height="30"
                              className="d-inline-block align-top"
-                             src="/assets/images/opendata-logo.png"/>
+                             src="./assets/images/opendata-logo.png"/>
                     </NavbarBrand>
                     <NavbarToggler onClick={this.toggleNavbar}/>
                     <Collapse isOpen={this.state.isOpen} navbar>

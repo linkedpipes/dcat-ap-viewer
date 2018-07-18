@@ -2,9 +2,9 @@ import React from "react";
 import {Header} from "./header";
 import Footer from "./footer";
 import {LanguageReRouter} from "./language-rerouter";
-import {LoaderIndicator} from "../app-components/loading-indicator/index";
+import {LoaderIndicator} from "../app-ui/loading-indicator/index";
 import {connect} from "react-redux";
-import GoogleTagManager from "../app-components/google-tag-manager"
+import GoogleTagManager from "../app-ui/google-tag-manager"
 import {withRouter} from "react-router-dom";
 
 class AppComponent extends React.Component {

@@ -5,7 +5,7 @@ import {
 import {
     addLoaderStatusOn,
     addLoaderStatusOff
-} from "../../app-components/loading-indicator";
+} from "../../app-ui/loading-indicator";
 import {constructSearchQueryUrl} from "./../solr-api";
 import {parse as parseQueryString} from "query-string";
 import {push} from "react-router-redux";

@@ -2,7 +2,7 @@ import React from "react";
 import {isDataReady} from "../../app-services/http-request";
 import {Col} from "reactstrap";
 import QueryInput from "./query-input";
-import {HttpRequestStatus} from "../../app/http-request-status";
+import {HttpRequestStatus} from "../../app-ui/http-request-status";
 import QueryStatus from "./query-status";
 import DatasetList from "./dataset-list";
 

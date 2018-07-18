@@ -6,7 +6,7 @@ import {statusSelector, publishersSelector} from "./publisher-list-reducer"
 import {getString} from "../../app/strings";
 import setPageTitle from "../../app-services/page-title";
 import {isDataReady} from "../../app-services/http-request";
-import {HttpRequestStatus} from "../../app/http-request-status";
+import {HttpRequestStatus} from "../../app-ui/http-request-status";
 import {PublisherList} from "./publisher-list";
 
 

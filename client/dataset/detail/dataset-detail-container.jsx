@@ -17,7 +17,7 @@ import {getString} from "app/strings";
 import setPageTitle from "app-services/page-title";
 import {isDataReady} from "app-services/http-request";
 import {selectLabel, labelsSelector} from "app-services/labels";
-import {HttpRequestStatus} from "app/http-request-status";
+import {HttpRequestStatus} from "app-ui/http-request-status";
 import {DatasetWebPageMetadata} from "./webpage-metadata";
 import {DistributionListContainer} from "./distribution";
 import {parse as parseQueryString} from "query-string";

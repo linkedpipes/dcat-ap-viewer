@@ -1,5 +1,5 @@
 import React from "react";
-import Paginator from "app-components/paginator";
+import Paginator from "app-ui/paginator";
 import {getString} from "app/strings";
 import {DistributionContainer} from "./distribution-container";
 import {selectLabel, selectLabelNoIri} from "app-services/labels/index";
