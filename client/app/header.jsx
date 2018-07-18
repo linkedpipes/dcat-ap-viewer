@@ -63,7 +63,8 @@ class HeaderComponent extends React.Component {
                             <NavItem>
                                 <RouterLink to={getUrl(DATASET_LIST_URL)}
                                             className="nav-link"
-                                            activeClassName="active">
+                                            activeClassName="active"
+                                            isActive={isDatasetActive}>
                                     {getString("h.datasets")}
                                 </RouterLink>
                             </NavItem>
@@ -120,9 +121,16 @@ class HeaderComponent extends React.Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => ({});
+function isDatasetActive(match, location) {
+    if (match) {
+        return true;
+    }
+    const rootPath = URL_PREFIX + "/";
+    console.log(location.pathname);
+    return location.pathname === rootPath;
+}
 
-export const Header = connect(mapStateToProps)(HeaderComponent);
+export const Header = (HeaderComponent);
 
 class HeaderLanguageSelector extends React.Component {
 

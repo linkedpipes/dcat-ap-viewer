@@ -91,7 +91,7 @@ export function setLanguage(language) {
 //
 
 export const getUrl = (page, query) => {
-    let url = "./" + NAVIGATION[getLanguage()][PAGE][page];
+    let url = URL_PREFIX + "/" + NAVIGATION[getLanguage()][PAGE][page];
     if (query === undefined) {
         return url;
     }
