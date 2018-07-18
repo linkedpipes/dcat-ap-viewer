@@ -55,7 +55,7 @@ class HeaderComponent extends React.Component {
                     <NavbarBrand href="https://data.gov.cz/">
                         <img width="174" height="30"
                              className="d-inline-block align-top"
-                             src="/assets/images/opendata-logo.png"/>
+                             src="./assets/images/opendata-logo.png"/>
                     </NavbarBrand>
                     <NavbarToggler onClick={this.toggleNavbar}/>
                     <Collapse isOpen={this.state.isOpen} navbar>
@@ -63,7 +63,8 @@ class HeaderComponent extends React.Component {
                             <NavItem>
                                 <RouterLink to={getUrl(DATASET_LIST_URL)}
                                             className="nav-link"
-                                            activeClassName="active">
+                                            activeClassName="active"
+                                            isActive={isDatasetActive}>
                                     {getString("h.datasets")}
                                 </RouterLink>
                             </NavItem>
@@ -120,9 +121,16 @@ class HeaderComponent extends React.Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => ({});
+function isDatasetActive(match, location) {
+    if (match) {
+        return true;
+    }
+    const rootPath = URL_PREFIX + "/";
+    console.log(location.pathname);
+    return location.pathname === rootPath;
+}
 
-export const Header = connect(mapStateToProps)(HeaderComponent);
+export const Header = (HeaderComponent);
 
 class HeaderLanguageSelector extends React.Component {
 
@@ -146,7 +154,7 @@ class HeaderLanguageSelector extends React.Component {
                 <Dropdown isOpen={this.state.isLanguageOpen}
                           toggle={this.toggleLanguage}>
                     <DropdownToggle caret nav>
-                        <img src={"/assets/images/flag-" + language + ".png"}
+                        <img src={"./assets/images/flag-" + language + ".png"}
                              style={{"width": "1.2rem"}}
                              alt={getString(language)}/>
                     </DropdownToggle>
@@ -184,17 +192,16 @@ class HeaderLanguageSelector extends React.Component {
     }
 
     createDropdownItem(baseUrl, lang) {
+        const link = baseUrl + "lang=" + lang;
         return (
-            <DropdownItem key={lang}>
-                <NavLink href={baseUrl + "lang=" + lang}>
-                    <img src={"/assets/images/flag-" + lang + ".png"}
-                         style={{
-                             "width": "1.2rem",
-                             "marginLeft": "0.4rem",
-                             "marginBottom": "0.3rem"
-                         }}
-                         alt={getString(lang)}/>
-                </NavLink>
+            <DropdownItem key={lang} tag={NavLink} href={link}>
+                <img src={"./assets/images/flag-" + lang + ".png"}
+                     style={{
+                         "width": "1.2rem",
+                         "marginLeft": "0.4rem",
+                         "marginBottom": "0.3rem"
+                     }}
+                     alt={getString(lang)}/>
             </DropdownItem>
         );
     }

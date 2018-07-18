@@ -1,7 +1,7 @@
 import {
     addLoaderStatusOn,
     addLoaderStatusOff
-} from "app-components/loading-indicator";
+} from "app-ui/loading-indicator";
 import {
     fetchDatasetDetail,
     fetchLabelsForDataset,

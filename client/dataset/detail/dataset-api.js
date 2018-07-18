@@ -2,7 +2,7 @@ import {fetchJson} from "app-services/http-request";
 import {fetchLabel} from "app-services/labels";
 
 export function fetchDatasetDetail(iri) {
-    const url = "/api/v1/resource/dataset?iri=" + encodeURI(iri);
+    const url = "./api/v1/resource/dataset?iri=" + encodeURI(iri);
     return fetchJson(url).then((response) => {
         return normalizeData(response.json);
     });

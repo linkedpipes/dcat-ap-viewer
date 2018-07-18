@@ -1,5 +1,5 @@
 import React from "react";
-import {getString} from "./strings";
+import {getString} from "../app/strings";
 import {
     STATUS_INITIAL,
     STATUS_FETCHING,

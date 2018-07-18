@@ -22,6 +22,9 @@ port = 3000
 client.title_prefix =
 client.title_suffix = - LP-DAV
 
+# If application is served from subdirectory, name of the subdirectory.
+client.page_prefix =
+
 # Sentry error report URL.
 sentry.url =
 
@@ -30,3 +33,4 @@ google_tag_manager.id =
 
 # Tag cloud filter options.
 client.keyword_cloud.min = 100
+

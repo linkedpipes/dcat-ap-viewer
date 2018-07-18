@@ -1,7 +1,7 @@
 import {
     addLoaderStatusOn,
     addLoaderStatusOff
-} from "app-components/loading-indicator";
+} from "app-ui/loading-indicator";
 import {fetchPublishers} from "../publisher-api";
 
 export const MOUNT_ORGANISATION_LIST = "MOUNT_ORGANISATION_LIST";

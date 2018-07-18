@@ -10,7 +10,7 @@ import {
     PAGE_SIZE_QUERY
 } from "../../app/navigation";
 import {Badge} from "reactstrap";
-import Paginator from "app-components/paginator";
+import Paginator from "app-ui/paginator";
 import {
     querySelector,
     datasetsSelector,

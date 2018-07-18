@@ -5,7 +5,7 @@ import {getString} from "../../app/strings";
 import setPageTitle from "../../app-services/page-title";
 import {isDataReady} from "../../app-services/http-request";
 import {statusSelector, keywordsSelector} from "./keyword-tagloud-reducer";
-import {HttpRequestStatus} from "../../app/http-request-status";
+import {HttpRequestStatus} from "../../app-ui/http-request-status";
 import {onMount, onUnMount} from "./keyword-tagloud-action";
 import {KeywordTagCloud} from "./keyword-tagloud";
 
