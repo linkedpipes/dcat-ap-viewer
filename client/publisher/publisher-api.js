@@ -8,7 +8,7 @@ export function fetchPublishers() {
 }
 
 function constructQueryUrl() {
-    const url = "api/v1/solr/query?" +
+    const url = "./api/v1/solr/query?" +
         "facet.field=publisherName&" +
         "facet=true&" +
         "facet.mincount=1&" +
@@ -18,8 +18,8 @@ function constructQueryUrl() {
     return url;
 }
 
-function parseResponse(pyload) {
-    const publisher = pyload["facet_counts"]["facet_fields"]["publisherName"];
+function parseResponse(payload) {
+    const publisher = payload["facet_counts"]["facet_fields"]["publisherName"];
     const output = [];
     for (let index = 0; index < publisher.length; index += 2) {
         output.push({

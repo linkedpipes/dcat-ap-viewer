@@ -21,7 +21,8 @@
         "port": properties.get("port"),
         "client": {
             "titlePrefix": properties.get("client.title_prefix") || "",
-            "titleSuffix": properties.get("client.title_suffix") || ""
+            "titleSuffix": properties.get("client.title_suffix") || "",
+            "urlPrefix": getUrlPrefix(properties),
         },
         "sentry": properties.get("sentry.url") || false,
         "googleTagManager": properties.get("google_tag_manager.id") || false
@@ -66,4 +67,12 @@ function getRepositoryType(properties) {
     } else {
         return "SPARQL";
     }
+}
+
+function getUrlPrefix(properties) {
+    let value = properties.get("client.url_prefix");
+    if (!value) {
+        return "";
+    }
+    return value;
 }

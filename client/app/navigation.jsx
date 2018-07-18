@@ -1,6 +1,6 @@
 import React from "react";
 import {App} from "./app";
-import {Route, Switch} from "react-router-dom";
+import {Router, Route, Switch} from "react-router-dom";
 import {PageNotFound} from "../system/page-not-found";
 import {getRegistered} from "./register";
 
@@ -91,7 +91,7 @@ export function setLanguage(language) {
 //
 
 export const getUrl = (page, query) => {
-    let url = "/" + NAVIGATION[getLanguage()][PAGE][page];
+    let url = "./" + NAVIGATION[getLanguage()][PAGE][page];
     if (query === undefined) {
         return url;
     }
@@ -111,9 +111,8 @@ export const getQuery = (query) => {
 //
 //
 //
-
 export const createRoutes = (history) => (
-    <Route history={history}>
+    <Router history={history}>
         <App>
             <Switch>
                 {
@@ -128,7 +127,7 @@ export const createRoutes = (history) => (
                 <Route path="*" component={PageNotFound}/>
             </Switch>
         </App>
-    </Route>
+    </Router>
 );
 
 
@@ -148,14 +147,14 @@ function getRouteObjects() {
             if (language !== "en") {
                 routes.push({
                     "id": entry.name + "-" + language,
-                    "link": "/" + encodeURI(url),
+                    "link": URL_PREFIX +"/" + encodeURI(url),
                     "component": entry.component,
                     "exact" : false
                 });
             }
             routes.push({
                 "id": entry.name + "-" + language,
-                "link": "/" + (url),
+                "link": URL_PREFIX +"/" + (url),
                 "component": entry.component,
                 "exact" : false
             });
@@ -163,7 +162,7 @@ function getRouteObjects() {
         if (entry.homepage) {
             routes.push({
                 "id": "homepage",
-                "link": "/",
+                "link": URL_PREFIX + "/",
                 "component": entry.component,
                 "exact" : true
             });

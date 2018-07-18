@@ -146,7 +146,7 @@ class HeaderLanguageSelector extends React.Component {
                 <Dropdown isOpen={this.state.isLanguageOpen}
                           toggle={this.toggleLanguage}>
                     <DropdownToggle caret nav>
-                        <img src={"/assets/images/flag-" + language + ".png"}
+                        <img src={"./assets/images/flag-" + language + ".png"}
                              style={{"width": "1.2rem"}}
                              alt={getString(language)}/>
                     </DropdownToggle>
@@ -187,7 +187,7 @@ class HeaderLanguageSelector extends React.Component {
         const link = baseUrl + "lang=" + lang;
         return (
             <DropdownItem key={lang} tag={NavLink} href={link}>
-                <img src={"/assets/images/flag-" + lang + ".png"}
+                <img src={"./assets/images/flag-" + lang + ".png"}
                      style={{
                          "width": "1.2rem",
                          "marginLeft": "0.4rem",

@@ -3,7 +3,7 @@
 // TODO Add function for fetching only facets and remove them from normal query.
 
 export function constructTypeaheadUrl(query) {
-    let url = "api/v1/solr/query?rows=8&fl=title";
+    let url = "./api/v1/solr/query?rows=8&fl=title";
     url += "&q=" + encodeURI(escapeSolrQuery(query))
     return url;
 }
@@ -54,7 +54,7 @@ function filterSpecial(value) {
 }
 
 export function constructSearchQueryUrl(query) {
-    let url = "api/v1/solr/query?" +
+    let url = "./api/v1/solr/query?" +
         "facet.field=keyword&" +
         "facet.field=formatName&" +
         "facet.field=publisherName&" +

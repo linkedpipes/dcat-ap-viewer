@@ -51,7 +51,8 @@ module.exports = {
             "GOOGLE_TAG_MANAGER_ID": asString(config["googleTagManager"]),
             "PAGE_TITLE_PREFIX": asString(config["client"]["titlePrefix"]),
             "PAGE_TITLE_SUFFIX": asString(config["client"]["titleSuffix"]),
-            "REPOSITORY_TYPE": asString(getRepositoryType())
+            "REPOSITORY_TYPE": asString(getRepositoryType()),
+            "URL_PREFIX": asString(config["client"]["urlPrefix"])
         })
     ]
 };
