@@ -184,17 +184,16 @@ class HeaderLanguageSelector extends React.Component {
     }
 
     createDropdownItem(baseUrl, lang) {
+        const link = baseUrl + "lang=" + lang;
         return (
-            <DropdownItem key={lang}>
-                <NavLink href={baseUrl + "lang=" + lang}>
-                    <img src={"/assets/images/flag-" + lang + ".png"}
-                         style={{
-                             "width": "1.2rem",
-                             "marginLeft": "0.4rem",
-                             "marginBottom": "0.3rem"
-                         }}
-                         alt={getString(lang)}/>
-                </NavLink>
+            <DropdownItem key={lang} tag={NavLink} href={link}>
+                <img src={"/assets/images/flag-" + lang + ".png"}
+                     style={{
+                         "width": "1.2rem",
+                         "marginLeft": "0.4rem",
+                         "marginBottom": "0.3rem"
+                     }}
+                     alt={getString(lang)}/>
             </DropdownItem>
         );
     }
