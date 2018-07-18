@@ -1,4 +1,7 @@
 
+// TODO Remove limits from keywords, filters etc ..
+// TODO Add function for fetching only facets and remove them from normal query.
+
 export function constructTypeaheadUrl(query) {
     let url = "api/v1/solr/query?rows=8&fl=title";
     url += "&q=" + encodeURI(escapeSolrQuery(query))

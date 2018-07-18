@@ -13,36 +13,36 @@ class GoogleTagManager extends React.Component {
     }
 
     componentDidMount() {
-        if (!GOOGLE_TAG_MANAGER_ID) {
-            return;
-        }
-        const dataLayerName = "dataLayer";
-        if (!window[dataLayerName]) {
-            const gtmScriptNode = document.getElementById(this.scriptId);
-            eval(gtmScriptNode.textContent);
+        if (GOOGLE_TAG_MANAGER_ID) {
+            const dataLayerName = "dataLayer";
+            if (!window[dataLayerName]) {
+                const gtmScriptNode = document.getElementById(this.scriptId);
+                eval(gtmScriptNode.textContent);
+            }
         }
     }
 
     render() {
-        if (!GOOGLE_TAG_MANAGER_ID) {
-            return null;
-        }
-        const gtm = gtmParts({
-            "id": GOOGLE_TAG_MANAGER_ID,
-            "dataLayerName": "dataLayer",
-            "additionalEvents": {}
-        });
-        return (
-            <div>
+        if (GOOGLE_TAG_MANAGER_ID) {
+            const gtm = gtmParts({
+                "id": GOOGLE_TAG_MANAGER_ID,
+                "dataLayerName": "dataLayer",
+                "additionalEvents": {}
+            });
+            return (
                 <div>
-                    {gtm.noScriptAsReact()}
+                    <div>
+                        {gtm.noScriptAsReact()}
+                    </div>
+                    <div id={this.scriptId}>
+                        {gtm.scriptAsReact()}
+                    </div>
                 </div>
-                <div id={this.scriptId}>
-                    {gtm.scriptAsReact()}
-                </div>
-            </div>
-        );
+            );
+        }
+        return null;
     }
 }
 
 export default GoogleTagManager;
+

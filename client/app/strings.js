@@ -219,14 +219,14 @@ export const getLanguages = () => {
 
 // TODO Add support for arguments in the string function
 export const getString = (name) => {
-    if (IS_PRODUCTION_ENV) {
-        return STRINGS[getLanguage()][name];
-    } else {
+    if (process.env.NODE_ENV === "development") {
         const language = getLanguage();
         const value = STRINGS[language][name];
         if (value === undefined) {
             console.error("Missing key (", language, ") :", name);
         }
         return value;
+    } else {
+        return STRINGS[getLanguage()][name];
     }
 };
