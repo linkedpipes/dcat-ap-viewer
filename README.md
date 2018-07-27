@@ -72,8 +72,13 @@ Load the data
 - To enable support for the European Metadata Registry Named Authority Lists (EU MDR NALs) linked from DCAT-AP records, configure and run the [codelist pipeline]. It will populate the Apache CouchDB instance with the codelists.
 
 ## Running DCAT-AP Viewer
+Before the first run the DCAT-AP Viewer client javascript needs to be compiled using command:
 ```
-node server -configFileLocation=configuration.properties
+npm run build -- -env.configFileLocation=configuration.properties
+``` 
+After the compilation is done the following command can be used to start the server:
+```
+npm run start -- -env.configFileLocation=configuration.properties
 ```
 
 [Node.js]: <https://nodejs.org>
