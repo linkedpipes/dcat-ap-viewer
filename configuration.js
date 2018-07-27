@@ -1,7 +1,9 @@
 (function initialize() {
     const path = require("path");
 
-    let configurationPath = readProperty("configFileLocation");
+    // We use env. prefix as this allow us to pass the argument
+    // through the webpack.
+    let configurationPath = readProperty("env.configFileLocation");
     if (configurationPath === undefined) {
         configurationPath = path.join(__dirname, "configuration.properties");
     }
