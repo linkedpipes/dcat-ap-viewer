@@ -57,14 +57,14 @@ class SearchBox extends React.Component {
         )
     }
 
-    fetchOptions(query) {
-        if (query === "") {
+    fetchOptions(textQuery) {
+        if (textQuery === "") {
             this.setState({"options": []});
         }
         this.setState({"isLoading": true});
 
         // TODO Move to some sort of API/action file?
-        const url = constructTypeaheadUrl(query);
+        const url = constructTypeaheadUrl(textQuery, this.props.query);
         return fetchJson(url).then((data) => {
             const options = data.json.response.docs.map((item) => item.title);
             this.setState({
@@ -118,7 +118,8 @@ class SearchBox extends React.Component {
 
 SearchBox.propTypes = {
     "defaultValue": PropTypes.string,
-    "onSearch": PropTypes.func.isRequired
+    "onSearch": PropTypes.func.isRequired,
+    "query": PropTypes.object.isRequired
 };
 
 export default SearchBox;

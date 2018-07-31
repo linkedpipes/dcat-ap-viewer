@@ -51,6 +51,7 @@ class _QueryInput extends React.Component {
                 <SearchBox
                     defaultValue={this.props.query.search}
                     onSearch={this.props.setSearchString}
+                    query={this.props.query}
                 />
                 {this.state.visible &&
                 <div style={{"margin": "1REM 1REM 0REM 2REM"}}>

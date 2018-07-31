@@ -2,9 +2,53 @@
 // TODO Remove limits from keywords, filters etc ..
 // TODO Add function for fetching only facets and remove them from normal query.
 
-export function constructTypeaheadUrl(query) {
+export function constructTypeaheadUrl(value, query) {
+    console.log("query", value, query);
     let url = "./api/v1/solr/query?rows=8&fl=title";
-    url += "&q=" + encodeURI(escapeSolrQuery(query))
+    url += "&q=" + encodeURI(escapeSolrQuery(value))
+    url += createFacetsFiltersQuery(query);
+    url += createTemporalQuery(query);
+    return url;
+}
+
+function createFacetsFiltersQuery(query) {
+    let url = "";
+
+    query.keyword.forEach((item) => {
+        url += "&fq=keyword:\"" + encodeURI(item) + "\""
+    });
+
+    query.publisher.forEach((item) => {
+        url += "&fq=publisherName:\"" + encodeURI(item) + "\""
+    });
+
+    query.format.forEach((item) => {
+        url += "&fq=formatName:\"" + encodeURI(item) + "\""
+    });
+
+    return url;
+}
+
+function createTemporalQuery(query) {
+    let url = "";
+
+    if (query.temporalStart === "") {
+        if (query.temporalEnd === "") {
+            // No temporal limits.
+        } else {
+            // Only temporal end is set.
+            url += "&fq=temporal-start:%5B+*+TO+" + query.temporalEnd + "T00%5C:00%5C:00Z+%5D";
+        }
+    } else {
+        if (query.temporalEnd === "") {
+            // Only temporal start is set.
+            url += "&fq=temporal-end:%5B+" + query.temporalStart + "T00%5C:00%5C:00Z+TO+*+%5D";
+        } else {
+            // Both temporal values are set.
+            url += "&fq=temporal-start:%5B+*+TO+" + query.temporalStart + "T00%5C:00%5C:00Z+%5D";
+            url += "&fq=temporal-end:%5B+" + query.temporalEnd + "T00%5C:00%5C:00Z+TO+*+%5D";
+        }
+    }
     return url;
 }
 
@@ -18,8 +62,6 @@ function escapeSolrQuery(query) {
     const charactersToEscape = /([\!\*\+\=\<\>\&\|\{\}\^\~\?"])/g;
     query = query.replace(charactersToEscape, "\\$1");
 
-    const charactersToIgnore = /\(\)\[\]/g;
-
     // Escape control words (and, or, not).
     query = query.replace("and", "\\and");
     query = query.replace("or", "\\or");
@@ -28,7 +70,7 @@ function escapeSolrQuery(query) {
     // Tokenize string.
     const tokens = query.trim().split(" ")
     .filter(filterEmpty)
-    .filter(filterSpecial);
+    .filter(isSpecialCharacter);
 
     if (tokens.length === 0) {
         return "";
@@ -46,10 +88,7 @@ function filterEmpty(value) {
     return value.length > 0;
 }
 
-/**
- * Return true if value is escaped special character.
- */
-function filterSpecial(value) {
+function isSpecialCharacter(value) {
     return value[0] !== "\\" || value.length !== 2;
 }
 
@@ -70,17 +109,8 @@ export function constructSearchQueryUrl(query) {
         url += "q=" + encodeURI(escapeSolrQuery(query.search))
     }
 
-    query.keyword.forEach((item) => {
-        url += "&fq=keyword:\"" + encodeURI(item) + "\""
-    });
-
-    query.publisher.forEach((item) => {
-        url += "&fq=publisherName:\"" + encodeURI(item) + "\""
-    });
-
-    query.format.forEach((item) => {
-        url += "&fq=formatName:\"" + encodeURI(item) + "\""
-    });
+    url += createFacetsFiltersQuery(query);
+    url += createTemporalQuery(query);
 
     if (query.sort === undefined) {
         url += "&sort=modified desc";
@@ -90,22 +120,5 @@ export function constructSearchQueryUrl(query) {
 
     url += "&rows=" + query.pageSize;
 
-    if (query.temporalStart === "") {
-        if (query.temporalEnd === "") {
-            // No temporal limits.
-        } else {
-            // Only temporal end is set.
-            url += "&fq=temporal-start:%5B+*+TO+" + query.temporalEnd + "T00%5C:00%5C:00Z+%5D";
-        }
-    } else {
-        if (query.temporalEnd === "") {
-            // Only temporal start is set.
-            url += "&fq=temporal-end:%5B+" + query.temporalStart + "T00%5C:00%5C:00Z+TO+*+%5D";
-        } else {
-            // Both temporal values are set.
-            url += "&fq=temporal-start:%5B+*+TO+" + query.temporalStart + "T00%5C:00%5C:00Z+%5D";
-            url += "&fq=temporal-end:%5B+" + query.temporalEnd + "T00%5C:00%5C:00Z+TO+*+%5D";
-        }
-    }
     return url;
 }
