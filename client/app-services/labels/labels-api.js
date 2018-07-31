@@ -32,7 +32,7 @@ export const selectLabels = (labelState, resource) => {
 
 function selectLabelFromState(labelState, languages, resource) {
     if (resource === undefined) {
-        console.trace("Label for (resource === undefined) requested.");
+        // This can happen if the data are not yet loaded.
         return [];
     }
     if (typeof(resource) === "object") {
