@@ -19,7 +19,7 @@ function normalizeData(data) {
 // TODO Generalize and merge.
 export function fetchLabelsForDistribution(entity, dispatch) {
     const iri = entity["@id"];
-    const properties = ["format"];
+    const properties = ["format", "mediaType"];
     properties.forEach((property) => {
         const value = entity[property];
         if (value === undefined) {
