@@ -43,12 +43,7 @@ class Distribution extends React.PureComponent {
             return null;
         }
 
-        let title = selectLabelNoIri(labels, distribution);
-
-        let formatLabel = undefined;
-        if (distribution.format !== undefined) {
-            formatLabel = selectLabel(labels, distribution.format);
-        }
+        const title = selectLabelNoIri(labels, distribution);
 
         return (
             <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
@@ -63,11 +58,7 @@ class Distribution extends React.PureComponent {
                                 {title}
                             </h5>
                         }
-                        {formatLabel &&
-                        <h6 className="card-subtitle mb-2 text-muted">
-                            {formatLabel}
-                        </h6>
-                        }
+                        {dataFormatItem(labels, distribution)}
                     </div>
                     <ul className="list-group list-group-flush">
                         {downloadListItem(distribution)}
@@ -82,6 +73,27 @@ class Distribution extends React.PureComponent {
 
 function isEmpty(value) {
     return value === undefined || value.length === 0;
+}
+
+function dataFormatItem(labels, distribution) {
+    const formatLabel = selectLabel(labels, distribution.format);
+    const mediaType = selectLabel(labels, distribution.mediaType);
+    let label;
+    if (formatLabel === undefined && mediaType === undefined) {
+        return null;
+    } else if (formatLabel === undefined) {
+        label = mediaType;
+    } else if (mediaType === undefined) {
+        label = formatLabel;
+    } else {
+        label = formatLabel + ", " + mediaType;
+    }
+
+    return (
+        <h6 className="card-subtitle mb-2 text-muted">
+            {label}
+        </h6>
+    )
 }
 
 function downloadListItem(distribution) {
