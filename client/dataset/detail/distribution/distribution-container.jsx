@@ -9,6 +9,7 @@ import {
 } from "./distribution-reducer";
 import {isDataReady} from "app-services/http-request";
 import {labelsSelector} from "app-services/labels/index";
+import Distribution from "./distribution";
 
 class _DistributionContainer extends React.Component {
 
@@ -21,16 +22,18 @@ class _DistributionContainer extends React.Component {
 
     render() {
         // TODO Add support for loading error.
-        const Component = this.props.component;
         if (!isDataReady(this.props.status)) {
             return (
-                <Component isLoading={true} labels={this.props.labels}/>
+                <Distribution
+                    isLoading={true}
+                    labels={this.props.labels}/>
             )
         }
         return (
-            <Component isLoading={false}
-                       labels={this.props.labels}
-                       distribution={this.props.distribution}/>
+            <Distribution
+                isLoading={false}
+                labels={this.props.labels}
+                distribution={this.props.distribution}/>
         )
     }
 
