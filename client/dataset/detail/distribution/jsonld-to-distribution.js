@@ -7,7 +7,9 @@ import {
     ADMS,
     VCARD,
     SCHEMA,
-    SPDX
+    SPDX,
+    PU,
+    PU_VALUES_MAPPING
 } from "../../../app-services/vocabulary";
 
 
@@ -22,7 +24,8 @@ export function jsonLdToDistribution(jsonld) {
     // TODO Change to getString with specific structure (object with languages).
     const mandatory = {
         "@id": triples.id(distribution),
-        "accessURL": triples.resources(distribution, DCAT.accessURL)
+        "accessURL": triples.resources(distribution, DCAT.accessURL),
+        ...parseTermsOfUse(distribution, jsonld)
     };
 
     const recommended = {
@@ -51,4 +54,34 @@ export function jsonLdToDistribution(jsonld) {
     };
 
     return {...mandatory, ...recommended, ...optional, ...extension};
+}
+
+function parseTermsOfUse(distribution, jsonld) {
+    const iri = triples.resource(distribution, PU.specification);
+    const entity = graph.getByResource(jsonld, iri);
+
+    const authorship = triples.resource(entity, PU.authorship);
+    const author = triples.string(entity, PU.author);
+    const databaseAuthorship = triples.resource(entity, PU.databaseAuthorship);
+    const databaseAuthor = triples.string(entity, PU.databaseAuthor);
+    const protectedDatabase = triples.resource(entity, PU.protectedDatabase);
+    const personalData = triples.resource(entity, PU.personalData);
+
+    return {
+        "authorship":  mapTermsOfUseValue(authorship),
+        "author":  author,
+        "databaseAuthorship":  mapTermsOfUseValue(databaseAuthorship),
+        "databaseAuthor":  databaseAuthor,
+        "protectedDatabase":  mapTermsOfUseValue(protectedDatabase),
+        "personalData":  mapTermsOfUseValue(personalData)
+    };
+}
+
+function mapTermsOfUseValue(value) {
+    const mapped = PU_VALUES_MAPPING[value];
+    if (mapped === undefined) {
+        return value;
+    } else {
+        return mapped;
+    }
 }

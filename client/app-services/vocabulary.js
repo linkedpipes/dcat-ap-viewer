@@ -90,3 +90,27 @@ export const RDF = {
 export const EUA = {
     "dataTheme" : "http://publications.europa.eu/resource/authority/data-theme"
 };
+
+const PU_PREFIX = "https://data.gov.cz/slovník/podmínky-užití/";
+export const PU = {
+    "specification": PU_PREFIX + "specifikace",
+    "authorship": PU_PREFIX + "autorské-dílo",
+    "author": PU_PREFIX + "autor",
+    "databaseAuthorship": PU_PREFIX + "databáze-jako-autorské-dílo",
+    "databaseAuthor": PU_PREFIX + "autor-databáze",
+    "protectedDatabase": PU_PREFIX + "databáze-chráněná-zvláštními-právy",
+    "personalData": PU_PREFIX + "osobní-údaje"
+};
+
+const POU_PREFIX = "https://data.gov.cz/podmínky-užití/";
+export const PU_VALUES_MAPPING = {
+    [POU_PREFIX + "neobsahuje-autorská-díla/"]: "no",
+    [POU_PREFIX + "obsahuje-více-autorských-děl/"]: "multi",
+    "https://creativecommons.org/licenses/by/4.0/": "ccBy",
+    [POU_PREFIX + "není-autorskoprávně-chráněnou-databází/"]: "no",
+    "https://creativecommons.org/publicdomain/zero/1.0/": "cc0",
+    [POU_PREFIX + "není-chráněna-zvláštním-právem-pořizovatele-databáze/"]: "no",
+    [POU_PREFIX + "obsahuje-osobní-údaje/"]: "contains",
+    [POU_PREFIX + "neobsahuje-osobní-údaje/"]: "no"
+};
+

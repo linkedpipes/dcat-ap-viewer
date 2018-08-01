@@ -133,3 +133,8 @@ dd {
     background-color: #057fa5;
     color: white;
 }
+
+.label {
+    font-size: 80%;
+    color: darkgray;
+}
