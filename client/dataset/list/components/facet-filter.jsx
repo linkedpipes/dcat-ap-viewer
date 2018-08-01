@@ -48,8 +48,7 @@ class FacetFilter extends React.Component {
         // TODO Show active on the top.
         for (let index = 0; index < indexEnd; ++index) {
             const value = props.values[index];
-            const isActive = props.active.indexOf(value.label) >= 0;
-            items.push(this.createListItem(value, isActive));
+            items.push(this.createListItem(value));
         }
         if (props.values.length > 7) {
             let label;
@@ -74,7 +73,7 @@ class FacetFilter extends React.Component {
         return items;
     }
 
-    createListItem(item, isActive) {
+    createListItem(item) {
         let label;
         let value;
 
@@ -87,6 +86,7 @@ class FacetFilter extends React.Component {
             value = label;
         }
 
+        const isActive = this.props.active.indexOf(value) >= 0;
         return (
             <ListGroupItem
                 key={value}
