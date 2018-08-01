@@ -5,7 +5,8 @@ import {getString} from "app/strings";
 import {
     DATASET_LIST_URL,
     getUrl,
-    KEYWORDS_QUERY
+    KEYWORDS_QUERY,
+    THEME_QUERY
 } from "../../app/navigation";
 
 export default class DatasetView extends React.PureComponent {
@@ -90,18 +91,53 @@ function firstColumn(labels, dataset) {
             {hasDataThemes &&
             <dl>
                 <dt>{getString("s.datasetTopic")}</dt>
-                {labeledLinkEntitiesAsDd(labels, dataset.datasetThemes)}
+                {searchableLabeledLinkEntitiesAsDd(
+                    labels, dataset.datasetThemes, THEME_QUERY)}
             </dl>
             }
             {hasThemes &&
             <dl>
                 <dt>{getString("s.topic")}</dt>
-                {labeledLinkEntitiesAsDd(labels, dataset.themes)}
+                {searchableLabeledLinkEntitiesAsDd(
+                    labels, dataset.themes, THEME_QUERY)}
             </dl>
             }
         </div>
     )
 
+}
+
+function searchableLabeledLinkEntitiesAsDd(labels, entities, searchQuery) {
+    if (!Array.isArray(entities)) {
+        entities = [entities];
+    }
+    return entities.map((entity) => {
+        const searchLink = getUrl(
+            DATASET_LIST_URL, {[searchQuery]: entity["@id"]});
+        return (
+            <dd key={entity["@id"]}>
+                <Link to={searchLink}>
+                    {selectLabel(labels, entity)}
+                </Link>
+                <a href={entity["@id"]} rel="nofollow">
+                    {linkIcon()}
+                </a>
+                <br/>
+            </dd>
+        )
+    });
+}
+
+function linkIcon() {
+    const iconStyle = {
+        "fontSize": "1.2rem",
+        "paddingLeft": "0.5rem"
+    };
+    return (
+        <i className="material-icons" style={iconStyle}>
+            share
+        </i>
+    );
 }
 
 function containsData(value) {
@@ -125,6 +161,21 @@ function secondColumn(labels, dataset) {
             </dl>
         </div>
     )
+}
+
+function labeledLinkEntitiesAsDd(labels, entities) {
+    if (!Array.isArray(entities)) {
+        entities = [entities];
+    }
+    return entities.map((entity) => (
+        <dd key={entity["@id"]}>
+            {selectLabel(labels, entity)}
+            <a href={entity["@id"]} rel="nofollow">
+                {linkIcon()}
+            </a>
+            <br/>
+        </dd>
+    ));
 }
 
 function thirdColumn(labels, dataset) {
@@ -160,19 +211,6 @@ function fourthColumn(labels, dataset) {
     )
 }
 
-function labeledLinkEntitiesAsDd(labels, entities) {
-    if (!Array.isArray(entities)) {
-        entities = [entities];
-    }
-    return entities.map((entity) => (
-        <dd key={entity["@id"]}>
-            <a href={entity["@id"]} rel="nofollow">
-                {selectLabel(labels, entity)}
-            </a>
-            <br/>
-        </dd>
-    ));
-}
 
 function documentation(entities) {
     if (!Array.isArray(entities)) {

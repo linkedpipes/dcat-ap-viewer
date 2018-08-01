@@ -78,7 +78,6 @@ class FacetFilter extends React.Component {
         let value;
 
         if (this.props.useIris) {
-            console.log("use IRI", item);
             label = selectLabel(this.props.labels, item.iri);
             value = item.iri;
         } else {
