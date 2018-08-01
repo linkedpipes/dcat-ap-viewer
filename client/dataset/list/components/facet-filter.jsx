@@ -3,13 +3,15 @@ import {PropTypes} from "prop-types";
 import {ListGroup, ListGroupItem} from "reactstrap";
 import {formatNumber} from "../../../app-services/formats"
 import {getString} from "../../../app/strings"
+import {selectLabel} from "../../../app-services/labels";
 
 class FacetFilter extends React.Component {
 
     constructor(props) {
         super(props);
         this.toggle = this.toggle.bind(this);
-        this.generateListItems = this.generateListItems.bind(this);
+        this.createListItems = this.createListItems.bind(this);
+        this.createListItem = this.createListItem.bind(this);
         this.state = {
             "showAll": false
         };
@@ -21,7 +23,20 @@ class FacetFilter extends React.Component {
         });
     }
 
-    generateListItems() {
+    render() {
+        const props = this.props;
+        const label = getString(props.label) + " (" + props.values.length + ")";
+        return (
+            <div className="mt-2">
+                <h3 className="p-lg-2">{label}</h3>
+                <ListGroup>
+                    {this.createListItems()}
+                </ListGroup>
+            </div>
+        )
+    }
+
+    createListItems() {
         const props = this.props;
         let indexEnd;
         if (this.state.showAll) {
@@ -30,22 +45,11 @@ class FacetFilter extends React.Component {
             indexEnd = Math.min(7, props.values.length);
         }
         const items = [];
-        // TODO First show all active
+        // TODO Show active on the top.
         for (let index = 0; index < indexEnd; ++index) {
             const value = props.values[index];
             const isActive = props.active.indexOf(value.label) >= 0;
-            const html = (
-                <ListGroupItem
-                    key={value.label}
-                    onClick={() => props.onChange(value, !isActive)}
-                    action
-                    className="filter-button"
-                    active={isActive}
-                    tag="button">
-                    {value.label} ({formatNumber(value.count)})
-                </ListGroupItem >
-            );
-            items.push(html);
+            items.push(this.createListItem(value, isActive));
         }
         if (props.values.length > 7) {
             let label;
@@ -70,29 +74,44 @@ class FacetFilter extends React.Component {
         return items;
     }
 
-    render() {
-        const props = this.props;
-        const items = this.generateListItems();
-        const label = getString(props.label) + " (" + props.values.length + ")";
+    createListItem(item, isActive) {
+        let label;
+        let value;
+
+        if (this.props.useIris) {
+            console.log("use IRI", item);
+            label = selectLabel(this.props.labels, item.iri);
+            value = item.iri;
+        } else {
+            label = item.label;
+            value = label;
+        }
+
         return (
-            <div className="mt-2">
-                <h3 className="p-lg-2">{label}</h3>
-                <ListGroup>
-                    {items}
-                </ListGroup>
-            </div>
-        )
+            <ListGroupItem
+                key={value}
+                onClick={() => this.props.onChange(value, !isActive)}
+                action
+                className="filter-button"
+                active={isActive}
+                tag="button">
+                {label} ({formatNumber(item.count)})
+            </ListGroupItem >
+        );
     }
 }
 
 FacetFilter.propTypes = {
     "label": PropTypes.string.isRequired,
     "values": PropTypes.arrayOf(PropTypes.shape({
-        "label": PropTypes.string.isRequired,
+        "label": PropTypes.string,
+        "iri": PropTypes.string,
         "count": PropTypes.number
     })).isRequired,
     "active": PropTypes.arrayOf(PropTypes.string).isRequired,
-    "onChange": PropTypes.func.isRequired
+    "onChange": PropTypes.func.isRequired,
+    "useIris": PropTypes.bool,
+    "labels": PropTypes.object
 };
 
 export default FacetFilter;

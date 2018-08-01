@@ -2,7 +2,8 @@ import React from "react";
 import {
     PUBLISHER_QUERY,
     KEYWORDS_QUERY,
-    FORMAT_QUERY
+    FORMAT_QUERY,
+    THEME_QUERY
 } from "../../app/navigation";
 import {getString} from "../../app/strings";
 import FacetFilter from "./components/facet-filter";
@@ -10,6 +11,7 @@ import {
     formatsSelector,
     keywordsSelector,
     publishersSelector,
+    themesSelector,
     querySelector
 } from "./dataset-list-reducer";
 import {
@@ -17,6 +19,7 @@ import {
 } from "./dataset-list-actions";
 import {connect} from "react-redux";
 import {Col, Button} from "reactstrap";
+import {labelsSelector} from "../../app-services/labels"
 
 class _FacetsColumn extends React.Component {
 
@@ -58,6 +61,14 @@ class _FacetsColumn extends React.Component {
                         onChange={this.props.setPublisherFacet}
                     />
                     <FacetFilter
+                        label="s.themes"
+                        values={this.props.theme}
+                        active={this.props.query.theme}
+                        onChange={this.props.setThemeFacet}
+                        useIris={true}
+                        labels={this.props.labels}
+                    />
+                    <FacetFilter
                         label="s.keywords"
                         values={this.props.keyword}
                         active={this.props.query.keyword}
@@ -80,19 +91,24 @@ const mapStateToProps = (state, ownProps) => ({
     "keyword": keywordsSelector(state),
     "publisher": publishersSelector(state),
     "format": formatsSelector(state),
-    "query": querySelector(state)
+    "theme": themesSelector(state),
+    "query": querySelector(state),
+    "labels": labelsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    "setKeywordsFacet": (facet, isActive) => dispatch(updateQueryFilters(
-        ownProps.location, KEYWORDS_QUERY, facet.label, isActive
+    "setKeywordsFacet": (value, isActive) => dispatch(updateQueryFilters(
+        ownProps.location, KEYWORDS_QUERY, value, isActive
     )),
-    "setPublisherFacet": (facet, isActive) => dispatch(updateQueryFilters(
-        ownProps.location, PUBLISHER_QUERY, facet.label, isActive
+    "setPublisherFacet": (value, isActive) => dispatch(updateQueryFilters(
+        ownProps.location, PUBLISHER_QUERY, value, isActive
     )),
-    "setFormatFacet": (facet, isActive) => dispatch(updateQueryFilters(
-        ownProps.location, FORMAT_QUERY, facet.label, isActive
-    ))
+    "setFormatFacet": (value, isActive) => dispatch(updateQueryFilters(
+        ownProps.location, FORMAT_QUERY, value, isActive
+    )),
+    "setThemeFacet": (value, isActive) => dispatch(updateQueryFilters(
+        ownProps.location, THEME_QUERY, value, isActive
+    )),
 });
 
 const FacetsColumn = connect(

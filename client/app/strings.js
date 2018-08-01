@@ -104,7 +104,8 @@ const STRINGS = {
         "s.show_filters" : "Zobrazit pokročilé filtry",
         "s.download": "Stáhnout",
         "s.schema": "Schéma",
-        "s.documentation_download": "Zobrazit dokumentaci"
+        "s.documentation_download": "Zobrazit dokumentaci",
+        "s.themes": "Témata"
     },
     "en": {
         "title.datasets": "Datasets",
@@ -207,7 +208,8 @@ const STRINGS = {
         "s.show_filters" : "Show advanced filters",
         "s.download": "Download",
         "s.schema": "Schema",
-        "s.documentation_download": "Show documentation"
+        "s.documentation_download": "Show documentation",
+        "s.themes": "Themes"
     }
 };
 

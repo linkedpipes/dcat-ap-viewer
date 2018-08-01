@@ -26,6 +26,10 @@ function createFacetsFiltersQuery(query) {
         url += "&fq=formatName:\"" + encodeURI(item) + "\""
     });
 
+    query.theme.forEach((item) => {
+        url += "&fq=theme:\"" + encodeURI(item) + "\""
+    });
+
     return url;
 }
 
@@ -97,6 +101,7 @@ export function constructSearchQueryUrl(query) {
         "facet.field=keyword&" +
         "facet.field=formatName&" +
         "facet.field=publisherName&" +
+        "facet.field=theme&" +
         "facet=true&" +
         "facet.mincount=1&";
 

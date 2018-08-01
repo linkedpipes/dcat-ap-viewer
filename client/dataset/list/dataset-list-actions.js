@@ -11,6 +11,7 @@ import {parse as parseQueryString} from "query-string";
 import {push} from "react-router-redux";
 import {getQuery, PAGE_QUERY} from "../../app/navigation";
 import {dataStatusSelector} from "./dataset-list-reducer"
+import {fetchLabel} from "../../app-services/labels";
 
 export const FETCH_LIST_PAGE_REQUEST = "FETCH_LIST_PAGE_REQUEST";
 export const FETCH_LIST_PAGE_SUCCESS = "FETCH_LIST_PAGE_SUCCESS";
@@ -23,6 +24,7 @@ export function fetchData(query) {
         const url = constructSearchQueryUrl(query);
         fetchJson(url).then((response) => {
             dispatch(fetchDataSuccess(response.json));
+            fetchLabels(dispatch, response);
         }).catch((response) => {
             dispatch(fetchDataFailed(response));
         });
@@ -81,6 +83,13 @@ function createSearchString(query) {
         });
     });
     return search;
+}
+
+function fetchLabels(dispatch, response) {
+    const theme = response.json.facet_counts.facet_fields.theme;
+    for (let index = 0; index < theme.length; index += 2) {
+        dispatch(fetchLabel(theme[index]));
+    }
 }
 
 function pushIfNotPending(pushObject) {
