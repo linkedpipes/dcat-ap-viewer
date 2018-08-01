@@ -130,8 +130,8 @@ function searchableLabeledLinkEntitiesAsDd(labels, entities, searchQuery) {
 
 function linkIcon() {
     const iconStyle = {
-        "font-size": "1.2rem",
-        "padding-left": "0.5rem"
+        "fontSize": "1.2rem",
+        "paddingLeft": "0.5rem"
     };
     return (
         <i className="material-icons" style={iconStyle}>
