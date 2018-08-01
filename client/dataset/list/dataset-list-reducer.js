@@ -9,6 +9,7 @@ import {
     PUBLISHER_QUERY,
     KEYWORDS_QUERY,
     FORMAT_QUERY,
+    THEME_QUERY,
     STRING_QUERY,
     PAGE_QUERY,
     SORT_QUERY,
@@ -37,6 +38,7 @@ const initialState = {
         "publisher": [],
         "format": [],
         "sort": "title asc",
+        "theme": [],
         "temporalStart": "",
         "temporalEnd": ""
     },
@@ -48,6 +50,7 @@ const initialState = {
         "keyword": [],
         "publisher": [],
         "format": [],
+        "theme": [],
         "sort": "title asc",
         "pageSize": 10,
         "temporalStart": "",
@@ -121,6 +124,15 @@ function onListRequestSuccess(state, action) {
         });
     }
 
+    const theme = json.facet_counts.facet_fields.theme;
+    const theme_list = [];
+    for (let index = 0; index < theme.length; index += 2) {
+        theme_list.push({
+            "iri": theme[index],
+            "count": theme[index + 1]
+        });
+    }
+
     return {
         ...state,
         "data": {
@@ -142,6 +154,7 @@ function onListRequestSuccess(state, action) {
             "keyword": keywords_list,
             "publisher": publisher_list,
             "format": format_list,
+            "theme": theme_list,
             "sort": json.responseHeader.params.sort
         }
     };
@@ -200,6 +213,7 @@ function paramsToQuery(params) {
         "keyword": asArray(params[getQuery(KEYWORDS_QUERY)]),
         "publisher": asArray(params[getQuery(PUBLISHER_QUERY)]),
         "format": asArray(params[getQuery(FORMAT_QUERY)]),
+        "theme": asArray(params[getQuery(THEME_QUERY)]),
         "sort": order,
         "pageSize": pageSize,
         "temporalStart": undefinedAsEmpty(params[getQuery(TEMPORAL_START)]),
@@ -242,6 +256,10 @@ export function publishersSelector(state) {
 
 export function formatsSelector(state) {
     return reducerSelector(state)["data"]["format"];
+}
+
+export function themesSelector(state) {
+    return reducerSelector(state)["data"]["theme"];
 }
 
 export function datasetsSelector(state) {

@@ -33,7 +33,8 @@ const STRINGS = {
         "s.dataset_iri": "IRI datové sady",
         "s.contact_point": "Kontaktní bod",
         "s.publisher": "Poskytovatel",
-        "s.topic": "Témata",
+        "s.datasetTopic": "Téma datové sady",
+        "s.topic": "EuroVoc Témata",
         "s.access_right": "Přístupová práva",
         "s.conforms_to": "Splňuje",
         "s.documentation": "Dokumentace",
@@ -103,7 +104,8 @@ const STRINGS = {
         "s.show_filters" : "Zobrazit pokročilé filtry",
         "s.download": "Stáhnout",
         "s.schema": "Schéma",
-        "s.documentation_download": "Zobrazit dokumentaci"
+        "s.documentation_download": "Zobrazit dokumentaci",
+        "s.themes": "Témata"
     },
     "en": {
         "title.datasets": "Datasets",
@@ -137,7 +139,8 @@ const STRINGS = {
         "s.dataset_iri": "Dataset IRI",
         "s.contact_point": "Contact point",
         "s.publisher": "Publisher",
-        "s.topic": "Themes",
+        "s.datasetTopic": "Dataset Theme",
+        "s.topic": "EuroVoc Themes",
         "s.access_right": "Access right",
         "s.conforms_to": "Conforms to",
         "s.documentation": "Documentation",
@@ -205,7 +208,8 @@ const STRINGS = {
         "s.show_filters" : "Show advanced filters",
         "s.download": "Download",
         "s.schema": "Schema",
-        "s.documentation_download": "Show documentation"
+        "s.documentation_download": "Show documentation",
+        "s.themes": "Themes"
     }
 };
 

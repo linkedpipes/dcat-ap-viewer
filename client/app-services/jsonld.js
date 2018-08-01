@@ -55,7 +55,7 @@ graph.getByResources = (data, iris) => {
 };
 
 graph.getByResource = (data, iri) => {
-    if (iri == undefined) {
+    if (iri === undefined) {
         return undefined;
     }
     const graph = getGraph(data);

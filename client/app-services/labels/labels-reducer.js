@@ -30,6 +30,7 @@ function addToLabels(jsonld, labels) {
     const result = {};
     resources.forEach((entity) => {
         const iri = triples.id(entity);
+
         const extractedLabels = {};
         merge(extractedLabels, triples.string(entity, SKOS.prefLabel));
         merge(extractedLabels, triples.string(entity, DCTERMS.title));
@@ -37,7 +38,7 @@ function addToLabels(jsonld, labels) {
         merge(extractedLabels, triples.string(entity, VCARD.fn));
         merge(extractedLabels, triples.string(entity, FOAF.name));
 
-        if (extractedLabels.length == 0) {
+        if (extractedLabels.length === 0) {
             return;
         }
 

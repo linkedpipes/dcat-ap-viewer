@@ -30,12 +30,18 @@ class Paginator extends React.PureComponent {
         const pages = createPageList(recordsCount, pageIndex, pageSize);
         const pageItems = createPageItemsList(pages, pageIndex, onIndexChange);
 
+        const paginationStyle = {
+            "flex-wrap": "wrap",
+            "display": "flex",
+            "list-style": "none"
+        }
+
         return (
-            <div style={{"height": "2rem"}}>
-                <ul className="pagination float-left">
+            <div className="row">
+                <ul className="col-sm-12 col-md-11" style={paginationStyle}>
                     {pageItems}
                 </ul>
-                <div className="float-right">
+                <div className="col-sm-12 col-md-1">
                     <ComboBox
                         activeValue={pageSize}
                         values={sizes}
@@ -67,14 +73,13 @@ function createPageList(elementCount, pageIndex, pageSize) {
     if (pageCount < 9) {
         return createArrayWithRangeOfValues(0, pageCount);
     }
-    const output = [0, 1];
+    const output = [0];
     const lastPage = pageCount - 1;
     const rangeValueStart = Math.max(pageIndex - 2, 0);
     const rangeValueEnd = Math.min(pageIndex + 2, lastPage);
     for (let index = rangeValueStart; index <= rangeValueEnd; ++index) {
         appendIfGreaterThenLast(output, index);
     }
-    appendIfGreaterThenLast(output, lastPage - 1);
     appendIfGreaterThenLast(output, lastPage);
     return output;
 }

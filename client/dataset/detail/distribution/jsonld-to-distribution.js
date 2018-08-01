@@ -38,7 +38,7 @@ export function jsonLdToDistribution(jsonld) {
         "downloadURL": triples.resources(distribution, DCAT.downloadURL),
         "language": triples.resources(distribution, DCTERMS.language),
         "conformsTo": triples.resources(distribution, DCTERMS.conformsTo),
-        "mediaType": triples.resource(distribution, DCAT.mediaType),
+        "mediaType": triples.entity(distribution, DCAT.mediaType),
         "issued": triples.value(distribution, DCTERMS.issued),
         "rights": triples.resource(distribution, DCTERMS.rights),
         "status": triples.resource(distribution, ADMS.status),

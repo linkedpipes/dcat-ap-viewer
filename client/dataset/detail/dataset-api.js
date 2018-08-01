@@ -18,7 +18,7 @@ function normalizeData(data) {
 
 // TODO Generalize and merge with distributions.
 export function fetchLabelsForDataset(entity, dispatch) {
-    const properties = ["themes", "frequency", "spatial"];
+    const properties = ["themes", "frequency", "spatial", "datasetThemes"];
     properties.forEach((property) => {
         const value = entity[property];
         if (value === undefined) {

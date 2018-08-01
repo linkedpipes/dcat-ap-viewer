@@ -6,7 +6,9 @@ import {
     OWL,
     ADMS,
     VCARD,
-    SCHEMA
+    SCHEMA,
+    SKOS,
+    EUA
 } from "../../app-services/vocabulary";
 
 export function jsonLdToDataset(jsonld) {
@@ -23,7 +25,7 @@ export function jsonLdToDataset(jsonld) {
         "distributions": triples.resources(dataset, DCAT.distribution),
         "keywords": triples.string(dataset, DCAT.keyword),
         "publisher": loadPublisher(jsonld, dataset),
-        "themes": triples.entities(dataset, DCAT.theme)
+        ...loadThemes(jsonld, dataset)
     };
 
     const optional = {
@@ -58,6 +60,31 @@ export function jsonLdToDataset(jsonld) {
     };
 
     return {...mandatory, ...recommended, ...optional, ...external};
+}
+
+function loadThemes(jsonld, dataset) {
+    const themes = [];
+    const datasetThemes = [];
+
+    triples.entities(dataset, DCAT.theme).forEach((entity) => {
+        const theme = graph.getByResource(jsonld, entity["@id"]);
+        if (theme === undefined) {
+            console.warn("Missing data for theme:", entity["@id"]);
+            themes.push(theme);
+            return;
+        }
+        const inScheme = triples.resources(theme, SKOS.inScheme);
+        if (inScheme.indexOf(EUA.dataTheme) !== -1) {
+            datasetThemes.push(theme);
+        } else {
+            themes.push(theme);
+        }
+    });
+
+    return {
+        "themes": themes,
+        "datasetThemes": datasetThemes
+    }
 }
 
 function loadContactPoints(jsonld, dataset) {

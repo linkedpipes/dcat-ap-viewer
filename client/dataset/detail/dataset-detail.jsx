@@ -81,15 +81,24 @@ const Properties = ({labels, dataset}) => {
 
 function firstColumn(labels, dataset) {
     const hasThemes = containsData(dataset.themes);
-    if (!hasThemes) {
+    const hasDataThemes = containsData(dataset.datasetThemes);
+    if (!hasThemes && !hasDataThemes) {
         return null;
     }
     return (
         <div className="col-12 col-sm-6 col-md-3">
+            {hasDataThemes &&
+            <dl>
+                <dt>{getString("s.datasetTopic")}</dt>
+                {labeledLinkEntitiesAsDd(labels, dataset.datasetThemes)}
+            </dl>
+            }
+            {hasThemes &&
             <dl>
                 <dt>{getString("s.topic")}</dt>
                 {labeledLinkEntitiesAsDd(labels, dataset.themes)}
             </dl>
+            }
         </div>
     )
 
