@@ -20,7 +20,7 @@ export default class DatasetView extends React.PureComponent {
             <div>
                 <h1>{title}
                     <a href={dataset["@id"]} target="_blank">
-                        <i className="material-icons pl-2">share</i>
+                        <i className="material-icons pl-2">open_in_new</i>
                     </a>
                 </h1>
                 <h2>
