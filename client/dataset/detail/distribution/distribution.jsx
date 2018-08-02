@@ -52,9 +52,9 @@ function licenseColumn(distribution) {
     }
     return (
         <div className="card">
-            <div className="card-title text-muted pl-2 pt-2">
+            <h6 className="card-title text-muted pl-2 pt-2">
                 {getString('s.distribution_license')}
-            </div>
+            </h6>
             <ul className="list-group list-group-flush">
                 {authorship(distribution)}
                 {databaseAuthorship(distribution)}
@@ -69,9 +69,9 @@ function legacyLicenseColumn(distribution) {
     if (distribution.license === undefined) {
         return (
             <div className="card">
-                <div className="card-title text-muted pl-2 pt-2">
+                <h6 className="card-title text-muted pl-2 pt-2">
                     {getString("s.distribution_license")}
-                </div>
+                </h6>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item">
                         {getString("s.license_missing")}
@@ -258,9 +258,9 @@ function personalData(distribution) {
 function accessColumn(labels, distribution) {
     return (
         <div className="card">
-            <div className="card-title text-muted pl-2 pt-2">
+            <h6 className="card-title text-muted pl-2 pt-2">
                 {getString("s.distribution_access")}
-            </div>
+            </h6>
             <ul className="list-group list-group-flush">
                 {downloadListItem(distribution)}
                 {schemaListItem(distribution)}
