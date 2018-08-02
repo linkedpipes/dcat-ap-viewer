@@ -30,7 +30,7 @@ export default class Distribution extends React.PureComponent {
                     </div>
                     <div className="row">
                         <div className="col-6 pr-1">
-                            {licenseColumn(labels, distribution)}
+                            {licenseColumn(distribution)}
                         </div>
                         <div className="col-6 pl-1">
                             {accessColumn(labels, distribution)}
@@ -46,7 +46,10 @@ function isEmpty(value) {
     return value === undefined || value.length === 0;
 }
 
-function licenseColumn(labels, distribution) {
+function licenseColumn(distribution) {
+    if (distribution.legacyTermsOfUse) {
+        return legacyLicenseColumn(distribution);
+    }
     return (
         <div className="card">
             <div className="card-title text-muted pl-2 pt-2">
@@ -57,6 +60,37 @@ function licenseColumn(labels, distribution) {
                 {databaseAuthorship(distribution)}
                 {protectedDatabaseAuthorship(distribution)}
                 {personalData(distribution)}
+            </ul>
+        </div>
+    )
+}
+
+function legacyLicenseColumn(distribution) {
+    if (distribution.license === undefined) {
+        return (
+            <div className="card">
+                <div className="card-title text-muted pl-2 pt-2">
+                    {getString("s.distribution_license")}
+                </div>
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+                        {getString("s.license_missing")}
+                    </li>
+                </ul>
+            </div>
+        )
+    }
+    return (
+        <div className="card">
+            <div className="card-title text-muted pl-2 pt-2">
+                {getString("s.distribution_license")}
+            </div>
+            <ul className="list-group list-group-flush">
+                <li className="list-group-item">
+                    <a href={distribution.license} ref="nofollow">
+                        {getString("s.licence")}
+                    </a>
+                </li>
             </ul>
         </div>
     )
@@ -144,7 +178,8 @@ function databaseAuthorship(distribution) {
                         {getString("license_author_custom")}
                     </div>
                     <div className="label">
-                        <a href={distribution.databaseAuthorship} rel="nofollow">
+                        <a href={distribution.databaseAuthorship}
+                           rel="nofollow">
                             {distribution.databaseAuthorship}
                         </a>
                     </div>
@@ -184,7 +219,8 @@ function protectedDatabaseAuthorship(distribution) {
                         {getString("license_author_custom")}
                     </div>
                     <div className="label">
-                        <a href={distribution.databaseAuthorship} rel="nofollow">
+                        <a href={distribution.databaseAuthorship}
+                           rel="nofollow">
                             {distribution.databaseAuthorship}
                         </a>
                     </div>

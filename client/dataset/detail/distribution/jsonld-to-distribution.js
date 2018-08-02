@@ -58,6 +58,12 @@ export function jsonLdToDistribution(jsonld) {
 
 function parseTermsOfUse(distribution, jsonld) {
     const iri = triples.resource(distribution, PU.specification);
+    if (iri === undefined) {
+        return {
+            "legacyTermsOfUse": true
+        }
+    }
+
     const entity = graph.getByResource(jsonld, iri);
 
     const authorship = triples.resource(entity, PU.authorship);
@@ -73,7 +79,8 @@ function parseTermsOfUse(distribution, jsonld) {
         "databaseAuthorship":  mapTermsOfUseValue(databaseAuthorship),
         "databaseAuthor":  databaseAuthor,
         "protectedDatabase":  mapTermsOfUseValue(protectedDatabase),
-        "personalData":  mapTermsOfUseValue(personalData)
+        "personalData":  mapTermsOfUseValue(personalData),
+        "legacyTermsOfUse": false
     };
 }
 
