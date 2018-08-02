@@ -119,7 +119,7 @@ const STRINGS = {
         ,"license_personal_yes": "Obsahuje"
         ,"s.distribution_access": "Přístup k distribuci"
         ,"s.distribution_license": "Podmínky užití distribuce"
-        ,"s.license_missing": "Nespecifikováno"
+        ,"s.license_missing": "Nespecifikovány"
     },
     "en": {
         "title.datasets": "Datasets",
