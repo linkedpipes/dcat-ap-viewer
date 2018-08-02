@@ -49,6 +49,9 @@ function isEmpty(value) {
 function licenseColumn(labels, distribution) {
     return (
         <div className="card">
+            <div className="card-title text-muted pl-2 pt-2">
+                {getString('s.distribution_license')}
+            </div>
             <ul className="list-group list-group-flush">
                 {authorship(distribution)}
                 {databaseAuthorship(distribution)}
@@ -219,6 +222,9 @@ function personalData(distribution) {
 function accessColumn(labels, distribution) {
     return (
         <div className="card">
+            <div className="card-title text-muted pl-2 pt-2">
+                {getString("s.distribution_access")}
+            </div>
             <ul className="list-group list-group-flush">
                 {downloadListItem(distribution)}
                 {schemaListItem(distribution)}

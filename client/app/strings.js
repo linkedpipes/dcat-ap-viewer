@@ -117,6 +117,8 @@ const STRINGS = {
         ,"license_personal_type": "Osobní údaje"
         ,"license_personal_no": "Neobsahuje"
         ,"license_personal_yes": "Obsahuje"
+        ,"s.distribution_access": "Přístup k distribuci"
+        ,"s.distribution_license": "Podmínky užití distribuce"
     },
     "en": {
         "title.datasets": "Datasets",
@@ -232,6 +234,8 @@ const STRINGS = {
         ,"license_personal_type": "Personal data"
         ,"license_personal_no": "Contains personal data"
         ,"license_personal_yes": "No personal data"
+        ,"s.distribution_access": "Access"
+        ,"s.distribution_license": "Terms of use"
     }
 };
 
