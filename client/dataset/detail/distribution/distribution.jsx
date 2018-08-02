@@ -328,7 +328,22 @@ function mediaTypeItem(labels, distribution) {
     return (
         <li className="list-group-item">
             {selectLabelNoIri(labels, distribution.mediaType)}
+            <a href={distribution.mediaType["@id"]} target="_blank">
+                {linkIcon()}
+            </a>
         </li>
     )
+}
+
+function linkIcon() {
+    const iconStyle = {
+        "fontSize": "1.2rem",
+        "paddingLeft": "0.5rem"
+    };
+    return (
+        <i className="material-icons" style={iconStyle}>
+            open_in_new
+        </i>
+    );
 }
 
