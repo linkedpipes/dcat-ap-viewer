@@ -31,9 +31,9 @@ class Paginator extends React.PureComponent {
         const pageItems = createPageItemsList(pages, pageIndex, onIndexChange);
 
         const paginationStyle = {
-            "flex-wrap": "wrap",
+            "flexWrap": "wrap",
             "display": "flex",
-            "list-style": "none"
+            "listStyle": "none"
         }
 
         return (
