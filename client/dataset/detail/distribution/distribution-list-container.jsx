@@ -11,6 +11,7 @@ import {
     pageSizeSelector,
 } from "./distribution-reducer";
 import DistributionList from "./distribution-list";
+import {hot} from "react-hot-loader";
 
 class _DistributionListContainer extends React.Component {
 
@@ -75,7 +76,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     "setPageSize": (value) => dispatch(setPageSize(value))
 });
 
-export const DistributionListContainer = connect(
+export const DistributionListContainer = hot(module)(connect(
     mapStateToProps,
     mapDispatchToProps
-)(_DistributionListContainer);
+)(_DistributionListContainer));

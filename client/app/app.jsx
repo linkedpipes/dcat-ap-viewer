@@ -6,6 +6,7 @@ import {LoaderIndicator} from "../app-ui/loading-indicator/index";
 import {connect} from "react-redux";
 import GoogleTagManager from "../app-ui/google-tag-manager"
 import {withRouter} from "react-router-dom";
+import {hot} from "react-hot-loader";
 
 class AppComponent extends React.Component {
     render() {
@@ -24,4 +25,4 @@ class AppComponent extends React.Component {
     };
 }
 
-export const App = withRouter(connect()(AppComponent));
+export const App = hot(module)(withRouter(connect()(AppComponent)));

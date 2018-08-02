@@ -135,7 +135,7 @@ function linkIcon() {
     };
     return (
         <i className="material-icons" style={iconStyle}>
-            share
+            open_in_new
         </i>
     );
 }
