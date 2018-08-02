@@ -15,14 +15,20 @@ function initializeWebpack(app) {
     // https://github.com/webpack-contrib/webpack-hot-middleware
     const webpackHotMiddleware = require("webpack-hot-middleware");
     const webpackCompiler = webpack(webpack_config);
-    app.use(webpackMiddleware(webpackCompiler, {
+
+    const middleware = webpackMiddleware(webpackCompiler, {
         "publicPath": webpack_config.output.publicPath.substr(1),
         "stats": {
             "colors": true,
             "chunks": false
         }
-    }));
+    });
+    
+    app.use(middleware);
     app.use(webpackHotMiddleware(webpackCompiler));
+    app.use("/*", (req, res, next) => {
+        middleware(req, res, next);
+    });
 }
 
 function initializeStatic(app) {

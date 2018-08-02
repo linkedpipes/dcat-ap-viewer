@@ -70,7 +70,7 @@ function loadThemes(jsonld, dataset) {
         const theme = graph.getByResource(jsonld, entity["@id"]);
         if (theme === undefined) {
             console.warn("Missing data for theme:", entity["@id"]);
-            themes.push(entity["@id"]);
+            themes.push({"@id": entity["@id"]});
             return;
         }
         const inScheme = triples.resources(theme, SKOS.inScheme);
