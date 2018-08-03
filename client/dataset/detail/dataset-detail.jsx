@@ -1,5 +1,5 @@
 import React from "react";
-import {selectLabel, selectString} from "app-services/labels/index";
+import {selectLabel, selectString, selectLabelNoIri} from "app-services/labels/index";
 import {Link} from "react-router-dom";
 import {getString} from "app/strings";
 import {
@@ -276,7 +276,7 @@ function contactPoints(labels, contactPoints) {
 }
 
 function contactPoint(labels, contactPoint) {
-    let label = selectLabel(labels, contactPoint.iri);
+    let label = selectLabelNoIri(labels, contactPoint.iri);
     let email = getEmail(contactPoint);
 
     if (label === undefined) {
