@@ -170,7 +170,7 @@ function labeledLinkEntitiesAsDd(labels, entities) {
     return entities.map((entity) => (
         <dd key={entity["@id"]}>
             {selectLabel(labels, entity)}
-            <a href={entity["@id"]} rel="nofollow">
+            <a href={entity["@id"]} rel="nofollow" target="_blank">
                 {linkIcon()}
             </a>
             <br/>
