@@ -323,7 +323,9 @@ function schemaListItem(distribution) {
     return (
         <li className="list-group-item">
             <a href={distribution.conformsTo[0]}
-               className="card-link">
+               className="card-link"
+               rel="nofollow"
+               target="_blank">
                 {getString("s.schema")}
             </a>
         </li>
