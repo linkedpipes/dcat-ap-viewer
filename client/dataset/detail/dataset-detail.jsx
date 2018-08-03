@@ -119,7 +119,7 @@ function searchableLabeledLinkEntitiesAsDd(labels, entities, searchQuery) {
                 <Link to={searchLink}>
                     {selectLabel(labels, entity)}
                 </Link>
-                <a href={entity["@id"]} rel="nofollow">
+                <a href={entity["@id"]} rel="nofollow" target="_blank">
                     {linkIcon()}
                 </a>
                 <br/>
