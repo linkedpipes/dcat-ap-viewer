@@ -1,5 +1,5 @@
 import React from "react";
-import {selectLabel, selectString} from "app-services/labels/index";
+import {selectLabel, selectString, selectLabelNoIri} from "app-services/labels/index";
 import {Link} from "react-router-dom";
 import {getString} from "app/strings";
 import {
@@ -170,7 +170,7 @@ function labeledLinkEntitiesAsDd(labels, entities) {
     return entities.map((entity) => (
         <dd key={entity["@id"]}>
             {selectLabel(labels, entity)}
-            <a href={entity["@id"]} rel="nofollow">
+            <a href={entity["@id"]} rel="nofollow" target="_blank">
                 {linkIcon()}
             </a>
             <br/>
@@ -276,7 +276,7 @@ function contactPoints(labels, contactPoints) {
 }
 
 function contactPoint(labels, contactPoint) {
-    let label = selectLabel(labels, contactPoint.iri);
+    let label = selectLabelNoIri(labels, contactPoint.iri);
     let email = getEmail(contactPoint);
 
     if (label === undefined) {
