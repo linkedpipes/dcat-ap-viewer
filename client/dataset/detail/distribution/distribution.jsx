@@ -87,7 +87,9 @@ function legacyLicenseColumn(distribution) {
             </div>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item">
-                    <a href={distribution.license} ref="nofollow">
+                    <a href={distribution.license}
+                       ref="nofollow"
+                       target="_blank">
                         {getString("s.licence")}
                     </a>
                 </li>
@@ -138,7 +140,9 @@ function authorship(distribution) {
                         {getString("license_author_custom")}
                     </div>
                     <div className="label">
-                        <a href={distribution.authorship} rel="nofollow">
+                        <a href={distribution.authorship}
+                           rel="nofollow"
+                           target="_blank">
                             {distribution.authorship}
                         </a>
                     </div>
@@ -179,7 +183,8 @@ function databaseAuthorship(distribution) {
                     </div>
                     <div className="label">
                         <a href={distribution.databaseAuthorship}
-                           rel="nofollow">
+                           rel="nofollow"
+                           target="_blank">
                             {distribution.databaseAuthorship}
                         </a>
                     </div>
@@ -220,7 +225,8 @@ function protectedDatabaseAuthorship(distribution) {
                     </div>
                     <div className="label">
                         <a href={distribution.databaseAuthorship}
-                           rel="nofollow">
+                           rel="nofollow"
+                           target="_blank">
                             {distribution.databaseAuthorship}
                         </a>
                     </div>
@@ -300,7 +306,10 @@ function downloadListItem(distribution) {
 
     return (
         <li className="list-group-item">
-            <a href={downloadUrl} className="card-link">
+            <a href={downloadUrl}
+               className="card-link"
+               rel="nofollow"
+               target="_blank">
                 {getString("s.download")}
             </a>
         </li>
@@ -328,7 +337,9 @@ function mediaTypeItem(labels, distribution) {
     return (
         <li className="list-group-item">
             {selectLabelNoIri(labels, distribution.mediaType)}
-            <a href={distribution.mediaType["@id"]} target="_blank">
+            <a href={distribution.mediaType["@id"]}
+               rel="nofollow"
+               target="_blank">
                 {linkIcon()}
             </a>
         </li>
