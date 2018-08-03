@@ -120,6 +120,7 @@ const STRINGS = {
         ,"s.distribution_access": "Přístup k distribuci"
         ,"s.distribution_license": "Podmínky užití distribuce"
         ,"s.license_missing": "Nespecifikovány"
+        ,"s.custom_distribution_license" : "Vlastní podmínky užit"
     },
     "en": {
         "title.datasets": "Datasets",
@@ -238,6 +239,7 @@ const STRINGS = {
         ,"s.distribution_access": "Access"
         ,"s.distribution_license": "Terms of use"
         ,"s.license_missing": "Missing"
+        ,"s.custom_distribution_license" : "Custom terms of use"
     }
 };
 
