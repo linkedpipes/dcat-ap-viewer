@@ -194,7 +194,7 @@ function databaseAuthorship(distribution) {
 }
 
 function protectedDatabaseAuthorship(distribution) {
-    switch (distribution.databaseAuthorship) {
+    switch (distribution.protectedDatabase) {
         case "no":
             return (
                 <li className="list-group-item">
@@ -224,10 +224,10 @@ function protectedDatabaseAuthorship(distribution) {
                         {getString("license_author_custom")}
                     </div>
                     <div className="label">
-                        <a href={distribution.databaseAuthorship}
+                        <a href={distribution.protectedDatabase}
                            rel="nofollow"
                            target="_blank">
-                            {distribution.databaseAuthorship}
+                            {distribution.protectedDatabase}
                         </a>
                     </div>
                 </li>
