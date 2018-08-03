@@ -62,7 +62,7 @@ const STRINGS = {
         "s.file": "Soubor",
         "s.format": "Formát",
         "s.structure": "Struktura",
-        "s.licence": "Podmínky užití",
+        "s.licence": "Specifické podmínky užití",
         "s.publishers_found": "poskytovatelů nalezeno",
         "s.one_dataset": "1 datová sada",
         "s.two_three_datasets": " datové sady",
@@ -119,7 +119,7 @@ const STRINGS = {
         ,"license_personal_yes": "Obsahuje"
         ,"s.distribution_access": "Přístup k distribuci"
         ,"s.distribution_license": "Podmínky užití distribuce"
-        ,"s.license_missing": "Nespecifikováno"
+        ,"s.license_missing": "Nespecifikovány"
     },
     "en": {
         "title.datasets": "Datasets",
@@ -182,7 +182,7 @@ const STRINGS = {
         "s.file": "File",
         "s.format": "Format",
         "s.structure": "Structure",
-        "s.licence": "License",
+        "s.licence": "Custom license",
         "s.publishers_found": "publishers found",
         "s.one_dataset": "1 dataset",
         "s.two_three_datasets": " datasets",
