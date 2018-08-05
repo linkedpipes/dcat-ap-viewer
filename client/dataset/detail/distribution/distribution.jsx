@@ -82,9 +82,9 @@ function legacyLicenseColumn(distribution) {
     }
     return (
         <div className="card">
-            <div className="card-title text-muted pl-2 pt-2">
+            <h6 className="card-title text-muted pl-2 pt-2">
                 {getString("s.custom_distribution_license")}
-            </div>
+            </h6>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item">
                     <a href={distribution.license}
