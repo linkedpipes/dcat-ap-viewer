@@ -10,7 +10,7 @@ const Footer = () => {
                          <strong>Registrace do NKOD</strong>
                          <ul>
                              <li><a href="https://dev.nkod.opendata.cz/formulář/">Registrovat datovou sadu</a></li>
-                             <li><a href="https://dev.nkod.opendata.cz/formulář/#catalog">Registrace lokálního katalogu</a></li>
+                             <li><a href="https://dev.nkod.opendata.cz/formulář/#catalog">Registrovat lokální katalog</a></li>
                           </ul>
 
                         <strong>Kontakty</strong>
