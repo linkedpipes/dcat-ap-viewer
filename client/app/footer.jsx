@@ -9,8 +9,8 @@ const Footer = () => {
                     <div className="col-md-4">
                          <strong>Registrace do NKOD</strong>
                          <ul>
-                             <li><a href="https://dev.nkod.opendata.cz/formulář/">Registrovat novou datovou sadu</a></li>
-                             <li><a href="https://dev.nkod.opendata.cz/formulář/#catalog">Registrovat nový lokální katalog</a></li>
+                             <li><a href="https://dev.nkod.opendata.cz/formulář/#/registrace-datové-sady">Registrovat novou datovou sadu</a></li>
+                             <li><a href="https://dev.nkod.opendata.cz/formulář/#/registrace-lokálního-katalogu">Registrovat nový lokální katalog</a></li>
                           </ul>
 
                         <strong>Kontakty</strong>
