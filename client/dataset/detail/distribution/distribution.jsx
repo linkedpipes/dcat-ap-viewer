@@ -16,7 +16,7 @@ export default class Distribution extends React.PureComponent {
         return (
             <div className="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
                 <div className="card p-2">
-                    <div className="card-body">
+                    <div className="card-body px-2">
                         {title === undefined ?
                             <span className="sr-only">
                             {getString("s.unnamed_distribution")}
@@ -73,7 +73,7 @@ function legacyLicenseColumn(distribution) {
                     {getString("s.custom_distribution_license")}
                 </h6>
                 <ul className="list-group list-group-flush">
-                    <li className="list-group-item">
+                    <li className="list-group-item px-2">
                         {getString("s.license_missing")}
                     </li>
                 </ul>
@@ -82,11 +82,11 @@ function legacyLicenseColumn(distribution) {
     }
     return (
         <div className="card">
-            <div className="card-title text-muted pl-2 pt-2">
+            <h6 className="card-title text-muted pl-2 pt-2">
                 {getString("s.custom_distribution_license")}
-            </div>
+            </h6>
             <ul className="list-group list-group-flush">
-                <li className="list-group-item">
+                <li className="list-group-item  px-2">
                     <a href={distribution.license}
                        ref="nofollow"
                        target="_blank">
@@ -102,7 +102,7 @@ function authorship(distribution) {
     switch (distribution.authorship) {
         case "multi":
             return (
-                <li className="list-group-item">
+                <li className="list-group-item  px-2">
                     <div>
                         {getString("license_author_multi")}
                     </div>
@@ -113,7 +113,7 @@ function authorship(distribution) {
             );
         case "no":
             return (
-                <li className="list-group-item">
+                <li className="list-group-item px-2">
                     <div>
                         {getString("license_author_no")}
                     </div>
@@ -124,7 +124,7 @@ function authorship(distribution) {
             );
         case "ccBy":
             return (
-                <li className="list-group-item">
+                <li className="list-group-item px-2">
                     <div>
                         {getString("license_author_ccBy")}
                     </div>
@@ -135,7 +135,7 @@ function authorship(distribution) {
             );
         default:
             return (
-                <li className="list-group-item">
+                <li className="list-group-item px-2">
                     <div>
                         {getString("license_author_custom")}
                     </div>
@@ -155,7 +155,7 @@ function databaseAuthorship(distribution) {
     switch (distribution.databaseAuthorship) {
         case "no":
             return (
-                <li className="list-group-item">
+                <li className="list-group-item px-2">
                     <div>
                         {getString("license_author_no")}
                     </div>
@@ -166,7 +166,7 @@ function databaseAuthorship(distribution) {
             );
         case "ccBy":
             return (
-                <li className="list-group-item">
+                <li className="list-group-item px-2">
                     <div>
                         {getString("license_author_ccBy")}
                     </div>
@@ -177,7 +177,7 @@ function databaseAuthorship(distribution) {
             );
         default:
             return (
-                <li className="list-group-item">
+                <li className="list-group-item px-2">
                     <div>
                         {getString("license_author_custom")}
                     </div>
@@ -197,7 +197,7 @@ function protectedDatabaseAuthorship(distribution) {
     switch (distribution.protectedDatabase) {
         case "no":
             return (
-                <li className="list-group-item">
+                <li className="list-group-item px-2">
                     <div>
                         {getString("license_author_no")}
                     </div>
@@ -208,7 +208,7 @@ function protectedDatabaseAuthorship(distribution) {
             );
         case "cc0":
             return (
-                <li className="list-group-item">
+                <li className="list-group-item px-2">
                     <div>
                         {getString("license_author_ccBy")}
                     </div>
@@ -219,7 +219,7 @@ function protectedDatabaseAuthorship(distribution) {
             );
         default:
             return (
-                <li className="list-group-item">
+                <li className="list-group-item px-2">
                     <div>
                         {getString("license_author_custom")}
                     </div>
@@ -238,7 +238,7 @@ function protectedDatabaseAuthorship(distribution) {
 function personalData(distribution) {
     if (distribution.personalData === "no") {
         return (
-            <li className="list-group-item">
+            <li className="list-group-item px-2">
                 <div>
                     {getString("license_personal_no")}
                 </div>
@@ -249,7 +249,7 @@ function personalData(distribution) {
         );
     } else {
         return (
-            <li className="list-group-item">
+            <li className="list-group-item px-2">
                 <div>
                     {getString("license_personal_yes")}
                 </div>
@@ -305,7 +305,7 @@ function downloadListItem(distribution) {
     }
 
     return (
-        <li className="list-group-item">
+        <li className="list-group-item px-2">
             <a href={downloadUrl}
                className="card-link"
                rel="nofollow"
@@ -321,7 +321,7 @@ function schemaListItem(distribution) {
         return null;
     }
     return (
-        <li className="list-group-item">
+        <li className="list-group-item px-2">
             <a href={distribution.conformsTo[0]}
                className="card-link"
                rel="nofollow"
@@ -337,7 +337,7 @@ function mediaTypeItem(labels, distribution) {
         return null;
     }
     return (
-        <li className="list-group-item">
+        <li className="list-group-item px-2">
             {selectLabelNoIri(labels, distribution.mediaType)}
             <a href={distribution.mediaType["@id"]}
                rel="nofollow"

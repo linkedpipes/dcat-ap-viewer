@@ -7,6 +7,12 @@ const Footer = () => {
                 <hr/>
                 <div className="row">
                     <div className="col-md-4">
+                         <strong>Registrace do NKOD</strong>
+                         <ul>
+                             <li><a href="https://dev.nkod.opendata.cz/formulář/#/registrace-datové-sady">Registrovat novou datovou sadu</a></li>
+                             <li><a href="https://dev.nkod.opendata.cz/formulář/#/registrace-lokálního-katalogu">Registrovat nový lokální katalog</a></li>
+                          </ul>
+
                         <strong>Kontakty</strong>
                         <ul>
                             <li>Kontaktní osoba: <a href="mailto:michal.kuban@mvcr.cz">Michal Kubáň</a></li>
