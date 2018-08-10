@@ -17,6 +17,7 @@ export function jsonLdToDataset(jsonld) {
     // TODO Change to getString with specific structure (object with languages).
     const mandatory = {
         "@id": triples.id(dataset),
+        "@type": triples.type(dataset),
         "description": triples.string(dataset, DCTERMS.description)
     };
 

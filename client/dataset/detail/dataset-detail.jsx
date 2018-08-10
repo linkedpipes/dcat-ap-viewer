@@ -1,5 +1,9 @@
 import React from "react";
-import {selectLabel, selectString, selectLabelNoIri} from "app-services/labels/index";
+import {
+    selectLabel,
+    selectString,
+    selectLabelNoIri
+} from "app-services/labels/index";
 import {Link} from "react-router-dom";
 import {getString} from "app/strings";
 import {
@@ -9,12 +13,14 @@ import {
     THEME_QUERY
 } from "../../app/navigation";
 
+const FORM_TYPE =
+    "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/Formulář";
+
 export default class DatasetView extends React.PureComponent {
 
     render() {
         const {dataset, publisherUrl, labels} = this.props;
         const title = selectLabel(labels, this.props.dataset);
-
 
         return (
             <div>
@@ -22,6 +28,7 @@ export default class DatasetView extends React.PureComponent {
                     <a href={dataset["@id"]} target="_blank">
                         <i className="material-icons pl-2">open_in_new</i>
                     </a>
+                    {dialogLinks(dataset)}
                 </h1>
                 <h2>
                     <Link to={publisherUrl}>
@@ -39,6 +46,25 @@ export default class DatasetView extends React.PureComponent {
 
 }
 
+function dialogLinks(dataset) {
+    const isFromFrom = dataset["@type"].indexOf(FORM_TYPE) !== -1;
+    if (!isFromFrom) {
+        return null;
+    }
+    const iri = dataset["@id"];
+    return (
+        <span>
+            <a href={FORM_URL + "#/odstranění-datové-sady?url=" + iri}
+               target="_blank">
+                <i className="material-icons pl-2">delete</i>
+            </a>
+            <a href={FORM_URL + "#/registrace-datové-sady?url=" + iri}
+               target="_blank">
+                <i className="material-icons pl-2">edit</i>
+            </a>
+        </span>
+    )
+}
 
 function Keywords({labels, keywords}) {
     const hasKeywords = Object.keys(keywords).length > 0;

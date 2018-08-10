@@ -25,6 +25,7 @@
             "titlePrefix": properties.get("client.title_prefix") || "",
             "titleSuffix": properties.get("client.title_suffix") || "",
             "urlPrefix": getUrlPrefix(properties),
+            "formUrl": properties.get("client.form_url")
         },
         "sentry": properties.get("sentry.url") || false,
         "googleTagManager": properties.get("google_tag_manager.id") || false
