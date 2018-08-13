@@ -76,6 +76,9 @@ class FacetFilter extends React.Component {
     createListItem(item) {
         let label;
         let value;
+        const listStyle = {
+            "wordWrap": "break-word"
+        };
 
         if (this.props.useIris) {
             label = selectLabel(this.props.labels, item.iri);
@@ -93,6 +96,7 @@ class FacetFilter extends React.Component {
                 action
                 className="filter-button"
                 active={isActive}
+                style={listStyle}
                 tag="button">
                 {label} ({formatNumber(item.count)})
             </ListGroupItem >
