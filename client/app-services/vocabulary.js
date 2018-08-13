@@ -111,7 +111,8 @@ export const PU_VALUES_MAPPING = {
     "https://creativecommons.org/publicdomain/zero/1.0/": "cc0",
     [POU_PREFIX + "není-chráněna-zvláštním-právem-pořizovatele-databáze/"]: "no",
     [POU_PREFIX + "obsahuje-osobní-údaje/"]: "contains",
-    [POU_PREFIX + "neobsahuje-osobní-údaje/"]: "no"
+    [POU_PREFIX + "neobsahuje-osobní-údaje/"]: "no",
+    [POU_PREFIX + "není-specifikováno-zda-obsahuje-osobní-údaje/"]: "unspecified"
 };
 
 export const NKOD = {

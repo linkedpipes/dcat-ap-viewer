@@ -211,7 +211,7 @@ function personalData(distribution) {
                 </div>
             </li>
         );
-    } else {
+    } else if (distribution.personalData === "contains") {
         return (
             <li className="list-group-item px-2">
                 <div>
@@ -222,6 +222,21 @@ function personalData(distribution) {
                 </div>
             </li>
         );
+    } else if (distribution.personalData === "unspecified") {
+        return (
+            <li className="list-group-item px-2">
+                <div>
+                    {getString("license_personal_unspecified")}
+                </div>
+                <div className="label">
+                    {getString("license_personal_type")}
+                </div>
+            </li>
+        );
+    } else {
+        console.error("Unexpected value for personalData: ",
+            distribution.personalData);
+        return null;
     }
 }
 
