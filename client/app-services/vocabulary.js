@@ -114,3 +114,8 @@ export const PU_VALUES_MAPPING = {
     [POU_PREFIX + "neobsahuje-osobní-údaje/"]: "no"
 };
 
+export const NKOD = {
+    "SourceForm" : "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/Formulář",
+    "SourceCkan": "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/CkanLkod",
+    "SourceDcat": "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/DcatLkod"
+};

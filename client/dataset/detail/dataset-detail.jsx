@@ -12,9 +12,8 @@ import {
     KEYWORDS_QUERY,
     THEME_QUERY
 } from "../../app/navigation";
+import {NKOD} from "app-services/vocabulary";
 
-const FORM_TYPE =
-    "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/Formulář";
 
 export default class DatasetView extends React.PureComponent {
 
@@ -47,23 +46,43 @@ export default class DatasetView extends React.PureComponent {
 }
 
 function dialogLinks(dataset) {
-    const isFromFrom = dataset["@type"].indexOf(FORM_TYPE) !== -1;
-    if (!isFromFrom) {
-        return null;
-    }
+    const isFromFrom = dataset["@type"].indexOf(NKOD.SourceForm) !== -1;
+    const isFromLkod =
+        dataset["@type"].indexOf(NKOD.SourceCkan) !== -1 ||
+        dataset["@type"].indexOf(NKOD.SourceDcat) !== -1;
     const iri = dataset["@id"];
-    return (
-        <span>
-            <a href={FORM_URL + "#/odstranění-datové-sady?url=" + iri}
-               target="_blank">
-                <i className="material-icons pl-2">delete</i>
-            </a>
+    const editStyle = {"color": "grey"};
+    const deleteStyle = {"color": "red"};
+    if (isFromFrom) {
+        return (
+            <span>
             <a href={FORM_URL + "#/registrace-datové-sady?url=" + iri}
                target="_blank">
-                <i className="material-icons pl-2">edit</i>
+                <i className="material-icons pl-2" style={editStyle}>
+                    edit
+                </i>
+            </a>
+            <a href={FORM_URL + "#/odstranění-datové-sady?url=" + iri}
+               target="_blank">
+                <i className="material-icons pl-2" style={deleteStyle}>
+                    delete_forever
+                </i>
             </a>
         </span>
-    )
+        )
+    } else if (isFromLkod) {
+        return (
+            <span>
+            <a href={FORM_URL + "#/odstranění-lokálního-katalogu?url=" + iri}
+               target="_blank">
+                <i className="material-icons pl-2" style={deleteStyle}>
+                    delete_forever
+                </i>
+            </a>
+        </span>
+        )
+    }
+    return null;
 }
 
 function Keywords({labels, keywords}) {
