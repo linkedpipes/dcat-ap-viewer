@@ -117,7 +117,7 @@ function createPageItemsList(pages, active, onChange) {
 }
 
 function createPageItem(index, isActive, onChange) {
-    let className = "page-item";
+    let className = "page-item pt-2";
     if (isActive) {
         className += " active";
     }
@@ -132,7 +132,7 @@ function createPageItem(index, isActive, onChange) {
 
 function createItemForIndexGap(index) {
     return (
-        <li className="page-item px-3" key={"stub_" + index}>
+        <li className="page-item px-3 pt-2" key={"stub_" + index}>
             ...
         </li>
     )
