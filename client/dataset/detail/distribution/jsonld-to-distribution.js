@@ -59,9 +59,8 @@ export function jsonLdToDistribution(jsonld) {
 function parseTermsOfUse(distribution, jsonld) {
     const iri = triples.resource(distribution, PU.specification);
     if (iri === undefined) {
-        return {
-            "legacyTermsOfUse": true
-        }
+        console.error("Legacy terms of use are no longer supported.");
+        return {};
     }
 
     const entity = graph.getByResource(jsonld, iri);
@@ -80,7 +79,6 @@ function parseTermsOfUse(distribution, jsonld) {
         "databaseAuthor":  databaseAuthor,
         "protectedDatabase":  mapTermsOfUseValue(protectedDatabase),
         "personalData":  mapTermsOfUseValue(personalData),
-        "legacyTermsOfUse": false
     };
 }
 

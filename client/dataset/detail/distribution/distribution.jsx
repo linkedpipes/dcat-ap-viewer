@@ -47,9 +47,6 @@ function isEmpty(value) {
 }
 
 function licenseColumn(distribution) {
-    if (distribution.legacyTermsOfUse) {
-        return legacyLicenseColumn(distribution);
-    }
     return (
         <div className="card">
             <h6 className="card-title text-muted pl-2 pt-2">
@@ -60,39 +57,6 @@ function licenseColumn(distribution) {
                 {databaseAuthorship(distribution)}
                 {protectedDatabaseAuthorship(distribution)}
                 {personalData(distribution)}
-            </ul>
-        </div>
-    )
-}
-
-function legacyLicenseColumn(distribution) {
-    if (distribution.license === undefined) {
-        return (
-            <div className="card">
-                <h6 className="card-title text-muted pl-2 pt-2">
-                    {getString("s.custom_distribution_license")}
-                </h6>
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item px-2">
-                        {getString("s.license_missing")}
-                    </li>
-                </ul>
-            </div>
-        )
-    }
-    return (
-        <div className="card">
-            <h6 className="card-title text-muted pl-2 pt-2">
-                {getString("s.custom_distribution_license")}
-            </h6>
-            <ul className="list-group list-group-flush">
-                <li className="list-group-item  px-2">
-                    <a href={distribution.license}
-                       ref="nofollow"
-                       target="_blank">
-                        {getString("s.licence")}
-                    </a>
-                </li>
             </ul>
         </div>
     )
