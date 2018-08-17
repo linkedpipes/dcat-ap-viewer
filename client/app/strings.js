@@ -106,6 +106,7 @@ const STRINGS = {
         "s.schema": "Schéma",
         "s.documentation_download": "Zobrazit dokumentaci",
         "s.themes": "Témata"
+        ,"s.logo_alt": "Otevřená data"
     },
     "en": {
         "title.datasets": "Datasets",
@@ -210,6 +211,7 @@ const STRINGS = {
         "s.schema": "Schema",
         "s.documentation_download": "Show documentation",
         "s.themes": "Themes"
+        ,"s.logo_alt": "Open data"
     }
 };
 
