@@ -54,6 +54,7 @@ class HeaderComponent extends React.Component {
                 <Navbar expand="md" className="navbar-light">
                     <NavbarBrand href="https://data.gov.cz/">
                         <img width="174" height="30"
+                             alt={getString("s.logo_alt")}
                              className="d-inline-block align-top"
                              src="./assets/images/opendata-logo.png"/>
                     </NavbarBrand>

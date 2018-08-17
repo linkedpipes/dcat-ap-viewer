@@ -106,6 +106,7 @@ const STRINGS = {
         "s.schema": "Schéma",
         "s.documentation_download": "Zobrazit dokumentaci",
         "s.themes": "Témata"
+        ,"s.logo_alt": "Otevřená data"
         //
         ,"license_author_multi": "Obsahuje více děl"
         ,"license_author_no": "Neobsahuje"
@@ -226,6 +227,7 @@ const STRINGS = {
         "s.schema": "Schema",
         "s.documentation_download": "Show documentation",
         "s.themes": "Themes"
+        ,"s.logo_alt": "Open data"
         //
         ,"license_author_multi": "Shared authorship"
         ,"license_author_no": "No license"
