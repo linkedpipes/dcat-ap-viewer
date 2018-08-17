@@ -12,8 +12,8 @@ export const PublisherList = ({publishers}) => {
                 {formatNumber(publishers.length)}
                 &nbsp;{getString("s.publishers_found")}
             </h4>
-            <div>
-                <hr/>
+            <hr/>
+            <div className="row">
                 {publishers.map((publisher) => (
                     <OrganisationListItem
                         key={publisher["@id"]}
@@ -32,14 +32,24 @@ PublisherList.propTypes = {
 };
 
 const OrganisationListItem = ({iri, label, count}) => {
-    let datasetCountLabel = getDatasetCountLabel(count);
+    const url = getUrl(DATASET_LIST_URL, {[PUBLISHER_QUERY]: iri});
+    const datasetCountLabel = getDatasetCountLabel(count);
     return (
-        <div>
-            <Link to={getUrl(DATASET_LIST_URL, {[PUBLISHER_QUERY]: iri})}>
-                <h4>{label}</h4>
-            </Link>
-            <p>{datasetCountLabel}</p>
-            <hr/>
+        <div className="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 mb-3">
+            <div className="card p-2">
+                <div className="card-body px-2">
+                    <h5 className="card-title">
+                        <Link to={url}>
+                            <h4>{label}</h4>
+                        </Link>
+                    </h5>
+                </div>
+                <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+                        {datasetCountLabel}
+                    </li>
+                </ul>
+            </div>
         </div>
     );
 };
