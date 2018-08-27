@@ -1,6 +1,15 @@
 import React from "react";
 import {getString} from "app/strings";
-import {selectLabel, selectLabelNoIri} from "app-services/labels/index";
+import {selectLabelNoIri} from "app-services/labels/index";
+import {selectLabel} from "../../../app-services/labels";
+import authorship from "./terms-of-use/authorship";
+import databaseAuthorship from "./terms-of-use/database-authorship";
+import protectedDatabaseAuthorship
+    from "./terms-of-use/protected-database-authorship";
+import personalData from "./terms-of-use/personal-data";
+import downloadListItem from "./access/download-list-item";
+import schemaListItem from "./access/schema-list-item";
+import mediaTypeItem from "./access/media-type-item";
 
 export default class Distribution extends React.PureComponent {
     render() {
@@ -42,8 +51,16 @@ export default class Distribution extends React.PureComponent {
     }
 }
 
-function isEmpty(value) {
-    return value === undefined || value.length === 0;
+function dataFormatItem(labels, distribution) {
+    const label = selectLabel(labels, distribution.format);
+    if (label === undefined) {
+        return null;
+    }
+    return (
+        <h6 className="card-subtitle mb-2 text-muted">
+            {label}
+        </h6>
+    )
 }
 
 function licenseColumn(distribution) {
@@ -62,203 +79,6 @@ function licenseColumn(distribution) {
     )
 }
 
-function authorship(distribution) {
-    switch (distribution.authorship) {
-        case "multi":
-            return (
-                <li className="list-group-item  px-2">
-                    <div>
-                        {getString("license_author_multi")}
-                    </div>
-                    <div className="label">
-                        {getString("license_author_type")}
-                    </div>
-                </li>
-            );
-        case "no":
-            return (
-                <li className="list-group-item px-2">
-                    <div>
-                        {getString("license_author_no")}
-                    </div>
-                    <div className="label">
-                        {getString("license_author_type")}
-                    </div>
-                </li>
-            );
-        case "ccBy":
-            return (
-                <li className="list-group-item px-2">
-                    <div>
-                        {getString("license_author_ccBy")}
-                    </div>
-                    <div className="label">
-                        {distribution.author}
-                    </div>
-                </li>
-            );
-        case "missing":
-            return (
-                <li className="list-group-item px-2">
-                    <div>
-                        {getString("s.license_missing")}
-                    </div>
-                    <div className="label">
-                        {getString("license_author_type")}
-                    </div>
-                </li>
-            );
-        default:
-            return (
-                <li className="list-group-item px-2">
-                    <div>
-                        {getString("license_author_custom")}
-                    </div>
-                    <div className="label">
-                        <a href={distribution.authorship}
-                           rel="nofollow"
-                           target="_blank">
-                            {distribution.authorship}
-                        </a>
-                    </div>
-                </li>
-            );
-    }
-}
-
-function databaseAuthorship(distribution) {
-    switch (distribution.databaseAuthorship) {
-        case "no":
-            return (
-                <li className="list-group-item px-2">
-                    <div>
-                        {getString("license_author_no")}
-                    </div>
-                    <div className="label">
-                        {getString("license_db_type")}
-                    </div>
-                </li>
-            );
-        case "ccBy":
-            return (
-                <li className="list-group-item px-2">
-                    <div>
-                        {getString("license_author_ccBy")}
-                    </div>
-                    <div className="label">
-                        {distribution.databaseAuthor}
-                    </div>
-                </li>
-            );
-        case "missing":
-            return (
-                <li className="list-group-item px-2">
-                    <div>
-                        {getString("s.license_missing")}
-                    </div>
-                    <div className="label">
-                        {getString("license_db_type")}
-                    </div>
-                </li>
-            );
-        default:
-            return (
-                <li className="list-group-item px-2">
-                    <div>
-                        {getString("license_author_custom")}
-                    </div>
-                    <div className="label">
-                        <a href={distribution.databaseAuthorship}
-                           rel="nofollow"
-                           target="_blank">
-                            {distribution.databaseAuthorship}
-                        </a>
-                    </div>
-                </li>
-            );
-    }
-}
-
-function protectedDatabaseAuthorship(distribution) {
-    switch (distribution.protectedDatabase) {
-        case "no":
-            return (
-                <li className="list-group-item px-2">
-                    <div>
-                        {getString("license_author_no")}
-                    </div>
-                    <div className="label">
-                        {getString("license_specialdb_type")}
-                    </div>
-                </li>
-            );
-        case "cc0":
-            return (
-                <li className="list-group-item px-2">
-                    <div>
-                        {getString("license_author_ccBy")}
-                    </div>
-                    <div className="label">
-                        {getString("license_specialdb_type")}
-                    </div>
-                </li>
-            );
-        case "missing":
-            return (
-                <li className="list-group-item px-2">
-                    <div>
-                        {getString("s.license_missing")}
-                    </div>
-                    <div className="label">
-                        {getString("license_specialdb_type")}
-                    </div>
-                </li>
-            );
-        default:
-            return (
-                <li className="list-group-item px-2">
-                    <div>
-                        {getString("license_author_custom")}
-                    </div>
-                    <div className="label">
-                        <a href={distribution.protectedDatabase}
-                           rel="nofollow"
-                           target="_blank">
-                            {distribution.protectedDatabase}
-                        </a>
-                    </div>
-                </li>
-            );
-    }
-}
-
-function personalData(distribution) {
-    let label;
-    if (distribution.personalData === "no") {
-        label = getString("license_personal_no");
-    } else if (distribution.personalData === "contains") {
-        label = getString("license_personal_yes");
-    } else if (distribution.personalData === "unspecified") {
-        label = getString("license_personal_unspecified");
-    } else if (distribution.personalData === "missing") {
-        label = getString("license_personal_unspecified");
-    } else {
-        console.error("Unexpected value for personal data: ",
-            distribution.personalData);
-        return null;
-    }
-    return (
-        <li className="list-group-item px-2">
-            <div>
-                {label}
-            </div>
-            <div className="label">
-                {getString("license_personal_type")}
-            </div>
-        </li>
-    );
-}
-
 function accessColumn(labels, distribution) {
     return (
         <div className="card">
@@ -273,88 +93,3 @@ function accessColumn(labels, distribution) {
         </div>
     );
 }
-
-function dataFormatItem(labels, distribution) {
-    const label = selectLabel(labels, distribution.format);
-    if (label === undefined) {
-        return null;
-    }
-    return (
-        <h6 className="card-subtitle mb-2 text-muted">
-            {label}
-        </h6>
-    )
-}
-
-function downloadListItem(distribution) {
-    let downloadUrl = undefined;
-    if (isEmpty(distribution.downloadURL)) {
-        if (isEmpty(distribution.accessURL)) {
-            console.error("Invalid data, missing accessURL", distribution);
-        } else {
-            downloadUrl = distribution.accessURL[0];
-        }
-    } else {
-        downloadUrl = distribution.downloadURL[0];
-    }
-
-    if (downloadUrl === undefined) {
-        return null;
-    }
-
-    return (
-        <li className="list-group-item px-2">
-            <a href={downloadUrl}
-               className="card-link"
-               rel="nofollow"
-               target="_blank">
-                {getString("s.download")}
-            </a>
-        </li>
-    )
-}
-
-function schemaListItem(distribution) {
-    if (distribution.conformsTo.length === 0) {
-        return null;
-    }
-    return (
-        <li className="list-group-item px-2">
-            <a href={distribution.conformsTo[0]}
-               className="card-link"
-               rel="nofollow"
-               target="_blank">
-                {getString("s.schema")}
-            </a>
-        </li>
-    )
-}
-
-function mediaTypeItem(labels, distribution) {
-    if (distribution.mediaType === undefined) {
-        return null;
-    }
-    return (
-        <li className="list-group-item px-2">
-            {selectLabelNoIri(labels, distribution.mediaType)}
-            <a href={distribution.mediaType["@id"]}
-               rel="nofollow"
-               target="_blank">
-                {linkIcon()}
-            </a>
-        </li>
-    )
-}
-
-function linkIcon() {
-    const iconStyle = {
-        "fontSize": "1.2rem",
-        "paddingLeft": "0.5rem"
-    };
-    return (
-        <i className="material-icons" style={iconStyle}>
-            open_in_new
-        </i>
-    );
-}
-
