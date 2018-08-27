@@ -59,8 +59,14 @@ export function jsonLdToDistribution(jsonld) {
 function parseTermsOfUse(distribution, jsonld) {
     const iri = triples.resource(distribution, PU.specification);
     if (iri === undefined) {
-        console.error("Legacy terms of use are no longer supported.");
-        return {};
+        return {
+            "authorship": "missing",
+            "author": "missing",
+            "databaseAuthorship": "missing",
+            "databaseAuthor": "missing",
+            "protectedDatabase": "missing",
+            "personalData": "missing"
+        };
     }
 
     const entity = graph.getByResource(jsonld, iri);
@@ -83,8 +89,12 @@ function parseTermsOfUse(distribution, jsonld) {
 }
 
 function mapTermsOfUseValue(value) {
+    if (value === undefined) {
+        return "missing";
+    }
     const mapped = PU_VALUES_MAPPING[value];
     if (mapped === undefined) {
+        console.error("Unexpected value for terms of use:", value);
         return value;
     } else {
         return mapped;

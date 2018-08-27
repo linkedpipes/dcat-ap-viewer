@@ -97,6 +97,17 @@ function authorship(distribution) {
                     </div>
                 </li>
             );
+        case "missing":
+            return (
+                <li className="list-group-item px-2">
+                    <div>
+                        {getString("s.license_missing")}
+                    </div>
+                    <div className="label">
+                        {getString("license_author_type")}
+                    </div>
+                </li>
+            );
         default:
             return (
                 <li className="list-group-item px-2">
@@ -136,6 +147,17 @@ function databaseAuthorship(distribution) {
                     </div>
                     <div className="label">
                         {distribution.databaseAuthor}
+                    </div>
+                </li>
+            );
+        case "missing":
+            return (
+                <li className="list-group-item px-2">
+                    <div>
+                        {getString("s.license_missing")}
+                    </div>
+                    <div className="label">
+                        {getString("license_db_type")}
                     </div>
                 </li>
             );
@@ -181,6 +203,17 @@ function protectedDatabaseAuthorship(distribution) {
                     </div>
                 </li>
             );
+        case "missing":
+            return (
+                <li className="list-group-item px-2">
+                    <div>
+                        {getString("s.license_missing")}
+                    </div>
+                    <div className="label">
+                        {getString("license_specialdb_type")}
+                    </div>
+                </li>
+            );
         default:
             return (
                 <li className="list-group-item px-2">
@@ -200,44 +233,30 @@ function protectedDatabaseAuthorship(distribution) {
 }
 
 function personalData(distribution) {
+    let label;
     if (distribution.personalData === "no") {
-        return (
-            <li className="list-group-item px-2">
-                <div>
-                    {getString("license_personal_no")}
-                </div>
-                <div className="label">
-                    {getString("license_personal_type")}
-                </div>
-            </li>
-        );
+        label = getString("license_personal_no");
     } else if (distribution.personalData === "contains") {
-        return (
-            <li className="list-group-item px-2">
-                <div>
-                    {getString("license_personal_yes")}
-                </div>
-                <div className="label">
-                    {getString("license_personal_type")}
-                </div>
-            </li>
-        );
+        label = getString("license_personal_yes");
     } else if (distribution.personalData === "unspecified") {
-        return (
-            <li className="list-group-item px-2">
-                <div>
-                    {getString("license_personal_unspecified")}
-                </div>
-                <div className="label">
-                    {getString("license_personal_type")}
-                </div>
-            </li>
-        );
+        label = getString("license_personal_unspecified");
+    } else if (distribution.personalData === "missing") {
+        label = getString("license_personal_unspecified");
     } else {
-        console.error("Unexpected value for personalData: ",
+        console.error("Unexpected value for personal data: ",
             distribution.personalData);
         return null;
     }
+    return (
+        <li className="list-group-item px-2">
+            <div>
+                {label}
+            </div>
+            <div className="label">
+                {getString("license_personal_type")}
+            </div>
+        </li>
+    );
 }
 
 function accessColumn(labels, distribution) {
