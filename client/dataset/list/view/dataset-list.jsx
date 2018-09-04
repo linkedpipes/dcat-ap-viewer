@@ -7,7 +7,8 @@ import {
     DATASET_LIST_URL,
     PUBLISHER_QUERY,
     PAGE_QUERY,
-    PAGE_SIZE_QUERY
+    PAGE_SIZE_QUERY,
+    SORT_QUERY
 } from "../../../app/navigation";
 import {Badge} from "reactstrap";
 import Paginator from "app-ui/paginator";
@@ -20,6 +21,9 @@ import {connect} from "react-redux";
 import {
     updateQuery
 } from "../dataset-list-actions";
+import SortSelector from "./ui/sort-selector";
+import {Row, Col} from "reactstrap";
+import QueryStatus from "./ui/query-status";
 
 class _DatasetList extends React.Component {
 
@@ -27,6 +31,19 @@ class _DatasetList extends React.Component {
         const showPublisher = this.props.query.publisher.length === 0;
         return (
             <div>
+                <Row>
+                    <Col className="mt-2">
+                        <div className="float-lg-right">
+                            <SortSelector
+                                value={this.props.query.sort}
+                                onChange={this.props.setSort}/>
+                        </div>
+                    </Col>
+                </Row>
+                <div className="m-md-1">
+                    <QueryStatus/>
+                </div>
+                <br/>
                 {this.props.datasets.map((dataset) => (
                     <DatasetListItem
                         key={dataset.id}
@@ -59,6 +76,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     )),
     "setPageSize": (value) => dispatch(updateQuery(
         ownProps.location, {[PAGE_SIZE_QUERY]: value}, [PAGE_QUERY]
+    )),
+    "setSort": (sortBy) => dispatch(updateQuery(
+        ownProps.location, {[SORT_QUERY]: sortBy}, [PAGE_QUERY]
     ))
 });
 

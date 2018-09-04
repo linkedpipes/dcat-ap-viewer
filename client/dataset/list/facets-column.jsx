@@ -108,7 +108,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     )),
     "setThemeFacet": (value, isActive) => dispatch(updateQueryFilters(
         ownProps.location, THEME_QUERY, value, isActive
-    )),
+    ))
 });
 
 const FacetsColumn = connect(

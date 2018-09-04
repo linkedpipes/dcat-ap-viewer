@@ -1,12 +1,12 @@
 import React from "react";
-import {formatNumber} from "../../../app-services/formats";
-import {getString} from "../../../app/strings";
+import {formatNumber} from "../../../../app-services/formats";
+import {getString} from "../../../../app/strings";
 import {Badge} from "reactstrap";
 import {connect} from "react-redux";
 import {
     datasetsTotalCountSelector,
     querySelector
-} from "../dataset-list-reducer";
+} from "../../dataset-list-reducer";
 
 class _QueryStatus extends React.PureComponent {
 
