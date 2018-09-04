@@ -8,18 +8,18 @@ import {
     PUBLISHER_QUERY,
     PAGE_QUERY,
     PAGE_SIZE_QUERY
-} from "../../app/navigation";
+} from "../../../app/navigation";
 import {Badge} from "reactstrap";
 import Paginator from "app-ui/paginator";
 import {
     querySelector,
     datasetsSelector,
     datasetsTotalCountSelector
-} from "./dataset-list-reducer";
+} from "../dataset-list-reducer";
 import {connect} from "react-redux";
 import {
     updateQuery
-} from "./dataset-list-actions";
+} from "../dataset-list-actions";
 
 class _DatasetList extends React.Component {
 

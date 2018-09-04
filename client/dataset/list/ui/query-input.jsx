@@ -1,23 +1,23 @@
 import React from "react";
-import {getString} from "../../app/strings";
-import SearchBox from "./ui/search-box"
-import SortSelector from "./ui/sort-selector";
+import {getString} from "../../../app/strings";
+import SearchBox from "./search-box"
+import SortSelector from "./sort-selector";
 import {Row, Col, Input, Button} from "reactstrap";
 import {
     querySelector
-} from "./dataset-list-reducer";
+} from "../dataset-list-reducer";
 import {connect} from "react-redux";
 import {
     clearQuery,
     updateQuery,
     updateQueryFilters
-} from "./dataset-list-actions";
+} from "../dataset-list-actions";
 import {
     PAGE_QUERY, SORT_QUERY,
     STRING_QUERY,
     TEMPORAL_END,
     TEMPORAL_START
-} from "../../app/navigation";
+} from "../../../app/navigation";
 
 
 class _QueryInput extends React.Component {

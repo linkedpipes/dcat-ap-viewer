@@ -1,12 +1,12 @@
 import React from "react";
 import {isDataReady} from "../../app-services/http-request";
 import {Col} from "reactstrap";
-import QueryInput from "./query-input";
+import QueryInput from "./ui/query-input";
 import {HttpRequestStatus} from "../../app-ui/http-request-status";
-import QueryStatus from "./query-status";
-import DatasetList from "./dataset-list";
+import QueryStatus from "./ui/query-status";
+import DatasetList from "./view/dataset-list";
 
-export default class DatasetColumn extends React.Component {
+export default class ViewColumn extends React.Component {
     render() {
         let datasetComponent;
         if (isDataReady(this.props.status)) {

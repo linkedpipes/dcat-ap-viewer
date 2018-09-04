@@ -4,7 +4,7 @@ import {querySelector, dataStatusSelector} from "./dataset-list-reducer"
 import {getString} from "../../app/strings";
 import setPageTitle from "../../app-services/page-title";
 import FacetsColumn from "./facets-column";
-import DatasetColumn from "./dataset-column";
+import ViewColumn from "./view-column";
 import {Container, Row} from "reactstrap";
 import {fetchData} from "./dataset-list-actions";
 
@@ -31,8 +31,8 @@ class DatasetListViewComponent extends React.Component {
             <Container>
                 <Row>
                     <FacetsColumn location={this.props.location}/>
-                    <DatasetColumn location={this.props.location}
-                                   status={this.props.status}/>
+                    <ViewColumn location={this.props.location}
+                                status={this.props.status}/>
                 </Row>
             </Container>
         )
@@ -56,7 +56,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     "fetchData": (query) => dispatch(fetchData(query))
 });
 
-export const DatasetListPage = connect(
+export const DatasetListContainer = connect(
     mapStateToProps,
     mapDispatchToProps
 )(DatasetListViewComponent);
