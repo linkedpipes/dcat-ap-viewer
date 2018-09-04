@@ -6,7 +6,7 @@ import {
     THEME_QUERY
 } from "../../app/navigation";
 import {getString} from "../../app/strings";
-import FacetFilter from "./components/facet-filter";
+import FacetFilter from "./ui/facet-filter";
 import {
     formatsSelector,
     keywordsSelector,

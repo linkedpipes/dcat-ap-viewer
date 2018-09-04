@@ -1,7 +1,7 @@
 import React from "react";
 import {getString} from "../../app/strings";
-import SearchBox from "./components/search-box"
-import SortSelector from "./components/sort-selector";
+import SearchBox from "./ui/search-box"
+import SortSelector from "./ui/sort-selector";
 import {Row, Col, Input, Button} from "reactstrap";
 import {
     querySelector
