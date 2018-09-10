@@ -32,7 +32,8 @@ class DatasetListViewComponent extends React.Component {
                 <Row>
                     <FacetsColumn location={this.props.location}/>
                     <ViewColumn location={this.props.location}
-                                status={this.props.status}/>
+                                status={this.props.status}
+                                view={this.props.query.datasetListView}/>
                 </Row>
             </Container>
         )
@@ -45,6 +46,7 @@ class DatasetListViewComponent extends React.Component {
             setPageTitle(getString("title.datasets"));
         }
     }
+
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -56,7 +58,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     "fetchData": (query) => dispatch(fetchData(query))
 });
 
-export const DatasetListContainer = connect(
+export const DatasetList = connect(
     mapStateToProps,
     mapDispatchToProps
 )(DatasetListViewComponent);

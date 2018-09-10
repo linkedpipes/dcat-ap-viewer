@@ -106,6 +106,9 @@ const STRINGS = {
         "s.schema": "Schéma",
         "s.documentation_download": "Zobrazit dokumentaci",
         "s.themes": "Témata"
+        , "dataset-list": "Seznam datových sad"
+        , "keyword-cloud": "Klíčová slova"
+        , "theme-cloud": "Témata"
         ,"s.logo_alt": "Otevřená data"
     },
     "en": {
@@ -211,6 +214,9 @@ const STRINGS = {
         "s.schema": "Schema",
         "s.documentation_download": "Show documentation",
         "s.themes": "Themes"
+        , "dataset-list": "Dataset list"
+        , "keyword-cloud": "Keywords"
+        , "theme-cloud": "Themes"
         ,"s.logo_alt": "Open data"
     }
 };

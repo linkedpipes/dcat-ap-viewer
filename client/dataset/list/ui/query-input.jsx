@@ -1,7 +1,7 @@
 import React from "react";
 import {getString} from "../../../app/strings";
 import SearchBox from "./search-box"
-import SortSelector from "./sort-selector";
+import ViewSelector from "./view-selector";
 import {Row, Col, Input, Button} from "reactstrap";
 import {
     querySelector
@@ -13,7 +13,8 @@ import {
     updateQueryFilters
 } from "../dataset-list-actions";
 import {
-    PAGE_QUERY, SORT_QUERY,
+    PAGE_QUERY,
+    VIEW_QUERY,
     STRING_QUERY,
     TEMPORAL_END,
     TEMPORAL_START
@@ -96,9 +97,9 @@ class _QueryInput extends React.Component {
                     </Col>
                     <Col className="mt-2">
                         <div className="float-lg-right">
-                            <SortSelector
-                                value={this.props.query.sort}
-                                onChange={this.props.setSort}/>
+                            <ViewSelector
+                                value={this.props.query.datasetListView}
+                                onChange={this.props.setView}/>
                         </div>
                     </Col>
                 </Row>
@@ -124,9 +125,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     "setSearchString": (value) => dispatch(updateQuery(
         ownProps.location, {[STRING_QUERY]: value}, [PAGE_QUERY]
     )),
-    "setSort": (sortBy) => dispatch(updateQuery(
-        ownProps.location, {[SORT_QUERY]: sortBy}, [PAGE_QUERY]
-    )),
+    "setView": (sortBy) => dispatch(updateQuery(
+        ownProps.location, {[VIEW_QUERY]: sortBy}, [PAGE_QUERY]
+    ))
 });
 
 const QueryInput = connect(mapStateToProps, mapDispatchToProps)(_QueryInput);
