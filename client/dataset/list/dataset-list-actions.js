@@ -105,6 +105,7 @@ function pushIfNotPending(pushObject) {
 }
 
 export function updateQueryFilters(location, propName, value, isActive) {
+    console.log("updateQueryFilters", location, propName, value, isActive);
     const params = parseQueryString(location.search);
     const oldValues = asArray(params[getQuery(propName)]);
     const list = updateValueList(value, isActive, oldValues);

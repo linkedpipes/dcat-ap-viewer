@@ -15,7 +15,8 @@ import {
     SORT_QUERY,
     PAGE_SIZE_QUERY,
     TEMPORAL_START,
-    TEMPORAL_END
+    TEMPORAL_END,
+    VIEW_QUERY
 } from "../../app/navigation";
 import {
     STATUS_INITIAL,
@@ -54,7 +55,8 @@ const initialState = {
         "sort": "title asc",
         "pageSize": 10,
         "temporalStart": "",
-        "temporalEnd": ""
+        "temporalEnd": "",
+        "datasetListView": 0
     }
 };
 
@@ -207,6 +209,11 @@ function paramsToQuery(params) {
     if (isNaN(pageSize)) {
         pageSize = 10;
     }
+    let datasetView = parseInt(params[getQuery(VIEW_QUERY)]);
+    if (isNaN(datasetView)) {
+        datasetView = 0;
+    }
+
     return {
         "page": page,
         "search": params[getQuery(STRING_QUERY)],
@@ -217,7 +224,8 @@ function paramsToQuery(params) {
         "sort": order,
         "pageSize": pageSize,
         "temporalStart": undefinedAsEmpty(params[getQuery(TEMPORAL_START)]),
-        "temporalEnd": undefinedAsEmpty(params[getQuery(TEMPORAL_END)])
+        "temporalEnd": undefinedAsEmpty(params[getQuery(TEMPORAL_END)]),
+        "datasetListView": datasetView
     };
 }
 

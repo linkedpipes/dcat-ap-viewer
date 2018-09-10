@@ -1,5 +1,5 @@
 import React from "react";
-import {getString} from "../../../app/strings";
+import {getString} from "../../../../app/strings";
 import {
     UncontrolledDropdown,
     DropdownToggle,
