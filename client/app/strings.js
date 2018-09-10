@@ -214,6 +214,9 @@ const STRINGS = {
         "s.schema": "Schema",
         "s.documentation_download": "Show documentation",
         "s.themes": "Themes"
+        , "dataset-list": "Dataset list"
+        , "keyword-cloud": "Keywords"
+        , "theme-cloud": "Themes"
         ,"s.logo_alt": "Open data"
     }
 };
