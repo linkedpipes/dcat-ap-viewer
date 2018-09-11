@@ -51,20 +51,19 @@ function dialogLinks(dataset) {
         dataset["@type"].indexOf(NKOD.SourceCkan) !== -1 ||
         dataset["@type"].indexOf(NKOD.SourceDcat) !== -1;
     const iri = dataset["@id"];
-    const editStyle = {"color": "grey"};
-    const deleteStyle = {"color": "red"};
+    const actionStyle = {"color": "grey"};
     if (isFromFrom) {
         return (
             <span>
             <a href={FORM_URL + "#/registrace-datové-sady?url=" + iri}
                target="_blank">
-                <i className="material-icons pl-2" style={editStyle}>
+                <i className="material-icons pl-2" style={actionStyle}>
                     edit
                 </i>
             </a>
             <a href={FORM_URL + "#/odstranění-datové-sady?url=" + iri}
                target="_blank">
-                <i className="material-icons pl-2" style={deleteStyle}>
+                <i className="material-icons pl-2" style={actionStyle}>
                     delete_forever
                 </i>
             </a>
@@ -75,7 +74,7 @@ function dialogLinks(dataset) {
             <span>
             <a href={FORM_URL + "#/odstranění-lokálního-katalogu?url=" + iri}
                target="_blank">
-                <i className="material-icons pl-2" style={deleteStyle}>
+                <i className="material-icons pl-2" style={actionStyle}>
                     delete_forever
                 </i>
             </a>
