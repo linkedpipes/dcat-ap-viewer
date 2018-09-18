@@ -1,10 +1,6 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {
-    Pagination,
-    PaginationItem,
-    Button,
-    ButtonDropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
