@@ -83,34 +83,6 @@ class HeaderComponent extends React.Component {
                                     {getString("h.keywords")}
                                 </RouterLink>
                             </NavItem>
-                            <NavItem>
-                                <Dropdown isOpen={this.state.isMoreOpen}
-                                          toggle={this.toggleMore}>
-                                    <DropdownToggle caret nav>
-                                        {getString("h.more")}
-                                    </DropdownToggle>
-                                    <DropdownMenu right>
-                                        <DropdownItem>
-                                            <NavLink
-                                                href="https://opendata.gov.cz/development:zajemci">
-                                                {getString("h.for_interested_in_open_data")}
-                                            </NavLink>
-                                        </DropdownItem>
-                                        <DropdownItem>
-                                            <NavLink
-                                                href="https://opendata.gov.cz/development:programatori">
-                                                {getString("h.for_programmes")}
-                                            </NavLink>
-                                        </DropdownItem>
-                                        <DropdownItem>
-                                            <NavLink
-                                                href="https://opendata.gov.cz/development:poskytovatele">
-                                                {getString("h.for_publishers")}
-                                            </NavLink>
-                                        </DropdownItem>
-                                    </DropdownMenu>
-                                </Dropdown>
-                            </NavItem>
                             <HeaderLanguageSelector
                                 language={getLanguage()}
                                 location={this.props.location}/>
