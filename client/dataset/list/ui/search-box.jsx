@@ -4,6 +4,10 @@ import {getString} from "../../../app/strings";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
 import {constructTypeaheadUrl} from "../../solr-api";
 import {fetchJson} from "app-services/http-request";
+import {InputGroup, InputGroupAddon, InputGroupText, Button} from "reactstrap";
+
+import "react-bootstrap-typeahead/css/Typeahead.css";
+import "react-bootstrap-typeahead/css/Typeahead-bs4.css";
 
 /**
  * Wrap AsyncTypeahead component.
@@ -21,7 +25,11 @@ class SearchBox extends React.Component {
         this.onKeyDown = this.onKeyDown.bind(this);
         this.onChange = this.onChange.bind(this);
         this.submitValue = this.submitValue.bind(this);
+        this.onSearch = this.onSearch.bind(this);
+        this.onInputChange = this.onInputChange.bind(this);
+        //
         this.lastSubmitedValue = null;
+        this.currentInputValue = null;
     }
 
     getInitialState() {
@@ -38,8 +46,12 @@ class SearchBox extends React.Component {
             defaultSelected = [this.props.defaultValue];
         }
         return (
-            <div>
-                {getString("s.search")}
+            <InputGroup>
+                <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                        <i className="material-icons">search</i>
+                    </InputGroupText>
+                </InputGroupAddon>
                 <AsyncTypeahead
                     minLength={2}
                     multiple={false}
@@ -49,11 +61,17 @@ class SearchBox extends React.Component {
                     options={this.state.options}
                     onChange={this.onChange}
                     onKeyDown={this.onKeyDown}
+                    onInputChange={this.onInputChange}
                     defaultSelected={defaultSelected}
                     searchText={getString("s.searching")}
-                    emptyLabel={getString("s.no_data_found")}
-                />
-            </div>
+                    emptyLabel={getString("s.no_data_found")}/>
+                <InputGroupAddon addonType="append">
+                    <Button color="primary"
+                            onClick={this.onSearch}>
+                        {getString("s.search")}
+                    </Button>
+                </InputGroupAddon>
+            </InputGroup>
         )
     }
 
@@ -114,6 +132,17 @@ class SearchBox extends React.Component {
         this.props.onSearch(value);
     }
 
+    onSearch() {
+        // Take current value and submit for search.
+        const value = this.currentInputValue;
+        this.lastSubmitedValue = value;
+        this.props.onSearch(value);
+    }
+
+    onInputChange(value) {
+        this.currentInputValue = value;
+    }
+
 }
 
 SearchBox.propTypes = {
@@ -123,4 +152,3 @@ SearchBox.propTypes = {
 };
 
 export default SearchBox;
-
