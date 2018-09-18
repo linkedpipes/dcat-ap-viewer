@@ -116,10 +116,10 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     "clearFilters": () => dispatch(clearQuery(ownProps.location)),
-    "setTemporalStart": (event) => dispatch(updateQueryFilters(
+    "setTemporalStart": (event) => dispatch(updateQuery(
         ownProps.location, {[TEMPORAL_START]: event.target.value}, [PAGE_QUERY]
     )),
-    "setTemporalEnd": (event) => dispatch(updateQueryFilters(
+    "setTemporalEnd": (event) => dispatch(updateQuery(
         ownProps.location, {[TEMPORAL_END]: event.target.value}, [PAGE_QUERY]
     )),
     "setSearchString": (value) => dispatch(updateQuery(
