@@ -1,6 +1,6 @@
 import React from "react";
-import {formatNumber} from "../../../../app-services/formats";
-import {getString} from "../../../../app/strings";
+import {formatNumber} from "@/app-services/formats";
+import {getString} from "@/app-services/strings";
 import {Badge} from "reactstrap";
 import {connect} from "react-redux";
 import {
@@ -15,9 +15,9 @@ class _QueryStatus extends React.PureComponent {
         return (
             <div>
                 <h4>
-                    {formatNumber(datasetCount)} {getString("s.datasets_found")}
+                    {formatNumber(datasetCount)} {getString("query.datasets_found")}
                     {query.search &&
-                    getString("s.with_query") + ": \"" + query.search + "\""
+                    getString("query.with") + ": \"" + query.search + "\""
                     }
                 </h4>
                 <TagLine values={query.publisher}/>

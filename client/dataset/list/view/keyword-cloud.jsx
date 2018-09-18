@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {keywordsSelector} from "../dataset-list-reducer";
-import {KEYWORDS_QUERY} from "../../../app/navigation";
+import {KEYWORDS_QUERY} from "@/app/navigation";
 import {updateQueryFilters} from "../dataset-list-actions";
 import {TagCloud} from "react-tagcloud";
 

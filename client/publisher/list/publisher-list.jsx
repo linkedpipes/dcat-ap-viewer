@@ -1,8 +1,8 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import {DATASET_LIST_URL, getUrl, PUBLISHER_QUERY} from "../../app/navigation";
-import {getString} from "../../app/strings";
-import {formatNumber} from "../../app-services/formats";
+import {DATASET_LIST_URL, getUrl, PUBLISHER_QUERY} from "@/app/navigation";
+import {getString} from "@/app-services/strings";
+import {formatNumber} from "@/app-services/formats";
 import {Link} from "react-router-dom";
 
 export const PublisherList = ({publishers}) => {
@@ -10,7 +10,7 @@ export const PublisherList = ({publishers}) => {
         <div className="container p-3">
             <h4>
                 {formatNumber(publishers.length)}
-                &nbsp;{getString("s.publishers_found")}
+                &nbsp;{getString("publishers_found")}
             </h4>
             <hr/>
             <div className="row">
@@ -56,11 +56,11 @@ const OrganisationListItem = ({iri, label, count}) => {
 
 function getDatasetCountLabel(count) {
     if (count === 1) {
-        return getString("s.one_dataset");
+        return getString("one_dataset");
     } else if (count <= 4) {
-        return count + getString("s.two_three_datasets");
+        return count + getString("two_three_datasets");
     } else {
-        return formatNumber(count) + getString("s.many_datasets");
+        return formatNumber(count) + getString("many_datasets");
     }
 }
 

@@ -13,7 +13,7 @@ import {
     PUBLISHER_QUERY,
     getUrl
 } from "app/navigation";
-import {getString} from "app/strings";
+import {getString} from "app-services/strings";
 import setPageTitle from "app-services/page-title";
 import {isDataReady} from "app-services/http-request";
 import {selectLabel, labelsSelector} from "app-services/labels";
@@ -26,7 +26,7 @@ import DatasetDetail from "./dataset-detail";
 class _DatasetDetailContainer extends React.Component {
 
     componentWillMount() {
-        setPageTitle(getString("title.dataset"));
+        setPageTitle(getString("datasets"));
         this.props.onMount();
         this.props.fetchDataset();
     }

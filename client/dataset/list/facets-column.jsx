@@ -4,8 +4,8 @@ import {
     KEYWORDS_QUERY,
     FORMAT_QUERY,
     THEME_QUERY
-} from "../../app/navigation";
-import {getString} from "../../app/strings";
+} from "@/app/navigation";
+import {getString} from "@/app-services/strings";
 import FacetFilter from "./ui/facet-filter";
 import {
     formatsSelector,
@@ -19,7 +19,7 @@ import {
 } from "./dataset-list-actions";
 import {connect} from "react-redux";
 import {Col, Button} from "reactstrap";
-import {labelsSelector} from "../../app-services/labels"
+import {labelsSelector} from "@/app-services/labels"
 
 class _FacetsColumn extends React.Component {
 
@@ -55,13 +55,13 @@ class _FacetsColumn extends React.Component {
                 </div>
                 <div className={facetClassName}>
                     <FacetFilter
-                        label="s.publishers"
+                        label="publishers"
                         values={this.props.publisher}
                         active={this.props.query.publisher}
                         onChange={this.props.setPublisherFacet}
                     />
                     <FacetFilter
-                        label="s.themes"
+                        label="themes"
                         values={this.props.theme}
                         active={this.props.query.theme}
                         onChange={this.props.setThemeFacet}
@@ -69,13 +69,13 @@ class _FacetsColumn extends React.Component {
                         labels={this.props.labels}
                     />
                     <FacetFilter
-                        label="s.keywords"
+                        label="keywords"
                         values={this.props.keyword}
                         active={this.props.query.keyword}
                         onChange={this.props.setKeywordsFacet}
                     />
                     <FacetFilter
-                        label="s.formats"
+                        label="formats"
                         values={this.props.format}
                         active={this.props.query.format}
                         onChange={this.props.setFormatFacet}
@@ -121,9 +121,9 @@ export default FacetsColumn;
 function ToggleFiltersButton({areFacetsOpen, onClick}) {
     let label;
     if (areFacetsOpen) {
-        label = getString("s.hide_facets");
+        label = getString("facet.hide");
     } else {
-        label = getString("s.show_facets");
+        label = getString("facet.show");
     }
     return (
         <Button onClick={onClick} style={{"margin": "1em"}}>

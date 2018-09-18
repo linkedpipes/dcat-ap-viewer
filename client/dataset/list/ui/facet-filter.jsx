@@ -1,9 +1,9 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {ListGroup, ListGroupItem} from "reactstrap";
-import {formatNumber} from "../../../app-services/formats"
-import {getString} from "../../../app/strings"
-import {selectLabel} from "../../../app-services/labels";
+import {formatNumber} from "@/app-services/formats"
+import {getString} from "@/app-services/strings"
+import {selectLabel} from "@/app-services/labels";
 
 class FacetFilter extends React.Component {
 
@@ -53,9 +53,9 @@ class FacetFilter extends React.Component {
         if (props.values.length > 7) {
             let label;
             if (this.state.showAll) {
-                label = getString("s.show_popular");
+                label = getString("facet.show_popular");
             } else {
-                label = getString("s.show_more");
+                label = getString("facet.show_more");
             }
             const html = (
                 <ListGroupItem

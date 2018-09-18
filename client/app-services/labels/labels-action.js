@@ -1,4 +1,4 @@
-import {fetchJson} from "../http-request";
+import {fetchJson} from "@/app-services/http-request";
 
 export const FETCH_LABEL_SUCCESS = "FETCH_LABEL_SUCCESS";
 

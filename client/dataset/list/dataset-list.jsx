@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 import {querySelector, dataStatusSelector} from "./dataset-list-reducer"
-import {getString} from "../../app/strings";
-import setPageTitle from "../../app-services/page-title";
+import {getString} from "@/app-services/strings";
+import setPageTitle from "@/app-services/page-title";
 import FacetsColumn from "./facets-column";
 import ViewColumn from "./view-column";
 import {Container, Row} from "reactstrap";
@@ -43,7 +43,7 @@ class DatasetListViewComponent extends React.Component {
         if (this.props.query.publisher.length !== 0) {
             setPageTitle(this.props.query.publisher[0]);
         } else {
-            setPageTitle(getString("title.datasets"));
+            setPageTitle(getString("datasets"));
         }
     }
 

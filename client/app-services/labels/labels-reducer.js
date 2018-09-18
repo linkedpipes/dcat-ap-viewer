@@ -1,5 +1,5 @@
-import {graph, triples} from "app-services/jsonld";
-import {SKOS, DCTERMS, RDF, VCARD, FOAF} from "app-services/vocabulary";
+import {graph, triples} from "@/app-services/jsonld";
+import {SKOS, DCTERMS, RDF, VCARD, FOAF} from "@/app-services/vocabulary";
 
 // TODO Add round-robin for labels repository?
 

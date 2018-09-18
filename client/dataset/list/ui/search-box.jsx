@@ -1,6 +1,6 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import {getString} from "../../../app/strings";
+import {getString} from "@/app-services/strings";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
 import {constructTypeaheadUrl} from "../../solr-api";
 import {fetchJson} from "app-services/http-request";
@@ -63,12 +63,12 @@ class SearchBox extends React.Component {
                     onKeyDown={this.onKeyDown}
                     onInputChange={this.onInputChange}
                     defaultSelected={defaultSelected}
-                    searchText={getString("s.searching")}
-                    emptyLabel={getString("s.no_data_found")}/>
+                    searchText={getString("search.searching")}
+                    emptyLabel={getString("search.no_data_found")}/>
                 <InputGroupAddon addonType="append">
                     <Button color="primary"
                             onClick={this.onSearch}>
-                        {getString("s.search")}
+                        {getString("search.search")}
                     </Button>
                 </InputGroupAddon>
             </InputGroup>

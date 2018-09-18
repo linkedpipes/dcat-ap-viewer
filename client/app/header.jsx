@@ -21,8 +21,7 @@ import {
     getLanguage
 } from "./navigation";
 import {NavLink as RouterLink} from "react-router-dom";
-import {getString, getLanguages} from "./strings";
-import {connect} from "react-redux";
+import {getString, getLanguages} from "../app-services/strings";
 
 class HeaderComponent extends React.Component {
 
@@ -54,7 +53,7 @@ class HeaderComponent extends React.Component {
                 <Navbar expand="md" className="navbar-light">
                     <NavbarBrand href="https://data.gov.cz/">
                         <img width="174" height="30"
-                             alt={getString("s.logo_alt")}
+                             alt={getString("header.logo_alt")}
                              className="d-inline-block align-top"
                              src="./assets/images/opendata-logo.png"/>
                     </NavbarBrand>
@@ -66,21 +65,21 @@ class HeaderComponent extends React.Component {
                                             className="nav-link"
                                             activeClassName="active"
                                             isActive={isDatasetActive}>
-                                    {getString("h.datasets")}
+                                    {getString("datasets")}
                                 </RouterLink>
                             </NavItem>
                             <NavItem>
                                 <RouterLink to={getUrl(ORGANISATION_LIST_URL)}
                                             className="nav-link"
                                             activeClassName="active">
-                                    {getString("h.publishers")}
+                                    {getString("publishers")}
                                 </RouterLink>
                             </NavItem>
                             <NavItem>
                                 <RouterLink to={getUrl(KEYWORDS_LIST_URL)}
                                             className="nav-link"
                                             activeClassName="active">
-                                    {getString("h.keywords")}
+                                    {getString("keywords")}
                                 </RouterLink>
                             </NavItem>
                             <HeaderLanguageSelector
@@ -99,7 +98,6 @@ function isDatasetActive(match, location) {
         return true;
     }
     const rootPath = URL_PREFIX + "/";
-    console.log(location.pathname);
     return location.pathname === rootPath;
 }
 

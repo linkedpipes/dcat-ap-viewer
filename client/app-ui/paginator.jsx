@@ -30,7 +30,7 @@ class Paginator extends React.PureComponent {
             "flexWrap": "wrap",
             "display": "flex",
             "listStyle": "none"
-        }
+        };
 
         return (
             <div className="row">

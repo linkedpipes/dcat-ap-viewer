@@ -1,5 +1,5 @@
-import {fetchLabel} from "app-services/labels";
-import {fetchJson} from "app-services/http-request";
+import {fetchLabel} from "@/app-services/labels";
+import {fetchJson} from "@/app-services/http-request";
 
 export function fetchDistributionDetail(iri) {
     const url = "./api/v1/resource/distribution?iri=" + encodeURI(iri);

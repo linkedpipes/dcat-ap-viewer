@@ -1,19 +1,18 @@
 import React from "react";
 import {connect} from "react-redux";
+import {getString} from "@/app-services/strings";
+import setPageTitle from "@/app-services/page-title";
+import {isDataReady} from "@/app-services/http-request";
+import {HttpRequestStatus} from "@/app-ui/http-request-status";
 import {onMount, onUnMount, fetchPublisherList} from "./publisher-list-action";
 import {statusSelector, publishersSelector} from "./publisher-list-reducer"
-
-import {getString} from "../../app/strings";
-import setPageTitle from "../../app-services/page-title";
-import {isDataReady} from "../../app-services/http-request";
-import {HttpRequestStatus} from "../../app-ui/http-request-status";
 import {PublisherList} from "./publisher-list";
 
 
 class _PublishersListContainer extends React.Component {
 
     componentDidMount() {
-        setPageTitle(getString("title.organisations"));
+        setPageTitle(getString("publishers"));
         this.props.onMount();
         this.props.fetchData();
     }

@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {fetchKeywords} from "./keyword-tagloud-action";
-import {getString} from "../../app/strings";
+import {getString} from "../../app-services/strings";
 import setPageTitle from "../../app-services/page-title";
 import {isDataReady} from "../../app-services/http-request";
 import {statusSelector, keywordsSelector} from "./keyword-tagloud-reducer";
@@ -13,7 +13,7 @@ import {KeywordTagCloud} from "./keyword-tagloud";
 class _KeywordsViewContainer extends React.Component {
 
     componentDidMount() {
-        setPageTitle(getString("title.keywords"));
+        setPageTitle(getString("keywords"));
         this.props.onMount();
         this.props.fetchData();
     }

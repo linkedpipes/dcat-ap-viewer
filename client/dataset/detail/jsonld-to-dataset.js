@@ -1,4 +1,4 @@
-import {graph, triples} from "../../app-services/jsonld";
+import {graph, triples} from "@/app-services/jsonld";
 import {
     DCAT,
     DCTERMS,
@@ -9,7 +9,7 @@ import {
     SCHEMA,
     SKOS,
     EUA
-} from "../../app-services/vocabulary";
+} from "@/app-services/vocabulary";
 
 export function jsonLdToDataset(jsonld) {
     const dataset = graph.getByType(jsonld, DCAT.Dataset);

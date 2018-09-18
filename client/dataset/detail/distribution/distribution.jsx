@@ -1,6 +1,6 @@
 import React from "react";
-import {getString} from "app/strings";
-import {selectLabel, selectLabelNoIri} from "app-services/labels/index";
+import {getString} from "@/app-services/strings";
+import {selectLabel, selectLabelNoIri} from "@/app-services/labels/index";
 
 export default class Distribution extends React.PureComponent {
     render() {
@@ -19,7 +19,7 @@ export default class Distribution extends React.PureComponent {
                     <div className="card-body">
                         {title === undefined ?
                             <span className="sr-only">
-                            {getString("s.unnamed_distribution")}
+                            {getString("unnamed_distribution")}
                             </span>
                             :
                             <h5 className="card-title">
@@ -83,7 +83,7 @@ function downloadListItem(distribution) {
     return (
         <li className="list-group-item">
             <a href={downloadUrl} className="card-link">
-                {getString("s.download")}
+                {getString("download")}
             </a>
         </li>
     )
@@ -97,7 +97,7 @@ function schemaListItem(distribution) {
         <li className="list-group-item">
             <a href={distribution.conformsTo[0]}
                className="card-link">
-                {getString("s.schema")}
+                {getString("schema")}
             </a>
         </li>
     )
@@ -111,7 +111,7 @@ function licenseListItem(distribution) {
         <li className="list-group-item">
             <a href={distribution.license}
                className="card-link">
-                {getString("s.licence")}
+                {getString("licence")}
             </a>
         </li>
     )

@@ -1,10 +1,10 @@
-import "../modules";
 import {combineReducers} from "redux";
 import {routerReducer} from "react-router-redux";
 import {getRegistered} from "./register";
 import {createStore as createReduxStore, compose, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
 import {routerMiddleware} from "react-router-redux";
+import "../modules";
 
 export function createStore(history) {
     const reducer = prepareReducer();

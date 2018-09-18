@@ -1,5 +1,5 @@
 import React from "react";
-import {getString} from "../../../app/strings";
+import {getString} from "@/app-services/strings";
 import SearchBox from "./search-box"
 import ViewSelector from "./view-selector";
 import {Row, Col, Input, Button} from "reactstrap";
@@ -10,7 +10,6 @@ import {connect} from "react-redux";
 import {
     clearQuery,
     updateQuery,
-    updateQueryFilters
 } from "../dataset-list-actions";
 import {
     PAGE_QUERY,
@@ -18,7 +17,7 @@ import {
     STRING_QUERY,
     TEMPORAL_END,
     TEMPORAL_START
-} from "../../../app/navigation";
+} from "@/app/navigation";
 
 
 class _QueryInput extends React.Component {
@@ -60,10 +59,10 @@ class _QueryInput extends React.Component {
                 <div style={{"margin": "1REM 1REM 0REM 2REM"}}>
                     <Row style={{"lineHeight": "2.5REM"}}>
                         <span style={{"marginRight": "0.5REM"}}>
-                            {getString("s.temporal")}
+                            {getString("query.temporal")}
                         </span>
                         <span style={{"marginRight": "0.5REM"}}>
-                            {getString("s.from")}
+                            {getString("query.from")}
                         </span>
                         <Input type="date" id="temporal-start"
                                onChange={this.props.setTemporalStart}
@@ -73,7 +72,7 @@ class _QueryInput extends React.Component {
                             "marginRight": "0.5REM",
                             "marginLeft": "0.5REM"
                         }}>
-                            {getString("s.to")}
+                            {getString("query.to")}
                         </span>
                         <Input type="date" id="temporal-end"
                                onChange={this.props.setTemporalEnd}
@@ -98,13 +97,13 @@ class _QueryInput extends React.Component {
                             className="mt-2 mr-2"
                             onClick={this.toggleVisibility}>
                             {this.state.visible ?
-                                getString("s.hide_filters") :
-                                getString("s.show_filters")}
+                                getString("query.hide_filters") :
+                                getString("query.show_filters")}
                         </Button>
                         <Button
                             className="mt-2"
                             onClick={this.props.clearFilters}>
-                            {getString("s.clear_filters")}
+                            {getString("query.clear_filters")}
                         </Button>
                     </Col>
                     <Col className="mt-2">
