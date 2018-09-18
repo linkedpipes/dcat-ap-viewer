@@ -1,17 +1,21 @@
 import {fetchJson} from "@/app-services/http-request";
+import {reducerName} from "./labels-reducer";
 
 export const FETCH_LABEL_SUCCESS = "FETCH_LABEL_SUCCESS";
 
 export const fetchLabel = (iri) => {
     const url = "./api/v1/resource/codelist?iri=" + encodeURI(iri);
-    return (dispatch) => {
-        // TODO Use caching.
+    return (dispatch, getState) => {
+        const state = getState()[reducerName];
+        if (state[iri]) {
+            // We already have the data.
+            return;
+        }
         fetchJson(url).then((data) => {
             const jsonld = normalizeJsonLd(data.json);
             dispatch(fetchLabelSuccess(jsonld));
         }).catch((error) => {
-            console.warn("Codelist request failed for: ", iri,
-                " error:" , error);
+            console.warn("Label request failed for: ", iri, " error:", error);
         });
     }
 };

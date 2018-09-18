@@ -5,7 +5,7 @@ import {SKOS, DCTERMS, RDF, VCARD, FOAF} from "@/app-services/vocabulary";
 
 const initialState = {};
 
-const reducerName = "labels";
+export const reducerName = "labels";
 
 function reducer(state = initialState, action) {
     if (action["jsonld"] !== undefined) {
