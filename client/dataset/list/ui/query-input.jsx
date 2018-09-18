@@ -27,6 +27,8 @@ class _QueryInput extends React.Component {
         super(props);
         this.state = this.getInitialStatus();
         this.toggleVisibility = this.toggleVisibility.bind(this);
+        this.onThisYear = this.onThisYear.bind(this);
+        this.onLastYear = this.onLastYear.bind(this);
     }
 
     getInitialStatus() {
@@ -66,7 +68,7 @@ class _QueryInput extends React.Component {
                         <Input type="date" id="temporal-start"
                                onChange={this.props.setTemporalStart}
                                value={this.props.query.temporalStart}
-                               style={{"width": "12REM"}}/>
+                               style={{"width": "11REM"}}/>
                         <span style={{
                             "marginRight": "0.5REM",
                             "marginLeft": "0.5REM"
@@ -76,7 +78,17 @@ class _QueryInput extends React.Component {
                         <Input type="date" id="temporal-end"
                                onChange={this.props.setTemporalEnd}
                                value={this.props.query.temporalEnd}
-                               style={{"width": "12REM"}}/>
+                               style={{
+                                   "width": "11REM",
+                                   "marginRight": "0.5REM"
+                               }}/>
+                        <Button style={{"marginRight": "0.5REM"}}
+                                onClick={this.onThisYear}>
+                            This year
+                        </Button>
+                        <Button onClick={this.onLastYear}>
+                            Last year
+                        </Button>
                     </Row>
                 </div>
                 }
@@ -107,6 +119,20 @@ class _QueryInput extends React.Component {
         )
     }
 
+    onThisYear() {
+        const now = new Date;
+        let start = now.getFullYear() + "-01-01";
+        let end = now.getFullYear() + "-12-31";
+        this.props.setTemporal(start, end);
+    }
+
+    onLastYear() {
+        const now = new Date;
+        let start = (now.getFullYear() - 1) + "-01-01";
+        let end = (now.getFullYear() - 1) + "-12-31";
+        this.props.setTemporal(start, end);
+    }
+
 }
 
 
@@ -121,6 +147,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     )),
     "setTemporalEnd": (event) => dispatch(updateQuery(
         ownProps.location, {[TEMPORAL_END]: event.target.value}, [PAGE_QUERY]
+    )),
+    "setTemporal": (start, end) => dispatch(updateQuery(
+        ownProps.location, {
+            [TEMPORAL_START]: start,
+            [TEMPORAL_END]: end
+        }, [PAGE_QUERY]
     )),
     "setSearchString": (value) => dispatch(updateQuery(
         ownProps.location, {[STRING_QUERY]: value}, [PAGE_QUERY]
