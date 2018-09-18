@@ -89,7 +89,7 @@ class HeaderComponent extends React.Component {
                                     <DropdownToggle caret nav>
                                         {getString("h.more")}
                                     </DropdownToggle>
-                                    <DropdownMenu>
+                                    <DropdownMenu right>
                                         <DropdownItem>
                                             <NavLink
                                                 href="https://opendata.gov.cz/development:zajemci">
