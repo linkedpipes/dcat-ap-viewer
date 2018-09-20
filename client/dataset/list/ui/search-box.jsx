@@ -28,8 +28,8 @@ class SearchBox extends React.Component {
         this.onSearch = this.onSearch.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
         //
-        this.lastSubmitedValue = null;
-        this.currentInputValue = null;
+        this.lastSubmitedValue = undefined;
+        this.currentInputValue = undefined;
     }
 
     getInitialState() {
@@ -133,8 +133,17 @@ class SearchBox extends React.Component {
     }
 
     onSearch() {
+        if (this.currentInputValue === undefined) {
+            // User do not change the search so it's same as when he come to
+            // this page.
+            return;
+        }
         // Take current value and submit for search.
-        const value = this.currentInputValue;
+        let value = this.currentInputValue;
+        if (this.lastSubmitedValue === value) {
+            // We already have results for this value.
+            return;
+        }
         this.lastSubmitedValue = value;
         this.props.onSearch(value);
     }
