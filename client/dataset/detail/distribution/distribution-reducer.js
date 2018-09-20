@@ -10,7 +10,7 @@ import {
 import {
     STATUS_FETCHING,
     STATUS_FETCHED
-} from "app-services/http-request";
+} from "@/app-services/http-request";
 
 const reducerName = "dataset-detail-distribution";
 

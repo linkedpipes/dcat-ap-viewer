@@ -1,5 +1,5 @@
 import React from "react";
-import {getString} from "../app/strings";
+import {getString} from "../app-services/strings";
 import {
     STATUS_INITIAL,
     STATUS_FETCHING,
@@ -19,17 +19,17 @@ export const HttpRequestStatus = ({status}) => {
 function getMessage(status) {
     switch (status) {
         case STATUS_INITIAL:
-            return getString("s.fetching");
+            return getString("http.fetching");
         case STATUS_FETCHING:
-            return getString("s.fetching");
+            return getString("http.fetching");
         case ERROR_MISSING:
-            return getString("s.missing_resource");
+            return getString("http.missing_resource");
         case ERROR_RESPONSE:
-            return getString("s.error_response");
+            return getString("http.error_response");
         case ERROR_SERVER_FAILURE:
-            return getString("s.server_failure");
+            return getString("http.server_failure");
         default:
-            return getString("s.fetch_failed");
+            return getString("http.fetch_failed");
 
     }
 }

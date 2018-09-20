@@ -1,5 +1,5 @@
 import React from "react";
-import {getString} from "app/strings";
+import {getString} from "@/app-services/strings";
 
 export default function schemaListItem(distribution) {
     if (distribution.conformsTo.length === 0) {
@@ -11,7 +11,7 @@ export default function schemaListItem(distribution) {
                className="card-link"
                rel="nofollow"
                target="_blank">
-                {getString("s.schema")}
+                {getString("schema")}
             </a>
         </li>
     )

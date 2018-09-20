@@ -1,5 +1,5 @@
 import React from "react";
-import Paginator from "app-ui/paginator";
+import Paginator from "@/app-ui/paginator";
 import {DistributionContainer} from "./distribution-container";
 
 export default class DistributionList extends React.PureComponent {

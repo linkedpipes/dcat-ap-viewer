@@ -1,7 +1,7 @@
 import React from "react";
 import {App} from "./app";
 import {Router, Route, Switch} from "react-router-dom";
-import {PageNotFound} from "../system/page-not-found";
+import {PageNotFound} from "@/system/page-not-found";
 import {getRegistered} from "./register";
 
 // Define application navigation properties

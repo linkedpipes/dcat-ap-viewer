@@ -1,5 +1,5 @@
 import React from "react";
-import {getString} from "app/strings";
+import {getString} from "@/app-services/strings";
 
 export default function databaseAuthorship(distribution) {
     switch (distribution.databaseAuthorship) {
@@ -29,7 +29,7 @@ export default function databaseAuthorship(distribution) {
             return (
                 <li className="list-group-item px-2">
                     <div>
-                        {getString("s.license_missing")}
+                        {getString("license_missing")}
                     </div>
                     <div className="label">
                         {getString("license_db_type")}

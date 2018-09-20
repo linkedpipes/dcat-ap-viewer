@@ -1,5 +1,5 @@
 import React from "react";
-import {getString} from "app/strings";
+import {getString} from "@/app-services/strings";
 
 export default function personalData(distribution) {
     let label;

@@ -9,7 +9,7 @@ import {
     PAGE_QUERY,
     PAGE_SIZE_QUERY,
     SORT_QUERY
-} from "../../../app/navigation";
+} from "@/app/navigation";
 import {Badge} from "reactstrap";
 import Paginator from "app-ui/paginator";
 import {

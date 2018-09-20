@@ -17,13 +17,13 @@ import {
     TEMPORAL_START,
     TEMPORAL_END,
     VIEW_QUERY
-} from "../../app/navigation";
+} from "@/app/navigation";
 import {
     STATUS_INITIAL,
     STATUS_FETCHING,
     STATUS_FETCHING_UPDATE,
     STATUS_FETCHED
-} from "../../app-services/http-request";
+} from "@/app-services/http-request";
 import {parse as parseQueryString} from "query-string";
 
 // TODO Isolate changes to minimize rendering.

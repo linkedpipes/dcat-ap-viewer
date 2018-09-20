@@ -1,10 +1,6 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {
-    Pagination,
-    PaginationItem,
-    Button,
-    ButtonDropdown,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
@@ -34,7 +30,7 @@ class Paginator extends React.PureComponent {
             "flexWrap": "wrap",
             "display": "flex",
             "listStyle": "none"
-        }
+        };
 
         return (
             <div className="row">

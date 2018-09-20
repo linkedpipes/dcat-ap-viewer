@@ -1,5 +1,5 @@
 import React from "react";
-import {getString} from "app/strings";
+import {getString} from "@/app-services/strings";
 
 export default function authorship(distribution) {
     switch (distribution.authorship) {
@@ -40,7 +40,7 @@ export default function authorship(distribution) {
             return (
                 <li className="list-group-item px-2">
                     <div>
-                        {getString("s.license_missing")}
+                        {getString("license_missing")}
                     </div>
                     <div className="label">
                         {getString("license_author_type")}

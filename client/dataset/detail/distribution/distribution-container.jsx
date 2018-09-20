@@ -7,8 +7,8 @@ import {
     distributionDataSelector,
     distributionStatusSelector
 } from "./distribution-reducer";
-import {isDataReady} from "app-services/http-request";
-import {labelsSelector} from "app-services/labels/index";
+import {isDataReady} from "@/app-services/http-request";
+import {labelsSelector} from "@/app-services/labels/index";
 import Distribution from "./distribution";
 
 class _DistributionContainer extends React.Component {

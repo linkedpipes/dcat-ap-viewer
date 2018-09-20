@@ -1,5 +1,5 @@
 import React from "react";
-import {getString} from "../../../app/strings";
+import {getString} from "@/app-services/strings";
 import SearchBox from "./search-box"
 import ViewSelector from "./view-selector";
 import {Row, Col, Input, Button} from "reactstrap";
@@ -10,7 +10,6 @@ import {connect} from "react-redux";
 import {
     clearQuery,
     updateQuery,
-    updateQueryFilters
 } from "../dataset-list-actions";
 import {
     PAGE_QUERY,
@@ -18,7 +17,7 @@ import {
     STRING_QUERY,
     TEMPORAL_END,
     TEMPORAL_START
-} from "../../../app/navigation";
+} from "@/app/navigation";
 
 
 class _QueryInput extends React.Component {
@@ -27,6 +26,8 @@ class _QueryInput extends React.Component {
         super(props);
         this.state = this.getInitialStatus();
         this.toggleVisibility = this.toggleVisibility.bind(this);
+        this.onThisYear = this.onThisYear.bind(this);
+        this.onLastYear = this.onLastYear.bind(this);
     }
 
     getInitialStatus() {
@@ -58,25 +59,35 @@ class _QueryInput extends React.Component {
                 <div style={{"margin": "1REM 1REM 0REM 2REM"}}>
                     <Row style={{"lineHeight": "2.5REM"}}>
                         <span style={{"marginRight": "0.5REM"}}>
-                            {getString("s.temporal")}
+                            {getString("query.temporal")}
                         </span>
                         <span style={{"marginRight": "0.5REM"}}>
-                            {getString("s.from")}
+                            {getString("query.from")}
                         </span>
                         <Input type="date" id="temporal-start"
                                onChange={this.props.setTemporalStart}
                                value={this.props.query.temporalStart}
-                               style={{"width": "12REM"}}/>
+                               style={{"width": "11REM"}}/>
                         <span style={{
                             "marginRight": "0.5REM",
                             "marginLeft": "0.5REM"
                         }}>
-                            {getString("s.to")}
+                            {getString("query.to")}
                         </span>
                         <Input type="date" id="temporal-end"
                                onChange={this.props.setTemporalEnd}
                                value={this.props.query.temporalEnd}
-                               style={{"width": "12REM"}}/>
+                               style={{
+                                   "width": "11REM",
+                                   "marginRight": "0.5REM"
+                               }}/>
+                        <Button style={{"marginRight": "0.5REM"}}
+                                onClick={this.onThisYear}>
+                            This year
+                        </Button>
+                        <Button onClick={this.onLastYear}>
+                            Last year
+                        </Button>
                     </Row>
                 </div>
                 }
@@ -86,13 +97,13 @@ class _QueryInput extends React.Component {
                             className="mt-2 mr-2"
                             onClick={this.toggleVisibility}>
                             {this.state.visible ?
-                                getString("s.hide_filters") :
-                                getString("s.show_filters")}
+                                getString("query.hide_filters") :
+                                getString("query.show_filters")}
                         </Button>
                         <Button
                             className="mt-2"
                             onClick={this.props.clearFilters}>
-                            {getString("s.clear_filters")}
+                            {getString("query.clear_filters")}
                         </Button>
                     </Col>
                     <Col className="mt-2">
@@ -107,6 +118,20 @@ class _QueryInput extends React.Component {
         )
     }
 
+    onThisYear() {
+        const now = new Date;
+        let start = now.getFullYear() + "-01-01";
+        let end = now.getFullYear() + "-12-31";
+        this.props.setTemporal(start, end);
+    }
+
+    onLastYear() {
+        const now = new Date;
+        let start = (now.getFullYear() - 1) + "-01-01";
+        let end = (now.getFullYear() - 1) + "-12-31";
+        this.props.setTemporal(start, end);
+    }
+
 }
 
 
@@ -116,11 +141,17 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     "clearFilters": () => dispatch(clearQuery(ownProps.location)),
-    "setTemporalStart": (event) => dispatch(updateQueryFilters(
+    "setTemporalStart": (event) => dispatch(updateQuery(
         ownProps.location, {[TEMPORAL_START]: event.target.value}, [PAGE_QUERY]
     )),
-    "setTemporalEnd": (event) => dispatch(updateQueryFilters(
+    "setTemporalEnd": (event) => dispatch(updateQuery(
         ownProps.location, {[TEMPORAL_END]: event.target.value}, [PAGE_QUERY]
+    )),
+    "setTemporal": (start, end) => dispatch(updateQuery(
+        ownProps.location, {
+            [TEMPORAL_START]: start,
+            [TEMPORAL_END]: end
+        }, [PAGE_QUERY]
     )),
     "setSearchString": (value) => dispatch(updateQuery(
         ownProps.location, {[STRING_QUERY]: value}, [PAGE_QUERY]

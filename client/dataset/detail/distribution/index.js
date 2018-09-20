@@ -1,4 +1,4 @@
-import {register} from "app/register.js";
+import {register} from "@/app/register.js";
 import reducer from "./distribution-reducer";
 import {DistributionListContainer as _DLC} from "./distribution-list-container";
 

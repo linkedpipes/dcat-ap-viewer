@@ -1,17 +1,17 @@
 import {
     fetchJson,
     isFetching
-} from "../../app-services/http-request";
+} from "@/app-services/http-request";
 import {
     addLoaderStatusOn,
     addLoaderStatusOff
-} from "../../app-ui/loading-indicator";
+} from "@/app-ui/loading-indicator";
 import {constructSearchQueryUrl} from "./../solr-api";
 import {parse as parseQueryString} from "query-string";
 import {push} from "react-router-redux";
-import {getQuery, PAGE_QUERY} from "../../app/navigation";
+import {getQuery, PAGE_QUERY} from "@/app/navigation";
 import {dataStatusSelector} from "./dataset-list-reducer"
-import {fetchLabel} from "../../app-services/labels";
+import {fetchLabel} from "@/app-services/labels";
 
 export const FETCH_LIST_PAGE_REQUEST = "FETCH_LIST_PAGE_REQUEST";
 export const FETCH_LIST_PAGE_SUCCESS = "FETCH_LIST_PAGE_SUCCESS";
@@ -105,7 +105,6 @@ function pushIfNotPending(pushObject) {
 }
 
 export function updateQueryFilters(location, propName, value, isActive) {
-    console.log("updateQueryFilters", location, propName, value, isActive);
     const params = parseQueryString(location.search);
     const oldValues = asArray(params[getQuery(propName)]);
     const list = updateValueList(value, isActive, oldValues);

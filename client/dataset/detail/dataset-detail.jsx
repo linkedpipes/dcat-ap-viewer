@@ -3,17 +3,16 @@ import {
     selectLabel,
     selectString,
     selectLabelNoIri
-} from "app-services/labels/index";
+} from "@/app-services/labels/index";
 import {Link} from "react-router-dom";
-import {getString} from "app/strings";
+import {getString} from "@/app-services/strings";
 import {
     DATASET_LIST_URL,
     getUrl,
     KEYWORDS_QUERY,
     THEME_QUERY
-} from "../../app/navigation";
-import {NKOD} from "app-services/vocabulary";
-
+} from "@/app/navigation";
+import {NKOD} from "@/app-services/vocabulary";
 
 export default class DatasetView extends React.PureComponent {
 
@@ -99,7 +98,7 @@ function Keywords({labels, keywords}) {
 
     return (
         <div>
-            <span className="sr-only">{getString("s.keywords") + ":"}</span>
+            <span className="sr-only">{getString("keywords") + ":"}</span>
             {keywordsRef.map((keyword) => (
                 <Link className="btn btn-light mx-1"
                       to={keyword.url} role="button"
@@ -134,14 +133,14 @@ function firstColumn(labels, dataset) {
         <div className="col-12 col-sm-6 col-md-3">
             {hasDataThemes &&
             <dl>
-                <dt>{getString("s.datasetTopic")}</dt>
+                <dt>{getString("dataset_topic")}</dt>
                 {searchableLabeledLinkEntitiesAsDd(
                     labels, dataset.datasetThemes, THEME_QUERY)}
             </dl>
             }
             {hasThemes &&
             <dl>
-                <dt>{getString("s.topic")}</dt>
+                <dt>{getString("topic")}</dt>
                 {searchableLabeledLinkEntitiesAsDd(
                     labels, dataset.themes, THEME_QUERY)}
             </dl>
@@ -198,9 +197,9 @@ function secondColumn(labels, dataset) {
     return (
         <div className="col-12 col-sm-6 col-md-3">
             <dl>
-                {hasSpatial && <dt>{getString("s.spatial")}</dt>}
+                {hasSpatial && <dt>{getString("spatial")}</dt>}
                 {hasSpatial && labeledLinkEntitiesAsDd(labels, dataset.spatial)}
-                {hasTemporal && <dt>{getString("s.temporal")}</dt>}
+                {hasTemporal && <dt>{getString("temporal")}</dt>}
                 {hasTemporal && temporal(dataset.temporal)}
             </dl>
         </div>
@@ -231,9 +230,9 @@ function thirdColumn(labels, dataset) {
     return (
         <div className="col-12 col-sm-6 col-md-3">
             <dl>
-                {hasDocumentation && <dt>{getString("s.documentation")}</dt>}
+                {hasDocumentation && <dt>{getString("documentation")}</dt>}
                 {hasDocumentation && documentation(dataset.documentation)}
-                {hasContacts && <dt>{getString("s.contact_point")}</dt>}
+                {hasContacts && <dt>{getString("contact_point")}</dt>}
                 {hasContacts && contactPoints(labels, dataset.contactPoints)}
             </dl>
         </div>
@@ -248,7 +247,7 @@ function fourthColumn(labels, dataset) {
     return (
         <div className="col-12 col-sm-6 col-md-3">
             <dl>
-                <dt>{getString("s.frequency")}</dt>
+                <dt>{getString("frequency")}</dt>
                 {labeledLinkEntitiesAsDd(labels, dataset.frequency)}
             </dl>
         </div>
@@ -260,7 +259,7 @@ function documentation(entities) {
     if (!Array.isArray(entities)) {
         entities = [entities];
     }
-    const label = getString("s.documentation_download");
+    const label = getString("documentation_download");
     return entities.map((iri) => (
         <dd key={iri}>
             <a href={iri} rel="nofollow">

@@ -1,7 +1,7 @@
 import React from "react";
-import {getString} from "app/strings";
-import {selectLabelNoIri} from "app-services/labels/index";
-import {selectLabel} from "../../../app-services/labels";
+import {getString} from "@/app-services/strings";
+import {selectLabelNoIri} from "@/app-services/labels/index";
+import {selectLabel} from "@/app-services/labels";
 import authorship from "./terms-of-use/authorship";
 import databaseAuthorship from "./terms-of-use/database-authorship";
 import protectedDatabaseAuthorship
@@ -28,7 +28,7 @@ export default class Distribution extends React.PureComponent {
                     <div className="card-body px-2">
                         {title === undefined ?
                             <span className="sr-only">
-                            {getString("s.unnamed_distribution")}
+                            {getString("unnamed_distribution")}
                             </span>
                             :
                             <h5 className="card-title">
@@ -67,7 +67,7 @@ function licenseColumn(distribution) {
     return (
         <div className="card">
             <h6 className="card-title text-muted pl-2 pt-2">
-                {getString('s.distribution_license')}
+                {getString("distribution_license")}
             </h6>
             <ul className="list-group list-group-flush">
                 {authorship(distribution)}
@@ -83,7 +83,7 @@ function accessColumn(labels, distribution) {
     return (
         <div className="card">
             <h6 className="card-title text-muted pl-2 pt-2">
-                {getString("s.distribution_access")}
+                {getString("distribution_access")}
             </h6>
             <ul className="list-group list-group-flush">
                 {downloadListItem(distribution)}

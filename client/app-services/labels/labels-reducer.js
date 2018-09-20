@@ -1,11 +1,11 @@
-import {graph, triples} from "app-services/jsonld";
-import {SKOS, DCTERMS, RDF, VCARD, FOAF} from "app-services/vocabulary";
+import {graph, triples} from "@/app-services/jsonld";
+import {SKOS, DCTERMS, RDF, VCARD, FOAF} from "@/app-services/vocabulary";
 
 // TODO Add round-robin for labels repository?
 
 const initialState = {};
 
-const reducerName = "labels";
+export const reducerName = "labels";
 
 function reducer(state = initialState, action) {
     if (action["jsonld"] !== undefined) {

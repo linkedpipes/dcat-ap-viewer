@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {themesSelector} from "../dataset-list-reducer";
-import {THEME_QUERY} from "../../../app/navigation";
+import {THEME_QUERY} from "@/app/navigation";
 import {updateQueryFilters} from "../dataset-list-actions";
 import {TagCloud} from "react-tagcloud";
 import {labelsSelector, selectLabel} from "app-services/labels";

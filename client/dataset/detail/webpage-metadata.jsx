@@ -2,7 +2,7 @@ import React from "react";
 import {
     selectLabel,
     selectString
-} from "../../app-services/labels";
+} from "@/app-services/labels";
 
 export class DatasetWebPageMetadata extends React.PureComponent {
     render() {

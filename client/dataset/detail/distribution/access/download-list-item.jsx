@@ -1,5 +1,5 @@
 import React from "react";
-import {getString} from "app/strings";
+import {getString} from "@/app-services/strings";
 
 export default function downloadListItem(distribution) {
     let downloadUrl = undefined;
@@ -23,7 +23,7 @@ export default function downloadListItem(distribution) {
                className="card-link"
                rel="nofollow"
                target="_blank">
-                {getString("s.download")}
+                {getString("download")}
             </a>
         </li>
     )

@@ -1,4 +1,4 @@
-import {getLanguage} from "app/navigation";
+import {getLanguage} from "@/app/navigation";
 
 // TODO Move language preferences to reducer.
 

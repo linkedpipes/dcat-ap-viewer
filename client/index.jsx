@@ -2,16 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import {ConnectedRouter} from "react-router-redux";
-import {createStore} from "./app/store";
-import {createRoutes} from "./app/navigation";
 import Raven from "raven-js";
 import createHistory from "history/createBrowserHistory";
-import "./backward-compatibility";
+import "@/app-services/backward-compatibility";
+import {createStore} from "@/app/store";
+import {createRoutes} from "@/app/navigation";
+import {initialize as initializeStrings} from "@/app-services/strings";
 
-import "./index.style.css";
+import "@/index.style.css";
 
 const history = createHistory();
 const store = createStore(history);
+initializeStrings();
 
 // TODO Add Raven component for exception handling
 //  https://docs.sentry.io/clients/javascript/integrations/react/

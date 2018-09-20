@@ -7,5 +7,7 @@ register({
     "reducer": reducer.reducer,
     "name": reducer.name,
     "url": [KEYWORDS_LIST_URL],
-    "component": KeywordsViewContainer
+    "component": KeywordsViewContainer,
+    "strings": {
+    }
 });
