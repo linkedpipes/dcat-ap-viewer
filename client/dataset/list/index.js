@@ -36,7 +36,7 @@ register({
             , "modified asc": "Datum aktualizace vzestupně"
             , "modified desc": "Datum aktualizace sestupně"
             , "themes": "Témata"
-            , "formats": "Form8ty"
+            , "formats": "Formáty"
         },
         "en": {
             "facet.show_popular": "Show popular only"
