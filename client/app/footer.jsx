@@ -2,9 +2,8 @@ import React from "react";
 
 const Footer = () => {
     return (
-        <footer className="text-muted">
+        <footer className="footer bg-light py-4 mt-2 border-top">
             <div className="container">
-                <hr/>
                 <div className="row">
                     <div className="col-md-4">
                          <strong>Registrace do NKOD</strong>
