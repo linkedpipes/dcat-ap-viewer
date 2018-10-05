@@ -86,5 +86,5 @@ npm run start -- -env.configFileLocation=configuration.properties
 [Apache Solr]: <http://lucene.apache.org/solr/>
 [Apache CouchDB]: <http://couchdb.apache.org/>
 [LinkedPipes ETL]: <https://etl.linkedpipes.com>
-[preparation pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/pipeline/dcatap2lpdav.jsonld>
-[codelist pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/pipeline/eumdrnals2couchdb.jsonld>
+[preparation pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/lp-etl/dcatap2lpdav.jsonld>
+[codelist pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/lp-etl/eumdrnals2couchdb.jsonld>
