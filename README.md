@@ -40,6 +40,7 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
     "add-field" : { "name" : "formatName", "type" : "strings" },
     "add-field" : { "name" : "license", "type" : "strings", "indexed" : false },
     "add-field" : { "name" : "keyword", "type" : "strings" },
+    "add-field" : { "name" : "theme", "type" : "strings" },
     "add-copy-field" : { "source" : "description", "dest" : "_text_" },
     "add-copy-field" : { "source" : "title", "dest" : "_text_" },
     "add-copy-field" : { "source" : "keyword", "dest" : "_text_" },
@@ -85,5 +86,5 @@ npm run start -- -env.configFileLocation=configuration.properties
 [Apache Solr]: <http://lucene.apache.org/solr/>
 [Apache CouchDB]: <http://couchdb.apache.org/>
 [LinkedPipes ETL]: <https://etl.linkedpipes.com>
-[preparation pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/pipeline/dcatap2lpdav.jsonld>
-[codelist pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/pipeline/eumdrnals2couchdb.jsonld>
+[preparation pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/lp-etl/dcatap2lpdav.jsonld>
+[codelist pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/lp-etl/eumdrnals2couchdb.jsonld>
