@@ -1,4 +1,4 @@
-const request = require("request"); // https://github.com/request/request
+const request = require("request");
 const config = require("./../configuration");
 
 module.exports = {

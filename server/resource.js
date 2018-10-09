@@ -1,7 +1,7 @@
 const express = require("express");
 const config = require("./../configuration");
-const couchdbEndpoint = require("./resource.couchdb");
-const sparqlEndpoint = require("./resource.sparql");
+const couchdbEndpoint = require("./resource-couchdb");
+const sparqlEndpoint = require("./resource-sparql");
 
 (function initialize() {
     const router = express.Router();
