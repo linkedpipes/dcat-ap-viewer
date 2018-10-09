@@ -27,8 +27,9 @@ class SearchBox extends React.Component {
         this.submitValue = this.submitValue.bind(this);
         this.onSearch = this.onSearch.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
-        //
-        this.lastSubmitedValue = undefined;
+        // Last value as submitted.
+        this.lastSubmittedValue = undefined;
+        // Last user provided value, is set to lastSubmittedValue on submit.
         this.currentInputValue = undefined;
     }
 
@@ -123,12 +124,17 @@ class SearchBox extends React.Component {
             // visible results.
             return
         }
-        if (this.lastSubmitedValue === value) {
+        if (this.lastSubmittedValue === value) {
             // This can happen when user use enter to select form suggestion,
             // as in this case the onKeyDown and then onChange are called.
             return;
         }
-        this.lastSubmitedValue = value;
+        this.emitOnSearchEvent(value);
+    }
+
+    emitOnSearchEvent(value) {
+        this.lastSubmittedValue = value;
+        this.currentInputValue = value;
         this.props.onSearch(value);
     }
 
@@ -140,12 +146,11 @@ class SearchBox extends React.Component {
         }
         // Take current value and submit for search.
         let value = this.currentInputValue;
-        if (this.lastSubmitedValue === value) {
+        if (this.lastSubmittedValue === value) {
             // We already have results for this value.
             return;
         }
-        this.lastSubmitedValue = value;
-        this.props.onSearch(value);
+        this.emitOnSearchEvent(value);
     }
 
     onInputChange(value) {
