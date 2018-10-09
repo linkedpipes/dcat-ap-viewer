@@ -1,11 +1,12 @@
 const request = require("request"); // https://github.com/request/request
-const config = require('./../configuration');
+const config = require("./../configuration");
 
 module.exports = {
     "createDatasetsGet": createDatasetsGet,
     "createDistributionsGet": createDistributionsGet,
     "createCodeListGet": createCodeListGet,
-    "createStaticGet": createStaticGet
+    "createStaticGet": createStaticGet,
+    "createFilterCacheGet": createFilterCacheGet
 };
 
 function createDatasetsGet() {
@@ -50,5 +51,11 @@ function createStaticGet() {
     return (req, res) => {
         const itemId = req.query.id;
         queryDataFromCouchDB("static", res, itemId);
+    }
+}
+
+function createFilterCacheGet() {
+    return (req, res) => {
+        queryDataFromCouchDB("static", res, "initial_data_cache");
     }
 }

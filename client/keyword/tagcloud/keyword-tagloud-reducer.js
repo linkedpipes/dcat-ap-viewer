@@ -9,7 +9,7 @@ import {
     STATUS_INITIAL,
     STATUS_FETCHING,
     STATUS_FETCHED
-} from "../../app-services/http-request";
+} from "@/app-services/http-request";
 
 const reducerName = "keyword-tagcloud";
 

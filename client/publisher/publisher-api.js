@@ -1,9 +1,10 @@
 import {fetchJson} from "app-services/http-request";
+import {parseFacetFromSolrResponse} from "@/app-services/solr";
 
-export function fetchPublishers() {
+export function fetchPublishersFromSolr() {
     const url = constructQueryUrl();
     return fetchJson(url).then((entry) => {
-        return parseResponse(entry.json);
+        return parseFacetFromSolrResponse(entry.json, "publisherName");
     });
 }
 
@@ -16,17 +17,4 @@ function constructQueryUrl() {
         "facet.limit=-1&" +
         "rows=0";
     return url;
-}
-
-function parseResponse(payload) {
-    const publisher = payload["facet_counts"]["facet_fields"]["publisherName"];
-    const output = [];
-    for (let index = 0; index < publisher.length; index += 2) {
-        output.push({
-            "@id": publisher[index],
-            "label": publisher[index],
-            "count": publisher[index + 1]
-        });
-    }
-    return output;
 }

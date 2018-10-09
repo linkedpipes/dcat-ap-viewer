@@ -25,6 +25,7 @@ import {
     STATUS_FETCHED
 } from "@/app-services/http-request";
 import {parse as parseQueryString} from "query-string";
+import {parseFacetFromSolrResponse} from "@/app-services/solr";
 
 // TODO Isolate changes to minimize rendering.
 //  For example paginator re-render on every change of string query.
@@ -34,19 +35,14 @@ const initialState = {
         "status": STATUS_INITIAL,
         "datasetCount": 0,
         "datasets": [],
-        // TODO Move to upper level.
+        // Not empty in scope of a query.
         "keyword": [],
         "publisher": [],
         "format": [],
-        "theme": [],
-        // TODO Do we need this properties?
-        "sort": "modified",
-        "temporalStart": "",
-        "temporalEnd": ""
+        "theme": []
     },
-    // Mirror of location.
+    // Mirror of location ~ query definition.
     "query": {
-        // TODO Update pages to start from 1, as it will look better in URL.
         "page": 0,
         "search": "",
         "keyword": [],
@@ -100,41 +96,17 @@ function onListRequest(state) {
 function onListRequestSuccess(state, action) {
     const json = action.data;
 
-    const keywords = json.facet_counts.facet_fields.keyword;
-    const keywords_list = [];
-    for (let index = 0; index < keywords.length; index += 2) {
-        keywords_list.push({
-            "label": keywords[index],
-            "count": keywords[index + 1]
-        });
-    }
+    const keywords = parseFacetFromSolrResponse(json, "keyword");
+    keywords.sort((left, right) => right.count - left.count);
 
-    const publisher = json.facet_counts.facet_fields.publisherName;
-    const publisher_list = [];
-    for (let index = 0; index < publisher.length; index += 2) {
-        publisher_list.push({
-            "label": publisher[index],
-            "count": publisher[index + 1]
-        });
-    }
+    const publishers = parseFacetFromSolrResponse(json, "publisherName");
+    publishers.sort((left, right) => right.count - left.count);
 
-    const format = json.facet_counts.facet_fields.formatName;
-    const format_list = [];
-    for (let index = 0; index < format.length; index += 2) {
-        format_list.push({
-            "label": format[index],
-            "count": format[index + 1]
-        });
-    }
+    const formats = parseFacetFromSolrResponse(json, "formatName");
+    formats.sort((left, right) => right.count - left.count);
 
-    const theme = json.facet_counts.facet_fields.theme;
-    const theme_list = [];
-    for (let index = 0; index < theme.length; index += 2) {
-        theme_list.push({
-            "iri": theme[index],
-            "count": theme[index + 1]
-        });
-    }
+    const themes = parseFacetFromSolrResponse(json, "theme");
+    themes.sort((left, right) => right.count - left.count);
 
     return {
         ...state,
@@ -154,11 +126,10 @@ function onListRequestSuccess(state, action) {
                 "format": item.formatName === undefined ? [] : item.formatName,
                 "license": item.license
             })),
-            "keyword": keywords_list,
-            "publisher": publisher_list,
-            "format": format_list,
-            "theme": theme_list,
-            "sort": json.responseHeader.params.sort
+            "keyword": keywords,
+            "publisher": publishers,
+            "format": formats,
+            "theme": themes
         }
     };
 }
@@ -197,19 +168,22 @@ function onLocationChange(state, action) {
 }
 
 function paramsToQuery(params) {
-    // TODO Move to other layer
+    // TODO Move to other layer as some form of a synchronization store - location.
     let page = parseInt(params[getQuery(PAGE_QUERY)]);
     if (isNaN(page)) {
         page = 0;
     }
+
     let order = params[getQuery(SORT_QUERY)];
     if (order === undefined) {
         order = "modified desc";
     }
+
     let pageSize = parseInt(params[getQuery(PAGE_SIZE_QUERY)]);
     if (isNaN(pageSize)) {
         pageSize = 10;
     }
+
     let datasetView = parseInt(params[getQuery(VIEW_QUERY)]);
     if (isNaN(datasetView)) {
         datasetView = 0;
@@ -254,35 +228,52 @@ export default reducer = {
 };
 
 const reducerSelector = (state) => state[reducerName];
-
-export function keywordsSelector(state) {
-    return reducerSelector(state)["data"]["keyword"];
-}
-
-export function publishersSelector(state) {
-    return reducerSelector(state)["data"]["publisher"];
-}
-
-export function formatsSelector(state) {
-    return reducerSelector(state)["data"]["format"];
-}
-
-export function themesSelector(state) {
-    return reducerSelector(state)["data"]["theme"];
-}
+const dataSelector = (state) => reducerSelector(state)["data"];
 
 export function datasetsSelector(state) {
-    return reducerSelector(state)["data"]["datasets"];
+    return dataSelector(state)["datasets"];
 }
 
 export function datasetsTotalCountSelector(state) {
-    return reducerSelector(state)["data"]["datasetCount"];
+    return dataSelector(state)["datasetCount"];
 }
 
 export function dataStatusSelector(state) {
-    return reducerSelector(state)["data"]["status"];
+    return dataSelector(state)["status"];
+}
+
+export function queryKeywordsSelector(state) {
+    return dataSelector(state)["keyword"];
+}
+
+export function queryPublishersSelector(state) {
+    return dataSelector(state)["publisher"];
+}
+
+export function queryFormatsSelector(state) {
+    return dataSelector(state)["format"];
+}
+
+export function queryThemesSelector(state) {
+    return dataSelector(state)["theme"];
 }
 
 export function querySelector(state) {
     return reducerSelector(state)["query"];
+}
+
+export function selectedKeywordsSelector(state) {
+    return querySelector(state)["keyword"];
+}
+
+export function selectedPublishersSelector(state) {
+    return querySelector(state)["publisher"];
+}
+
+export function selectedFormatsSelector(state) {
+    return querySelector(state)["format"];
+}
+
+export function selectedThemesSelector(state) {
+    return querySelector(state)["theme"];
 }

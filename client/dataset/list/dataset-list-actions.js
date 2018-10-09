@@ -86,7 +86,7 @@ function createSearchString(query) {
 }
 
 function fetchLabels(dispatch, response) {
-    const theme = response.json.facet_counts.facet_fields.theme;
+    const theme = response.json["facet_counts"]["facet_fields"]["theme"];
     for (let index = 0; index < theme.length; index += 2) {
         dispatch(fetchLabel(theme[index]));
     }

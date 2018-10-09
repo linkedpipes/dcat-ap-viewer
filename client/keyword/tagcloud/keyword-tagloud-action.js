@@ -1,7 +1,7 @@
 import {
     addLoaderStatusOn,
     addLoaderStatusOff
-} from "app-ui/loading-indicator";
+} from "app-ui/loading-indicator/index";
 import {fetchKeywordsByPublishers} from "../keyword-api";
 
 export const MOUNT_KEYWORDS_LIST = "MOUNT_KEYWORDS_LIST";

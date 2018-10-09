@@ -26,7 +26,6 @@ export const PublisherList = ({publishers}) => {
     )
 };
 
-
 PublisherList.propTypes = {
     "publishers": PropTypes.array.isRequired
 };
@@ -63,7 +62,6 @@ function getDatasetCountLabel(count) {
         return formatNumber(count) + getString("many_datasets");
     }
 }
-
 
 OrganisationListItem.propTypes = {
     "iri": PropTypes.string.isRequired,

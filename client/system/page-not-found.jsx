@@ -1,8 +1,8 @@
 import React from "react";
 import {Container} from "reactstrap";
-import {getString} from "../app-services/strings";
 import {NavLink} from "react-router-dom";
-import {getUrl, DATASET_LIST_URL} from "../app/navigation";
+import {getString} from "@/app-services/strings";
+import {getUrl, DATASET_LIST_URL} from "@/app/navigation";
 
 export const PageNotFound = () => (
     <Container style={{"textAlign": "center"}}>

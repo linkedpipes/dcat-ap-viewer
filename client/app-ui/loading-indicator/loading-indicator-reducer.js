@@ -1,18 +1,24 @@
 import {SET_APPLICATION_LOADER_PROPERTY} from "./loading-indicator-action";
 
 const initialState = {
-    "active": false
+    "active": 0
 };
 
 const reducerName = "loading-indicator";
 
 function reducer(state = initialState, action) {
-    if (action[SET_APPLICATION_LOADER_PROPERTY] !== undefined) {
+    if (action[SET_APPLICATION_LOADER_PROPERTY] === undefined) {
+        return state;
+    }
+    if (action[SET_APPLICATION_LOADER_PROPERTY]) {
         return {
-            "active": action[SET_APPLICATION_LOADER_PROPERTY]
+            "active": state.active + 1
+        };
+    } else {
+        return {
+            "active": state.active - 1
         };
     }
-    return state;
 }
 
 export default reducer = {
@@ -23,5 +29,5 @@ export default reducer = {
 const reducerSelector = (state) => state[reducerName];
 
 export function isLoaderActiveSelector(state) {
-    return reducerSelector(state)["active"];
+    return reducerSelector(state)["active"] > 0;
 }

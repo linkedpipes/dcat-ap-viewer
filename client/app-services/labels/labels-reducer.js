@@ -9,9 +9,12 @@ export const reducerName = "labels";
 
 function reducer(state = initialState, action) {
     if (action["jsonld"] !== undefined) {
-        return onJsonLd(state, action);
+        return addFromJsonLd(state, action);
+    } else if (action["$labels"] !== undefined) {
+        return addFromLabels(state, action["$labels"]);
+    } else {
+        return state;
     }
-    return state;
 }
 
 export default reducer = {
@@ -19,15 +22,9 @@ export default reducer = {
     "reducer": reducer
 };
 
-function onJsonLd(state, action) {
-    const newLabels = {...state};
-    addToLabels(action["jsonld"], newLabels);
-    return newLabels;
-}
-
-function addToLabels(jsonld, labels) {
-    const resources = graph.getResources(jsonld);
-    const result = {};
+function addFromJsonLd(state, action) {
+    const resources = graph.getResources(action["jsonld"]);
+    const result = {...state};
     resources.forEach((entity) => {
         const iri = triples.id(entity);
 
@@ -42,9 +39,9 @@ function addToLabels(jsonld, labels) {
             return;
         }
 
-        labels[iri] = {
+        result[iri] = {
             "@id": iri,
-            ...labels[iri],
+            ...state[iri],
             ...extractedLabels
         };
     });
@@ -71,6 +68,18 @@ function filterEmpty(values) {
     return values.filter(value => value !== "")
 }
 
+function addFromLabels(state, labels) {
+    const result = {...state};
+    labels.forEach((entity) => {
+        const iri = entity["@id"];
+        result[iri] = {
+            "@id": iri,
+            ...state[iri],
+            ...entity["labels"]
+        };
+    });
+    return result;
+}
 
 const reducerSelector = (state) => state[reducerName];
 

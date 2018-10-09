@@ -5,8 +5,9 @@ import {connect} from "react-redux";
 import {Header} from "./header";
 import Footer from "./footer";
 import {LanguageReRouter} from "./language-rerouter";
-import {LoaderIndicator} from "@/app-ui/loading-indicator/index";
+import {LoaderIndicator} from "@/app-ui/loading-indicator";
 import GoogleTagManager from "@/app-ui/google-tag-manager"
+import {InitialDataFetch} from "@/app-services/initial-data";
 
 class AppComponent extends React.Component {
     render() {
@@ -17,7 +18,9 @@ class AppComponent extends React.Component {
                     <GoogleTagManager/>
                     <LoaderIndicator/>
                     <Header location={location}/>
-                    {React.cloneElement(this.props.children, this.props)}
+                    <InitialDataFetch>
+                        {React.cloneElement(this.props.children, this.props)}
+                    </InitialDataFetch>
                     <Footer/>
                 </div>
             </LanguageReRouter>

@@ -1,10 +1,14 @@
 import React from "react";
 import {connect} from "react-redux";
-import {themesSelector} from "../dataset-list-reducer";
+import {
+    selectedThemesSelector,
+    queryThemesSelector
+} from "../dataset-list-reducer";
 import {THEME_QUERY} from "@/app/navigation";
 import {updateQueryFilters} from "../dataset-list-actions";
 import {TagCloud} from "react-tagcloud";
 import {labelsSelector, selectLabel} from "app-services/labels";
+import {themesMapSelector} from "@/theme/theme-reducer";
 
 class _ThemeCloud extends React.Component {
 
@@ -14,7 +18,10 @@ class _ThemeCloud extends React.Component {
     }
 
     render() {
-        const tagRenderer = createTagRenderer(this.props.labels);
+        const renderer = (tag, size, color) =>
+            tagRenderer(this.props.labels, this.props.all, this.props.selected,
+                tag, size);
+
         return (
             <div className="col col-sm-12 col-md-9 offset-md-1"
                  style={{"textAlign": "center", "display": "block"}}>
@@ -22,49 +29,52 @@ class _ThemeCloud extends React.Component {
                 <TagCloud minSize={20}
                           maxSize={52}
                           shuffle={false}
-                          tags={this.props.theme}
-                          colorOptions={{
-                              "luminosity": "dark",
-                              "hue": "random"
-                          }}
-                          renderer={tagRenderer}
+                          tags={this.props.query}
+                          renderer={renderer}
                           onClick={this.onClick}/>
             </div>
         );
     }
 
     onClick(tag) {
-        this.props.setThemeFacet(tag.iri, true);
+        this.props.setThemeFacet(tag["@id"], true);
     }
 
 }
 
-function createTagRenderer(labels) {
+const tagRenderer = (labels, all, selected, tag, size) => {
+    const style = {
+        "marginLeft": "1REM",
+        "verticalAlign": "middle",
+        "display": "inline-block",
+        "cursor": "pointer"
+    };
+    // If all elements have the same count, then size is NaN.
+    if (isNaN(size)) {
+        size = 32;
+    }
 
-    return (tag, size, color) => {
-        const style = {
-            "marginLeft": "1REM",
-            "verticalAlign": "middle",
-            "display": "inline-block",
-            "cursor": "grab"
-        };
-        // If all elements have the same count, then size is NaN.
-        if (isNaN(size)) {
-            size = 32;
-        }
-        return (
-            <span className="tag-cloud-tag" style={style} key={tag.iri}>
+    const entry = all[tag["@id"]];
+    const isSelected = selected.includes(tag["@id"]);
+
+    let color = "black";
+    if (entry) {
+        color = entry["color"];
+    }
+
+    return (
+        <span className="tag-cloud-tag" style={style} key={tag["@id"]}>
              <span style={{"color": color, "fontSize": size}}>
-             {selectLabel(labels, tag.iri)}
+             {selectLabel(labels, tag["@id"])}
              </span>
         </span>
-        )
-    };
-
-}
+    )
+};
 
 const mapStateToProps = (state, ownProps) => ({
-    "theme": themesSelector(state),
+    "all": themesMapSelector(state),
+    "selected": selectedThemesSelector(state),
+    "query": queryThemesSelector(state),
     "labels": labelsSelector(state)
 });
 
