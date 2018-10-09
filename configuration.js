@@ -64,7 +64,7 @@ function getDatasetPerGraph(properties) {
 
 function getRepositoryType(properties) {
     const couchdb = properties.get("couchdb.url");
-    if (couchdb !== undefined && couchdb.length > 0) {
+    if (couchdb !== undefined && couchdb !==  null && couchdb.length > 0) {
         return "COUCHDB";
     } else {
         return "SPARQL";
