@@ -103,6 +103,7 @@ export function constructSearchQueryUrl(query) {
         "facet.field=publisherName&" +
         "facet.field=theme&" +
         "facet=true&" +
+        "facet.limit=-1&" +
         "facet.mincount=1&";
 
     const start = query.page * query.pageSize;
