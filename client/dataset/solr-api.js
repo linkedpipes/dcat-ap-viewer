@@ -4,7 +4,7 @@
 
 export function constructTypeaheadUrl(value, query) {
     let url = "./api/v1/solr/query?rows=8&fl=title";
-    url += "&q=" + encodeURI(escapeSolrQuery(value));
+    url += "&q=" + encodeURIComponent(escapeSolrQuery(value));
     url += createFacetsFiltersQuery(query);
     url += createTemporalQuery(query);
     return url;
@@ -14,19 +14,19 @@ function createFacetsFiltersQuery(query) {
     let url = "";
 
     query.keyword.forEach((item) => {
-        url += "&fq=keyword:\"" + encodeURI(item) + "\""
+        url += "&fq=keyword:\"" + encodeURIComponent(item) + "\""
     });
 
     query.publisher.forEach((item) => {
-        url += "&fq=publisherName:\"" + encodeURI(item) + "\""
+        url += "&fq=publisherName:\"" + encodeURIComponent(item) + "\""
     });
 
     query.format.forEach((item) => {
-        url += "&fq=formatName:\"" + encodeURI(item) + "\""
+        url += "&fq=formatName:\"" + encodeURIComponent(item) + "\""
     });
 
     query.theme.forEach((item) => {
-        url += "&fq=theme:\"" + encodeURI(item) + "\""
+        url += "&fq=theme:\"" + encodeURIComponent(item) + "\""
     });
 
     return url;
@@ -111,7 +111,7 @@ export function constructSearchQueryUrl(query) {
     if (query.search === undefined || query.search === "") {
         url += "q=*:*";
     } else {
-        url += "q=" + encodeURI(escapeSolrQuery(query.search))
+        url += "q=" + encodeURIComponent(escapeSolrQuery(query.search))
     }
 
     url += createFacetsFiltersQuery(query);
