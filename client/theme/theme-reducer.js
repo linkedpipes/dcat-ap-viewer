@@ -4,7 +4,7 @@ const reducerName = "themes";
 
 const initialState = {
     "themes": [],
-    "themes-map": {}
+    "themesMap": {}
 };
 
 function reducer(state = initialState, action) {
