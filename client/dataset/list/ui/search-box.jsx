@@ -1,10 +1,11 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import {getString} from "@/app-services/strings";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
-import {constructTypeaheadUrl} from "../../solr-api";
-import {fetchJson} from "app-services/http-request";
 import {InputGroup, InputGroupAddon, InputGroupText, Button} from "reactstrap";
+
+import {getString} from "@/app-services/strings";
+import {constructTypeaheadUrl} from "@/dataset/solr-api";
+import {fetchJson} from "@/app-services/http-request";
 
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "react-bootstrap-typeahead/css/Typeahead-bs4.css";
