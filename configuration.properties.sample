@@ -36,3 +36,6 @@ client.keyword_cloud.min = 100
 
 # Forms URL - with percent encoded of utf-8 characters.
 client.form_url =
+
+# Prefix used to create dereference IRI for datasets.
+client.dereference_prefix =

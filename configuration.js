@@ -25,7 +25,8 @@
             "titlePrefix": properties.get("client.title_prefix") || "",
             "titleSuffix": properties.get("client.title_suffix") || "",
             "urlPrefix": getUrlPrefix(properties),
-            "formUrl": properties.get("client.form_url")
+            "formUrl": properties.get("client.form_url"),
+            "dereferenceIri": properties.get("client.dereference_prefix") || ""
         },
         "sentry": properties.get("sentry.url") || false,
         "googleTagManager": properties.get("google_tag_manager.id") || false
@@ -65,7 +66,7 @@ function getDatasetPerGraph(properties) {
 
 function getRepositoryType(properties) {
     const couchdb = properties.get("couchdb.url");
-    if (couchdb !== undefined && couchdb.length > 0) {
+    if (couchdb !== undefined && couchdb !==  null && couchdb.length > 0) {
         return "COUCHDB";
     } else {
         return "SPARQL";

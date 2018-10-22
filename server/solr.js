@@ -1,5 +1,5 @@
 const express = require("express");
-const request = require("request"); // https://github.com/request/request
+const request = require("request");
 const config = require("../configuration");
 
 (function initialize() {
@@ -62,4 +62,3 @@ function createSolrQueryGet() {
             }).pipe(res);
     };
 }
-

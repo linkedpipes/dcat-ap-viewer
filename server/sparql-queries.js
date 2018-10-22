@@ -1,19 +1,3 @@
-const request = require("request"); // https://github.com/request/request
-const config = require('./../configuration');
-
-module.exports = {
-    "createDatasetsGet": createDatasetsGet,
-    "createDistributionsGet": createDistributionsGet
-};
-
-function createDatasetsGet() {
-    return (req, res) => {
-        const datasetIri = req.query.iri;
-        const sparql = createDatasetSparqlQuery(datasetIri);
-        queryDataFromSparql(res, sparql);
-    }
-}
-
 function createDatasetSparqlQuery(iri) {
     return `
 PREFIX dcat: <http://www.w3.org/ns/dcat#> 
@@ -86,32 +70,6 @@ CONSTRUCT {
 }`;
 }
 
-function queryDataFromSparql(res, sparql) {
-    const url = config.data.sparql + "/?" +
-        "format=application%2Fx-json%2Bld&" +
-        "timeout=0&" +
-        "query=" + encodeURIComponent(sparql);
-    request.get({"url": url}).on("error", (error) => {
-        handleError(res, error);
-    }).pipe(res);
-}
-
-function handleError(res, error) {
-    // TODO Improve logging and error handling #38.
-    console.error("Request failed: ", error);
-    res.status(500).json({
-        "error": "service_request_failed"
-    });
-}
-
-function createDistributionsGet() {
-    return (req, res) => {
-        const distributionIri = req.query.iri;
-        const sparql = createDistributionSparqlQuery(distributionIri);
-        queryDataFromSparql(res, sparql);
-    }
-}
-
 function createDistributionSparqlQuery(iri) {
     return `
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -131,3 +89,9 @@ CONSTRUCT {
      VALUES (?distribution) { (<` + iri + `>) }
 }`;
 }
+
+
+module.exports = {
+    "dataset": createDatasetSparqlQuery,
+    "distribution": createDistributionSparqlQuery
+};

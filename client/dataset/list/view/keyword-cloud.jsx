@@ -1,9 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
-import {keywordsSelector} from "../dataset-list-reducer";
+import {selectedKeywordsSelector, queryKeywordsSelector} from "../dataset-list-reducer";
 import {KEYWORDS_QUERY} from "@/app/navigation";
 import {updateQueryFilters} from "../dataset-list-actions";
 import {TagCloud} from "react-tagcloud";
+import {keywordsMapSelector} from "@/keyword/keyword-reducer";
 
 class _KeywordCloud extends React.Component {
 
@@ -13,6 +14,8 @@ class _KeywordCloud extends React.Component {
     }
 
     render() {
+        const renderer = (tag, size, color) =>
+            tagRenderer(this.props.all, this.props.selected, tag, size);
         return (
             <div className="col col-sm-12 col-md-9 offset-md-1"
                  style={{"textAlign": "center", "display": "block"}}>
@@ -20,12 +23,8 @@ class _KeywordCloud extends React.Component {
                 <TagCloud minSize={20}
                           maxSize={52}
                           shuffle={false}
-                          tags={this.props.keyword}
-                          colorOptions={{
-                              "luminosity": "dark",
-                              "hue": "random"
-                          }}
-                          renderer={tagRenderer}
+                          tags={this.props.query}
+                          renderer={renderer}
                           onClick={this.onClick}/>
             </div>
         );
@@ -37,17 +36,26 @@ class _KeywordCloud extends React.Component {
 
 }
 
-const tagRenderer = (tag, size, color) => {
+const tagRenderer = (all, selected, tag, size) => {
     const style = {
         "marginLeft": "1REM",
         "verticalAlign": "middle",
         "display": "inline-block",
-        "cursor": "grab"
+        "cursor": "pointer"
     };
     // If all elements have the same count, then size is NaN.
     if (isNaN(size)) {
         size = 32;
     }
+
+    const entry = all[tag["@id"]];
+    const isSelected = selected.includes(tag["@id"]);
+
+    let color = "black";
+    if (entry) {
+        color = entry["color"];
+    }
+
     return (
         <span className="tag-cloud-tag" style={style} key={tag.label}>
              <span style={{"color": color, "fontSize": size}}>
@@ -58,7 +66,9 @@ const tagRenderer = (tag, size, color) => {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-    "keyword": keywordsSelector(state)
+    "all": keywordsMapSelector(state),
+    "selected": selectedKeywordsSelector(state),
+    "query": queryKeywordsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({

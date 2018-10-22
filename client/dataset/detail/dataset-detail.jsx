@@ -23,7 +23,7 @@ export default class DatasetView extends React.PureComponent {
         return (
             <div>
                 <h1>{title}
-                    <a href={dataset["@id"]} target="_blank">
+                    <a href={DEREFERENCE_IRI + dataset["@id"]} target="_blank">
                         <i className="material-icons pl-2">open_in_new</i>
                     </a>
                     {dialogLinks(dataset)}

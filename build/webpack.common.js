@@ -53,7 +53,8 @@ module.exports = {
             "PAGE_TITLE_SUFFIX": asString(config["client"]["titleSuffix"]),
             "REPOSITORY_TYPE": asString(getRepositoryType()),
             "URL_PREFIX": asString(config["client"]["urlPrefix"]),
-            "FORM_URL": asString(config["client"]["formUrl"])
+            "FORM_URL": asString(config["client"]["formUrl"]),
+            "DEREFERENCE_IRI": asString(config["client"]["dereferenceIri"])
         })
     ]
 };

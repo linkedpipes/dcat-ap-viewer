@@ -1,3 +1,6 @@
+/**
+ * Entry point for running the backend.
+ */
 (function initialize() {
     const express = require("express");
     const app = express();

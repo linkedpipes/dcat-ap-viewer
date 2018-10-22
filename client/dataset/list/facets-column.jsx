@@ -8,10 +8,14 @@ import {
 import {getString} from "@/app-services/strings";
 import FacetFilter from "./ui/facet-filter";
 import {
-    formatsSelector,
-    keywordsSelector,
-    publishersSelector,
-    themesSelector,
+    queryFormatsSelector,
+    selectedFormatsSelector,
+    queryKeywordsSelector,
+    selectedKeywordsSelector,
+    queryPublishersSelector,
+    selectedPublishersSelector,
+    queryThemesSelector,
+    selectedThemesSelector,
     querySelector
 } from "./dataset-list-reducer";
 import {
@@ -19,7 +23,11 @@ import {
 } from "./dataset-list-actions";
 import {connect} from "react-redux";
 import {Col, Button} from "reactstrap";
-import {labelsSelector} from "@/app-services/labels"
+import {labelsSelector} from "@/app-services/labels";
+import {formatsSelector} from "@/format/format-reducer";
+import {keywordsSelector} from "@/keyword/keyword-reducer";
+import {publishersSelector} from "@/publisher/publisher-reducer";
+import {themesSelector} from "@/theme/theme-reducer";
 
 class _FacetsColumn extends React.Component {
 
@@ -45,7 +53,6 @@ class _FacetsColumn extends React.Component {
         let facetClassName = this.state.areFacetsOpen ?
             "collapse-sm-down show" :
             "collapse-sm-down";
-
         return (
             <Col xs={12} md={3}>
                 <div className="d-sm-none">
@@ -56,28 +63,28 @@ class _FacetsColumn extends React.Component {
                 <div className={facetClassName}>
                     <FacetFilter
                         label="publishers"
-                        values={this.props.publisher}
-                        active={this.props.query.publisher}
+                        values={this.props.publisherQuery}
+                        active={this.props.publisherSelected}
                         onChange={this.props.setPublisherFacet}
                     />
                     <FacetFilter
                         label="themes"
-                        values={this.props.theme}
-                        active={this.props.query.theme}
+                        values={this.props.themeQuery}
+                        active={this.props.themeSelected}
                         onChange={this.props.setThemeFacet}
                         useIris={true}
                         labels={this.props.labels}
                     />
                     <FacetFilter
                         label="keywords"
-                        values={this.props.keyword}
-                        active={this.props.query.keyword}
+                        values={this.props.keywordQuery}
+                        active={this.props.keywordSelected}
                         onChange={this.props.setKeywordsFacet}
                     />
                     <FacetFilter
                         label="formats"
-                        values={this.props.format}
-                        active={this.props.query.format}
+                        values={this.props.formatQuery}
+                        active={this.props.formatSelected}
                         onChange={this.props.setFormatFacet}
                     />
                 </div>
@@ -88,10 +95,14 @@ class _FacetsColumn extends React.Component {
 
 
 const mapStateToProps = (state, ownProps) => ({
-    "keyword": keywordsSelector(state),
-    "publisher": publishersSelector(state),
-    "format": formatsSelector(state),
-    "theme": themesSelector(state),
+    "keywordSelected": selectedKeywordsSelector(state),
+    "keywordQuery": queryKeywordsSelector(state),
+    "publisherSelected": selectedPublishersSelector(state),
+    "publisherQuery": queryPublishersSelector(state),
+    "formatSelected": selectedFormatsSelector(state),
+    "formatQuery": queryFormatsSelector(state),
+    "themeSelected": selectedThemesSelector(state),
+    "themeQuery": queryThemesSelector(state),
     "query": querySelector(state),
     "labels": labelsSelector(state)
 });

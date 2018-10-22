@@ -1,10 +1,11 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import {getString} from "@/app-services/strings";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
-import {constructTypeaheadUrl} from "../../solr-api";
-import {fetchJson} from "app-services/http-request";
 import {InputGroup, InputGroupAddon, InputGroupText, Button} from "reactstrap";
+
+import {getString} from "@/app-services/strings";
+import {constructTypeaheadUrl} from "@/dataset/solr-api";
+import {fetchJson} from "@/app-services/http-request";
 
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "react-bootstrap-typeahead/css/Typeahead-bs4.css";
@@ -27,8 +28,9 @@ class SearchBox extends React.Component {
         this.submitValue = this.submitValue.bind(this);
         this.onSearch = this.onSearch.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
-        //
-        this.lastSubmitedValue = undefined;
+        // Last value as submitted.
+        this.lastSubmittedValue = undefined;
+        // Last user provided value, is set to lastSubmittedValue on submit.
         this.currentInputValue = undefined;
     }
 
@@ -64,7 +66,9 @@ class SearchBox extends React.Component {
                     onInputChange={this.onInputChange}
                     defaultSelected={defaultSelected}
                     searchText={getString("search.searching")}
-                    emptyLabel={getString("search.no_data_found")}/>
+                    emptyLabel={getString("search.no_data_found")}
+                    ref={(ref) => this.typeahead = ref}
+                    />
                 <InputGroupAddon addonType="append">
                     <Button color="primary"
                             onClick={this.onSearch}>
@@ -102,6 +106,7 @@ class SearchBox extends React.Component {
             // This can happen in text box after user input, or
             // in the expansion with suggestion. Luckily in both
             // cases the target has the right value by now.
+            this.typeahead.getInstance().blur();
             this.submitValue(event.target.value);
         }
     }
@@ -123,12 +128,17 @@ class SearchBox extends React.Component {
             // visible results.
             return
         }
-        if (this.lastSubmitedValue === value) {
+        if (this.lastSubmittedValue === value) {
             // This can happen when user use enter to select form suggestion,
             // as in this case the onKeyDown and then onChange are called.
             return;
         }
-        this.lastSubmitedValue = value;
+        this.emitOnSearchEvent(value);
+    }
+
+    emitOnSearchEvent(value) {
+        this.lastSubmittedValue = value;
+        this.currentInputValue = value;
         this.props.onSearch(value);
     }
 
@@ -140,16 +150,21 @@ class SearchBox extends React.Component {
         }
         // Take current value and submit for search.
         let value = this.currentInputValue;
-        if (this.lastSubmitedValue === value) {
+        if (this.lastSubmittedValue === value) {
             // We already have results for this value.
             return;
         }
-        this.lastSubmitedValue = value;
-        this.props.onSearch(value);
+        this.emitOnSearchEvent(value);
     }
 
     onInputChange(value) {
         this.currentInputValue = value;
+    }
+
+    clear() {
+      this.typeahead.getInstance().clear();
+      this.lastSubmittedValue = undefined;
+      this.currentInputValue = undefined;
     }
 
 }

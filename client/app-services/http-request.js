@@ -12,7 +12,7 @@ export const STATUS_FETCHED = "FETCHED";
 // We have some data, but we are fetching again - for an update.
 export const STATUS_FETCHING_UPDATE = "FETCHING_UPDATE";
 
-export const ERROR_MISSING = "MISSING";
+export const ERROR_NOT_FOUND = "ERROR_NOT_FOUND";
 
 export const ERROR_SERVER_FAILURE = "SERVER_FAILURE";
 
