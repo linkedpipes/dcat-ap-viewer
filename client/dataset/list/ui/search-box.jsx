@@ -65,7 +65,9 @@ class SearchBox extends React.Component {
                     onInputChange={this.onInputChange}
                     defaultSelected={defaultSelected}
                     searchText={getString("search.searching")}
-                    emptyLabel={getString("search.no_data_found")}/>
+                    emptyLabel={getString("search.no_data_found")}
+                    ref={(ref) => this.typeahead = ref}
+                    />
                 <InputGroupAddon addonType="append">
                     <Button color="primary"
                             onClick={this.onSearch}>
@@ -103,6 +105,7 @@ class SearchBox extends React.Component {
             // This can happen in text box after user input, or
             // in the expansion with suggestion. Luckily in both
             // cases the target has the right value by now.
+            this.typeahead.getInstance().blur();
             this.submitValue(event.target.value);
         }
     }
@@ -155,6 +158,12 @@ class SearchBox extends React.Component {
 
     onInputChange(value) {
         this.currentInputValue = value;
+    }
+
+    clear() {
+      this.typeahead.getInstance().clear();
+      this.lastSubmittedValue = undefined;
+      this.currentInputValue = undefined;
     }
 
 }

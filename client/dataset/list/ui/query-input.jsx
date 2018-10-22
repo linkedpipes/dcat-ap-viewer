@@ -28,6 +28,7 @@ class _QueryInput extends React.Component {
         this.toggleVisibility = this.toggleVisibility.bind(this);
         this.onThisYear = this.onThisYear.bind(this);
         this.onLastYear = this.onLastYear.bind(this);
+        this.onClear = this.onClear.bind(this);
     }
 
     getInitialStatus() {
@@ -54,6 +55,7 @@ class _QueryInput extends React.Component {
                     defaultValue={this.props.query.search}
                     onSearch={this.props.setSearchString}
                     query={this.props.query}
+                    ref={(ref) => this.searchBox = ref}
                 />
                 {this.state.visible &&
                 <div style={{"margin": "1REM 1REM 0REM 2REM"}}>
@@ -102,7 +104,7 @@ class _QueryInput extends React.Component {
                         </Button>
                         <Button
                             className="mt-2"
-                            onClick={this.props.clearFilters}>
+                            onClick={this.onClear}>
                             {getString("query.clear_filters")}
                         </Button>
                     </Col>
@@ -132,8 +134,12 @@ class _QueryInput extends React.Component {
         this.props.setTemporal(start, end);
     }
 
-}
+    onClear() {
+        this.searchBox.clear();
+        this.props.clearFilters();
+    }
 
+}
 
 const mapStateToProps = (state, ownProps) => ({
     "query": querySelector(state),
