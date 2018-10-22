@@ -3,9 +3,8 @@
 // TODO Add function for fetching only facets and remove them from normal query.
 
 export function constructTypeaheadUrl(value, query) {
-    console.log("query", value, query);
     let url = "./api/v1/solr/query?rows=8&fl=title";
-    url += "&q=" + encodeURI(escapeSolrQuery(value))
+    url += "&q=" + encodeURI(escapeSolrQuery(value));
     url += createFacetsFiltersQuery(query);
     url += createTemporalQuery(query);
     return url;
