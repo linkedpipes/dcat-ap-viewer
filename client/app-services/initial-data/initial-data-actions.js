@@ -25,7 +25,7 @@ function fetchFiltersFromCache(dispatch) {
     dispatch(fetchDataRequest());
     const url = "./api/v1/resource/filter";
     return fetchJson(url)
-        .then((payload) => dispatch(fetchDataSuccess(payload.json)))
+        .then((payload) => dispatch(fetchDataSuccess(payload.json.json)))
         .catch((error) => dispatch(fetchDataFailed(error)));
 }
 
