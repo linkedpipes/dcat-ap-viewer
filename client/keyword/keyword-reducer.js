@@ -4,7 +4,7 @@ const reducerName = "keywords";
 
 const initialState = {
     "keywords": [],
-    "keywords-map": {}
+    "keywordsMap": {}
 };
 
 function reducer(state = initialState, action) {
