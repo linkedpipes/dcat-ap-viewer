@@ -68,7 +68,7 @@ function isNotEmpty(value) {
 
 function getRepositoryType() {
     const couchdb = config["data"]["couchdb"];
-    if (couchdb !== undefined && couchdb.length > 0) {
+    if (couchdb !== null && couchdb.length > 0) {
         return "COUCHDB";
     } else {
         return "SPARQL";
