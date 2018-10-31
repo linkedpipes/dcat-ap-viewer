@@ -7,6 +7,7 @@ import {statusSelector, publishersSelector} from "../publisher-reducer"
 import {PublisherList} from "./publisher-list";
 import {ORGANISATION_LIST_URL} from "@/app/navigation";
 import HeadLinks from "@/app-ui/head-links";
+import {getString} from "@/app-services/strings";
 
 class _PublishersListContainer extends React.Component {
 
@@ -22,7 +23,7 @@ class _PublishersListContainer extends React.Component {
         } else {
             return (
                 <React.Fragment>
-                    <HeadLinks title="publishers"
+                    <HeadLinks title={getString("publishers")}
                                url={ORGANISATION_LIST_URL}/>
                     <PublisherList publishers={this.props.publishers}/>
                 </React.Fragment>

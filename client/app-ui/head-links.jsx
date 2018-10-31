@@ -4,7 +4,6 @@ import {
     getQuery,
     getFullUrl,
 } from "@/app/navigation";
-import {getString} from "@/app-services/strings";
 import {PropTypes} from "prop-types";
 import {Helmet} from "react-helmet";
 import {parse as parseQueryString} from "query-string";
@@ -15,17 +14,17 @@ export default class HeadLinks extends React.PureComponent {
         const query = parseQueryString(this.props.search);
         const {url, params} = this.props;
         const languages = listLanguages();
-        console.log(">", languages);
         return (
             <Helmet>
-                <title>{getString(this.props.title)}</title>
+                <title>{this.props.title}</title>
                 <link rel="canonical"
                       href={prepareQuery(url, query, params)}/>
                 {
                     languages.map((lang) => (
                         <link rel="alternate"
                               href={prepareQuery(url, query, params, lang)}
-                              hrefLang={lang}/>
+                              hrefLang={lang}
+                              key={lang}/>
                     ))
                 }
             </Helmet>

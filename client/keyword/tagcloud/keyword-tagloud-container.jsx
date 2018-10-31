@@ -9,6 +9,7 @@ import {
     KEYWORDS_LIST_URL,
 } from "@/app/navigation";
 import HeadLinks from "@/app-ui/head-links";
+import {getString} from "@/app-services/strings";
 
 class _KeywordsViewContainer extends React.Component {
 
@@ -21,7 +22,7 @@ class _KeywordsViewContainer extends React.Component {
         if (isDataReady(this.props.status)) {
             return (
                 <React.Fragment>
-                    <HeadLinks title="keywords"
+                    <HeadLinks title={getString("keywords")}
                                url={KEYWORDS_LIST_URL}/>
                     <KeywordTagCloud tags={this.props.data}/>
                 </React.Fragment>

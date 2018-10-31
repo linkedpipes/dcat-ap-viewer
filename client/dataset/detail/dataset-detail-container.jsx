@@ -22,6 +22,7 @@ import {parse as parseQueryString} from "query-string";
 import DatasetDetail from "./dataset-detail";
 import {DATASET_DETAIL_URL} from "@/app/navigation";
 import HeadLinks from "@/app-ui/head-links";
+import {getString} from "@/app-services/strings";
 
 class _DatasetDetailContainer extends React.Component {
 
@@ -46,7 +47,7 @@ class _DatasetDetailContainer extends React.Component {
             });
 
             return (
-                <div className="container">
+                <div className={getString("container")}>
                     <HeadLinks title={title}
                                url={DATASET_DETAIL_URL}
                                search={this.props.location.search}
