@@ -29,13 +29,6 @@ module.exports = {
                 "test": /\.jsx?$/,
                 "loaders": ["babel-loader"],
                 "include": path.resolve(__dirname, "..", "client"),
-            },
-            {
-                "test": /\.scss$/,
-                "use": [
-                    {"loader": "style-loader"},
-                    {"loader": "css-loader"}
-                ]
             }
         ]
     },
