@@ -49,7 +49,7 @@ module.exports = merge(common, {
             "root": path.join(__dirname, "..")
         }),
         new MiniCssExtractPlugin({
-            "filename": path.join("assets", "main.[hash].css")
+            "filename": path.join("assets", "main.[chunkhash].css"),
         }),
         new CopyWebpackPlugin([
             {
