@@ -19,6 +19,7 @@ virtuoso.sparql.url =
 port = 3000
 
 # Page title configuration.
+client.title_default = DCAT-AP Viewer
 client.title_prefix =
 client.title_suffix = - LP-DAV
 

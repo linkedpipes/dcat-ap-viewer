@@ -35,6 +35,7 @@ module.exports = {
     "plugins": [
         new HtmlWebpackPlugin({
             "filename": "index.html",
+            "title": config.client.title,
             "template": path.join(__dirname, "..", "public", "index.html"),
             "inject": true
         }),

@@ -22,6 +22,7 @@
         },
         "port": properties.get("port"),
         "client": {
+            "title": properties.get("client.title_default") || "",
             "titlePrefix": properties.get("client.title_prefix") || "",
             "titleSuffix": properties.get("client.title_suffix") || "",
             "urlPrefix": getUrlPrefix(properties),
