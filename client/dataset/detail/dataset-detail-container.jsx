@@ -47,7 +47,7 @@ class _DatasetDetailContainer extends React.Component {
             });
 
             return (
-                <div className={getString("container")}>
+                <div className="container">
                     <HeadLinks title={title}
                                url={DATASET_DETAIL_URL}
                                search={this.props.location.search}
