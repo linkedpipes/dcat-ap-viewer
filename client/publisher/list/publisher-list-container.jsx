@@ -1,17 +1,17 @@
 import React from "react";
 import {connect} from "react-redux";
-import {getString} from "@/app-services/strings";
-import setPageTitle from "@/app-services/page-title";
 import {isDataReady} from "@/app-services/http-request";
 import {HttpRequestStatus} from "@/app-ui/http-request-status";
 import {fetchPublisherList} from "../publisher-action";
 import {statusSelector, publishersSelector} from "../publisher-reducer"
 import {PublisherList} from "./publisher-list";
+import {ORGANISATION_LIST_URL} from "@/app/navigation";
+import HeadLinks from "@/app-ui/head-links";
+import {getString} from "@/app-services/strings";
 
 class _PublishersListContainer extends React.Component {
 
     componentDidMount() {
-        setPageTitle(getString("publishers"));
         this.props.fetchData();
     }
 
@@ -22,7 +22,11 @@ class _PublishersListContainer extends React.Component {
             )
         } else {
             return (
-                <PublisherList publishers={this.props.publishers}/>
+                <React.Fragment>
+                    <HeadLinks title={getString("publishers")}
+                               url={ORGANISATION_LIST_URL}/>
+                    <PublisherList publishers={this.props.publishers}/>
+                </React.Fragment>
             );
         }
     }

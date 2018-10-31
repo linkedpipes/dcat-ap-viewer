@@ -1,18 +1,19 @@
 import React from "react";
 import {connect} from "react-redux";
-import {getString} from "@/app-services/strings";
-import setPageTitle from "@/app-services/page-title";
 import {isDataReady} from "@/app-services/http-request";
 import {statusSelector, keywordsSelector} from "./keyword-tagloud-reducer";
 import {HttpRequestStatus} from "@/app-ui/http-request-status";
 import {onMount, onUnMount, fetchKeywords} from "./keyword-tagloud-action";
 import {KeywordTagCloud} from "./keyword-tagloud";
-
+import {
+    KEYWORDS_LIST_URL,
+} from "@/app/navigation";
+import HeadLinks from "@/app-ui/head-links";
+import {getString} from "@/app-services/strings";
 
 class _KeywordsViewContainer extends React.Component {
 
     componentDidMount() {
-        setPageTitle(getString("keywords"));
         this.props.onMount();
         this.props.fetchData();
     }
@@ -20,7 +21,11 @@ class _KeywordsViewContainer extends React.Component {
     render() {
         if (isDataReady(this.props.status)) {
             return (
-                <KeywordTagCloud tags={this.props.data}/>
+                <React.Fragment>
+                    <HeadLinks title={getString("keywords")}
+                               url={KEYWORDS_LIST_URL}/>
+                    <KeywordTagCloud tags={this.props.data}/>
+                </React.Fragment>
             )
         } else {
             return (

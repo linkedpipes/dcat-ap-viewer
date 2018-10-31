@@ -19,11 +19,17 @@ virtuoso.sparql.url =
 port = 3000
 
 # Page title configuration.
+client.title_default = DCAT-AP Viewer
 client.title_prefix =
 client.title_suffix = - LP-DAV
 
-# If application is served from subdirectory, name of the subdirectory.
-client.page_prefix =
+# If application is served from subdirectory, name of the subdirectory,
+# is used for navigation.
+client.url_subdirectory =
+
+# Public URL without client.url_subdirectory, used to create full links
+# that are used in header. This URL is not used for navigation.
+client.base_url =
 
 # Sentry error report URL.
 sentry.url =

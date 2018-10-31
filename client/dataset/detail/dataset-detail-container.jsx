@@ -13,8 +13,6 @@ import {
     PUBLISHER_QUERY,
     getUrl
 } from "app/navigation";
-import {getString} from "app-services/strings";
-import setPageTitle from "app-services/page-title";
 import {isDataReady} from "app-services/http-request";
 import {selectLabel, labelsSelector} from "app-services/labels";
 import {HttpRequestStatus} from "app-ui/http-request-status";
@@ -22,11 +20,13 @@ import {DatasetWebPageMetadata} from "./webpage-metadata";
 import {DistributionListContainer} from "./distribution";
 import {parse as parseQueryString} from "query-string";
 import DatasetDetail from "./dataset-detail";
+import {DATASET_DETAIL_URL} from "@/app/navigation";
+import HeadLinks from "@/app-ui/head-links";
+import {getString} from "@/app-services/strings";
 
 class _DatasetDetailContainer extends React.Component {
 
     componentWillMount() {
-        setPageTitle(getString("datasets"));
         this.props.onMount();
         this.props.fetchDataset();
     }
@@ -39,7 +39,6 @@ class _DatasetDetailContainer extends React.Component {
         } else {
             const labels = this.props.labels;
             const title = selectLabel(labels, this.props.dataset);
-            setPageTitle(title);
 
             const publisherLabel =
                 selectLabel(labels, this.props.dataset.publisher);
@@ -48,7 +47,11 @@ class _DatasetDetailContainer extends React.Component {
             });
 
             return (
-                <div className="container">
+                <div className={getString("container")}>
+                    <HeadLinks title={title}
+                               url={DATASET_DETAIL_URL}
+                               search={this.props.location.search}
+                               params={[DATASET_QUERY]}/>
                     <DatasetDetail
                         dataset={this.props.dataset}
                         publisherUrl={publisherUrl}

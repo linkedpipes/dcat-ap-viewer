@@ -36,7 +36,7 @@ module.exports = merge(common, {
     "module": {
         "rules": [
             {
-                "test": /\.css?$/,
+                "test": /\.(sa|sc|c)ss$/,
                 "use": [
                     MiniCssExtractPlugin.loader,
                     "css-loader"
@@ -49,13 +49,12 @@ module.exports = merge(common, {
             "root": path.join(__dirname, "..")
         }),
         new MiniCssExtractPlugin({
-            "filename": path.join("assets", "main.[hash].css")
+            "filename": path.join("assets", "main.[chunkhash].css"),
         }),
-        new CopyWebpackPlugin([
-            {
-                "from": path.join(__dirname, "..", "public", "assets"),
-                "to": path.join(__dirname, "..", "dist", "assets")}
-        ])
+        new CopyWebpackPlugin([{
+            "from": path.join(__dirname, "..", "public", "assets"),
+            "to": path.join(__dirname, "..", "dist", "assets")
+        }])
     ]
 });
 

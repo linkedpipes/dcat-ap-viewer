@@ -29,19 +29,13 @@ module.exports = {
                 "test": /\.jsx?$/,
                 "loaders": ["babel-loader"],
                 "include": path.resolve(__dirname, "..", "client"),
-            },
-            {
-                "test": /\.scss$/,
-                "use": [
-                    {"loader": "style-loader"},
-                    {"loader": "css-loader"}
-                ]
             }
         ]
     },
     "plugins": [
         new HtmlWebpackPlugin({
             "filename": "index.html",
+            "title": config.client.title,
             "template": path.join(__dirname, "..", "public", "index.html"),
             "inject": true
         }),
@@ -54,6 +48,7 @@ module.exports = {
             "REPOSITORY_TYPE": asString(getRepositoryType()),
             "URL_PREFIX": asString(config["client"]["urlPrefix"]),
             "FORM_URL": asString(config["client"]["formUrl"]),
+            "URL_BASE": asString(config["client"]["urlBase"]),
             "DEREFERENCE_IRI": asString(config["client"]["dereferenceIri"])
         })
     ]
@@ -69,7 +64,7 @@ function isNotEmpty(value) {
 
 function getRepositoryType() {
     const couchdb = config["data"]["couchdb"];
-    if (couchdb !== undefined && couchdb.length > 0) {
+    if (couchdb !== null && couchdb.length > 0) {
         return "COUCHDB";
     } else {
         return "SPARQL";

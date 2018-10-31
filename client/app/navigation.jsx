@@ -92,6 +92,10 @@ export function setLanguage(language) {
     activeLanguage = language;
 }
 
+export function listLanguages() {
+    return Object.keys(NAVIGATION);
+}
+
 //
 //
 //
@@ -102,6 +106,23 @@ export const getUrl = (page, query) => {
         return url;
     }
     const keys = Object.keys(query);
+    url += "?" + getQuery(keys[0]) + "=" + encodeURIComponent(query[keys[0]]);
+    for (let index = 1; index < keys.length; ++index) {
+        const value = encodeURIComponent(query[keys[index]]);
+        url += "&" + getQuery(keys[index]) + "=" + value;
+    }
+    return url;
+};
+
+export const getFullUrl = (page, query, lang) => {
+    if (!lang) {
+        lang = getLanguage();
+    }
+    let url = URL_BASE + "/" + NAVIGATION[lang][PAGE][page];
+    const keys = Object.keys(query);
+    if (keys.length === 0) {
+        return url;
+    }
     url += "?" + getQuery(keys[0]) + "=" + encodeURIComponent(query[keys[0]]);
     for (let index = 1; index < keys.length; ++index) {
         const value = encodeURIComponent(query[keys[index]]);
