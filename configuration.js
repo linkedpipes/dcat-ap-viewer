@@ -26,6 +26,7 @@
             "titlePrefix": properties.get("client.title_prefix") || "",
             "titleSuffix": properties.get("client.title_suffix") || "",
             "urlPrefix": getUrlPrefix(properties),
+            "urlBase": getUrl(properties),
             "dereferenceIri": properties.get("client.dereference_prefix") || "",
         },
         "sentry": properties.get("sentry.url") || false,
@@ -66,7 +67,7 @@ function getDatasetPerGraph(properties) {
 
 function getRepositoryType(properties) {
     const couchdb = properties.get("couchdb.url");
-    if (couchdb !== undefined && couchdb !==  null && couchdb.length > 0) {
+    if (couchdb !== undefined && couchdb !== null && couchdb.length > 0) {
         return "COUCHDB";
     } else {
         return "SPARQL";
@@ -74,9 +75,25 @@ function getRepositoryType(properties) {
 }
 
 function getUrlPrefix(properties) {
-    let value = properties.get("client.url_prefix");
+    let value = properties.get("client.url_subdirectory");
+    if (!value) {
+        return "";
+    } else if (value.startsWith("/")) {
+        return value;
+    } else {
+        return "/" + value;
+    }
+}
+
+function getUrl(properties) {
+    let value = properties.get("client.base_url");
     if (!value) {
         return "";
     }
-    return "/" + value;
+    let prefix = getUrlPrefix(properties);
+    if (value.endsWith("/")) {
+        return value.substr(0, value.length - 1) + prefix;
+    } else {
+        return value + prefix;
+    }
 }

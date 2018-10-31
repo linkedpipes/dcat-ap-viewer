@@ -2,17 +2,18 @@ import React from "react";
 import {connect} from "react-redux";
 import {querySelector, dataStatusSelector} from "./dataset-list-reducer"
 import {getString} from "@/app-services/strings";
-import setPageTitle from "@/app-services/page-title";
 import FacetsColumn from "./facets-column";
 import ViewColumn from "./view-column";
 import {Container, Row} from "reactstrap";
 import {fetchData} from "./dataset-list-actions";
+import {DATASET_LIST_URL} from "@/app/navigation";
+import HeadLinks from "@/app-ui/head-links";
 
 class DatasetListViewComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        this.updatePageTitle = this.updatePageTitle.bind(this);
+        this.getPageTitle = this.getPageTitle.bind(this);
     }
 
     componentDidMount() {
@@ -26,9 +27,10 @@ class DatasetListViewComponent extends React.Component {
     }
 
     render() {
-        this.updatePageTitle();
         return (
             <Container>
+                <HeadLinks title={this.getPageTitle()}
+                           url={DATASET_LIST_URL}/>
                 <Row>
                     <FacetsColumn location={this.props.location}/>
                     <ViewColumn location={this.props.location}
@@ -39,13 +41,13 @@ class DatasetListViewComponent extends React.Component {
         )
     }
 
-    updatePageTitle() {
-        if (this.props.query.publisher.length !== 0) {
-            setPageTitle(this.props.query.publisher[0]);
-        } else {
-            setPageTitle(getString("datasets"));
-        }
-    }
+    getPageTitle() {
+      if (this.props.query.publisher.length !== 0) {
+          return this.props.query.publisher[0];
+      } else {
+          return getString("datasets");
+      }
+  }
 
 }
 
