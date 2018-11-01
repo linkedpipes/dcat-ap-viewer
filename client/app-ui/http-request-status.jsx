@@ -3,7 +3,7 @@ import {getString} from "../app-services/strings";
 import {
     STATUS_INITIAL,
     STATUS_FETCHING,
-    ERROR_MISSING,
+    ERROR_NOT_FOUND,
     ERROR_RESPONSE,
     ERROR_SERVER_FAILURE
 } from "../app-services/http-request";
@@ -22,7 +22,7 @@ function getMessage(status) {
             return getString("http.fetching");
         case STATUS_FETCHING:
             return getString("http.fetching");
-        case ERROR_MISSING:
+        case ERROR_NOT_FOUND:
             return getString("http.missing_resource");
         case ERROR_RESPONSE:
             return getString("http.error_response");
