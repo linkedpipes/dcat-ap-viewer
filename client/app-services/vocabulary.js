@@ -118,5 +118,6 @@ export const PU_VALUES_MAPPING = {
 export const NKOD = {
     "SourceForm" : "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/Formulář",
     "SourceCkan": "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/CkanLkod",
-    "SourceDcat": "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/DcatLkod"
+    "SourceDcat": "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/DcatLkod",
+    "SourceSparql": "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/DcatLkodSparql"
 };

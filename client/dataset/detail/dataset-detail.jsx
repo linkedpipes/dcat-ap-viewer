@@ -45,13 +45,14 @@ export default class DatasetView extends React.PureComponent {
 }
 
 function dialogLinks(dataset) {
-    const isFromFrom = dataset["@type"].indexOf(NKOD.SourceForm) !== -1;
+    const isFromForm = dataset["@type"].indexOf(NKOD.SourceForm) !== -1;
     const isFromLkod =
         dataset["@type"].indexOf(NKOD.SourceCkan) !== -1 ||
-        dataset["@type"].indexOf(NKOD.SourceDcat) !== -1;
+        dataset["@type"].indexOf(NKOD.SourceDcat) !== -1 ||
+        dataset["@type"].indexOf(NKOD.SourceSparql) !== -1;
     const iri = dataset["@id"];
     const actionStyle = {"color": "grey"};
-    if (isFromFrom) {
+    if (isFromForm) {
         return (
             <span>
             <a href={FORM_URL + "#/registrace-datové-sady?url=" + iri}
