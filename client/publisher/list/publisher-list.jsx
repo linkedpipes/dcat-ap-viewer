@@ -54,7 +54,9 @@ const OrganisationListItem = ({iri, label, count}) => {
 };
 
 function getDatasetCountLabel(count) {
-    if (count === 1) {
+    if (count === undefined || count === null) {
+        return "";
+    } else if (count === 1) {
         return getString("one_dataset");
     } else if (count <= 4) {
         return count + getString("two_three_datasets");
