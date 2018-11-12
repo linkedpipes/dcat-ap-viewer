@@ -12,6 +12,12 @@ import {
     KEYWORDS_QUERY,
     THEME_QUERY
 } from "@/app/navigation";
+import {
+    getFormLink,
+    DATASET_EDIT,
+    DATASET_DELETE,
+    CATALOG_DELETE
+} from "@/app/form-links";
 import {NKOD} from "@/app-services/vocabulary";
 
 export default class DatasetView extends React.PureComponent {
@@ -55,13 +61,13 @@ function dialogLinks(dataset) {
     if (isFromForm) {
         return (
             <span>
-            <a href={FORM_URL + "#/registrace-datové-sady?url=" + iri}
+            <a href={getFormLink(DATASET_EDIT, iri)}
                target="_blank">
                 <i className="material-icons pl-2" style={actionStyle}>
                     edit
                 </i>
             </a>
-            <a href={FORM_URL + "#/odstranění-datové-sady?url=" + iri}
+            <a href={getFormLink(DATASET_DELETE, iri)}
                target="_blank">
                 <i className="material-icons pl-2" style={actionStyle}>
                     delete_forever
@@ -72,7 +78,7 @@ function dialogLinks(dataset) {
     } else if (isFromLkod) {
         return (
             <span>
-            <a href={FORM_URL + "#/odstranění-lokálního-katalogu?url=" + iri}
+            <a href={getFormLink(CATALOG_DELETE, iri)}
                target="_blank">
                 <i className="material-icons pl-2" style={actionStyle}>
                     delete_forever
@@ -254,7 +260,6 @@ function fourthColumn(labels, dataset) {
         </div>
     )
 }
-
 
 function documentation(entities) {
     if (!Array.isArray(entities)) {
