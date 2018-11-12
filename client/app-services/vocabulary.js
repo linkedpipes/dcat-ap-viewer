@@ -38,7 +38,7 @@ export const DCAT = {
     "issued": DCAT_PREFIX + "issued",
     "CatalogRecord" : DCAT_PREFIX + "CatalogRecord",
     "Catalog": DCAT_PREFIX + "Catalog",
-    "accessURL": DCAT_PREFIX + "accessURL"
+    "accessURL": DCAT_PREFIX + "accessURL",
 };
 
 const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";
@@ -115,9 +115,11 @@ export const PU_VALUES_MAPPING = {
     [POU_PREFIX + "není-specifikováno-zda-obsahuje-osobní-údaje/"]: "unspecified"
 };
 
+const NKOD_PREFIX = "https://data.gov.cz/slovník/nkod/";
 export const NKOD = {
-    "SourceForm" : "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/Formulář",
-    "SourceCkan": "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/CkanLkod",
-    "SourceDcat": "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/DcatLkod",
-    "SourceSparql": "https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/DcatLkodSparql"
+    "SourceForm" : NKOD_PREFIX + "typ-datové-sady-dle-zdroje/Formulář",
+    "SourceCkan": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/CkanLkod",
+    "SourceDcat": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkod",
+    "SourceSparql": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkodSparql",
+    "lkod": NKOD_PREFIX + "lkod"
 };

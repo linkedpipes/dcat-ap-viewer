@@ -56,9 +56,9 @@ function dialogLinks(dataset) {
         dataset["@type"].indexOf(NKOD.SourceCkan) !== -1 ||
         dataset["@type"].indexOf(NKOD.SourceDcat) !== -1 ||
         dataset["@type"].indexOf(NKOD.SourceSparql) !== -1;
-    const iri = dataset["@id"];
     const actionStyle = {"color": "grey"};
     if (isFromForm) {
+        const iri = dataset["@id"];
         return (
             <span>
             <a href={getFormLink(DATASET_EDIT, iri)}
@@ -76,6 +76,7 @@ function dialogLinks(dataset) {
         </span>
         )
     } else if (isFromLkod) {
+        const iri = dataset["lkod"];
         return (
             <span>
             <a href={getFormLink(CATALOG_DELETE, iri)}

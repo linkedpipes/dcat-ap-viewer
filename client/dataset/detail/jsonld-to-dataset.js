@@ -8,7 +8,8 @@ import {
     VCARD,
     SCHEMA,
     SKOS,
-    EUA
+    EUA,
+    NKOD
 } from "@/app-services/vocabulary";
 
 export function jsonLdToDataset(jsonld) {
@@ -57,7 +58,8 @@ export function jsonLdToDataset(jsonld) {
     const catalogRecord = graph.getByType(jsonld, DCAT.CatalogRecord) || {};
     const external = {
         "catalog": triples.id(catalog),
-        "catalogSource": triples.resource(catalogRecord, DCTERMS.source)
+        "catalogSource": triples.resource(catalogRecord, DCTERMS.source),
+        "lkod": triples.resource(dataset, NKOD.lkod)
     };
 
     return {...mandatory, ...recommended, ...optional, ...external};
