@@ -1,4 +1,9 @@
 import React from "react";
+import {
+    getFormLink,
+    DATASET_EDIT,
+    CATALOG_EDIT
+} from "./form-links";
 
 const Footer = () => {
     return (
@@ -8,8 +13,16 @@ const Footer = () => {
                     <div className="col-md-4">
                          <strong>Registrace do NKOD</strong>
                          <ul>
-                             <li><a href="https://nkod.nakit.opendata.cz/formulář/#/registrace-datové-sady">Registrovat novou datovou sadu</a></li>
-                             <li><a href="https://nkod.nakit.opendata.cz/formulář/#/registrace-lokálního-katalogu">Registrovat nový lokální katalog</a></li>
+                             <li>
+                                 <a href={getFormLink(DATASET_EDIT)}>
+                                     Registrovat novou datovou sadu
+                                 </a>
+                             </li>
+                             <li>
+                                 <a href={getFormLink(CATALOG_EDIT)}>
+                                     Registrovat nový lokální katalog
+                                 </a>
+                             </li>
                           </ul>
 
                         <strong>Kontakty</strong>
