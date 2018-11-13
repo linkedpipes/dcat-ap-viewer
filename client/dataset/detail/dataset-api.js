@@ -28,21 +28,14 @@ export function fetchLabelsForDataset(entity, dispatch) {
                 if (!value.hasOwnProperty(index)) {
                     continue;
                 }
-                dispatchLabelRequest(dispatch, value[index]["@id"], {
-                    "target": "dataset",
-                    "key": property,
-                    "index": index
-                });
+                dispatchLabelRequest(dispatch, value[index]["@id"]);
             }
         } else {
-            dispatchLabelRequest(dispatch, value["@id"], {
-                "target": "dataset",
-                "key": property
-            });
+            dispatchLabelRequest(dispatch, value["@id"]);
         }
     });
 }
 
-function dispatchLabelRequest(dispatch, iri, identifier) {
-    dispatch(fetchLabel(iri, identifier));
+function dispatchLabelRequest(dispatch, iri) {
+    dispatch(fetchLabel(iri));
 }
