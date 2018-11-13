@@ -1,8 +1,10 @@
 import React from "react";
 import {getString} from "@/app-services/strings";
+import {PU_VALUES_MAPPING} from "@/app-services/vocabulary";
 
 export default function authorship(distribution) {
-    switch (distribution.authorship) {
+    const mapped = PU_VALUES_MAPPING[distribution.authorship];
+    switch (mapped) {
         case "multi":
             return (
                 <li className="list-group-item  px-2">
@@ -51,14 +53,14 @@ export default function authorship(distribution) {
             return (
                 <li className="list-group-item px-2">
                     <div>
-                        {getString("license_author_custom")}
-                    </div>
-                    <div className="label">
                         <a href={distribution.authorship}
                            rel="nofollow"
                            target="_blank">
-                            {distribution.authorship}
+                            {getString("license_author_custom")}
                         </a>
+                    </div>
+                    <div className="label">
+                        {getString("license_author_type")}
                     </div>
                 </li>
             );

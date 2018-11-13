@@ -1,15 +1,17 @@
 import React from "react";
 import {getString} from "@/app-services/strings";
+import {PU_VALUES_MAPPING} from "@/app-services/vocabulary";
 
 export default function personalData(distribution) {
     let label;
-    if (distribution.personalData === "no") {
+    const mapped = PU_VALUES_MAPPING[distribution.personalData];
+    if (mapped === "no") {
         label = getString("license_personal_no");
-    } else if (distribution.personalData === "contains") {
+    } else if (mapped === "contains") {
         label = getString("license_personal_yes");
-    } else if (distribution.personalData === "unspecified") {
+    } else if (mapped === "unspecified") {
         label = getString("license_personal_unspecified");
-    } else if (distribution.personalData === "missing") {
+    } else if (mapped === "missing") {
         label = getString("license_personal_unspecified");
     } else {
         console.error("Unexpected value for personal data: ",

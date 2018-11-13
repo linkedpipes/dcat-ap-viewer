@@ -1,8 +1,10 @@
 import React from "react";
 import {getString} from "@/app-services/strings";
+import {PU_VALUES_MAPPING} from "@/app-services/vocabulary";
 
 export default function databaseAuthorship(distribution) {
-    switch (distribution.databaseAuthorship) {
+    const mapped = PU_VALUES_MAPPING[distribution.databaseAuthorship];
+    switch (mapped) {
         case "no":
             return (
                 <li className="list-group-item px-2">
@@ -40,14 +42,14 @@ export default function databaseAuthorship(distribution) {
             return (
                 <li className="list-group-item px-2">
                     <div>
-                        {getString("license_author_custom")}
-                    </div>
-                    <div className="label">
                         <a href={distribution.databaseAuthorship}
                            rel="nofollow"
                            target="_blank">
-                            {distribution.databaseAuthorship}
+                            {getString("license_author_custom")}
                         </a>
+                    </div>
+                    <div className="label">
+                        {getString("license_db_type")}
                     </div>
                 </li>
             );

@@ -3,15 +3,10 @@ import {
     DCAT,
     DCTERMS,
     FOAF,
-    OWL,
     ADMS,
-    VCARD,
-    SCHEMA,
     SPDX,
-    PU,
-    PU_VALUES_MAPPING
+    PU
 } from "../../../app-services/vocabulary";
-
 
 // TODO Merge with action or leave in separated file.
 
@@ -79,24 +74,11 @@ function parseTermsOfUse(distribution, jsonld) {
     const personalData = triples.resource(entity, PU.personalData);
 
     return {
-        "authorship":  mapTermsOfUseValue(authorship),
+        "authorship":  authorship,
         "author":  author,
-        "databaseAuthorship":  mapTermsOfUseValue(databaseAuthorship),
+        "databaseAuthorship":  databaseAuthorship,
         "databaseAuthor":  databaseAuthor,
-        "protectedDatabase":  mapTermsOfUseValue(protectedDatabase),
-        "personalData":  mapTermsOfUseValue(personalData),
+        "protectedDatabase":  protectedDatabase,
+        "personalData":  personalData,
     };
-}
-
-function mapTermsOfUseValue(value) {
-    if (value === undefined) {
-        return "missing";
-    }
-    const mapped = PU_VALUES_MAPPING[value];
-    if (mapped === undefined) {
-        console.error("Unexpected value for terms of use:", value);
-        return value;
-    } else {
-        return mapped;
-    }
 }
