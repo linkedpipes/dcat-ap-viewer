@@ -26,23 +26,14 @@ export function fetchLabelsForDistribution(entity, dispatch) {
             return;
         } else if (Array.isArray(value)) {
             for (let index in value) {
-                dispatchLabelRequest(dispatch, value[index]["@id"], {
-                    "target": "distribution",
-                    "key": property,
-                    "index": index,
-                    "iri": iri
-                });
+                dispatchLabelRequest(dispatch, value[index]["@id"]);
             }
         } else {
-            dispatchLabelRequest(dispatch, value["@id"], {
-                "target": "distribution",
-                "key": property,
-                "iri": iri
-            });
+            dispatchLabelRequest(dispatch, value["@id"]);
         }
     });
 }
 
-function dispatchLabelRequest(dispatch, iri, identifier) {
-    dispatch(fetchLabel(iri, identifier));
+function dispatchLabelRequest(dispatch, iri) {
+    dispatch(fetchLabel(iri));
 }
