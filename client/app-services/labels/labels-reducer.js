@@ -35,7 +35,7 @@ function addFromJsonLd(state, action) {
         merge(extractedLabels, triples.string(entity, VCARD.fn));
         merge(extractedLabels, triples.string(entity, FOAF.name));
 
-        if (extractedLabels.length === 0) {
+        if (Object.keys(extractedLabels).length === 0) {
             return;
         }
 
