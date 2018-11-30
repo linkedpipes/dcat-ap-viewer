@@ -14,7 +14,9 @@ export const PublisherList = ({publishers}) => {
             </h4>
             <hr/>
             <div className="row">
-                {publishers.map((publisher) => (
+                {publishers
+                    .filter((publisher) => publisher.count)
+                    .map((publisher) => (
                     <OrganisationListItem
                         key={publisher["@id"]}
                         iri={publisher["@id"]}
