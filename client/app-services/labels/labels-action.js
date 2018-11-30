@@ -4,7 +4,7 @@ import {reducerName} from "./labels-reducer";
 export const FETCH_LABEL_SUCCESS = "FETCH_LABEL_SUCCESS";
 
 export const fetchLabel = (iri) => {
-    const url = "./api/v1/resource/codelist?iri=" + encodeURI(iri);
+    const url = "./api/v1/resource/codelist?iri=" + encodeURIComponent(iri);
     return (dispatch, getState) => {
         const state = getState()[reducerName];
         if (state[iri]) {
