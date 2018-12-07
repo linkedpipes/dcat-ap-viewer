@@ -1,5 +1,5 @@
 import {graph, triples} from "@/app-services/jsonld";
-import {SKOS, DCTERMS, RDF, VCARD, FOAF} from "@/app-services/vocabulary";
+import {SKOS, DCTERMS, RDF, VCARD, FOAF, RDFS} from "@/app-services/vocabulary";
 
 // TODO Add round-robin for labels repository?
 
@@ -34,6 +34,7 @@ function addFromJsonLd(state, action) {
         merge(extractedLabels, triples.string(entity, RDF.label));
         merge(extractedLabels, triples.string(entity, VCARD.fn));
         merge(extractedLabels, triples.string(entity, FOAF.name));
+        merge(extractedLabels, triples.string(entity, RDFS.label));
 
         if (Object.keys(extractedLabels).length === 0) {
             return;

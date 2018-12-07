@@ -27,6 +27,7 @@ export function isDataReady(status) {
 }
 
 export function fetchJson(url) {
+    url = "https://skod.opendata.cz" + url.substring(1);
     return fetch(url, {
         "method": "GET",
         "headers": {
@@ -73,4 +74,18 @@ function reportException(exception, extra) {
     Raven.captureException(exception, {
         "extra": extra
     });
+}
+
+export function fetchJsonLd(url) {
+    return fetch(url, {
+        "method": "GET",
+        "headers": {
+            "Accept": "application/ld+json"
+        },
+    }).catch(failureToResponse).then(json).then(response => ({
+        "error": response["error"],
+        "status": response["status"],
+        "jsonld": response["json"],
+        "statusText": response["statusText"]
+    }));
 }

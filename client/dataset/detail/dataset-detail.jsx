@@ -19,13 +19,14 @@ import {
     CATALOG_DELETE
 } from "@/app/form-links";
 import {NKOD} from "@/app-services/vocabulary";
+import {SemanticRelatedDatasets} from "@/semantic/dataset-related";
+import {SemanticTermsDatasets} from "@/semantic/dataset-terms";
 
 export default class DatasetView extends React.PureComponent {
 
     render() {
         const {dataset, publisherUrl, labels} = this.props;
         const title = selectLabel(labels, this.props.dataset);
-
         return (
             <div>
                 <h1>{title}
@@ -42,12 +43,13 @@ export default class DatasetView extends React.PureComponent {
                 <p>{selectString(labels, dataset.description)}</p>
                 <hr/>
                 <Keywords labels={labels} keywords={dataset.keywords}/>
+                <SemanticRelatedDatasets dataset={"https://skod.opendata.cz/zdroj/datová-sada/1"}/>
+                <SemanticTermsDatasets dataset={"https://skod.opendata.cz/zdroj/datová-sada/1"}/>
                 <Properties labels={labels} dataset={dataset}/>
                 <hr/>
             </div>
         )
     }
-
 }
 
 function dialogLinks(dataset) {

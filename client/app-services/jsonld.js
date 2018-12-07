@@ -76,6 +76,15 @@ graph.getResources = (data) => {
     return result;
 };
 
+graph.forEachResource = (data, callback) => {
+    const graph = getGraph(data);
+    const result = [];
+    for (let index = 0; index < graph.length; ++index) {
+        callback(graph[index]);
+    }
+    return result;
+};
+
 export const triples = {};
 
 triples.id = (entity) => {

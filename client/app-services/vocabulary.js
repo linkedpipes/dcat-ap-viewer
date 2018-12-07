@@ -23,6 +23,12 @@ export const DCTERMS = {
     "rights": DCTERMS_PREFIX + "rights"
 };
 
+const DCELEMENTS_PREFIX = "http://purl.org/dc/elements/1.1/";
+export const DCELEMENTS = {
+    "source": DCELEMENTS_PREFIX + "source"
+};
+
+
 const DCAT_PREFIX = "http://www.w3.org/ns/dcat#";
 export const DCAT = {
     "Dataset": DCAT_PREFIX + "Dataset",
@@ -113,6 +119,11 @@ export const PU_VALUES_MAPPING = {
     [POU_PREFIX + "obsahuje-osobní-údaje/"]: "contains",
     [POU_PREFIX + "neobsahuje-osobní-údaje/"]: "no",
     [POU_PREFIX + "není-specifikováno-zda-obsahuje-osobní-údaje/"]: "unspecified"
+};
+
+const RDFS_PREFIX = "http://www.w3.org/2000/01/rdf-schema#";
+export const RDFS = {
+    "label": RDFS_PREFIX + "label"
 };
 
 const NKOD_PREFIX = "https://data.gov.cz/slovník/nkod/";
