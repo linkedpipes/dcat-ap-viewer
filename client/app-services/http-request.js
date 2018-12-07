@@ -27,7 +27,6 @@ export function isDataReady(status) {
 }
 
 export function fetchJson(url) {
-    url = "https://skod.opendata.cz" + url.substring(1);
     return fetch(url, {
         "method": "GET",
         "headers": {
