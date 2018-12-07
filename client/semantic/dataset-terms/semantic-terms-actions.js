@@ -10,7 +10,7 @@ export const FETCH_TERMS = "FETCH_TERMS";
 export const FETCH_TERMS_SUCCESS = "FETCH_TERMS_SUCCESS";
 export const FETCH_TERMS_FAILED = "FETCH_TERMS_FAILED";
 
-const BASE_TERMS_URL = "http://kbss.felk.cvut.cz/termit-server-dev/rest/resources/resource/terms?iri=";
+const BASE_TERMS_URL = "https://kbss.felk.cvut.cz/termit-server-dev/rest/resources/resource/terms?iri=";
 
 export function onMount() {
     return {

@@ -25,7 +25,7 @@ export function onUnMount() {
 export function fetch(iri) {
     return (dispatch) => {
         dispatch(fetchStart());
-        const url = "http://kbss.felk.cvut.cz/termit-server-dev/rest/resources/resource/related?iri=" + iri;
+        const url = "https://kbss.felk.cvut.cz/termit-server-dev/rest/resources/resource/related?iri=" + iri;
         fetchJsonLd(url)
             .then(response => dispatch(fetchSuccess(iri, response)))
             .catch(error => dispatch(fetchFailed(iri, error)));
