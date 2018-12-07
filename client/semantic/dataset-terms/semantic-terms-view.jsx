@@ -14,6 +14,12 @@ class _SemanticDatasetTerms extends React.Component {
         this.props.fetch(this.props.dataset);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.dataset !== this.props.dataset) {
+            this.props.fetch(this.props.dataset);
+        }
+    }
+
     render() {
         if (isFetching(this.props.status)) {
             return (
