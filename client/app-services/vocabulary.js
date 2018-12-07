@@ -128,7 +128,7 @@ export const RDFS = {
 
 const NKOD_PREFIX = "https://data.gov.cz/slovník/nkod/";
 export const NKOD = {
-    "SourceForm" : NKOD_PREFIX + "typ-datové-sady-dle-zdroje/Formulář",
+    "SourceForm": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/Formulář",
     "SourceCkan": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/CkanLkod",
     "SourceDcat": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkod",
     "SourceSparql": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkodSparql",

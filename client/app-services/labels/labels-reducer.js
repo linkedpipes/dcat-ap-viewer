@@ -1,8 +1,6 @@
 import {graph, triples} from "@/app-services/jsonld";
 import {SKOS, DCTERMS, RDF, VCARD, FOAF, RDFS} from "@/app-services/vocabulary";
 
-// TODO Add round-robin for labels repository?
-
 const initialState = {};
 
 export const reducerName = "labels";
@@ -54,7 +52,7 @@ function merge(labels, newLabels) {
         return;
     }
     for (let key in newLabels) {
-        if (!newLabels.hasOwnProperty(key) ) {
+        if (!newLabels.hasOwnProperty(key)) {
             continue;
         }
         // TODO Introduce some form of a merging strategy.

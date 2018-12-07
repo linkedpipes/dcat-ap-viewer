@@ -31,7 +31,6 @@ graph.getAllByType = (data, type) => {
     return output;
 };
 
-
 function getGraph(data) {
     // TODO Add support for different data formats.
     if (data["@graph"] === undefined) {
