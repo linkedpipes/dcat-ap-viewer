@@ -33,7 +33,9 @@ class _SemanticDatasetTerms extends React.Component {
                     <ul>
                         {this.props.terms.map((item) => (
                             <li key={item["@id"]}>
-                                {selectLabel(this.props.labels, item["@id"])}
+                                <a href={item["@id"]} target="_blank">
+                                    {selectLabel(this.props.labels, item["@id"])}
+                                </a>
                             </li>
                         ))}
                     </ul>
