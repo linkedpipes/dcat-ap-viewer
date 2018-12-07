@@ -31,6 +31,14 @@ class _DatasetDetailContainer extends React.Component {
         this.props.fetchDataset();
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const prevDataset = getDatasetIriFromLocation(prevProps.location);
+        const newDataset = getDatasetIriFromLocation(this.props.location);
+        if (prevDataset !== newDataset) {
+            this.props.fetchDataset();
+        }
+    }
+
     render() {
         if (!isDataReady(this.props.status)) {
             return (
@@ -81,12 +89,15 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     "onMount": () => dispatch(onMount()),
     "onUnMount": () => dispatch(onUnMount()),
     "fetchDataset": () => {
-        const queryKey = getQuery(DATASET_QUERY);
-        const params = parseQueryString(ownProps.location.search);
-        const iri = params[queryKey];
-        dispatch(fetchDataset(iri));
+        dispatch(fetchDataset(getDatasetIriFromLocation(ownProps.location)));
     }
 });
+
+function getDatasetIriFromLocation(location) {
+    const queryKey = getQuery(DATASET_QUERY);
+    const params = parseQueryString(location.search);
+    return params[queryKey];
+}
 
 export const DatasetDetailContainer = connect(
     mapStateToProps,
