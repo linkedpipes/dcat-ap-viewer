@@ -31,7 +31,6 @@ graph.getAllByType = (data, type) => {
     return output;
 };
 
-
 function getGraph(data) {
     // TODO Add support for different data formats.
     if (data["@graph"] === undefined) {
@@ -72,6 +71,15 @@ graph.getResources = (data) => {
     const result = [];
     for (let index = 0; index < graph.length; ++index) {
         result.push(graph[index]);
+    }
+    return result;
+};
+
+graph.forEachResource = (data, callback) => {
+    const graph = getGraph(data);
+    const result = [];
+    for (let index = 0; index < graph.length; ++index) {
+        callback(graph[index]);
     }
     return result;
 };
