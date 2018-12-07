@@ -43,8 +43,8 @@ export default class DatasetView extends React.PureComponent {
                 <p>{selectString(labels, dataset.description)}</p>
                 <hr/>
                 <Keywords labels={labels} keywords={dataset.keywords}/>
-                <SemanticRelatedDatasets dataset={"https://skod.opendata.cz/zdroj/datová-sada/1"}/>
-                <SemanticTermsDatasets dataset={"https://skod.opendata.cz/zdroj/datová-sada/1"}/>
+                <SemanticRelatedDatasets dataset={dataset["@id"]}/>
+                <SemanticTermsDatasets dataset={dataset["@id"]}/>
                 <Properties labels={labels} dataset={dataset}/>
                 <hr/>
             </div>
