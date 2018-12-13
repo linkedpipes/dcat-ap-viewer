@@ -27,7 +27,7 @@ export default class DatasetView extends React.PureComponent {
                         {selectLabel(labels, dataset.publisher)}
                     </Link>
                 </h2>
-                <p>{selectString(labels, dataset.description)}</p>
+                <p>{selectString(dataset.description)}</p>
                 <hr/>
                 <Keywords labels={labels} keywords={dataset.keywords}/>
                 <Properties labels={labels} dataset={dataset}/>
@@ -45,7 +45,7 @@ function Keywords({labels, keywords}) {
         return null;
     }
 
-    const keywordsLabels = selectString(labels, keywords);
+    const keywordsLabels = selectString(keywords);
     const keywordsRef = keywordsLabels.map((keyword) => (
         {
             "label": keyword,

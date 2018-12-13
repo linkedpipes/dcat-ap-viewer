@@ -42,10 +42,14 @@ function selectLabelFromState(labelState, languages, resource) {
     if (strings === undefined) {
         return [resource];
     }
-    return selectString(languages, strings);
+    return selectString(strings, languages);
 }
 
-export function selectString(languages, value) {
+export function selectString(value, languages = undefined) {
+    if (languages === undefined) {
+        languages = getLanguagePreferences();
+    }
+    
     for (let index in languages) {
         if (!languages.hasOwnProperty(index)) {
             continue;
