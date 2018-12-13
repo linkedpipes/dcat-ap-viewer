@@ -36,7 +36,7 @@ const Footer = () => {
                     <div className="col-md-4">
                         <strong>Odkazy</strong>
                         <ul>
-                            <li><a href="https://data.gov.cz/soubor/nkod.trig">Katalog ke stažení (RDF TriG)</a></li>
+                            <li>Katalog ke stažení: <a href="https://data.gov.cz/soubor/nkod.trig">Celý katalog (RDF TriG)</a>, <a href="https://data.gov.cz/soubor/datové-sady.csv">Datové sady (CSV)</a>, <a href="https://data.gov.cz/soubor/distribuce.csv">Distribuce (CSV)</a></li>
                             <li><a href="https://data.gov.cz/sparql">SPARQL endpoint</a></li>
                             <li><a href="https://data.gov.cz">Otevřená data</a></li>
                             <li>Katalog běží na <a href="https://github.com/linkedpipes/dcat-ap-viewer">LinkedPipes DCAT-AP Viewer</a> (GitHub)</li>
