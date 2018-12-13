@@ -74,3 +74,17 @@ function reportException(exception, extra) {
         "extra": extra
     });
 }
+
+export function fetchJsonLd(url) {
+    return fetch(url, {
+        "method": "GET",
+        "headers": {
+            "Accept": "application/ld+json"
+        },
+    }).catch(failureToResponse).then(json).then(response => ({
+        "error": response["error"],
+        "status": response["status"],
+        "jsonld": response["json"],
+        "statusText": response["statusText"]
+    }));
+}

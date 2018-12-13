@@ -19,7 +19,7 @@ function createJsonLdDescription(labels, dataset) {
         '"@context":"http://schema.org/",\n' +
         '"@type":"Dataset",\n' +
         '"name":"' + selectLabel(labels, dataset) + '",\n' +
-        '"description":"' + selectString(labels, dataset["description"]) +
+        '"description":"' + selectString(dataset["description"]) +
         '",\n' +
         '"url":"' + dataset["@id"] + '"\n';
 
@@ -38,8 +38,7 @@ function createJsonLdDescription(labels, dataset) {
     }
 
     if (dataset["keywords"] !== undefined) {
-        const keywords = JSON.stringify(
-            selectString(labels, dataset["keywords"]));
+        const keywords = JSON.stringify(selectString(dataset["keywords"]));
         content += ',"keywords":' + keywords + '\n';
     }
 

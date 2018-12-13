@@ -123,3 +123,12 @@ export const NKOD = {
     "SourceSparql": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkodSparql",
     "lkod": NKOD_PREFIX + "lkod"
 };
+const RDFS_PREFIX = "http://www.w3.org/2000/01/rdf-schema#";
+export const RDFS = {
+    "label": RDFS_PREFIX + "label"
+};
+
+const DCELEMENTS_PREFIX = "http://purl.org/dc/elements/1.1/";
+export const DCELEMENTS = {
+    "source": DCELEMENTS_PREFIX + "source"
+};
