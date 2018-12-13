@@ -1,6 +1,7 @@
 import React from "react";
 import {getString} from "@/app-services/strings";
 import {PU_VALUES_MAPPING} from "@/app-services/vocabulary";
+import {selectString} from "@/app-services/labels";
 
 export default function databaseAuthorship(distribution) {
     const mapped = PU_VALUES_MAPPING[distribution.databaseAuthorship];
@@ -23,7 +24,7 @@ export default function databaseAuthorship(distribution) {
                         {getString("license_author_ccBy")}
                     </div>
                     <div className="label">
-                        {distribution.databaseAuthor}
+                        {selectString(distribution.databaseAuthor)}
                     </div>
                 </li>
             );

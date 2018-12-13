@@ -1,6 +1,7 @@
 import React from "react";
 import {getString} from "@/app-services/strings";
 import {PU_VALUES_MAPPING} from "@/app-services/vocabulary";
+import {selectString} from "@/app-services/labels";
 
 export default function authorship(distribution) {
     const mapped = PU_VALUES_MAPPING[distribution.authorship];
@@ -34,7 +35,7 @@ export default function authorship(distribution) {
                         {getString("license_author_ccBy")}
                     </div>
                     <div className="label">
-                        {distribution.author}
+                        {selectString(distribution.author)}
                     </div>
                 </li>
             );
