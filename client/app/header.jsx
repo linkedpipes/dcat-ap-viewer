@@ -61,6 +61,12 @@ class HeaderComponent extends React.Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
+                                <NavLink
+                                    href="https://data.gov.cz/novinky/">
+                                    {getString("news")}
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
                                 <RouterLink to={getUrl(DATASET_LIST_URL)}
                                             className="nav-link"
                                             activeClassName="active"
