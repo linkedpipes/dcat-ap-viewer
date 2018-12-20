@@ -91,19 +91,19 @@ class HeaderComponent extends React.Component {
                                     <DropdownMenu right>
                                         <DropdownItem>
                                             <NavLink
-                                                href="https://opendata.gov.cz/development:zajemci">
+                                                href="https://opendata.gov.cz/informace:základy-otevřených-dat-pro-zájemce">
                                                 {getString("for_interested_in_open_data")}
                                             </NavLink>
                                         </DropdownItem>
                                         <DropdownItem>
                                             <NavLink
-                                                href="https://opendata.gov.cz/development:programatori">
+                                                href="https://opendata.gov.cz/informace:základy-otevřených-dat-pro-programátory">
                                                 {getString("for_programmes")}
                                             </NavLink>
                                         </DropdownItem>
                                         <DropdownItem>
                                             <NavLink
-                                                href="https://opendata.gov.cz/development:poskytovatele">
+                                                href="https://opendata.gov.cz">
                                                 {getString("for_publishers")}
                                             </NavLink>
                                         </DropdownItem>
