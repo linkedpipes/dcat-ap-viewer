@@ -20,7 +20,7 @@ export default function protectedDatabaseAuthorship(distribution) {
             return (
                 <li className="list-group-item px-2">
                     <div>
-                        {getString("license_author_ccBy")}
+                        {getString("license_author_cc0")}
                     </div>
                     <div className="label">
                         {getString("license_specialdb_type")}
