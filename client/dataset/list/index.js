@@ -37,6 +37,8 @@ register({
             , "modified desc": "Datum aktualizace sestupně"
             , "themes": "Témata"
             , "formats": "Formáty"
+            , "query.last_year": "Minulý rok"
+            , "query.this_year": "Tento rok"
         },
         "en": {
             "facet.show_popular": "Show popular only"
@@ -65,6 +67,8 @@ register({
             , "modified desc": "Modified Descending"
             , "themes": "Themes"
             , "formats": "Formats"
+            , "query.last_year": "Last year"
+            , "query.this_year": "This year"
         }
     }
 });

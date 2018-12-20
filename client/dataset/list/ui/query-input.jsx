@@ -85,10 +85,10 @@ class _QueryInput extends React.Component {
                                }}/>
                         <Button style={{"marginRight": "0.5REM"}}
                                 onClick={this.onThisYear}>
-                            This year
+                            {getString("query.this_year")}
                         </Button>
                         <Button onClick={this.onLastYear}>
-                            Last year
+                            {getString("query.last_year")}
                         </Button>
                     </Row>
                 </div>
