@@ -22,7 +22,7 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 It will contain the search index. 
 For instance, you may proceed like this:
 - [Download Apache Solr](http://lucene.apache.org/solr/) - e.g. ```solr-7.6.0.tgz```
-- Extract the service installer ```tar xzf solr-7.6.0.tgz solr-7.3.0/bin/install_solr_service.sh --strip-components=2```
+- Extract the service installer ```tar xzf solr-7.6.0.tgz solr-7.6.0/bin/install_solr_service.sh --strip-components=2```
 - Run the service installer ```sudo bash ./install_solr_service.sh solr-7.6.0.tgz```
 - Create Solr core ```sudo -u solr /opt/solr/bin/solr create -c dcat-ap-viewer```
 - Prepare Solr schema:
