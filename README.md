@@ -6,7 +6,7 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 - native [DCAT-AP v1.2](https://joinup.ec.europa.eu/release/dcat-ap/12) input
 - handles large numbers of distributions of a single dataset
 - handles licenses attached to distributions
-- supports [EU MDR NAL](http://publications.europa.eu/mdr/authority/) codelists
+- supports [EU Vocabularies](https://publications.europa.eu/en/web/eu-vocabularies/controlled-vocabularies) codelists
 
 ## Requirements
 - [Node.js] & npm
