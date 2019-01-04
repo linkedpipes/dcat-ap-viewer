@@ -16,17 +16,17 @@ const strings = {
     },
     "en": {
         "license_author_multi": "Shared authorship"
-        ,"license_author_no": "No license"
+        ,"license_author_no": "Not protected"
         ,"license_author_ccBy": "CC BY 4.0"
         ,"license_author_cc0": "CC0"
-        ,"license_author_type": "License author type"
+        ,"license_author_type": "Copyrighted work"
         ,"license_author_custom": "Custom license"
-        ,"license_db_type": "Database author type"
-        ,"license_specialdb_type": "Special database license"
+        ,"license_db_type": "Copyrighted database"
+        ,"license_specialdb_type": "Sui generis db rights"
         ,"license_personal_type": "Personal data"
-        ,"license_personal_no": "Contains personal data"
-        ,"license_personal_yes": "No personal data"
-        ,"license_missing": "Missing"
+        ,"license_personal_no": "No personal data"
+        ,"license_personal_yes": "Contains personal data"
+        ,"license_missing": "Unspecified"
         ,"license_personal_unspecified": "May contain personal data (unspecified)"
     }
 };
