@@ -2120,7 +2120,7 @@
         ],
         "http://plugins.linkedpipes.com/ontology/e-httpGetFile#fileName": [
           {
-            "@value": "dcat-ap.trig"
+            "@value": "test.trig"
           }
         ],
         "http://plugins.linkedpipes.com/ontology/e-httpGetFile#fileNameControl": [
@@ -2130,7 +2130,7 @@
         ],
         "http://plugins.linkedpipes.com/ontology/e-httpGetFile#fileUri": [
           {
-            "@value": "https://nkod.nakit.opendata.cz/soubor/nkod.trig"
+            "@value": "https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/lp-etl/test.trig"
           }
         ],
         "http://plugins.linkedpipes.com/ontology/e-httpGetFile#fileUriControl": [
