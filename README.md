@@ -1,29 +1,29 @@
 # LinkedPipes DCAT-AP Viewer
 
-This is a native DCAT-AP v1.1 catalog viewer. 
+This is a native DCAT-AP v1.2 catalog viewer. 
 It is originally developed for OpenData.cz projects, however, it is completely open-source and resuable. 
 It addresses the most painful disadvantages of CKAN when it comes to representing DCAT compatible data such as
-- native [DCAT-AP v1.1](https://joinup.ec.europa.eu/release/dcat-ap-v11) input
+- native [DCAT-AP v1.2](https://joinup.ec.europa.eu/release/dcat-ap/12) input
 - handles large numbers of distributions of a single dataset
 - handles licenses attached to distributions
-- supports [EU MDR NAL](http://publications.europa.eu/mdr/authority/) codelists
+- supports [EU Vocabularies](https://publications.europa.eu/en/web/eu-vocabularies/controlled-vocabularies) codelists
 
 ## Requirements
 - [Node.js] & npm
 - [Apache Solr] 7
-- [Apache CouchDB] 2.1.1
+- [Apache CouchDB] 2.1.1 and up
 
 ### Requirements for data preparation
 - [LinkedPipes ETL], the [preparation pipeline] and the [codelist pipeline]
 
 ## Installation
 
-[Install Solr](https://lucene.apache.org/solr/guide/7_3/installing-solr.html). 
+[Install Solr](https://lucene.apache.org/solr/guide/7_6/installing-solr.html). 
 It will contain the search index. 
 For instance, you may proceed like this:
-- [Download Apache Solr](http://lucene.apache.org/solr/) - e.g. ```solr-7.3.0.tgz```
-- Extract the service installer ```tar xzf solr-7.3.0.tgz solr-7.3.0/bin/install_solr_service.sh --strip-components=2```
-- Run the service installer ```sudo bash ./install_solr_service.sh solr-7.3.0.tgz```
+- [Download Apache Solr](http://lucene.apache.org/solr/) - e.g. ```solr-7.6.0.tgz```
+- Extract the service installer ```tar xzf solr-7.6.0.tgz solr-7.6.0/bin/install_solr_service.sh --strip-components=2```
+- Run the service installer ```sudo bash ./install_solr_service.sh solr-7.6.0.tgz```
 - Create Solr core ```sudo -u solr /opt/solr/bin/solr create -c dcat-ap-viewer```
 - Prepare Solr schema:
 ```
