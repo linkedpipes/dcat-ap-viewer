@@ -1,29 +1,31 @@
 # LinkedPipes DCAT-AP Viewer
 
-This is a native DCAT-AP v1.1 catalog viewer. 
+This is a native DCAT-AP v1.2 catalog viewer. 
 It is originally developed for OpenData.cz projects, however, it is completely open-source and resuable. 
 It addresses the most painful disadvantages of CKAN when it comes to representing DCAT compatible data such as
-- native [DCAT-AP v1.1](https://joinup.ec.europa.eu/release/dcat-ap-v11) input
+- native [DCAT-AP v1.2](https://joinup.ec.europa.eu/release/dcat-ap/12) input
 - handles large numbers of distributions of a single dataset
 - handles licenses attached to distributions
-- supports [EU MDR NAL](http://publications.europa.eu/mdr/authority/) codelists
+- supports [EU Vocabularies](https://publications.europa.eu/en/web/eu-vocabularies/controlled-vocabularies) codelists
 
 ## Requirements
 - [Node.js] & npm
-- [Apache Solr] 7
-- [Apache CouchDB] 2.1.1
+- [Apache Solr] 7.6 ([Docker](https://hub.docker.com/_/solr/))
+- [Apache CouchDB] 2.3 and up ([Docker](https://hub.docker.com/_/couchdb/))
 
 ### Requirements for data preparation
 - [LinkedPipes ETL], the [preparation pipeline] and the [codelist pipeline]
 
 ## Installation
 
-[Install Solr](https://lucene.apache.org/solr/guide/7_3/installing-solr.html). 
+[Install Solr](https://lucene.apache.org/solr/guide/7_6/installing-solr.html) or run in it [Docker](https://hub.docker.com/_/solr/).
 It will contain the search index. 
-For instance, you may proceed like this:
-- [Download Apache Solr](http://lucene.apache.org/solr/) - e.g. ```solr-7.3.0.tgz```
-- Extract the service installer ```tar xzf solr-7.3.0.tgz solr-7.3.0/bin/install_solr_service.sh --strip-components=2```
-- Run the service installer ```sudo bash ./install_solr_service.sh solr-7.3.0.tgz```
+For installation, you may proceed like this:
+- [Download Apache Solr](http://lucene.apache.org/solr/) - e.g. ```solr-7.6.0.tgz```
+- Extract the service installer ```tar xzf solr-7.6.0.tgz solr-7.6.0/bin/install_solr_service.sh --strip-components=2```
+- Run the service installer ```sudo bash ./install_solr_service.sh solr-7.6.0.tgz```
+
+Next, configure Solr like this:
 - Create Solr core ```sudo -u solr /opt/solr/bin/solr create -c dcat-ap-viewer```
 - Prepare Solr schema:
 ```
@@ -57,7 +59,7 @@ curl http://localhost:8983/solr/dcat-ap-viewer/config -H 'Content-type:applicati
 }'
 ```
 
-Install [Apache CouchDB], e.g. via a package manager.
+Install [Apache CouchDB], e.g. via a package manager, or run it in [Docker](https://hub.docker.com/_/couchdb/).
 It will contain the datasets, distributions and, optionally, the code list labels.
 
 Install LinkedPipes DCAT-AP viewer
@@ -86,5 +88,5 @@ npm run start -- -env.configFileLocation=configuration.properties
 [Apache Solr]: <http://lucene.apache.org/solr/>
 [Apache CouchDB]: <http://couchdb.apache.org/>
 [LinkedPipes ETL]: <https://etl.linkedpipes.com>
-[preparation pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/lp-etl/dcatap2lpdav.jsonld>
-[codelist pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/develop/lp-etl/eumdrnals2couchdb.jsonld>
+[preparation pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/nkod/lp-etl/dcatap2lpdav.jsonld>
+[codelist pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/nkod/lp-etl/eumdrnals2couchdb.jsonld>
