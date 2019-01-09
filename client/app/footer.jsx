@@ -74,7 +74,7 @@ const Footer = () => {
                 <hr/>
                 <div className="row">
                     <div className="col-md-12">
-                        {getString("f_legal_0")}
+                        {getString("f_legal_0")} 
                         <a href="https://www.zakonyprolidi.cz/cs/2008-64" title="Vyhláška o přístupnosti">
                             {getString("f_legal_1")}
                         </a>
