@@ -59,10 +59,10 @@ const Footer = () => {
                             <li><a href="https://data.gov.cz">
                                 {getString("f_opendata")}
                             </a></li>
-                            <li>{getString("f_catalog_runs_at")}
+                            <li>{getString("f_catalog_runs_at")} 
                                 <a href="https://github.com/linkedpipes/dcat-ap-viewer">LinkedPipes DCAT-AP Viewer</a> (GitHub)
                             </li>
-                            <li>{getString("f_data_prepared_with")}
+                            <li>{getString("f_data_prepared_with")} 
                                 <a href="https://etl.linkedpipes.com">LinkedPipes ETL</a>
                             </li>
                         </ul>
