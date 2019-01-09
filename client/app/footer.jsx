@@ -28,28 +28,28 @@ const Footer = () => {
 
                         <strong>{getString("f_contacts")}</strong>
                         <ul>
-                            <li>{getString("f_contact_person")}::&nsp;
+                            <li>{getString("f_contact_person")}:&nbsp;
                                 <a href="mailto:michal.kuban@mvcr.cz">Michal Kubáň</a>
                             </li>
-                            <li>{getString("f_email")}::&nsp;
+                            <li>{getString("f_email")}:&nbsp;
                                 <a href="mailto:michal.kuban@mvcr.cz">michal.kuban@mvcr.cz</a>
                             </li>
-                            <li>{getString("f_telephone")}::&nsp;
+                            <li>{getString("f_telephone")}:&nbsp;
                                 +420 974 816 395
                             </li>
                             <li><a href="http://www.mvcr.cz/">{getString("f_mvcr")}</a></li>
                         </ul>
                     </div>
                     <div className="col-md-4">
-                        <strong>O{getString("f_links")}</strong>
+                        <strong>{getString("f_links")}</strong>
                         <ul>
-                            <li>{getString("f_catalog_for_download")}:&nsp;
+                            <li>{getString("f_catalog_for_download")}:&nbsp;
                                 <a href="https://data.gov.cz/soubor/nkod.trig">
                                     {getString("f_download_catalog")}
-                                </a>,
+                                </a>, 
                                 <a href="https://data.gov.cz/soubor/datové-sady.csv">
                                     {getString("f_download_datasets")}
-                                </a>,
+                                </a>, 
                                 <a href="https://data.gov.cz/soubor/distribuce.csv">
                                     {getString("f_download_distributions")}
                                 </a></li>
