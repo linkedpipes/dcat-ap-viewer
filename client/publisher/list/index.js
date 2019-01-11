@@ -1,9 +1,10 @@
 import {register} from "app/register.js";
 import {PublisherListContainer} from "./publisher-list-container";
 import {ORGANISATION_LIST_URL} from "@/app/navigation";
+import reducer from "@/publisher/publisher-reducer";
 
 register({
-    "reducer": "publisher-list",
+    "name": reducer.name,
     "url": [ORGANISATION_LIST_URL],
     "component": PublisherListContainer,
     "strings": {
