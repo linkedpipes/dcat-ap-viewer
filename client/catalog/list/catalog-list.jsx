@@ -1,6 +1,7 @@
 import React from "react";
 import {formatNumber} from "@/app-services/formats";
 import {getString} from "@/app-services/strings";
+import {CATALOG_DELETE, getFormLink} from "@/app/form-links";
 
 export const CatalogList = ({catalogs}) => (
     <div className="container p-3">
@@ -18,7 +19,7 @@ export const CatalogList = ({catalogs}) => (
 );
 
 function CatalogItem({catalog}) {
-    const {title, endpointURL, contactPoint} = catalog;
+    const {title, endpointURL, contactPoint, id} = catalog;
     const {name, email} = contactPoint;
     return (
         <div className="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 mb-3">
@@ -34,8 +35,17 @@ function CatalogItem({catalog}) {
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item">
                         <a href={"mailto:" + email}>
-                            <i className="material-icons pr-2 md-18 center">email</i>
+                            <i className="material-icons pr-2 md-24 center">email</i>
                             {name}
+                        </a>
+                    </li>
+                    <li className="list-group-item">
+                        <a href={getFormLink(CATALOG_DELETE, id)}
+                           target="_blank">
+                            <i className="material-icons md-24"
+                               style={{"color":"gray"}}>
+                                delete_forever
+                            </i>
                         </a>
                     </li>
                 </ul>
