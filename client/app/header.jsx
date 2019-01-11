@@ -18,6 +18,7 @@ import {
     DATASET_LIST_URL,
     ORGANISATION_LIST_URL,
     KEYWORDS_LIST_URL,
+    CATALOG_LIST,
     getLanguage
 } from "./navigation";
 import {NavLink as RouterLink} from "react-router-dom";
@@ -103,6 +104,9 @@ class HeaderComponent extends React.Component {
                                         </DropdownItem>
                                         <DropdownItem href="https://opendata.gov.cz">
                                             {getString("for_publishers")}
+                                        </DropdownItem>
+                                        <DropdownItem tag={RouterLink} to={getUrl(CATALOG_LIST)}>
+                                            {getString("catalogs")}
                                         </DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
