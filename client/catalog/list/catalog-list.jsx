@@ -26,16 +26,16 @@ function CatalogItem({catalog}) {
             <div className="card p-2">
                 <div className="card-body px-2">
                     <h5 className="card-title">
-                        <span className="pr-2">{title}</span>
-                        <a href={id} target="_blank">
+                        <span className="pr-2">{catalog["publisherName"]}</span>
+                        <a href={catalog["publisherIRI"]} target="_blank">
                             <i className="material-icons md-18">open_in_new</i>
                         </a>
                     </h5>
                 </div>
                 <ul className="list-group list-group-flush">
                     <li className="list-group-item">
-                        <span className="pr-2">{catalog["publisherName"]}</span>
-                        <a href={catalog["publisherIRI"]} target="_blank">
+                        <span className="pr-2">{title}</span>
+                        <a href={id} target="_blank">
                             <i className="material-icons md-18">open_in_new</i>
                         </a>
                     </li>
@@ -46,13 +46,6 @@ function CatalogItem({catalog}) {
                         </a>
                     </li>
                     <li className="list-group-item">
-                        <a href={getFormLink(CATALOG_DELETE, id)}
-                           target="_blank">
-                            <i className="material-icons md-24"
-                               style={{"color": "gray"}}>
-                                delete_forever
-                            </i>
-                        </a>
                         <a href={catalog["endpointURL"]}
                            target="_blank" className="pr-2">
                             <i className="material-icons md-24"
@@ -69,6 +62,13 @@ function CatalogItem({catalog}) {
                             </i>
                         </a>
                         }
+                        <a href={getFormLink(CATALOG_DELETE, id)}
+                           target="_blank">
+                            <i className="material-icons md-24"
+                               style={{"color": "gray"}}>
+                                delete_forever
+                            </i>
+                        </a>
                     </li>
                 </ul>
             </div>
