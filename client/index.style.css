@@ -97,6 +97,15 @@ a {
     color: #014c8c;
 }
 
+nav a.dropdown-item {
+    color: #057fa5;
+}
+
+nav a.dropdown-item.active, .dropdown-item:active {
+    color: rgba(0,0,0,.9);
+    background-color: #ffffff;
+}
+
 /* Interactive button (links). */
 
 .page-button {
