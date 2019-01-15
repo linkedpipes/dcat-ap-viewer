@@ -16,7 +16,7 @@ const initialState = {
     "catalogs": undefined,
 };
 
-function reducer(state = {}, action) {
+function reducer(state = initialState, action) {
     switch (action.type) {
         case FETCH_CATALOGS_REQUEST:
             return onCatalogsRequest();
@@ -38,7 +38,7 @@ function onCatalogsRequest() {
 
 function onCatalogsRequestSuccess(state, action) {
     action.catalogs.sort((left, right) => {
-        return left["publisherName"] - right["publisherName"];
+        return left["publisherName"].localeCompare(right["publisherName"]);
     });
     return {
         ...state,

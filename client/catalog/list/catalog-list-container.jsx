@@ -6,7 +6,9 @@ import {CatalogList} from "./catalog-list";
 
 import {isDataReady} from "@/app-services/http-request";
 import {HttpRequestStatus} from "@/app-ui/http-request-status";
-
+import {CATALOG_LIST_URL} from "@/app/navigation";
+import {getString} from "@/app-services/strings";
+import HeadLinks from "@/app-ui/head-links";
 
 class _CatalogsViewContainer extends React.Component {
 
@@ -17,11 +19,19 @@ class _CatalogsViewContainer extends React.Component {
     render() {
         if (isDataReady(this.props.status)) {
             return (
-                <CatalogList catalogs={this.props.catalogs}/>
+                <React.Fragment>
+                    <HeadLinks title={getString("catalogs")}
+                               url={CATALOG_LIST_URL}/>
+                    <CatalogList catalogs={this.props.catalogs}/>
+                </React.Fragment>
             )
         } else {
             return (
-                <HttpRequestStatus status={this.props.status}/>
+                <React.Fragment>
+                    <HeadLinks title={getString("catalogs")}
+                               url={CATALOG_LIST_URL}/>
+                    <HttpRequestStatus status={this.props.status}/>
+                </React.Fragment>
             )
         }
     }
