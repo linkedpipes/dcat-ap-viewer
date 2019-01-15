@@ -37,6 +37,9 @@ function onCatalogsRequest() {
 }
 
 function onCatalogsRequestSuccess(state, action) {
+    action.catalogs.sort((left, right) => {
+        return left["publisherName"] - right["publisherName"];
+    });
     return {
         ...state,
         "status": STATUS_FETCHED,
