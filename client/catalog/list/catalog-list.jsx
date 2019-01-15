@@ -19,20 +19,26 @@ export const CatalogList = ({catalogs}) => (
 );
 
 function CatalogItem({catalog}) {
-    const {title, endpointURL, contactPoint, id} = catalog;
+    const {title, contactPoint, id} = catalog;
     const {name, email} = contactPoint;
     return (
         <div className="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 mb-3">
             <div className="card p-2">
                 <div className="card-body px-2">
                     <h5 className="card-title">
-                        {title}
-                        <a href={endpointURL} target="_blank">
-                            <i className="material-icons pl-2 md-18">open_in_new</i>
+                        <span className="pr-2">{title}</span>
+                        <a href={id} target="_blank">
+                            <i className="material-icons md-18">open_in_new</i>
                         </a>
                     </h5>
                 </div>
                 <ul className="list-group list-group-flush">
+                    <li className="list-group-item">
+                        <span className="pr-2">{catalog["publisherName"]}</span>
+                        <a href={catalog["publisherIRI"]} target="_blank">
+                            <i className="material-icons md-18">open_in_new</i>
+                        </a>
+                    </li>
                     <li className="list-group-item">
                         <a href={"mailto:" + email}>
                             <i className="material-icons pr-2 md-24 center">email</i>
@@ -43,10 +49,26 @@ function CatalogItem({catalog}) {
                         <a href={getFormLink(CATALOG_DELETE, id)}
                            target="_blank">
                             <i className="material-icons md-24"
-                               style={{"color":"gray"}}>
+                               style={{"color": "gray"}}>
                                 delete_forever
                             </i>
                         </a>
+                        <a href={catalog["endpointURL"]}
+                           target="_blank" className="pr-2">
+                            <i className="material-icons md-24"
+                               style={{"color": "gray"}}>
+                                link
+                            </i>
+                        </a>
+                        {catalog["homepage"] &&
+                        <a href={catalog["homepage"]}
+                           target="_blank" className="pr-2">
+                            <i className="material-icons md-24"
+                               style={{"color": "gray"}}>
+                                home
+                            </i>
+                        </a>
+                        }
                     </li>
                 </ul>
             </div>
