@@ -8,7 +8,7 @@ import {getRegistered} from "./register";
 export const DATASET_LIST_URL = "DATASET_LIST";
 export const DATASET_DETAIL_URL = "DATASET_DETAIL";
 export const ORGANISATION_LIST_URL = "ORGANISATION_LIST";
-export const KEYWORDS_LIST_URL = "KEYWORDS_LIST_URL";
+export const KEYWORDS_LIST_URL = "KEYWORDS_LIST";
 export const CATALOG_LIST_URL = "CATALOG_LIST";
 export const PUBLISHER_QUERY = "PUBLISHER_QUERY";
 export const KEYWORDS_QUERY = "KEYWORDS_QUERY";
