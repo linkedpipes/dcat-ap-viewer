@@ -45,13 +45,6 @@ function CatalogItem({catalog}) {
                         </a>
                     </li>
                     <li className="list-group-item">
-                        <a href={catalog["endpointURL"]}
-                           target="_blank" className="pr-2">
-                            <i className="material-icons md-24"
-                               style={{"color": "gray"}}>
-                                link
-                            </i>
-                        </a>
                         {catalog["homepage"] &&
                         <a href={catalog["homepage"]}
                            target="_blank" className="pr-2">
@@ -61,6 +54,13 @@ function CatalogItem({catalog}) {
                             </i>
                         </a>
                         }
+                        <a href={catalog["endpointURL"]}
+                           target="_blank" className="pr-2">
+                            <i className="material-icons md-24"
+                               style={{"color": "gray"}}>
+                                link
+                            </i>
+                        </a>
                     </li>
                 </ul>
             </div>
