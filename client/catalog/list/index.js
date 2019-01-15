@@ -11,11 +11,11 @@ register({
     "strings": {
         "cs": {
             "catalogs_found": "katalogů nalezeno",
-            "catalogs": "Lokální Katalogy"
+            "catalogs": "Lokální katalogy"
         },
         "en": {
             "catalogs_found": "catalogs found",
-            "catalogs": "Local Catalogs"
+            "catalogs": "Local catalogs"
         }
     }
 });
