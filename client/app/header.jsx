@@ -105,7 +105,7 @@ class HeaderComponent extends React.Component {
                                         <DropdownItem href="https://opendata.gov.cz">
                                             {getString("for_publishers")}
                                         </DropdownItem>
-                                        <DropdownItem tag={RouterLink} to={getUrl(CATALOG_LIST_URL)}>
+                                        <DropdownItem tag={RouterLink} to={getUrl(CATALOG_LIST_URL)} activeClassName="active">
                                             {getString("catalogs")}
                                         </DropdownItem>
                                     </DropdownMenu>
