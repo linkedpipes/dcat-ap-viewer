@@ -79,9 +79,15 @@ Before the first run the DCAT-AP Viewer client javascript needs to be compiled u
 ```
 npm run build -- -env.configFileLocation=configuration.properties
 ``` 
-After the compilation is done the following command can be used to start the server:
+After the compilation is done the following commands can be used to start the server:
 ```
 npm run start -- -env.configFileLocation=configuration.properties
+```
+
+OR if you do not want to install Solr and CouchDB
+
+```
+docker-compose -f docker-compose.dev.yml up
 ```
 
 [Node.js]: <https://nodejs.org>

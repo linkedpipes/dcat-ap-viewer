@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+
+  couchdb:
+    ports:
+      - 5984:5984
+    image: couchdb
+
+  solr:
+    volumes:
+      - ./solr_mycores/dcat-ap-viewer:/opt/solr/server/solr/dcat-ap-viewer
+    ports:
+      - 8983:8983
+    image: solr:alpine
+
+  viewer:
+    ports:
+      - 80:3000
+    depends_on:
+      - couchdb
+      - solr
+    image: node:alpine
+    working_dir: /home/node
+    command: npm start
+    volumes:
+      - ./node_modules:/home/node/node_modules
+      - ./server:/home/node/server
+      - ./configuration.js:/home/node/configuration.js
+      - ./dist:/home/node/dist
+      - ./package.json:/home/node/package.json
+      - ./package-lock.json:/home/node/package-lock.json
+      - ./configuration.properties.docker-compose:/home/node/configuration.properties

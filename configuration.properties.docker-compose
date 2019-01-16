@@ -1,0 +1,44 @@
+#
+# All URLs must NOT end with "/".
+#
+
+# Path to Solr Core (collection) with DCAT-AP data.
+solr.url = http://solr:8983/solr/dcat-ap-viewer
+
+# Path to Virtuoso instance with data.
+virtuoso.sparql.url =
+# Options
+# SINGLE-GRAPH - dataset query is restricted to a single graph
+# MULTI-GRAPH - no graph restriction is used
+# virtuoso.sparql.type = SINGLE-GRAPH
+
+# Path to CouchDB database.
+# couchdb.url = http://couchdb:5984
+
+# Port used by DCAT-AP viewer.
+port = 3000
+
+# Page title configuration.
+client.title_default = DCAT-AP Viewer
+client.title_prefix =
+client.title_suffix = - LP-DAV
+
+# If application is served from subdirectory, name of the subdirectory,
+# is used for navigation.
+client.url_subdirectory =
+
+# Public URL without client.url_subdirectory, used to create full links
+# that are used in header. This URL is not used for navigation.
+client.base_url =
+
+# Sentry error report URL.
+sentry.url =
+
+# Google tag manager ID.
+google_tag_manager.id =
+
+# Tag cloud filter options.
+client.keyword_cloud.min = 100
+
+# Prefix used to create dereference IRI for datasets.
+client.dereference_prefix =
