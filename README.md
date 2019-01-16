@@ -87,7 +87,7 @@ npm run start -- -env.configFileLocation=configuration.properties
 OR if you do not want to install Solr and CouchDB
 
 ```
-docker-compose -f docker-compose.dev.yml up
+sudo chown 8983:8983 -R solr_mycores && docker-compose -f docker-compose.dev.yml up
 ```
 
 [Node.js]: <https://nodejs.org>
