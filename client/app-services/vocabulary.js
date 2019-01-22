@@ -112,7 +112,8 @@ export const PU_VALUES_MAPPING = {
     [POU_PREFIX + "není-chráněna-zvláštním-právem-pořizovatele-databáze/"]: "no",
     [POU_PREFIX + "obsahuje-osobní-údaje/"]: "contains",
     [POU_PREFIX + "neobsahuje-osobní-údaje/"]: "no",
-    [POU_PREFIX + "není-specifikováno-zda-obsahuje-osobní-údaje/"]: "unspecified"
+    [POU_PREFIX + "není-specifikováno-zda-obsahuje-osobní-údaje/"]: "unspecified",
+    "missing": "missing"
 };
 
 const NKOD_PREFIX = "https://data.gov.cz/slovník/nkod/";
