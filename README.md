@@ -10,7 +10,7 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 
 ## Requirements
 - [Node.js] & npm
-- [Apache Solr] 7.6 ([Docker](https://hub.docker.com/_/solr/))
+- [Apache Solr] 7.7 ([Docker](https://hub.docker.com/_/solr/))
 - [Apache CouchDB] 2.3 and up ([Docker](https://hub.docker.com/_/couchdb/))
 
 ### Requirements for data preparation
@@ -21,14 +21,14 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 [Install Solr](https://lucene.apache.org/solr/guide/7_6/installing-solr.html) or run in it [Docker](https://hub.docker.com/_/solr/).
 It will contain the search index. 
 For installation, you may proceed like this:
-- [Download Apache Solr](http://lucene.apache.org/solr/) - e.g. ```solr-7.6.0.tgz```
-- Extract the service installer ```tar xzf solr-7.6.0.tgz solr-7.6.0/bin/install_solr_service.sh --strip-components=2```
-- Run the service installer ```sudo bash ./install_solr_service.sh solr-7.6.0.tgz```
+- [Download Apache Solr](http://lucene.apache.org/solr/) - e.g. ```solr-7.7.0.tgz```
+- Extract the service installer ```tar xzf solr-7.7.0.tgz solr-7.7.0/bin/install_solr_service.sh --strip-components=2```
+- Run the service installer ```sudo bash ./install_solr_service.sh solr-7.7.0.tgz```
 
 Next, configure Solr like this:
 - Create Solr core ```sudo -u solr /opt/solr/bin/solr create -c dcat-ap-viewer```
 
-- Add following to `dcat-ap-viewer/conf/solrconfig.xml` file and restart Solr.
+- Add following to `dcat-ap-viewer/conf/solrconfig.xml` file (adjust the version numbers as necessary) and restart Solr.
 ```
   <lib path="${solr.install.dir:../../../..}/dist/solr-analysis-extras-7.7.0.jar" />  
   <lib path="${solr.install.dir:../../../..}/contrib/analysis-extras/lib/icu4j-62.1.jar" />  
