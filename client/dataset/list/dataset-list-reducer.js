@@ -176,7 +176,7 @@ function paramsToQuery(params) {
 
     let order = params[getQuery(SORT_QUERY)];
     if (order === undefined) {
-        order = "title asc";
+        order = "title_sort asc";
     }
 
     let pageSize = parseInt(params[getQuery(PAGE_SIZE_QUERY)]);
