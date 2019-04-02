@@ -8,8 +8,8 @@ import {
 } from "reactstrap";
 
 const values = [
-    "title asc",
-    "title desc"
+    "title_sort asc",
+    "title_sort desc"
 ];
 
 const SortSelector = ({value, onChange}) => (
