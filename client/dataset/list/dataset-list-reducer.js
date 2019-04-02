@@ -49,7 +49,7 @@ const initialState = {
         "publisher": [],
         "format": [],
         "theme": [],
-        "sort": "title asc",
+        "sort": "title_sort asc",
         "pageSize": 10,
         "temporalStart": "",
         "temporalEnd": "",

@@ -8,8 +8,8 @@ import {
 } from "reactstrap";
 
 const values = [
-    "title asc",
-    "title desc",
+    "title_sort asc",
+    "title_sort desc",
     "issued asc",
     "issued desc",
     "modified asc",
