@@ -60,7 +60,9 @@ const Footer = () => {
                         </ul>
                     </div>
                     <div className="col-md-4">
-                        <img alt={getString("f_eu_ozp")} className="d-inline-block align-top" id="eulogo" src={getString("f_opz_logo_link")} width="300"/>
+					    <div className="bg-white shadow">
+							<img alt={getString("f_eu_ozp")} className="d-inline-block align-top" id="eulogo" src={getString("f_opz_logo_link")} width="300"/>
+						</div>
                     </div>
                 </div>
                 <hr/>
