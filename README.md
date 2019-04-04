@@ -10,6 +10,7 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 
 ## Requirements
 - [Node.js] & npm
+- [OpenJDK] 8 or 12 for Apache Solr
 - [Apache Solr] 8.0 ([Docker](https://hub.docker.com/_/solr/))
 - [Apache CouchDB] 2.3 and up ([Docker](https://hub.docker.com/_/couchdb/))
 
@@ -117,6 +118,7 @@ After the compilation is done the following command can be used to start the ser
 npm run start -- -env.configFileLocation=configuration.properties
 ```
 
+[OpenJDK]: <https://jdk.java.net/12/>
 [Node.js]: <https://nodejs.org>
 [Apache Solr]: <http://lucene.apache.org/solr/>
 [Apache CouchDB]: <http://couchdb.apache.org/>
