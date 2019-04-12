@@ -53,16 +53,18 @@ const Footer = () => {
                             <li><a href="https://data.gov.cz">
                                 {getString("f_opendata")}
                             </a></li>
-                            <li>{getString("f_catalog_runs_at")} <a href="https://github.com/linkedpipes/dcat-ap-viewer">LinkedPipes DCAT-AP Viewer</a> (GitHub)
+                            <li>{getString("f_catalog_runs_at")} <a href="https://github.com/linkedpipes/dcat-ap-viewer">LinkedPipes DCAT-AP Viewer</a>
                             </li>
                             <li>{getString("f_data_prepared_with")} <a href="https://etl.linkedpipes.com">LinkedPipes ETL</a>
+                            </li>
+                            <li><a href="https://github.com/opendata-mvcr/nkod">{getString("f_nkod_documentation")}</a>
                             </li>
                         </ul>
                     </div>
                     <div className="col-md-4">
-					    <div className="bg-white shadow">
-							<img alt={getString("f_eu_ozp")} className="d-inline-block align-top" id="eulogo" src={getString("f_opz_logo_link")} width="300"/>
-						</div>
+                        <div className="bg-white shadow">
+                            <img alt={getString("f_eu_ozp")} className="d-inline-block align-top" id="eulogo" src={getString("f_opz_logo_link")} width="300"/>
+                        </div>
                     </div>
                 </div>
                 <hr/>

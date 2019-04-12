@@ -41,12 +41,13 @@ const strings = {
         , "f_sparql_endpoint": "SPARQL endpoint"
         , "f_opendata": "Otevřená data"
         , "f_catalog_runs_at": "Katalog běží na"
+        , "f_nkod_documentation": "Dokumentace na GitHubu"
         , "f_data_prepared_with": "Data zpracována pomocí"
         , "f_eu_ozp": "Evropská unie - Evropský sociální fond - Operační program Zaměstnanost"
         , "f_legal_0": "Forma uveřejňovaných informací je v souladu s"
         , "f_legal_1": "vyhláškou č. 64/2008 Sb., o formě uveřejňování informací souvisejících s výkonem veřejné správy prostřednictvím webových stránek pro osoby se zdravotním postižením (vyhláška o přístupnosti)"
         , "f_legal_2": ", a splňuje všechna pravidla uveřejněná v příloze této vyhlášky."
-		, "f_opz_logo_link": "/images/ozp_logo_cz.jpg"
+        , "f_opz_logo_link": "/images/ozp_logo_cz.jpg"
     },
     "en": {
         "404_title": "404 page not found"
@@ -85,12 +86,13 @@ const strings = {
         , "f_sparql_endpoint": "SPARQL endpoint"
         , "f_opendata": "Open Data"
         , "f_catalog_runs_at": "Runs using"
+        , "f_nkod_documentation": "Documentation on GitHub"
         , "f_data_prepared_with": "Data harvested using"
         , "f_eu_ozp": "European Union - European Social Fund - Operational Programme Employment"
         , "f_legal_0": "The form the information is published in complies with"
         , "f_legal_1": "Decree No. 64/2008, on the form of publishing information related to the exercise of public administration via web sites for persons with a disability (accessibility decree)"
         , "f_legal_2": " and conforms to all the rules laid down in the appendix to this decree."
-		, "f_opz_logo_link": "/images/ozp_logo_en.jpg"
+        , "f_opz_logo_link": "/images/ozp_logo_en.jpg"
     }
 };
 
