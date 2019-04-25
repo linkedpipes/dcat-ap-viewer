@@ -4,10 +4,51 @@
 
 export function constructTypeaheadUrl(value, query) {
     let url = "./api/v1/solr/query?rows=8&fl=title";
-    url += "&q=" + encodeURIComponent(escapeSolrQuery(value));
+    url += "&q=" + encodeURIComponent(prepareTypeaheadSolrQuery(value));
     url += createFacetsFiltersQuery(query);
     url += createTemporalQuery(query);
     return url;
+}
+
+function prepareTypeaheadSolrQuery(query) {
+    query = escapeSolrQuery(query);
+
+    const tokens = query.trim().split(" ")
+        .filter(filterEmpty)
+        .filter(isSpecialCharacter);
+    if (tokens.length === 0) {
+        return "";
+    }
+
+  let solrQuery = "title_query:" + tokens[0];
+  for (let index = 1; index < tokens.length; ++index) {
+    solrQuery += " AND title_query:" + tokens[index];
+  }
+  solrQuery += "*";
+
+  return solrQuery;
+}
+
+function escapeSolrQuery(query) {
+  query = query.toLocaleLowerCase();
+
+  const charactersToEscape = /([\!\*\+\=\<\>\&\|\{\}\^\~\?"])/g;
+  query = query.replace(charactersToEscape, "\\$1");
+
+  // Escape control words (and, or, not).
+  query = query.replace("and", "\\and");
+  query = query.replace("or", "\\or");
+  query = query.replace("not", "\\not");
+
+  return query;
+}
+
+function filterEmpty(value) {
+     return value.length > 0;
+}
+
+function isSpecialCharacter(value) {
+    return value[0] !== "\\" || value.length !== 2;
 }
 
 function createFacetsFiltersQuery(query) {
@@ -55,46 +96,6 @@ function createTemporalQuery(query) {
     return url;
 }
 
-function escapeSolrQuery(query) {
-    // Convert to lower case.
-    query = query.toLocaleLowerCase();
-
-    const charactersToRemove = /[\:\-\\\.\/\[\]]/g;
-    query = query.replace(charactersToRemove, " ");
-
-    const charactersToEscape = /([\!\*\+\=\<\>\&\|\{\}\^\~\?"])/g;
-    query = query.replace(charactersToEscape, "\\$1");
-
-    // Escape control words (and, or, not).
-    query = query.replace("and", "\\and");
-    query = query.replace("or", "\\or");
-    query = query.replace("not", "\\not");
-
-    // Tokenize string.
-    const tokens = query.trim().split(" ")
-    .filter(filterEmpty)
-    .filter(isSpecialCharacter);
-
-    if (tokens.length === 0) {
-        return "";
-    }
-
-    let solrQuery = "*" + tokens[0] + "*";
-    for (let index = 1; index < tokens.length; ++index) {
-        solrQuery += " AND *" + tokens[index] + "*";
-    }
-
-    return solrQuery;
-}
-
-function filterEmpty(value) {
-    return value.length > 0;
-}
-
-function isSpecialCharacter(value) {
-    return value[0] !== "\\" || value.length !== 2;
-}
-
 export function constructSearchQueryUrl(query) {
     let url = "./api/v1/solr/query?" +
         "facet.field=keyword&" +
@@ -111,7 +112,7 @@ export function constructSearchQueryUrl(query) {
     if (query.search === undefined || query.search === "") {
         url += "q=*:*";
     } else {
-        url += "q=" + encodeURIComponent(escapeSolrQuery(query.search))
+        url += "q=" + encodeURIComponent(prepareFullSolrQuery(query.search))
     }
 
     url += createFacetsFiltersQuery(query);
@@ -126,4 +127,23 @@ export function constructSearchQueryUrl(query) {
     url += "&rows=" + query.pageSize;
 
     return url;
+}
+
+function prepareFullSolrQuery(query) {
+  query = escapeSolrQuery(query);
+
+  const tokens = query.trim().split(" ")
+    .filter(filterEmpty)
+    .filter(isSpecialCharacter);
+  if (tokens.length === 0) {
+    return "";
+  }
+
+  let solrQuery = "_text_:" + tokens[0];
+  for (let index = 1; index < tokens.length; ++index) {
+    solrQuery += " AND _text_:" + tokens[index];
+  }
+  solrQuery += "*";
+
+  return solrQuery;
 }
