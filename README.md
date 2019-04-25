@@ -44,7 +44,7 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
         "class" : "solr.TextField",
         "positionIncrementGap" : "100",
         "analyzer" : {
-            "tokenizer" : { "class" : "solr.StandardTokenizerFactory" },
+            "tokenizer" : { "class" : "solr.WhitespaceTokenizerFactory" },
             "filters" : [
                 { 
                     "class" : "solr.LowerCaseFilterFactory" 
@@ -69,20 +69,25 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
     "add-field" : { "name" : "publisher", "type" : "string" , "indexed" : false },
     "add-field" : { "name" : "publisherName", "type" : "string" },
     "add-field" : { "name" : "title", "type" : "string", "docValues" : true },
-    "add-field" : { "name" : "title_sort", "type" : "string_icu", "stored" : false },
-    "add-copy-field" : { "source" : "title", "dest" : "title_sort" },
     "add-field" : { "name" : "format", "type" : "strings", "indexed" : false },
     "add-field" : { "name" : "formatName", "type" : "strings" },
     "add-field" : { "name" : "license", "type" : "strings", "indexed" : false },
     "add-field" : { "name" : "keyword", "type" : "strings" },
     "add-field" : { "name" : "theme", "type" : "strings" },
+    "add-field" : { "name" : "temporal-start", "type" : "pdate", "docValues" : true },
+    "add-field" : { "name" : "temporal-end", "type" : "pdate", "docValues" : true },
+    "add-field" : { "name" : "spatial", "type" : "string" },
+
+    "add-field" : { "name" : "title_sort", "type" : "string_icu", "stored" : false },
+    "add-copy-field" : { "source" : "title", "dest" : "title_sort" },
+        
+    "add-field" : { "name" : "title_query", "type" : "ascii_string"},
+    "add-copy-field" : { "source" : "title", "dest" : "title_query" },
+
     "replace-field" : { "name": "_text_", "type" : "ascii_string", "multiValued" : true, "indexed" : true, "stored" : false },
     "add-copy-field" : { "source" : "description", "dest" : "_text_" },
     "add-copy-field" : { "source" : "title", "dest" : "_text_" },
-    "add-copy-field" : { "source" : "keyword", "dest" : "_text_" },
-    "add-field" : { "name" : "temporal-start", "type" : "pdate", "docValues" : true },
-    "add-field" : { "name" : "temporal-end", "type" : "pdate", "docValues" : true },
-    "add-field" : { "name" : "spatial", "type" : "string" }
+    "add-copy-field" : { "source" : "keyword", "dest" : "_text_" }        
 }'
 ```
 - And then:
