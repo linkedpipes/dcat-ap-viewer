@@ -20,11 +20,10 @@ function prepareTypeaheadSolrQuery(query) {
         return "";
     }
 
-  let solrQuery = "title_query:" + tokens[0];
+  let solrQuery = "title_query:*" + tokens[0] + "*";
   for (let index = 1; index < tokens.length; ++index) {
-    solrQuery += " AND title_query:" + tokens[index];
+    solrQuery += " AND title_query:*" + tokens[index] + "*";
   }
-  solrQuery += "*";
 
   return solrQuery;
 }
@@ -139,11 +138,10 @@ function prepareFullSolrQuery(query) {
     return "";
   }
 
-  let solrQuery = "_text_:" + tokens[0];
+  let solrQuery = "_text_:*" + tokens[0] + "*";
   for (let index = 1; index < tokens.length; ++index) {
-    solrQuery += " AND _text_:" + tokens[index];
+    solrQuery += " AND _text_:*" + tokens[index] + "*";
   }
-  solrQuery += "*";
 
   return solrQuery;
 }
