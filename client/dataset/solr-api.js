@@ -31,7 +31,7 @@ function prepareTypeaheadSolrQuery(query) {
 function escapeSolrQuery(query) {
   query = query.toLocaleLowerCase();
 
-  const charactersToEscape = /([\!\*\+\=\<\>\&\|\{\}\^\~\?"])/g;
+  const charactersToEscape = /([\!\*\+\=\<\>\&\|\{\}\^\~\?\[\]\:"])/g;
   query = query.replace(charactersToEscape, "\\$1");
 
   // Escape control words (and, or, not).
