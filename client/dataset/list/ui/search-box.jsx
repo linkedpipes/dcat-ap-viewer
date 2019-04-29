@@ -68,6 +68,15 @@ class SearchBox extends React.Component {
                     searchText={getString("search.searching")}
                     emptyLabel={getString("search.no_data_found")}
                     ref={(ref) => this.typeahead = ref}
+                    filterBy={(option, props) => {
+                      // Just show all that we get.
+                      return true;
+                    }}
+                    renderMenuItemChildren={(text, props, idx) => {
+                      return (
+                        <span>{text}</span>
+                      )
+                    }}
                     />
                 <InputGroupAddon addonType="append">
                     <Button color="primary"
