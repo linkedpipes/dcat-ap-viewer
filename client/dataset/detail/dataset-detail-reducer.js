@@ -93,8 +93,8 @@ function onQualityRequestFailed(state, action) {
         "dataset": {
             ...state.dataset,
             "quality": {
-                "ready": true,
-                "missing": true
+                ...state.dataset.quality,
+                "ready": true
             }
         }
     }

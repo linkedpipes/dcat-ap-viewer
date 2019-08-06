@@ -138,11 +138,10 @@ function onQualityRequestFailed(state, action) {
                 "data": {
                     ...dist.data,
                     "quality": {
-                        "ready": true,
-                        "missing": true
+                        ...dist.data.quality,
+                        "ready": true
                     }
                 }
-
             }
         }
     }

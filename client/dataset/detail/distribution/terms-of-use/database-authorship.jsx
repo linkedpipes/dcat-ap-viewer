@@ -82,7 +82,7 @@ function custom(distribution) {
                 {!distribution.quality.ready &&
                 <Spinner size="sm" color="secondary" className="float-right"/>
                 }
-                {distribution.quality.ready && !distribution.quality.databaseAuthorship &&
+                {distribution.quality.ready && distribution.quality.databaseAuthorship === false &&
                 <i className="material-icons text-danger float-right"
                    title={getString("license_db_custom_unavailable", strArgs)}
                    onClick={() => openModal(getString("license_db_custom_unavailable", strArgs))}>
