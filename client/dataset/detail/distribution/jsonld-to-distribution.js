@@ -125,7 +125,7 @@ export function loadDistributionQuality(jsonld, distribution) {
                 quality["mediaTypeNote"] = triples.value(measure, SKOS.note);
                 break;
             case QUALITY.schemaAvailability:
-                quality["format"] = value;
+                quality["schema"] = value;
                 quality["schemaLastCheck"] = sdmxRefToDate(period);
                 break;
             case QUALITY.authorship:
