@@ -16,7 +16,7 @@ export default function personalData(distribution, openModal) {
         label = getString("license_personal_yes");
         title = getString("license_personal_yes_comment");
     } else if (mapped === "unspecified") {
-        iconClass = " text-danger";
+        iconClass = " text-warning";
         label = getString("license_personal_unspecified");
         title = getString("license_personal_unspecified_comment");
     } else if (mapped === "missing") {
