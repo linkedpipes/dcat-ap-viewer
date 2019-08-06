@@ -1,7 +1,9 @@
 import React from "react";
-import {selectLabel, selectLabelNoIri} from "../../../../app-services/labels";
+import {selectLabelNoIri} from "../../../../app-services/labels";
+import {getString} from "@/app-services/strings";
+import {Spinner} from "reactstrap";
 
-export default function mediaTypeItem(labels, distribution) {
+export default function mediaTypeItem(labels, distribution, openModal) {
     if (distribution.mediaType === undefined) {
         return null;
     }
@@ -13,6 +15,7 @@ export default function mediaTypeItem(labels, distribution) {
                target="_blank">
                 {linkIcon()}
             </a>
+            {qualityIcon(distribution, openModal)}
         </li>
     )
 }
@@ -27,4 +30,35 @@ function linkIcon() {
             open_in_new
         </i>
     );
+}
+
+function qualityIcon(distribution, openModal) {
+    if (!distribution.quality.ready) {
+        return (
+            <Spinner size="sm" color="secondary" className="float-right"/>
+        )
+    }
+    if (distribution.quality.mediaType === null) {
+        return null;
+    }
+    if (distribution.quality.mediaType) {
+        return (
+            <i className="material-icons text-success float-right"
+               title={getString("format_match")}
+               onClick={() => openModal(getString("format_match"))}>
+                verified_user
+            </i>
+        )
+    } else {
+        const strArgs = {
+            "media-type": distribution.quality.mediaTypeByServer
+        };
+        return (
+            <i className="material-icons text-warning float-right"
+               title={getString("format_mismatch", strArgs)}
+               onClick={() => openModal(getString("format_mismatch", strArgs))}>
+                warning
+            </i>
+        )
+    }
 }

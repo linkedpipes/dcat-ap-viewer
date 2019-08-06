@@ -19,11 +19,12 @@ import {
     CATALOG_DELETE
 } from "@/app/form-links";
 import {NKOD} from "@/app-services/vocabulary";
+import {Spinner} from "reactstrap";
 
 export default class DatasetView extends React.PureComponent {
 
     render() {
-        const {dataset, publisherUrl, labels} = this.props;
+        const {dataset, publisherUrl, labels, openModal} = this.props;
         const title = selectLabel(labels, this.props.dataset);
 
         return (
@@ -42,7 +43,8 @@ export default class DatasetView extends React.PureComponent {
                 <p>{selectString(dataset.description)}</p>
                 <hr/>
                 <Keywords labels={labels} keywords={dataset.keywords}/>
-                <Properties labels={labels} dataset={dataset}/>
+                <Properties labels={labels} dataset={dataset}
+                            openModal={openModal}/>
                 <hr/>
             </div>
         )
@@ -120,12 +122,12 @@ function Keywords({labels, keywords}) {
 }
 
 
-const Properties = ({labels, dataset}) => {
+const Properties = ({labels, dataset, openModal}) => {
     return (
         <div className="row">
             {firstColumn(labels, dataset)}
             {secondColumn(labels, dataset)}
-            {thirdColumn(labels, dataset)}
+            {thirdColumn(labels, dataset, openModal)}
             {fourthColumn(labels, dataset)}
         </div>
     );
@@ -195,7 +197,6 @@ function containsData(value) {
     return value !== undefined && value.length !== 0;
 }
 
-
 function secondColumn(labels, dataset) {
     const hasSpatial = containsData(dataset.spatial);
     const hasTemporal = containsData(dataset.temporal);
@@ -229,7 +230,7 @@ function labeledLinkEntitiesAsDd(labels, entities) {
     ));
 }
 
-function thirdColumn(labels, dataset) {
+function thirdColumn(labels, dataset, openModal) {
     const hasDocumentation = containsData(dataset.documentation);
     const hasContacts = containsData(dataset.contactPoints);
     if (!hasDocumentation && !hasContacts) {
@@ -238,14 +239,15 @@ function thirdColumn(labels, dataset) {
     return (
         <div className="col-12 col-sm-6 col-md-3">
             <dl>
-                {hasDocumentation && <dt>{getString("documentation")}</dt>}
-                {hasDocumentation && documentation(dataset.documentation)}
+                {hasDocumentation && documentationLabel(dataset, openModal)}
+                {hasDocumentation && documentation(dataset)}
                 {hasContacts && <dt>{getString("contact_point")}</dt>}
                 {hasContacts && contactPoints(labels, dataset.contactPoints)}
             </dl>
         </div>
     )
 }
+
 
 function fourthColumn(labels, dataset) {
     const hasFrequency = containsData(dataset.frequency);
@@ -262,7 +264,52 @@ function fourthColumn(labels, dataset) {
     )
 }
 
-function documentation(entities) {
+function documentationLabel(dataset, openModal) {
+    const strArgs = {
+        "date": dataset.quality.documentationLastCheck
+    };
+    if (!dataset.quality.ready) {
+        return (
+            <dt>
+                {getString("documentation")}
+                <Spinner size="sm" color="secondary" className="float-right"/>
+            </dt>
+        )
+    }
+    if (dataset.quality.documentation === null) {
+        return (
+            <dt>
+                {getString("documentation")}
+            </dt>
+        )
+    }
+    if (dataset.quality.documentation) {
+        return (
+            <dt>
+                {getString("documentation")}
+                <i className="material-icons text-success float-right"
+                   title={getString("documentation_available", strArgs)}
+                   onClick={() => openModal(getString("documentation_available", strArgs))}>
+                    verified_user
+                </i>
+            </dt>
+        )
+    } else {
+        return (
+            <dt>
+                {getString("documentation")}
+                <i className="material-icons text-danger float-right"
+                   title={getString("documentation_unavailable", strArgs)}
+                   onClick={() => openModal(getString("documentation_unavailable", strArgs))}>
+                    link_off
+                </i>
+            </dt>
+        )
+    }
+}
+
+function documentation(dataset) {
+    let entities = dataset.documentation;
     if (!Array.isArray(entities)) {
         entities = [entities];
     }

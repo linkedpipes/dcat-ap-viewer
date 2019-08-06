@@ -27,6 +27,9 @@ export function isDataReady(status) {
 }
 
 export function fetchJson(url) {
+    if (url.indexOf("quality") === -1) {
+        url = url.replace("./", "https://data.gov.cz/");
+    }
     return fetch(url, {
         "method": "GET",
         "headers": {

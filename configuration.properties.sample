@@ -45,3 +45,6 @@ client.form_url = https://dev.nkod.opendata.cz/formulář/
 
 # Prefix used to create dereference IRI for datasets.
 client.dereference_prefix =
+
+# Endpoint with quality data.
+quality.sparql =

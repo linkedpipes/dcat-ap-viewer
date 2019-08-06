@@ -22,7 +22,7 @@ import {parse as parseQueryString} from "query-string";
 import DatasetDetail from "./dataset-detail";
 import {DATASET_DETAIL_URL} from "@/app/navigation";
 import HeadLinks from "@/app-ui/head-links";
-import {getString} from "@/app-services/strings";
+import {showModal} from "@/app-services/modal";
 
 class _DatasetDetailContainer extends React.Component {
 
@@ -38,6 +38,7 @@ class _DatasetDetailContainer extends React.Component {
             this.props.fetchDataset();
         }
     }
+
 
     render() {
         if (!isDataReady(this.props.status)) {
@@ -63,7 +64,8 @@ class _DatasetDetailContainer extends React.Component {
                     <DatasetDetail
                         dataset={this.props.dataset}
                         publisherUrl={publisherUrl}
-                        labels={labels}/>
+                        labels={labels}
+                        openModal={this.props.openModal}/>
                     <DistributionListContainer dataset={this.props.dataset}/>
                     <DatasetWebPageMetadata
                         dataset={this.props.dataset}
@@ -90,7 +92,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     "onUnMount": () => dispatch(onUnMount()),
     "fetchDataset": () => {
         dispatch(fetchDataset(getDatasetIriFromLocation(ownProps.location)));
-    }
+    },
+    "openModal": (body) => dispatch(showModal(undefined, body))
 });
 
 function getDatasetIriFromLocation(location) {

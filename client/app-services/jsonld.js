@@ -38,7 +38,6 @@ function getGraph(data) {
     } else {
         return data["@graph"]
     }
-
 }
 
 graph.getByResources = (data, iris) => {

@@ -48,6 +48,7 @@ const strings = {
         , "f_legal_1": "vyhláškou č. 64/2008 Sb., o formě uveřejňování informací souvisejících s výkonem veřejné správy prostřednictvím webových stránek pro osoby se zdravotním postižením (vyhláška o přístupnosti)"
         , "f_legal_2": ", a splňuje všechna pravidla uveřejněná v příloze této vyhlášky."
         , "f_opz_logo_link": "/images/ozp_logo_cz.jpg"
+        , "close": "Zavři"
     },
     "en": {
         "404_title": "404 page not found"
@@ -93,6 +94,7 @@ const strings = {
         , "f_legal_1": "Decree No. 64/2008, on the form of publishing information related to the exercise of public administration via web sites for persons with a disability (accessibility decree)"
         , "f_legal_2": " and conforms to all the rules laid down in the appendix to this decree."
         , "f_opz_logo_link": "/images/ozp_logo_en.jpg"
+        , "close": "Close"
     }
 };
 
@@ -127,11 +129,16 @@ export function getString(name) {
         const value = strings[language][name];
         if (value === undefined) {
             console.error("Missing key (", language, ") :", name);
+            return undefined;
         }
-        return value;
-    } else {
-        return strings[getLanguage()][name];
     }
+    let label = strings[getLanguage()][name];
+    if (arguments.length === 1) {
+        return label;
+    }
+    const args = arguments[1];
+    return label.replace(/{([^\}]*)}/g,
+      (match, number) => args[match.substr(1, match.length - 2)]);
 }
 
 export function getStringArgs(name) {

@@ -8,6 +8,7 @@ import {LanguageReRouter} from "./language-rerouter";
 import {LoaderIndicator} from "@/app-ui/loading-indicator";
 import GoogleTagManager from "@/app-ui/google-tag-manager"
 import {InitialDataFetch} from "@/app-services/initial-data";
+import {ModalContainer} from "@/app-services/modal";
 
 class AppComponent extends React.Component {
     render() {
@@ -22,6 +23,7 @@ class AppComponent extends React.Component {
                         {React.cloneElement(this.props.children, this.props)}
                     </InitialDataFetch>
                     <Footer/>
+                    <ModalContainer/>
                 </div>
             </LanguageReRouter>
         );

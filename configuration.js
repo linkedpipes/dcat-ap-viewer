@@ -20,6 +20,9 @@
             "couchdb": properties.get("couchdb.url"),
             "repository": getRepositoryType(properties)
         },
+        "quality": {
+            "sparql": properties.get("quality.sparql")
+        },
         "port": properties.get("port"),
         "client": {
             "title": properties.get("client.title_default") || "",

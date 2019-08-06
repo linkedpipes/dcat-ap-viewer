@@ -4,7 +4,8 @@ const queries = require("./sparql-queries");
 
 module.exports = {
     "createDatasetsGet": createDatasetsGet,
-    "createDistributionsGet": createDistributionsGet
+    "createDistributionsGet": createDistributionsGet,
+    "createQualityGet": createQualityGet
 };
 
 function createDatasetsGet() {
@@ -41,4 +42,38 @@ function createDistributionsGet() {
     }
 }
 
+function createQualityGet() {
+    return (req, res) => {
+        const query = createQualityGetSparql(req.query.iri);
+        const url = config.quality.sparql + "/?" +
+            "format=application%2Fx-json%2Bld&" +
+            "timeout=0&" +
+            "query=" + encodeURIComponent(query);
+        request.get({"url": url}).on("error", (error) => {
+            handleError(res, error);
+        }).pipe(res);
+    }
+}
 
+function createQualityGetSparql(resource) {
+    return `
+prefix dqv: <http://www.w3.org/ns/dqv#>
+prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
+
+CONSTRUCT {
+  ?measure a dqv:QualityMeasurement ;
+    dqv:computedOn <${resource}> ;
+    dqv:isMeasurementOf ?MeasurementOf ;
+    dqv:value ?value ;
+    sdmx-dimension:refPeriod ?refPeriod .
+} WHERE {
+  ?measure a dqv:QualityMeasurement ;
+    dqv:computedOn <${resource}> ;
+    dqv:isMeasurementOf ?MeasurementOf ;
+    dqv:value ?value .
+  OPTIONAL {
+    ?measure sdmx-dimension:refPeriod ?refPeriod .
+  }
+}
+    `;
+}

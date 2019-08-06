@@ -13,7 +13,7 @@ import mediaTypeItem from "./access/media-type-item";
 
 export default class Distribution extends React.PureComponent {
     render() {
-        const {labels, distribution, isLoading} = this.props;
+        const {labels, distribution, isLoading, openModal} = this.props;
 
         if (isLoading) {
             // TODO Add loading indicator !!
@@ -39,10 +39,10 @@ export default class Distribution extends React.PureComponent {
                     </div>
                     <div className="row">
                         <div className="col-6 pr-1">
-                            {licenseColumn(distribution)}
+                            {licenseColumn(distribution, openModal)}
                         </div>
                         <div className="col-6 pl-1">
-                            {accessColumn(labels, distribution)}
+                            {accessColumn(labels, distribution, openModal)}
                         </div>
                     </div>
                 </div>
@@ -63,32 +63,32 @@ function dataFormatItem(labels, distribution) {
     )
 }
 
-function licenseColumn(distribution) {
+function licenseColumn(distribution, openModal) {
     return (
         <div className="card">
             <h6 className="card-title text-muted pl-2 pt-2">
                 {getString("distribution_license")}
             </h6>
             <ul className="list-group list-group-flush">
-                {authorship(distribution)}
-                {databaseAuthorship(distribution)}
-                {protectedDatabaseAuthorship(distribution)}
-                {personalData(distribution)}
+                {authorship(distribution, openModal)}
+                {databaseAuthorship(distribution, openModal)}
+                {protectedDatabaseAuthorship(distribution, openModal)}
+                {personalData(distribution, openModal)}
             </ul>
         </div>
     )
 }
 
-function accessColumn(labels, distribution) {
+function accessColumn(labels, distribution, openModal) {
     return (
         <div className="card">
             <h6 className="card-title text-muted pl-2 pt-2">
                 {getString("distribution_access")}
             </h6>
             <ul className="list-group list-group-flush">
-                {downloadListItem(distribution)}
-                {schemaListItem(distribution)}
-                {mediaTypeItem(labels, distribution)}
+                {downloadListItem(distribution, openModal)}
+                {schemaListItem(distribution, openModal)}
+                {mediaTypeItem(labels, distribution, openModal)}
             </ul>
         </div>
     );

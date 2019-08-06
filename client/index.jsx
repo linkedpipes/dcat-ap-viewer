@@ -12,6 +12,7 @@ import {createRoutes} from "@/app/navigation";
 import {initialize as initializeStrings} from "@/app-services/strings";
 
 import "@/index.style.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const history = createHistory();
 const store = createStore(history);

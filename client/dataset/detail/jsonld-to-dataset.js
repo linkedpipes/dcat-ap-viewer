@@ -9,7 +9,10 @@ import {
     SCHEMA,
     SKOS,
     EUA,
-    NKOD
+    NKOD,
+    DQV,
+    SDMX,
+    QUALITY
 } from "@/app-services/vocabulary";
 
 export function jsonLdToDataset(jsonld) {
@@ -62,7 +65,15 @@ export function jsonLdToDataset(jsonld) {
         "lkod": triples.resource(dataset, NKOD.lkod)
     };
 
-    return {...mandatory, ...recommended, ...optional, ...external};
+    const quality = {
+        "quality": {
+            "ready": false,
+            "documentation": null,
+            "documentationLastCheck": null
+        }
+    };
+
+    return {...mandatory, ...recommended, ...optional, ...external, ...quality};
 }
 
 function loadThemes(jsonld, dataset) {
@@ -128,4 +139,34 @@ function loadTemporal(jsonld, dataset) {
             "endDate": triples.value(temporal, SCHEMA.endDate)
         };
     }
+}
+
+export function loadDatasetQuality(jsonld, dataset) {
+    const measures = graph.getAllByType(jsonld, DQV.QualityMeasurement);
+    const quality = {
+        ...dataset.quality,
+        "ready": true
+    };
+
+    measures.forEach((measure) => {
+        const period = triples.resource(measure, SDMX.refPeriod);
+        const measureOf = triples.resource(measure, DQV.isMeasurementOf);
+        const value = triples.value(measure, DQV.value);
+        switch (measureOf) {
+            case QUALITY.documentationAvailability:
+                quality["documentation"] = value;
+                quality["documentationLastCheck"] = sdmxRefToDate(period);
+                break;
+            default:
+                break;
+        }
+    });
+
+    return quality;
+}
+
+function sdmxRefToDate(iri) {
+    return iri.substr(iri.lastIndexOf("/") + 1)
+        .replace("T", " ")
+        .replace("-", ".");
 }
