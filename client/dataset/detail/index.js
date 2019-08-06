@@ -32,7 +32,7 @@ register({
             , "documentation_available": "Dokumentace byla {date} dostupná."
             , "documentation_unavailable": "Dokumentace byla {date} nedostupná."
             , "format_match": "Datový formát registrovaný poskytovatelem odpovídá datovému formátu, který indikuje webový server."
-            , "format_mismatch" : "Datový formát registrovaný poskytovatelem je jiný, než datový formát indikovaný webovým serverem: {media-type}."
+            , "format_mismatch" : "Datový formát registrovaný poskytovatelem je jiný, než datový formát indikovaný webovým serverem: {note}."
             , ...termsOfUseString["cs"]
         },
         "en": {
@@ -57,7 +57,7 @@ register({
             , "documentation_available": "The documentation was available on {date}."
             , "documentation_unavailable": "The documentation was unavailable on {date}."
             , "format_match": "The media type registered by the publisher matches the media type indicated by the web server."
-            , "format_mismatch" : " The media type registered by the publisher differs from the media type indicated by the web server: {media-type}."
+            , "format_mismatch" : " The media type registered by the publisher differs from the media type indicated by the web server: {note}."
             , ...termsOfUseString["en"]
         }
     }

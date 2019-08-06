@@ -8,7 +8,8 @@ import {
     PU,
     DQV,
     SDMX,
-    QUALITY
+    QUALITY,
+    SKOS
 } from "../../../app-services/vocabulary";
 
 // TODO Merge with action or leave in separated file.
@@ -59,7 +60,7 @@ export function jsonLdToDistribution(jsonld) {
             "schema": null,
             "schemaLastCheck": null,
             "mediaType": null,
-            "mediaTypeByServer": null,
+            "mediaTypeNote": null,
             "authorshipCustom": null,
             "authorshipCustomLastCheck": null,
             "databaseAuthorship": null,
@@ -121,8 +122,7 @@ export function loadDistributionQuality(jsonld, distribution) {
                 break;
             case QUALITY.mediaType:
                 quality["mediaType"] = value;
-                quality["mediaTypeByServer"] =
-                    triples.value(measure, DQV.expectedDataType);
+                quality["mediaTypeNote"] = triples.value(measure, SKOS.note);
                 break;
             case QUALITY.schemaAvailability:
                 quality["format"] = value;

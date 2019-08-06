@@ -80,7 +80,8 @@ export const SCHEMA = {
 const SKOS_PREFIX = "http://www.w3.org/2004/02/skos/core#";
 export const SKOS = {
     "prefLabel": SKOS_PREFIX + "prefLabel",
-    "inScheme": SKOS_PREFIX + "inScheme"
+    "inScheme": SKOS_PREFIX + "inScheme",
+    "note": SKOS_PREFIX + "note"
 };
 
 export const RDF = {

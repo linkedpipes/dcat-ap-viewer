@@ -51,7 +51,7 @@ function qualityIcon(distribution, openModal) {
         )
     } else {
         const strArgs = {
-            "media-type": distribution.quality.mediaTypeByServer
+            "note": distribution.quality.mediaTypeNote
         };
         return (
             <i className="material-icons text-warning float-right"
