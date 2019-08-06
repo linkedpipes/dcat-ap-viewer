@@ -5,7 +5,8 @@ const queries = require("./sparql-queries");
 module.exports = {
     "createDatasetsGet": createDatasetsGet,
     "createDistributionsGet": createDistributionsGet,
-    "createQualityGet": createQualityGet
+    "createQualityGet": createQualityGet,
+    "createPublishersQualityGet": createPublishersQualityGet
 };
 
 function createDatasetsGet() {
@@ -76,4 +77,28 @@ CONSTRUCT {
   }
 }
     `;
+}
+
+function createPublishersQualityGet() {
+    const query = `
+prefix foaf: <http://xmlns.com/foaf/0.1/>
+
+CONSTRUCT {
+  ?publisher a <https://data.gov.cz/slovník/nkod/VzornýPoskytovatel> ;
+    foaf:name ?name .
+}
+WHERE {
+  ?publisher a <https://data.gov.cz/slovník/nkod/VzornýPoskytovatel> ;
+    foaf:name ?name .
+}
+    `;
+    return (req, res) => {
+        const url = config.quality.sparql + "/?" +
+            "format=application%2Fx-json%2Bld&" +
+            "timeout=0&" +
+            "query=" + encodeURIComponent(query);
+        request.get({"url": url}).on("error", (error) => {
+            handleError(res, error);
+        }).pipe(res);
+    }
 }
