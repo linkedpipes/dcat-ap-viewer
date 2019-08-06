@@ -42,7 +42,8 @@ function qualityIcon(distribution, openModal) {
         )
     }
     const strArgs = {
-        "date": distribution.quality.downloadLastCheck
+        "date": distribution.quality.downloadLastCheck,
+        "note": distribution.quality.downloadNote
     };
     if (distribution.quality.download === null) {
         return null;

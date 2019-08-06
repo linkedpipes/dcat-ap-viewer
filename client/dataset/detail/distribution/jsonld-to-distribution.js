@@ -57,16 +57,22 @@ export function jsonLdToDistribution(jsonld) {
             "ready": false,
             "download": null,
             "downloadLastCheck": null,
+            "downloadNone": null,
             "schema": null,
             "schemaLastCheck": null,
+            "schemaNone": null,
             "mediaType": null,
+            "mediaTypeCheck": null,
             "mediaTypeNote": null,
             "authorshipCustom": null,
             "authorshipCustomLastCheck": null,
+            "authorshipCustomNte": null,
             "databaseAuthorship": null,
             "databaseAuthorshipLastCheck": null,
+            "databaseAuthorshipNote": null,
             "protectedDatabaseAuthorship": null,
-            "protectedDatabaseAuthorshipLastCheck": null
+            "protectedDatabaseAuthorshipLastCheck": null,
+            "protectedDatabaseAuthorshipNote": null
         }
     };
 
@@ -119,27 +125,36 @@ export function loadDistributionQuality(jsonld, distribution) {
             case QUALITY.downloadAvailability:
                 quality["download"] = value;
                 quality["downloadLastCheck"] = sdmxRefToDate(period);
+                quality["downloadNote"] = triples.value(measure, SKOS.note);
                 break;
             case QUALITY.mediaType:
                 quality["mediaType"] = value;
+                quality["mediaTypeLastCheck"] = sdmxRefToDate(period);
                 quality["mediaTypeNote"] = triples.value(measure, SKOS.note);
                 break;
             case QUALITY.schemaAvailability:
                 quality["schema"] = value;
                 quality["schemaLastCheck"] = sdmxRefToDate(period);
+                quality["schemaNote"] = triples.value(measure, SKOS.note);
                 break;
             case QUALITY.authorship:
                 quality["authorshipCustom"] = value;
                 quality["authorshipCustomLastCheck"] = sdmxRefToDate(period);
+                quality["authorshipCustomNote"] =
+                    triples.value(measure, SKOS.note);
                 break;
             case QUALITY.databaseAuthorship:
                 quality["databaseAuthorship"] = value;
                 quality["databaseAuthorshipLastCheck"] = sdmxRefToDate(period);
+                quality["databaseAuthorshipNote"] =
+                    triples.value(measure, SKOS.note);
                 break;
             case QUALITY.specialDatabaseAuthorship:
                 quality["protectedDatabaseAuthorship"] = value;
                 quality["protectedDatabaseAuthorshipLastCheck"] =
                     sdmxRefToDate(period);
+                quality["protectedDatabaseAuthorshipNote"] =
+                    triples.value(measure, SKOS.note);
                 break;
             default:
                 break;

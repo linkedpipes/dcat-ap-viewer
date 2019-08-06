@@ -83,7 +83,8 @@ function missing(openModal) {
 
 function custom(distribution, openModal) {
     const strArgs = {
-        "date": distribution.quality.authorshipCustomLastCheck
+        "date": distribution.quality.authorshipCustomLastCheck,
+        "note": distribution.quality.authorshipCustomNote
     };
     return (
         <li className="list-group-item px-2">

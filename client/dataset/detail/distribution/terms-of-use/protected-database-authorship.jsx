@@ -62,7 +62,8 @@ export default function protectedDatabaseAuthorship(distribution, openModal) {
 
 function custom(distribution, openModal) {
     const strArgs = {
-        "date": distribution.quality.protectedDatabaseAuthorshipLastCheck
+        "date": distribution.quality.protectedDatabaseAuthorshipLastCheck,
+        "note": distribution.quality.protectedDatabaseAuthorshipNote
     };
     return (
         <li className="list-group-item px-2">

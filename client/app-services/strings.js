@@ -138,7 +138,15 @@ export function getString(name) {
     }
     const args = arguments[1];
     return label.replace(/{([^\}]*)}/g,
-      (match, number) => args[match.substr(1, match.length - 2)]);
+      (match, number) => {
+            let key =  match.substr(1, match.length - 2);
+            let value = args[key];
+            if (value === undefined) {
+                return "";
+            } else {
+                return value;
+            }
+      });
 }
 
 export function getStringArgs(name) {

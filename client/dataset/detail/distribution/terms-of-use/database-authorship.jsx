@@ -64,7 +64,8 @@ export default function databaseAuthorship(distribution, openModal) {
 
 function custom(distribution, openModal) {
     const strArgs = {
-        "date": distribution.quality.databaseAuthorshipLastCheck
+        "date": distribution.quality.databaseAuthorshipLastCheck,
+        "note": distribution.quality.databaseAuthorshipNote
     };
     return (
         <li className="list-group-item px-2">

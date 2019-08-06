@@ -69,7 +69,8 @@ export function jsonLdToDataset(jsonld) {
         "quality": {
             "ready": false,
             "documentation": null,
-            "documentationLastCheck": null
+            "documentationLastCheck": null,
+            "documentationNote": null
         }
     };
 
@@ -156,6 +157,7 @@ export function loadDatasetQuality(jsonld, dataset) {
             case QUALITY.documentationAvailability:
                 quality["documentation"] = value;
                 quality["documentationLastCheck"] = sdmxRefToDate(period);
+                quality["documentationNote"] = triples.value(measure, SKOS.note);
                 break;
             default:
                 break;

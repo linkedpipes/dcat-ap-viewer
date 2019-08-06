@@ -29,7 +29,8 @@ function qualityIcon(distribution, openModal) {
         return null;
     }
     const strArgs = {
-        "date": distribution.quality.schemaLastCheck
+        "date": distribution.quality.schemaLastCheck,
+        "note": distribution.quality.schemaNote
     };
     if (distribution.quality.schema) {
         return (

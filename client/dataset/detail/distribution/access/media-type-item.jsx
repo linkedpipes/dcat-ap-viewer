@@ -51,6 +51,7 @@ function qualityIcon(distribution, openModal) {
         )
     } else {
         const strArgs = {
+            "date": distribution.quality.mediaTypeLastCheck,
             "note": distribution.quality.mediaTypeNote
         };
         return (
