@@ -56,7 +56,7 @@ export default function protectedDatabaseAuthorship(distribution, openModal) {
                 </li>
             );
         default:
-            return custom(distribution);
+            return custom(distribution, openModal);
     }
 }
 

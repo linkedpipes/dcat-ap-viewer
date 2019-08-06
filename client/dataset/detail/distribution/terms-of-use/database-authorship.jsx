@@ -58,11 +58,11 @@ export default function databaseAuthorship(distribution, openModal) {
                 </li>
             );
         default:
-            return custom(distribution);
+            return custom(distribution, openModal);
     }
 }
 
-function custom(distribution) {
+function custom(distribution, openModal) {
     const strArgs = {
         "date": distribution.quality.databaseAuthorshipLastCheck
     };
