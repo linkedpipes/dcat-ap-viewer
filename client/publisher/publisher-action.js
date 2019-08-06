@@ -2,12 +2,15 @@ import {
     addLoaderStatusOn,
     addLoaderStatusOff
 } from "app-ui/loading-indicator/index";
-import {fetchPublishersFromSolr} from "./publisher-api";
+import {fetchPublishersFromSolr, fetchPublishersQuality} from "./publisher-api";
 import reducer from "./publisher-reducer";
 
 export const FETCH_PUBLISHERS_REQUEST = "FETCH_PUBLISHERS_REQUEST";
 export const FETCH_PUBLISHERS_SUCCESS = "FETCH_PUBLISHERS_SUCCESS";
 export const FETCH_PUBLISHERS_FAILED = "FETCH_PUBLISHERS_FAILED";
+
+export const FETCH_PUBLISHERS_QUALITY_SUCCESS =
+    "FETCH_PUBLISHERS_QUALITY_SUCCESS";
 
 export function fetchPublisherList() {
     return (dispatch, getState) => {
@@ -17,7 +20,10 @@ export function fetchPublisherList() {
         }
         dispatch(fetchRequest());
         fetchPublishersFromSolr()
-            .then((payload) => dispatch(fetchSuccess(payload)))
+            .then((payload) => {
+                dispatch(fetchSuccess(payload));
+                dispatch(publisherQuality());
+            })
             .catch((error) => dispatch(fetchFailed(error)));
     };
 }
@@ -41,4 +47,18 @@ function fetchFailed(error) {
         "type": FETCH_PUBLISHERS_FAILED,
         "error": error
     });
+}
+
+function publisherQuality() {
+    return (dispatch) => {
+        fetchPublishersQuality().
+            then((payload) => dispatch(fetchQualitySuccess(payload)));
+    };
+}
+
+function fetchQualitySuccess(publishers) {
+    return {
+        "type": FETCH_PUBLISHERS_QUALITY_SUCCESS,
+        "publishers": publishers
+    }
 }

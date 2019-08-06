@@ -122,7 +122,8 @@ export const NKOD = {
     "SourceCkan": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/CkanLkod",
     "SourceDcat": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkod",
     "SourceSparql": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkodSparql",
-    "lkod": NKOD_PREFIX + "lkod"
+    "lkod": NKOD_PREFIX + "lkod",
+    "ExceptionalPublisher": NKOD_PREFIX + "VzornýPoskytovatel"
 };
 const RDFS_PREFIX = "http://www.w3.org/2000/01/rdf-schema#";
 export const RDFS = {

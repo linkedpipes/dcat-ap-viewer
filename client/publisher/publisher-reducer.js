@@ -1,7 +1,8 @@
 import {
     FETCH_PUBLISHERS_REQUEST,
     FETCH_PUBLISHERS_SUCCESS,
-    FETCH_PUBLISHERS_FAILED
+    FETCH_PUBLISHERS_FAILED,
+    FETCH_PUBLISHERS_QUALITY_SUCCESS
 } from "./publisher-action";
 import {
     STATUS_INITIAL,
@@ -28,6 +29,8 @@ function reducer(state = initialState, action) {
             return onRequestSuccess(state, action);
         case FETCH_PUBLISHERS_FAILED:
             return onRequestFailed(state, action);
+        case FETCH_PUBLISHERS_QUALITY_SUCCESS:
+            return onQualityRequestSuccess(state, action);
         default:
             break;
     }
@@ -49,14 +52,14 @@ function onRequestSuccess(state, action) {
         ...state,
         "status": STATUS_FETCHED,
         "allFetched": true,
-        ... addPublishers(state, action.publishers)
+        ...addPublishers(state, action.publishers)
     };
 }
 
 function addPublishers(state, publishersToAdd) {
     const publishersMap = {...state.publishersMap};
     publishersToAdd.forEach((publisher) => {
-        const id  = publisher["@id"];
+        const id = publisher["@id"];
         if (publishersMap[id] === undefined) {
             publishersMap[id] = publisher;
         } else {
@@ -80,6 +83,25 @@ function onRequestFailed(state, action) {
         ...state,
         "status": action.error.status,
         "publishers": undefined
+    };
+}
+
+function onQualityRequestSuccess(state, action) {
+    const exceptionalPublisher = action.publishers;
+    const publishers = state.publishers.map((publisher) => {
+        const name = publisher["@id"];
+        if (exceptionalPublisher.indexOf(name) === -1) {
+            return publisher;
+        } else {
+            return {
+                ...publisher,
+                "exceptional": true
+            };
+        }
+    });
+    return {
+        ...state,
+        "publishers": publishers
     };
 }
 
