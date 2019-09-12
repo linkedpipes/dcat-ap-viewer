@@ -55,6 +55,7 @@ class SearchBox extends React.Component {
                     </InputGroupText>
                 </InputGroupAddon>
                 <AsyncTypeahead
+                    id="search-box"
                     minLength={2}
                     multiple={false}
                     useCache={false}

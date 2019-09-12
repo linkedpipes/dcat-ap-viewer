@@ -8,7 +8,7 @@ import {
 } from "@/app-ui/loading-indicator";
 import {constructSearchQueryUrl} from "./../solr-api";
 import {parse as parseQueryString} from "query-string";
-import {push} from "react-router-redux";
+import {push} from "connected-react-router";
 import {getQuery, PAGE_QUERY} from "@/app/navigation";
 import {dataStatusSelector} from "./dataset-list-reducer"
 import {fetchLabel} from "@/app-services/labels";

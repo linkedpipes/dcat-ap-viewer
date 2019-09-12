@@ -8,7 +8,7 @@ module.exports = (api) => {
             "@babel/preset-env",
             {
                 "targets": {
-                    "ei": 11,
+                    "ie": 11,
                     "chrome": 41
                 }
             }

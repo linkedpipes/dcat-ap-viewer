@@ -1,5 +1,5 @@
 import React from "react";
-import {withRouter} from "react-router-dom";
+import {withRouter} from "react-router";
 import {hot} from "react-hot-loader";
 import {connect} from "react-redux";
 import {Header} from "./header";

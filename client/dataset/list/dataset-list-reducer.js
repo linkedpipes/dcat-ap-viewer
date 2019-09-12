@@ -155,7 +155,7 @@ function onSetQueryString(state, action) {
 }
 
 function onLocationChange(state, action) {
-    const params = parseQueryString(action.payload.search);
+    const params = parseQueryString(action.payload.location.search);
     const queryString = params[getQuery(STRING_QUERY)];
     return {
         ...state,

@@ -10,7 +10,7 @@ import {
     PAGE,
     QUERY
 } from "./navigation";
-import {replace} from "react-router-redux";
+import {replace} from "connected-react-router";
 
 /**
  * Top level component, does not modify the content.

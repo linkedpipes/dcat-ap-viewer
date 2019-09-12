@@ -6,7 +6,8 @@ module.exports = merge(common, {
     "mode": "development",
     "devtool": "eval",
     "entry": [
-        "webpack-hot-middleware/client"
+        "webpack-hot-middleware/client",
+        "react-hot-loader/patch"
     ],
     "devServer": {
         "hot": true
