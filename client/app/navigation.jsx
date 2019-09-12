@@ -25,10 +25,9 @@ export const VIEW_QUERY = "VIEW_QUERY";
 
 export const PAGE = "PAGE";
 export const QUERY = "QUERY";
-const VALUE = "VALUE";
 const NAVIGATION = {
-    "cs": {},
-    "en": {}
+  "cs": {},
+  "en": {},
 };
 
 // TODO Use strings
@@ -79,24 +78,24 @@ NAVIGATION["en"][QUERY][VIEW_QUERY] = "visualization";
 let activeLanguage = getDefaultLanguage();
 
 function getDefaultLanguage() {
-    const language = navigator.language || navigator.userLanguage;
-    if (NAVIGATION[language] === undefined) {
-        return "en";
-    } else {
-        return language;
-    }
+  const language = navigator.language || navigator.userLanguage;
+  if (NAVIGATION[language] === undefined) {
+    return "en";
+  } else {
+    return language;
+  }
 }
 
 export function getLanguage() {
-    return activeLanguage;
+  return activeLanguage;
 }
 
 export function setLanguage(language) {
-    activeLanguage = language;
+  activeLanguage = language;
 }
 
 export function listLanguages() {
-    return Object.keys(NAVIGATION);
+  return Object.keys(NAVIGATION);
 }
 
 //
@@ -104,123 +103,123 @@ export function listLanguages() {
 //
 
 export const getUrl = (page, query) => {
-    let url = URL_PREFIX + "/" + NAVIGATION[getLanguage()][PAGE][page];
-    if (query === undefined) {
-        return url;
-    }
-    const keys = Object.keys(query);
-    url += "?" + getQuery(keys[0]) + "=" + encodeURIComponent(query[keys[0]]);
-    for (let index = 1; index < keys.length; ++index) {
-        const value = encodeURIComponent(query[keys[index]]);
-        url += "&" + getQuery(keys[index]) + "=" + value;
-    }
+  let url = URL_PREFIX + "/" + NAVIGATION[getLanguage()][PAGE][page];
+  if (query === undefined) {
     return url;
+  }
+  const keys = Object.keys(query);
+  url += "?" + getQuery(keys[0]) + "=" + encodeURIComponent(query[keys[0]]);
+  for (let index = 1; index < keys.length; ++index) {
+    const value = encodeURIComponent(query[keys[index]]);
+    url += "&" + getQuery(keys[index]) + "=" + value;
+  }
+  return url;
 };
 
 export const getFullUrl = (page, query, lang) => {
-    if (!lang) {
-        lang = getLanguage();
-    }
-    let url = URL_BASE + "/" + NAVIGATION[lang][PAGE][page];
-    const keys = Object.keys(query);
-    if (keys.length === 0) {
-        return url;
-    }
-    url += "?" + getQuery(keys[0]) + "=" + encodeURIComponent(query[keys[0]]);
-    for (let index = 1; index < keys.length; ++index) {
-        const value = encodeURIComponent(query[keys[index]]);
-        url += "&" + getQuery(keys[index]) + "=" + value;
-    }
+  if (!lang) {
+    lang = getLanguage();
+  }
+  let url = URL_BASE + "/" + NAVIGATION[lang][PAGE][page];
+  const keys = Object.keys(query);
+  if (keys.length === 0) {
     return url;
+  }
+  url += "?" + getQuery(keys[0]) + "=" + encodeURIComponent(query[keys[0]]);
+  for (let index = 1; index < keys.length; ++index) {
+    const value = encodeURIComponent(query[keys[index]]);
+    url += "&" + getQuery(keys[index]) + "=" + value;
+  }
+  return url;
 };
 
-export const getQuery = (query) => {
-    return NAVIGATION[getLanguage()][QUERY][query];
-};
+export function getQuery(query) {
+  return NAVIGATION[getLanguage()][QUERY][query];
+}
 
 //
 //
 //
 export const createRoutes = (history) => (
-    <Router history={history}>
-        <App>
-            <Switch>
-                {
-                    getRouteObjects().map(page =>
-                        <Route key={page.id}
-                               path={page.link}
-                               component={page.component}
-                               exact={page.exact}
-                        />
-                    )
-                }
-                <Route path="*" component={PageNotFound}/>
-            </Switch>
-        </App>
-    </Router>
+  <Router history={history}>
+    <App>
+      <Switch>
+        {
+          getRouteObjects().map(page =>
+            <Route key={page.id}
+              path={page.link}
+              component={page.component}
+              exact={page.exact}
+            />
+          )
+        }
+        <Route path="*" component={PageNotFound}/>
+      </Switch>
+    </App>
+  </Router>
 );
 
 
 function getRouteObjects() {
-    const routes = [];
-    const languages = Object.keys(NAVIGATION);
-    getRegistered().forEach((entry) => {
-        if (entry.url === undefined || entry.component === undefined) {
-            return;
-        }
-        languages.forEach((language) => {
-            const url = NAVIGATION[language][PAGE][entry.url];
-            // Some browsers (IE, Edge) does not escape national characters,
-            // while others (Firefox, Chrome) do, therefore we need to be ready
-            // to handle both variants. So we add escaped version for all
-            // but english.
-            if (language !== "en") {
-                routes.push({
-                    "id": entry.name + "-" + language,
-                    "link": URL_PREFIX +"/" + encodeURI(url),
-                    "component": entry.component,
-                    "exact" : false
-                });
-            }
-            routes.push({
-                "id": entry.name + "-" + language,
-                "link": URL_PREFIX +"/" + (url),
-                "component": entry.component,
-                "exact" : false
-            });
+  const routes = [];
+  const languages = Object.keys(NAVIGATION);
+  getRegistered().forEach((entry) => {
+    if (entry.url === undefined || entry.component === undefined) {
+      return;
+    }
+    languages.forEach((language) => {
+      const url = NAVIGATION[language][PAGE][entry.url];
+      // Some browsers (IE, Edge) does not escape national characters,
+      // while others (Firefox, Chrome) do, therefore we need to be ready
+      // to handle both variants. So we add escaped version for all
+      // but english.
+      if (language !== "en") {
+        routes.push({
+          "id": entry.name + "-" + language,
+          "link": URL_PREFIX +"/" + encodeURI(url),
+          "component": entry.component,
+          "exact" : false,
         });
-        if (entry.homepage) {
-            routes.push({
-                "id": "homepage",
-                "link": URL_PREFIX + "/",
-                "component": entry.component,
-                "exact" : true
-            });
-        }
-
+      }
+      routes.push({
+        "id": entry.name + "-" + language,
+        "link": URL_PREFIX +"/" + (url),
+        "component": entry.component,
+        "exact" : false,
+      });
     });
-    return routes;
+    if (entry.homepage) {
+      routes.push({
+        "id": "homepage",
+        "link": URL_PREFIX + "/",
+        "component": entry.component,
+        "exact" : true,
+      });
+    }
+
+  });
+  return routes;
 }
 
 export function translate(value, type, targetLanguage) {
-    for (let language in NAVIGATION) {
-        const value_map = NAVIGATION[language][type];
-        for (let key in value_map) {
-            if (value === value_map[key]) {
-                return NAVIGATION[targetLanguage][type][key];
-            }
-        }
+  for (let language in NAVIGATION) {
+    const value_map = NAVIGATION[language][type];
+    for (let key in value_map) {
+      if (value === value_map[key]) {
+        return NAVIGATION[targetLanguage][type][key];
+      }
     }
+  }
 }
 
 export function getLanguageForUrl(value) {
-    for (let language in NAVIGATION) {
-        const value_map = NAVIGATION[language][PAGE];
-        for (let key in value_map) {
-            if (value === value_map[key]) {
-                return language;
-            }
-        }
+  for (let language in NAVIGATION) {
+    const value_map = NAVIGATION[language][PAGE];
+    for (let key in value_map) {
+      if (value === value_map[key]) {
+        return language;
+      }
     }
-    return getDefaultLanguage();
+  }
+  return getDefaultLanguage();
 }

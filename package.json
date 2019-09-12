@@ -9,6 +9,7 @@
     "build": "cross-env NODE_ENV=production webpack --config build/webpack.production.js",
     "start": "node server/server.production.js",
     "start-api": "node server/server.api.js",
+    "lint": "eslint --ext .js,.jsx --ignore-path .gitignore . --fix",
     "test": "jest client"
   },
   "license": "X11",
@@ -69,5 +70,10 @@
     "webpack-hot-middleware": "^2.25.0",
     "webpack-merge": "^4.2.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.3.0",
+    "eslint-loader": "^3.0.0",
+    "eslint-plugin-react": "^7.14.3"
+  }
 }

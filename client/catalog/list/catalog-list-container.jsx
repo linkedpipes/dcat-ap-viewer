@@ -9,49 +9,56 @@ import {HttpRequestStatus} from "@/app-ui/http-request-status";
 import {CATALOG_LIST_URL} from "@/app/navigation";
 import {getString} from "@/app-services/strings";
 import HeadLinks from "@/app-ui/head-links";
+import {PropTypes} from "prop-types";
 
 class _CatalogsViewContainer extends React.Component {
 
-    componentDidMount() {
-        this.props.fetchData();
-    }
+  componentDidMount() {
+    this.props.fetchData();
+  }
 
-    render() {
-        if (isDataReady(this.props.status)) {
-            return (
-                <React.Fragment>
-                    <HeadLinks title={getString("catalogs")}
-                               url={CATALOG_LIST_URL}/>
-                    <CatalogList catalogs={this.props.catalogs}/>
-                </React.Fragment>
-            )
-        } else {
-            return (
-                <React.Fragment>
-                    <HeadLinks title={getString("catalogs")}
-                               url={CATALOG_LIST_URL}/>
-                    <HttpRequestStatus status={this.props.status}/>
-                </React.Fragment>
-            )
-        }
+  render() {
+    if (isDataReady(this.props.status)) {
+      return (
+        <React.Fragment>
+          <HeadLinks title={getString("catalogs")}
+            url={CATALOG_LIST_URL}/>
+          <CatalogList catalogs={this.props.catalogs}/>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <React.Fragment>
+          <HeadLinks title={getString("catalogs")}
+            url={CATALOG_LIST_URL}/>
+          <HttpRequestStatus status={this.props.status}/>
+        </React.Fragment>
+      )
     }
+  }
 
-    componentWillUnmount() {
+  componentWillUnmount() {
 
-    }
+  }
 
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    "status": statusSelector(state),
-    "catalogs": catalogsSelector(state)
+_CatalogsViewContainer.propTypes = {
+  "fetchData": PropTypes.func.isRequired,
+  "status": PropTypes.string.isRequired,
+  "catalogs": PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  "status": statusSelector(state),
+  "catalogs": catalogsSelector(state),
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    "fetchData": () => dispatch(fetchCatalogList())
+const mapDispatchToProps = (dispatch) => ({
+  "fetchData": () => dispatch(fetchCatalogList()),
 });
 
 export const CatalogsViewContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(_CatalogsViewContainer);

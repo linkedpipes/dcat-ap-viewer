@@ -4,18 +4,18 @@ import {CATALOG_LIST_URL} from "@/app/navigation";
 import reducer from "./catalog-list-reducer";
 
 register({
-    "name": reducer.name,
-    "reducer": reducer.reducer,
-    "url": [CATALOG_LIST_URL],
-    "component": CatalogsViewContainer,
-    "strings": {
-        "cs": {
-            "catalogs_found": "katalogů nalezeno",
-            "catalogs": "Lokální katalogy"
-        },
-        "en": {
-            "catalogs_found": "catalogs found",
-            "catalogs": "Local catalogs"
-        }
-    }
+  "name": reducer.name,
+  "reducer": reducer.reducer,
+  "url": [CATALOG_LIST_URL],
+  "component": CatalogsViewContainer,
+  "strings": {
+    "cs": {
+      "catalogs_found": "katalogů nalezeno",
+      "catalogs": "Lokální katalogy",
+    },
+    "en": {
+      "catalogs_found": "catalogs found",
+      "catalogs": "Local catalogs",
+    },
+  },
 });

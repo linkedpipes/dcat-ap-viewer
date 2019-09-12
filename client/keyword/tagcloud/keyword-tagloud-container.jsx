@@ -6,52 +6,61 @@ import {HttpRequestStatus} from "@/app-ui/http-request-status";
 import {onMount, onUnMount, fetchKeywords} from "./keyword-tagloud-action";
 import {KeywordTagCloud} from "./keyword-tagloud";
 import {
-    KEYWORDS_LIST_URL,
+  KEYWORDS_LIST_URL,
 } from "@/app/navigation";
 import HeadLinks from "@/app-ui/head-links";
 import {getString} from "@/app-services/strings";
+import {PropTypes} from "prop-types";
 
 class _KeywordsViewContainer extends React.Component {
 
-    componentDidMount() {
-        this.props.onMount();
-        this.props.fetchData();
-    }
+  componentDidMount() {
+    this.props.onMount();
+    this.props.fetchData();
+  }
 
-    render() {
-        if (isDataReady(this.props.status)) {
-            return (
-                <React.Fragment>
-                    <HeadLinks title={getString("keywords")}
-                               url={KEYWORDS_LIST_URL}/>
-                    <KeywordTagCloud tags={this.props.data}/>
-                </React.Fragment>
-            )
-        } else {
-            return (
-                <HttpRequestStatus status={this.props.status}/>
-            )
-        }
+  render() {
+    if (isDataReady(this.props.status)) {
+      return (
+        <React.Fragment>
+          <HeadLinks title={getString("keywords")}
+            url={KEYWORDS_LIST_URL}/>
+          <KeywordTagCloud tags={this.props.data}/>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <HttpRequestStatus status={this.props.status}/>
+      )
     }
+  }
 
-    componentWillUnmount() {
-        this.props.onUnMount();
-    }
+  componentWillUnmount() {
+    this.props.onUnMount();
+  }
 
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    "status": statusSelector(state),
-    "data": keywordsSelector(state)
+_KeywordsViewContainer.propTypes = {
+  "onMount": PropTypes.func.isRequired,
+  "fetchData": PropTypes.func.isRequired,
+  "onUnMount": PropTypes.func.isRequired,
+  "status": PropTypes.string.isRequired,
+  "data": PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  "status": statusSelector(state),
+  "data": keywordsSelector(state),
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    "onMount": () => dispatch(onMount()),
-    "onUnMount": () => dispatch(onUnMount()),
-    "fetchData": () => dispatch(fetchKeywords())
+const mapDispatchToProps = (dispatch) => ({
+  "onMount": () => dispatch(onMount()),
+  "onUnMount": () => dispatch(onUnMount()),
+  "fetchData": () => dispatch(fetchKeywords()),
 });
 
 export const KeywordsViewContainer = connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(_KeywordsViewContainer);

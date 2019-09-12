@@ -1,169 +1,169 @@
 import {graph, triples} from "../../../app-services/jsonld";
 import {
-    DCAT,
-    DCTERMS,
-    FOAF,
-    ADMS,
-    SPDX,
-    PU,
-    DQV,
-    SDMX,
-    QUALITY,
-    SKOS
+  DCAT,
+  DCTERMS,
+  FOAF,
+  ADMS,
+  SPDX,
+  PU,
+  DQV,
+  SDMX,
+  QUALITY,
+  SKOS,
 } from "../../../app-services/vocabulary";
 
 // TODO Merge with action or leave in separated file.
 
 export function jsonLdToDistribution(jsonld) {
-    const distribution = graph.getByType(jsonld, DCAT.Distribution);
-    if (distribution === undefined) {
-        return undefined;
-    }
+  const distribution = graph.getByType(jsonld, DCAT.Distribution);
+  if (distribution === undefined) {
+    return undefined;
+  }
 
-    // TODO Change to getString with specific structure (object with languages).
-    const mandatory = {
-        "@id": triples.id(distribution),
-        "accessURL": triples.resources(distribution, DCAT.accessURL),
-        ...parseTermsOfUse(distribution, jsonld)
-    };
+  // TODO Change to getString with specific structure (object with languages).
+  const mandatory = {
+    "@id": triples.id(distribution),
+    "accessURL": triples.resources(distribution, DCAT.accessURL),
+    ...parseTermsOfUse(distribution, jsonld),
+  };
 
-    const recommended = {
-        "description": triples.string(distribution, DCTERMS.description),
-        "format": triples.entity(distribution, DCTERMS.format),
-        "license": triples.resource(distribution, DCTERMS.license)
-    };
+  const recommended = {
+    "description": triples.string(distribution, DCTERMS.description),
+    "format": triples.entity(distribution, DCTERMS.format),
+    "license": triples.resource(distribution, DCTERMS.license),
+  };
 
-    const optional = {
-        "byteSize": triples.value(distribution, DCAT.byteSize),
-        "checksum": triples.resource(distribution, SPDX.checksum),
-        "documentation": triples.resources(distribution, FOAF.page),
-        "downloadURL": triples.resources(distribution, DCAT.downloadURL),
-        "language": triples.resources(distribution, DCTERMS.language),
-        "conformsTo": triples.resources(distribution, DCTERMS.conformsTo),
-        "mediaType": triples.entity(distribution, DCAT.mediaType),
-        "issued": triples.value(distribution, DCTERMS.issued),
-        "rights": triples.resource(distribution, DCTERMS.rights),
-        "status": triples.resource(distribution, ADMS.status),
-        "title": triples.values(distribution, DCTERMS.title),
-        "modified": triples.resource(distribution, DCTERMS.modified)
-    };
+  const optional = {
+    "byteSize": triples.value(distribution, DCAT.byteSize),
+    "checksum": triples.resource(distribution, SPDX.checksum),
+    "documentation": triples.resources(distribution, FOAF.page),
+    "downloadURL": triples.resources(distribution, DCAT.downloadURL),
+    "language": triples.resources(distribution, DCTERMS.language),
+    "conformsTo": triples.resources(distribution, DCTERMS.conformsTo),
+    "mediaType": triples.entity(distribution, DCAT.mediaType),
+    "issued": triples.value(distribution, DCTERMS.issued),
+    "rights": triples.resource(distribution, DCTERMS.rights),
+    "status": triples.resource(distribution, ADMS.status),
+    "title": triples.values(distribution, DCTERMS.title),
+    "modified": triples.resource(distribution, DCTERMS.modified),
+  };
 
-    const extension = {
-        "type": triples.resource(distribution, DCTERMS.type)
-    };
+  const extension = {
+    "type": triples.resource(distribution, DCTERMS.type),
+  };
 
-    const quality = {
-        "quality": {
-            "ready": false,
-            "download": null,
-            "downloadLastCheck": null,
-            "downloadNone": null,
-            "schema": null,
-            "schemaLastCheck": null,
-            "schemaNone": null,
-            "mediaType": null,
-            "mediaTypeCheck": null,
-            "mediaTypeNote": null,
-            "authorshipCustom": null,
-            "authorshipCustomLastCheck": null,
-            "authorshipCustomNte": null,
-            "databaseAuthorship": null,
-            "databaseAuthorshipLastCheck": null,
-            "databaseAuthorshipNote": null,
-            "protectedDatabaseAuthorship": null,
-            "protectedDatabaseAuthorshipLastCheck": null,
-            "protectedDatabaseAuthorshipNote": null
-        }
-    };
+  const quality = {
+    "quality": {
+      "ready": false,
+      "download": null,
+      "downloadLastCheck": null,
+      "downloadNone": null,
+      "schema": null,
+      "schemaLastCheck": null,
+      "schemaNone": null,
+      "mediaType": null,
+      "mediaTypeCheck": null,
+      "mediaTypeNote": null,
+      "authorshipCustom": null,
+      "authorshipCustomLastCheck": null,
+      "authorshipCustomNte": null,
+      "databaseAuthorship": null,
+      "databaseAuthorshipLastCheck": null,
+      "databaseAuthorshipNote": null,
+      "protectedDatabaseAuthorship": null,
+      "protectedDatabaseAuthorshipLastCheck": null,
+      "protectedDatabaseAuthorshipNote": null,
+    },
+  };
 
-    return {...mandatory, ...recommended, ...optional, ...extension, ...quality};
+  return {...mandatory, ...recommended, ...optional, ...extension, ...quality};
 }
 
 function parseTermsOfUse(distribution, jsonld) {
-    const iri = triples.resource(distribution, PU.specification);
-    if (iri === undefined) {
-        return {
-            "authorship": "missing",
-            "author": "missing",
-            "databaseAuthorship": "missing",
-            "databaseAuthor": "missing",
-            "protectedDatabase": "missing",
-            "personalData": "missing"
-        };
-    }
-
-    const entity = graph.getByResource(jsonld, iri);
-
-    const authorship = triples.resource(entity, PU.authorship);
-    const author = triples.string(entity, PU.author);
-    const databaseAuthorship = triples.resource(entity, PU.databaseAuthorship);
-    const databaseAuthor = triples.string(entity, PU.databaseAuthor);
-    const protectedDatabase = triples.resource(entity, PU.protectedDatabase);
-    const personalData = triples.resource(entity, PU.personalData);
-
+  const iri = triples.resource(distribution, PU.specification);
+  if (iri === undefined) {
     return {
-        "authorship": authorship,
-        "author": author,
-        "databaseAuthorship": databaseAuthorship,
-        "databaseAuthor": databaseAuthor,
-        "protectedDatabase": protectedDatabase,
-        "personalData": personalData,
+      "authorship": "missing",
+      "author": "missing",
+      "databaseAuthorship": "missing",
+      "databaseAuthor": "missing",
+      "protectedDatabase": "missing",
+      "personalData": "missing",
     };
+  }
+
+  const entity = graph.getByResource(jsonld, iri);
+
+  const authorship = triples.resource(entity, PU.authorship);
+  const author = triples.string(entity, PU.author);
+  const databaseAuthorship = triples.resource(entity, PU.databaseAuthorship);
+  const databaseAuthor = triples.string(entity, PU.databaseAuthor);
+  const protectedDatabase = triples.resource(entity, PU.protectedDatabase);
+  const personalData = triples.resource(entity, PU.personalData);
+
+  return {
+    "authorship": authorship,
+    "author": author,
+    "databaseAuthorship": databaseAuthorship,
+    "databaseAuthor": databaseAuthor,
+    "protectedDatabase": protectedDatabase,
+    "personalData": personalData,
+  };
 }
 
 export function loadDistributionQuality(jsonld, distribution) {
-    const measures = graph.getAllByType(jsonld, DQV.QualityMeasurement);
-    const quality = {
-        ...distribution.quality,
-        "ready": true
-    };
-    measures.forEach((measure) => {
-        const period = triples.resource(measure, SDMX.refPeriod);
-        const measureOf = triples.resource(measure, DQV.isMeasurementOf);
-        const value = triples.value(measure, DQV.value);
-        switch (measureOf) {
-            case QUALITY.downloadAvailability:
-                quality["download"] = value;
-                quality["downloadLastCheck"] = sdmxRefToDate(period);
-                quality["downloadNote"] = triples.value(measure, SKOS.note);
-                break;
-            case QUALITY.mediaType:
-                quality["mediaType"] = value;
-                quality["mediaTypeLastCheck"] = sdmxRefToDate(period);
-                quality["mediaTypeNote"] = triples.value(measure, SKOS.note);
-                break;
-            case QUALITY.schemaAvailability:
-                quality["schema"] = value;
-                quality["schemaLastCheck"] = sdmxRefToDate(period);
-                quality["schemaNote"] = triples.value(measure, SKOS.note);
-                break;
-            case QUALITY.authorship:
-                quality["authorshipCustom"] = value;
-                quality["authorshipCustomLastCheck"] = sdmxRefToDate(period);
-                quality["authorshipCustomNote"] =
+  const measures = graph.getAllByType(jsonld, DQV.QualityMeasurement);
+  const quality = {
+    ...distribution.quality,
+    "ready": true,
+  };
+  measures.forEach((measure) => {
+    const period = triples.resource(measure, SDMX.refPeriod);
+    const measureOf = triples.resource(measure, DQV.isMeasurementOf);
+    const value = triples.value(measure, DQV.value);
+    switch (measureOf) {
+      case QUALITY.downloadAvailability:
+        quality["download"] = value;
+        quality["downloadLastCheck"] = sdmxRefToDate(period);
+        quality["downloadNote"] = triples.value(measure, SKOS.note);
+        break;
+      case QUALITY.mediaType:
+        quality["mediaType"] = value;
+        quality["mediaTypeLastCheck"] = sdmxRefToDate(period);
+        quality["mediaTypeNote"] = triples.value(measure, SKOS.note);
+        break;
+      case QUALITY.schemaAvailability:
+        quality["schema"] = value;
+        quality["schemaLastCheck"] = sdmxRefToDate(period);
+        quality["schemaNote"] = triples.value(measure, SKOS.note);
+        break;
+      case QUALITY.authorship:
+        quality["authorshipCustom"] = value;
+        quality["authorshipCustomLastCheck"] = sdmxRefToDate(period);
+        quality["authorshipCustomNote"] =
                     triples.value(measure, SKOS.note);
-                break;
-            case QUALITY.databaseAuthorship:
-                quality["databaseAuthorship"] = value;
-                quality["databaseAuthorshipLastCheck"] = sdmxRefToDate(period);
-                quality["databaseAuthorshipNote"] =
+        break;
+      case QUALITY.databaseAuthorship:
+        quality["databaseAuthorship"] = value;
+        quality["databaseAuthorshipLastCheck"] = sdmxRefToDate(period);
+        quality["databaseAuthorshipNote"] =
                     triples.value(measure, SKOS.note);
-                break;
-            case QUALITY.specialDatabaseAuthorship:
-                quality["protectedDatabaseAuthorship"] = value;
-                quality["protectedDatabaseAuthorshipLastCheck"] =
+        break;
+      case QUALITY.specialDatabaseAuthorship:
+        quality["protectedDatabaseAuthorship"] = value;
+        quality["protectedDatabaseAuthorshipLastCheck"] =
                     sdmxRefToDate(period);
-                quality["protectedDatabaseAuthorshipNote"] =
+        quality["protectedDatabaseAuthorshipNote"] =
                     triples.value(measure, SKOS.note);
-                break;
-            default:
-                break;
-        }
-    });
-    return quality;
+        break;
+      default:
+        break;
+    }
+  });
+  return quality;
 }
 
 function sdmxRefToDate(iri) {
-    return iri.substr(iri.lastIndexOf("/") + 1)
-        .replace("T", " ");
+  return iri.substr(iri.lastIndexOf("/") + 1)
+    .replace("T", " ");
 }

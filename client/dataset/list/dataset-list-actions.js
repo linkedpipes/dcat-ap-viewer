@@ -1,10 +1,10 @@
 import {
-    fetchJson,
-    isFetching
+  fetchJson,
+  isFetching,
 } from "@/app-services/http-request";
 import {
-    addLoaderStatusOn,
-    addLoaderStatusOff
+  addLoaderStatusOn,
+  addLoaderStatusOff,
 } from "@/app-ui/loading-indicator";
 import {constructSearchQueryUrl} from "./../solr-api";
 import {parse as parseQueryString} from "query-string";
@@ -19,124 +19,124 @@ export const FETCH_LIST_PAGE_FAILED = "FETCH_LIST_PAGE_FAILED";
 export const SET_LIST_QUERY_STRING = "SET_LIST_QUERY_STRING";
 
 export function fetchData(query) {
-    return (dispatch) => {
-        dispatch(fetchDataRequest());
-        const url = constructSearchQueryUrl(query);
-        fetchJson(url).then((response) => {
-            dispatch(fetchDataSuccess(response.json));
-            fetchLabels(dispatch, response);
-        }).catch((response) => {
-            dispatch(fetchDataFailed(response));
-        });
-    };
+  return (dispatch) => {
+    dispatch(fetchDataRequest());
+    const url = constructSearchQueryUrl(query);
+    fetchJson(url).then((response) => {
+      dispatch(fetchDataSuccess(response.json));
+      fetchLabels(dispatch, response);
+    }).catch((response) => {
+      dispatch(fetchDataFailed(response));
+    });
+  };
 }
 
 function fetchDataRequest() {
-    return addLoaderStatusOn({
-        "type": FETCH_LIST_PAGE_REQUEST
-    });
+  return addLoaderStatusOn({
+    "type": FETCH_LIST_PAGE_REQUEST,
+  });
 }
 
 function fetchDataSuccess(json) {
-    return addLoaderStatusOff({
-        "type": FETCH_LIST_PAGE_SUCCESS,
-        "data": json
-    });
+  return addLoaderStatusOff({
+    "type": FETCH_LIST_PAGE_SUCCESS,
+    "data": json,
+  });
 }
 
 function fetchDataFailed(error) {
-    return addLoaderStatusOff({
-        "type": FETCH_LIST_PAGE_FAILED,
-        "data": error
-    });
+  return addLoaderStatusOff({
+    "type": FETCH_LIST_PAGE_FAILED,
+    "data": error,
+  });
 }
 
 export function updateQuery(location, updateProperties, unsetProperties) {
-    const query = parseQueryString(location.search);
-    Object.keys(updateProperties).map((key) => {
-        query[getQuery(key)] = updateProperties[key];
-    });
-    unsetProperties.forEach((key) => query[getQuery(key)] = undefined);
-    return pushIfNotPending({
-        "pathname": location.pathname,
-        "search": createSearchString(query)
-    });
+  const query = parseQueryString(location.search);
+  Object.keys(updateProperties).map((key) => {
+    query[getQuery(key)] = updateProperties[key];
+  });
+  unsetProperties.forEach((key) => query[getQuery(key)] = undefined);
+  return pushIfNotPending({
+    "pathname": location.pathname,
+    "search": createSearchString(query),
+  });
 }
 
 function createSearchString(query) {
-    let search = "";
-    Object.keys(query).map((key) => {
-        let values = query[key];
-        if (values === undefined || values === "") {
-            return;
-        }
-        if (!Array.isArray(values)) {
-            values = [values];
-        }
-        values.forEach((value) => {
-            if (search === "") {
-                search += "?";
-            } else {
-                search += "&";
-            }
-            search += encodeURIComponent(key) + "=" + encodeURIComponent(value);
-        });
+  let search = "";
+  Object.keys(query).map((key) => {
+    let values = query[key];
+    if (values === undefined || values === "") {
+      return;
+    }
+    if (!Array.isArray(values)) {
+      values = [values];
+    }
+    values.forEach((value) => {
+      if (search === "") {
+        search += "?";
+      } else {
+        search += "&";
+      }
+      search += encodeURIComponent(key) + "=" + encodeURIComponent(value);
     });
-    return search;
+  });
+  return search;
 }
 
 function fetchLabels(dispatch, response) {
-    const theme = response.json["facet_counts"]["facet_fields"]["theme"];
-    for (let index = 0; index < theme.length; index += 2) {
-        dispatch(fetchLabel(theme[index]));
-    }
+  const theme = response.json["facet_counts"]["facet_fields"]["theme"];
+  for (let index = 0; index < theme.length; index += 2) {
+    dispatch(fetchLabel(theme[index]));
+  }
 }
 
 function pushIfNotPending(pushObject) {
-    // Prevent any location change (action) if we are loading the data.
-    return (dispatch, getState) => {
-        const state = getState();
-        const status = dataStatusSelector(state);
-        if (isFetching(status)) {
-            return;
-        }
-        dispatch(push(pushObject));
-    };
+  // Prevent any location change (action) if we are loading the data.
+  return (dispatch, getState) => {
+    const state = getState();
+    const status = dataStatusSelector(state);
+    if (isFetching(status)) {
+      return;
+    }
+    dispatch(push(pushObject));
+  };
 }
 
 export function updateQueryFilters(location, propName, value, isActive) {
-    const params = parseQueryString(location.search);
-    const oldValues = asArray(params[getQuery(propName)]);
-    const list = updateValueList(value, isActive, oldValues);
-    return updateQuery(location, {[propName]: list}, [PAGE_QUERY])
+  const params = parseQueryString(location.search);
+  const oldValues = asArray(params[getQuery(propName)]);
+  const list = updateValueList(value, isActive, oldValues);
+  return updateQuery(location, {[propName]: list}, [PAGE_QUERY])
 }
 
 function asArray(values) {
-    if (values === undefined) {
-        return [];
-    } else if (Array.isArray(values)) {
-        return values;
-    } else {
-        return [values];
-    }
+  if (values === undefined) {
+    return [];
+  } else if (Array.isArray(values)) {
+    return values;
+  } else {
+    return [values];
+  }
 }
 
 function updateValueList(value, isActive, activeList) {
-    const output = [...activeList];
-    const index = output.indexOf(value);
-    if (isActive && index === -1) {
-        output.push(value);
-    } else if (index > -1) {
-        output.splice(index, 1);
-    }
-    return output;
+  const output = [...activeList];
+  const index = output.indexOf(value);
+  if (isActive && index === -1) {
+    output.push(value);
+  } else if (index > -1) {
+    output.splice(index, 1);
+  }
+  return output;
 }
 
 export function clearQuery(location) {
-    return pushIfNotPending({
-        "pathname": location.pathname,
-        "search": ""
-    });
+  return pushIfNotPending({
+    "pathname": location.pathname,
+    "search": "",
+  });
 }
 
 

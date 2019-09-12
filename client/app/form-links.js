@@ -1,5 +1,5 @@
 import {
-    getLanguage
+  getLanguage,
 } from "@/app/navigation";
 
 export const DATASET_EDIT = "DATASET_EDIT";
@@ -20,10 +20,10 @@ LINKS["en"][CATALOG_EDIT] = "local-catalog-registration";
 LINKS["en"][CATALOG_DELETE] = "local-catalog-withdrawn";
 
 export function getFormLink(type, iri) {
-    let link =  FORM_URL + LINKS[getLanguage()][type];
-    if (iri) {
-        return link + "?url=" + encodeURIComponent(iri);
-    } else {
-        return link;
-    }
+  let link =  FORM_URL + LINKS[getLanguage()][type];
+  if (iri) {
+    return link + "?url=" + encodeURIComponent(iri);
+  } else {
+    return link;
+  }
 }
