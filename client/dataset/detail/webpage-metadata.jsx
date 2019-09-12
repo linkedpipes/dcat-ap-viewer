@@ -21,44 +21,47 @@ DatasetWebPageMetadata.propTypes = {
 };
 
 function createJsonLdDescription(labels, dataset) {
-  let content = "\n{\n" +
-        "\"@context\":\"http://schema.org/\",\n" +
-        "\"@type\":\"Dataset\",\n" +
-        "\"name\":\"" + selectLabel(labels, dataset) + "\",\n" +
-        "\"description\":\"" + selectString(dataset["description"]) +
-        "\",\n" +
-        "\"url\":\"" + dataset["@id"] + "\"\n";
+  const context = {
+    "@context": "http://schema.org/",
+    "@type": "Dataset",
+    "name": selectLabel(labels, dataset),
+    "description": getFirstOrEmpty(selectString(dataset["description"])),
+    "url": dataset["@id"],
+  };
 
   if (dataset["catalog"] !== undefined) {
-    content += ",\"includedInDataCatalog\": \"" + dataset["catalog"] + "\"\n";
+    context["includedInDataCatalog"] = dataset["catalog"];
   }
 
   if (dataset["spatial"] !== undefined) {
-    content += ",\"spatialCoverage\":\"" + dataset["spatial"]["@id"] + "\"\n";
+    context["spatialCoverage"] = dataset["spatial"]["@id"];
   }
 
   if (dataset["temporal"] !== undefined) {
-    content += ",\"temporalCoverage\":\"" +
-            dataset["temporal"]["startDate"] + "/" +
-            dataset["temporal"]["endDate"] + "\"\n";
+    context["temporalCoverage"] =
+      dataset["temporal"]["startDate"] + "/" +
+      dataset["temporal"]["endDate"] + "\"\n";
   }
 
   if (dataset["keywords"] !== undefined) {
-    const keywords = JSON.stringify(selectString(dataset["keywords"]));
-    content += ",\"keywords\":" + keywords + "\n";
+    context["keywords"] = selectString(dataset["keywords"]);
   }
 
   if (dataset["publisher"] !== undefined) {
-    content += "," +
-            "\"creator\":{\n" +
-            " \"@type\":\"Organization\",\n" +
-            " \"url\": \"" + dataset["publisher"]["@id"] + "\",\n" +
-            " \"name\":\"" + selectLabel(labels, dataset["publisher"]) + "\"\n" +
-            " }\n" +
-            "}\n";
+    context["creator"] = {
+      "@type": "Organization",
+      "url": dataset["publisher"]["@id"],
+      "name": selectLabel(labels, dataset["publisher"]),
+    }
   }
 
-  content += "}";
+  return JSON.stringify(context, null, 2);
+}
 
-  return content;
+function getFirstOrEmpty(array) {
+  if (array === undefined || array.length === 0) {
+    return "";
+  } else {
+    return array[0];
+  }
 }
