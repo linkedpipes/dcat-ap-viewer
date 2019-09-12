@@ -73,13 +73,13 @@ function dialogLinks(dataset) {
     return (
       <span>
         <a href={getFormLink(DATASET_EDIT, iri)}
-          target="_blank" rel="noopener noreferrer">
+          target="_blank" rel="nofollow noopener noreferrer">
           <i className="material-icons pl-2" style={actionStyle}>
                     edit
           </i>
         </a>
         <a href={getFormLink(DATASET_DELETE, iri)}
-          target="_blank" rel="noopener noreferrer">
+          target="_blank" rel="nofollow noopener noreferrer">
           <i className="material-icons pl-2" style={actionStyle}>
                     delete_forever
           </i>
@@ -91,7 +91,7 @@ function dialogLinks(dataset) {
     return (
       <span>
         <a href={getFormLink(CATALOG_DELETE, iri)}
-          target="_blank" rel="noopener noreferrer">
+          target="_blank" rel="nofollow noopener noreferrer">
           <i className="material-icons pl-2" style={actionStyle}>
                     delete_forever
           </i>
