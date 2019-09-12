@@ -32,8 +32,8 @@ function CatalogItem({catalog}) {
         <div className="card-body px-2">
           <h5 className="card-title">
             <span className="pr-2">{catalog["publisherName"]}</span>
-            <a href={catalog["publisherIRI"]} target="_blank"
-              rel="noopener noreferrer">
+            <a href={DEREFERENCE_IRI + catalog["publisherIRI"]}
+              target="_blank" rel="noopener noreferrer">
               <i className="material-icons md-18">open_in_new</i>
             </a>
           </h5>
@@ -41,7 +41,8 @@ function CatalogItem({catalog}) {
         <ul className="list-group list-group-flush">
           <li className="list-group-item">
             <span className="pr-2">{title}</span>
-            <a href={id} target="_blank" rel="noopener noreferrer">
+            <a href={DEREFERENCE_IRI + id} target="_blank"
+              rel="noopener noreferrer">
               <i className="material-icons md-18">open_in_new</i>
             </a>
           </li>
@@ -69,7 +70,7 @@ function CatalogItem({catalog}) {
               </i>
             </a>
             <a href={getFormLink(CATALOG_DELETE, id)}
-              target="_blank" rel="noopener noreferrer">
+              target="_blank" rel="nofollow noopener noreferrer">
               <i className="material-icons md-24"
                 style={{"color": "gray"}}>
                                 delete_forever
