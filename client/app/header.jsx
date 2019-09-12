@@ -2,7 +2,6 @@ import React from "react";
 import {
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Container,
   Collapse,
   Nav,
@@ -18,7 +17,6 @@ import {
   DATASET_LIST_URL,
   ORGANISATION_LIST_URL,
   KEYWORDS_LIST_URL,
-  CATALOG_LIST_URL,
   getLanguage,
 } from "./navigation";
 import {NavLink as RouterLink} from "react-router-dom";
@@ -30,10 +28,8 @@ class HeaderComponent extends React.Component {
   constructor(props) {
     super(props);
     this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.toggleMore = this.toggleMore.bind(this);
     this.state = {
       "isOpen": false,
-      "isMoreOpen": false,
     };
   }
 
@@ -43,31 +39,13 @@ class HeaderComponent extends React.Component {
     });
   }
 
-  toggleMore() {
-    this.setState({
-      "isMoreOpen": !this.state.isMoreOpen,
-    });
-  }
-
   render() {
     return (
       <Container>
         <Navbar expand="md" className="navbar-light">
-          <NavbarBrand href="https://data.gov.cz/">
-            <img width="174" height="30"
-              alt={getString("header.logo_alt")}
-              className="d-inline-block align-top"
-              src="./assets/images/opendata-logo.png"/>
-          </NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar}/>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink
-                  href="https://data.gov.cz/novinky/">
-                  {getString("news")}
-                </NavLink>
-              </NavItem>
               <NavItem>
                 <RouterLink to={getUrl(DATASET_LIST_URL)}
                   className="nav-link"
@@ -89,28 +67,6 @@ class HeaderComponent extends React.Component {
                   activeClassName="active">
                   {getString("keywords")}
                 </RouterLink>
-              </NavItem>
-              <NavItem>
-                <Dropdown isOpen={this.state.isMoreOpen}
-                  toggle={this.toggleMore}>
-                  <DropdownToggle caret nav>
-                    {getString("more")}
-                  </DropdownToggle>
-                  <DropdownMenu right>
-                    <DropdownItem href="https://opendata.gov.cz/informace:základy-otevřených-dat-pro-zájemce">
-                      {getString("for_interested_in_open_data")}
-                    </DropdownItem>
-                    <DropdownItem href="https://opendata.gov.cz/informace:základy-otevřených-dat-pro-programátory">
-                      {getString("for_programmes")}
-                    </DropdownItem>
-                    <DropdownItem href="https://opendata.gov.cz">
-                      {getString("for_publishers")}
-                    </DropdownItem>
-                    <DropdownItem tag={RouterLink} to={getUrl(CATALOG_LIST_URL)} activeClassName="active">
-                      {getString("catalogs")}
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
               </NavItem>
               <HeaderLanguageSelector
                 language={getLanguage()}
@@ -143,7 +99,6 @@ class HeaderLanguageSelector extends React.Component {
 
   constructor(props) {
     super(props);
-    this.toggleLanguage = this.toggleLanguage.bind(this);
     this.getOtherLanguages = this.getOtherLanguages.bind(this);
     this.state = {
       "isLanguageOpen": false,
