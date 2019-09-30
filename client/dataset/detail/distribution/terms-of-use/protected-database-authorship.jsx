@@ -10,7 +10,6 @@ export default function protectedDatabaseAuthorship(distribution, openModal) {
       return (
         <li className="list-group-item px-2">
           <div>
-            {getString("license_author_no")}
             {getString("license_specialdb_no")}
             <i className="material-icons text-success float-right"
               title={getString("license_specialdb_no_comment")}
