@@ -7,15 +7,16 @@ import databaseAuthorship from "./terms-of-use/database-authorship";
 import protectedDatabaseAuthorship
   from "./terms-of-use/protected-database-authorship";
 import personalData from "./terms-of-use/personal-data";
-import downloadListItem from "./access/download-list-item";
 import schemaListItem from "./access/schema-list-item";
 import mediaTypeItem from "./access/media-type-item";
 import compressFormat from "./access/compress-format-item";
 import packageFormat from "./access/package-format-item";
+import endpointDescription from "./access/endpoint-description-item";
+import endpointUrl from "./access/endpoint-url-item";
 
 import {PropTypes} from "prop-types";
 
-export default class Distribution extends React.PureComponent {
+export default class DataService extends React.PureComponent {
   render() {
     const {labels, distribution, openModal} = this.props;
 
@@ -50,7 +51,7 @@ export default class Distribution extends React.PureComponent {
   }
 }
 
-Distribution.propTypes = {
+DataService.propTypes = {
   "labels": PropTypes.object.isRequired,
   "distribution": PropTypes.object.isRequired,
   "openModal": PropTypes.func.isRequired,
@@ -59,11 +60,15 @@ Distribution.propTypes = {
 function dataFormatItem(labels, distribution) {
   const label = selectLabel(labels, distribution.format);
   if (label === undefined) {
-    return null;
+    return (
+      <h6 className="card-subtitle mb-2 text-muted">
+        {getString("data_service")}
+      </h6>
+    );
   }
   return (
     <h6 className="card-subtitle mb-2 text-muted">
-      {label}
+      {getString("data_service")} {label}
     </h6>
   )
 }
@@ -91,7 +96,8 @@ function accessColumn(labels, distribution, openModal) {
         {getString("distribution_access")}
       </h6>
       <ul className="list-group list-group-flush">
-        {downloadListItem(distribution, openModal)}
+        {endpointDescription(labels, distribution)}
+        {endpointUrl(labels, distribution)}
         {schemaListItem(distribution, openModal)}
         {mediaTypeItem(labels, distribution, openModal)}
         {compressFormat(labels, distribution)}

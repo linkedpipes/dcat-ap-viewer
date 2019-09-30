@@ -27,15 +27,24 @@ class _DistributionListContainer extends React.Component {
   }
 
   updateVisibleList({page, pageSize, dataset}) {
-    const distributions = dataset["distributions"];
+    const records = [
+      ...dataset["distributions"].map((url) => ({
+        "iri": url,
+        "type": "distribution",
+      })),
+      ...dataset["services"].map((url) => ({
+        "iri": url,
+        "type": "service",
+      })),
+    ];
     const visibleDistributions = [];
     const start = page * pageSize;
-    const end = Math.min((page  + 1) * pageSize, distributions.length);
+    const end = Math.min((page  + 1) * pageSize, records.length);
     for (let index = start; index < end; ++index) {
-      visibleDistributions.push(distributions[index]);
+      visibleDistributions.push(records[index]);
     }
     this.setState({
-      "distributions": visibleDistributions,
+      "records": visibleDistributions,
     });
   }
 
@@ -49,8 +58,8 @@ class _DistributionListContainer extends React.Component {
   render() {
     return (
       <DistributionList
-        distributions={this.state.distributions}
-        recordsCount={this.props.dataset.distributions.length}
+        records={this.state.records}
+        recordsCount={this.state.records.length}
         page={this.props.page}
         pageSize={this.props.pageSize}
         setPage={this.props.setPage}

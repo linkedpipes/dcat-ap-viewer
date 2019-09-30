@@ -8,6 +8,9 @@ import {
   SET_DISTRIBUTION_PAGE_SIZE,
   FETCH_DISTRIBUTION_QUALITY_SUCCESS,
   FETCH_DISTRIBUTION_QUALITY_FAILED,
+  FETCH_DATA_SOURCE_REQUEST,
+  FETCH_DATA_SOURCE_SUCCESS,
+  FETCH_DATA_SOURCE_FAILED,
 } from "./distribution-action";
 import {
   STATUS_UNKNOWN,
@@ -44,6 +47,14 @@ function reducer(state = initialState, action) {
       return onQualityRequestSuccess(state, action);
     case FETCH_DISTRIBUTION_QUALITY_FAILED:
       return onQualityRequestFailed(state, action);
+    // Reuse logic for distributions, as for now
+    // we do not need any distinction.
+    case FETCH_DATA_SOURCE_REQUEST:
+      return onDistributionRequest(state, action);
+    case FETCH_DATA_SOURCE_SUCCESS:
+      return onDistributionRequestSuccess(state, action);
+    case FETCH_DATA_SOURCE_FAILED:
+      return onDistributionRequestFailed(state, action);
     default:
       return state
   }

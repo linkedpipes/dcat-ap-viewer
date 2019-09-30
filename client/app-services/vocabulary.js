@@ -39,6 +39,12 @@ export const DCAT = {
   "CatalogRecord": DCAT_PREFIX + "CatalogRecord",
   "Catalog": DCAT_PREFIX + "Catalog",
   "accessURL": DCAT_PREFIX + "accessURL",
+  "packageFormat": DCAT_PREFIX + "packageFormat",
+  "compressFormat": DCAT_PREFIX + "compressFormat",
+  "DataService": DCAT_PREFIX + "DataService",
+  "endpointURL": DCAT_PREFIX + "endpointURL",
+  "servesDataset": DCAT_PREFIX + "servesDataset",
+  "endpointDescription": DCAT_PREFIX + "endpointDescription",
 };
 
 const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";

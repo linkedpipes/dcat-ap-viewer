@@ -17,8 +17,7 @@ function normalizeData(data) {
 }
 
 // TODO Generalize and merge.
-export function fetchLabelsForDistribution(entity, dispatch) {
-  const properties = ["format", "mediaType"];
+export function fetchLabelsForProperties(entity, dispatch, properties) {
   properties.forEach((property) => {
     const value = entity[property];
     if (value === undefined) {
@@ -35,4 +34,10 @@ export function fetchLabelsForDistribution(entity, dispatch) {
 
 function dispatchLabelRequest(dispatch, iri) {
   dispatch(fetchLabel(iri));
+}
+export function fetchDataSourceDetail(iri) {
+  const url = "./api/v1/resource/distribution?iri=" + encodeURI(iri);
+  return fetchJson(url).then((response) => {
+    return normalizeData(response.json);
+  });
 }

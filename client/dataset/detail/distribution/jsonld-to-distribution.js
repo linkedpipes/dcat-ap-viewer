@@ -76,10 +76,22 @@ export function jsonLdToDistribution(jsonld) {
     },
   };
 
-  return {...mandatory, ...recommended, ...optional, ...extension, ...quality};
+  const dcat = {
+    "packageFormat": triples.entity(distribution, DCAT.packageFormat),
+    "compressFormat": triples.entity(distribution, DCAT.compressFormat),
+  };
+
+  return {
+    ...mandatory,
+    ...recommended,
+    ...optional,
+    ...extension,
+    ...quality,
+    ...dcat,
+  };
 }
 
-function parseTermsOfUse(distribution, jsonld) {
+export function parseTermsOfUse(distribution, jsonld) {
   const iri = triples.resource(distribution, PU.specification);
   if (iri === undefined) {
     return {
@@ -141,20 +153,20 @@ export function loadDistributionQuality(jsonld, distribution) {
         quality["authorshipCustom"] = value;
         quality["authorshipCustomLastCheck"] = sdmxRefToDate(period);
         quality["authorshipCustomNote"] =
-                    triples.value(measure, SKOS.note);
+          triples.value(measure, SKOS.note);
         break;
       case QUALITY.databaseAuthorship:
         quality["databaseAuthorship"] = value;
         quality["databaseAuthorshipLastCheck"] = sdmxRefToDate(period);
         quality["databaseAuthorshipNote"] =
-                    triples.value(measure, SKOS.note);
+          triples.value(measure, SKOS.note);
         break;
       case QUALITY.specialDatabaseAuthorship:
         quality["protectedDatabaseAuthorship"] = value;
         quality["protectedDatabaseAuthorshipLastCheck"] =
-                    sdmxRefToDate(period);
+          sdmxRefToDate(period);
         quality["protectedDatabaseAuthorshipNote"] =
-                    triples.value(measure, SKOS.note);
+          triples.value(measure, SKOS.note);
         break;
       default:
         break;

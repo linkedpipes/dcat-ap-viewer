@@ -57,6 +57,16 @@ export function jsonLdToDataset(jsonld) {
     "versionNotes": triples.value(dataset, ADMS.versionNotes),
   };
 
+  const services = graph.getAllByType(jsonld, DCAT.DataService)
+    .filter((service) => {
+      const serves = triples.resource(service, DCAT.servesDataset);
+      return serves === triples.id(dataset);
+    });
+
+  const dcat = {
+    "services": services.map((service) => triples.id(service)),
+  };
+
   const catalog = graph.getByType(jsonld, DCAT.Catalog) || {};
   const catalogRecord = graph.getByType(jsonld, DCAT.CatalogRecord) || {};
   const external = {
@@ -74,7 +84,14 @@ export function jsonLdToDataset(jsonld) {
     },
   };
 
-  return {...mandatory, ...recommended, ...optional, ...external, ...quality};
+  return {
+    ...mandatory,
+    ...recommended,
+    ...optional,
+    ...external,
+    ...quality,
+    ...dcat,
+  };
 }
 
 function loadThemes(jsonld, dataset) {
