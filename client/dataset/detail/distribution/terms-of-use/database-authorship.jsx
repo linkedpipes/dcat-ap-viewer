@@ -12,7 +12,6 @@ export default function databaseAuthorship(distribution, openModal) {
         <li className="list-group-item px-2">
           <div>
             {getString("license_author_no")}
-            {getString("license_db_no")}
             <i className="material-icons text-success float-right"
               title={getString("license_db_no_comment")}
               onClick={() => openModal(getString("license_db_no_comment"))}>
@@ -29,7 +28,6 @@ export default function databaseAuthorship(distribution, openModal) {
         <li className="list-group-item px-2">
           <div>
             {getString("license_author_ccBy")}
-            {getString("license_db_ccBy")}
             <i className="material-icons text-warning float-right"
               title={getString("license_db_ccBy_comment")}
               onClick={() => openModal(getString("license_db_ccBy_comment"))}>
