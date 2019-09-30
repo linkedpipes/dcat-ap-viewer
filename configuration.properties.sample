@@ -43,6 +43,9 @@ client.keyword_cloud.min = 100
 # Forms URL - with percent encoded of utf-8 characters.
 client.form_url = https://dev.nkod.opendata.cz/formulář/
 
+# Leave empty to show the publisher tab or set to true to hide it.
+client.hide_publisher_tab =
+
 # Prefix used to create dereference IRI for datasets.
 client.dereference_prefix =
 

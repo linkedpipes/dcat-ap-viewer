@@ -51,8 +51,10 @@ module.exports = {
       "REPOSITORY_TYPE": asString(getRepositoryType()),
       "URL_PREFIX": asString(config["client"]["urlPrefix"]),
       "FORM_URL": asString(config["client"]["formUrl"]),
+      "SHOW_FORM_URL": isNotEmpty(config["client"]["formUrl"]),
       "URL_BASE": asString(config["client"]["urlBase"]),
       "DEREFERENCE_IRI": asString(config["client"]["dereferenceIri"]),
+      "SHOW_PUBLISHER_TAB": !config["client"]["hidePublisherTab"],
     }),
   ],
 };

@@ -32,6 +32,7 @@
       "formUrl": properties.get("client.form_url"),
       "urlBase": getUrl(properties),
       "dereferenceIri": properties.get("client.dereference_prefix") || "",
+      "hidePublisherTab": asBoolean(properties.get("client.hide_publisher_tab")),
     },
     "sentry": properties.get("sentry.url") || false,
     "googleTagManager": properties.get("google_tag_manager.id") || false,
@@ -100,4 +101,11 @@ function getUrl(properties) {
   } else {
     return value + prefix;
   }
+}
+
+function asBoolean(value) {
+  if (value === undefined || value === null) {
+    return false;
+  }
+  return value;
 }

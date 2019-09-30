@@ -54,13 +54,14 @@ class HeaderComponent extends React.Component {
                   {getString("datasets")}
                 </RouterLink>
               </NavItem>
-              <NavItem>
+              {SHOW_PUBLISHER_TAB && <NavItem>
                 <RouterLink to={getUrl(ORGANISATION_LIST_URL)}
                   className="nav-link"
                   activeClassName="active">
                   {getString("publishers")}
                 </RouterLink>
               </NavItem>
+              }
               <NavItem>
                 <RouterLink to={getUrl(KEYWORDS_LIST_URL)}
                   className="nav-link"

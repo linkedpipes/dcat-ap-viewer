@@ -62,6 +62,10 @@ DatasetView.propTypes = {
 };
 
 function dialogLinks(dataset) {
+  if (!SHOW_FORM_URL) {
+    return null;
+  }
+
   const isFromForm = dataset["@type"].indexOf(NKOD.SourceForm) !== -1;
   const isFromLkod =
         dataset["@type"].indexOf(NKOD.SourceCkan) !== -1 ||
