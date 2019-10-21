@@ -6,7 +6,6 @@ import {
   OWL,
   ADMS,
   VCARD,
-  SCHEMA,
   SKOS,
   EUA,
   NKOD,
@@ -65,6 +64,8 @@ export function jsonLdToDataset(jsonld) {
 
   const dcat = {
     "services": services.map((service) => triples.id(service)),
+    "temporalResolution": triples.value(dataset, DCAT.temporalResolution),
+    "spatialResolutionInMeters": triples.value(dataset, DCAT.spatialResolutionInMeters),
   };
 
   const catalog = graph.getByType(jsonld, DCAT.Catalog) || {};
@@ -153,8 +154,8 @@ function loadTemporal(jsonld, dataset) {
   } else {
     return {
       "iri": temporalIri,
-      "startDate": triples.value(temporal, SCHEMA.startDate),
-      "endDate": triples.value(temporal, SCHEMA.endDate),
+      "startDate": triples.value(temporal, DCAT.startDate),
+      "endDate": triples.value(temporal, DCAT.endDate),
     };
   }
 }

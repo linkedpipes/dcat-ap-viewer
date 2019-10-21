@@ -45,6 +45,10 @@ export const DCAT = {
   "endpointURL": DCAT_PREFIX + "endpointURL",
   "servesDataset": DCAT_PREFIX + "servesDataset",
   "endpointDescription": DCAT_PREFIX + "endpointDescription",
+  "startDate": DCAT_PREFIX + "startDate",
+  "endDate": DCAT_PREFIX + "endDate",
+  "temporalResolution": DCAT_PREFIX + "temporalResolution",
+  "spatialResolutionInMeters": DCAT_PREFIX + "spatialResolutionInMeters",
 };
 
 const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";
