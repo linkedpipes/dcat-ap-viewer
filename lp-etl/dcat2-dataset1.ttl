@@ -1,0 +1,71 @@
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix ns1: <https://data.gov.cz/slovník/podmínky-užití/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://cuzk.cz/dataset> a dcat:Dataset,
+        <https://data.gov.cz/slovník/nkod/typ-datové-sady-dle-zdroje/Formulář> ;
+    dcterms:accrualPeriodicity <http://publications.europa.eu/resource/authority/frequency/MONTHLY> ;
+    dcterms:description "Popisuji první datovou sadu se službou"@cs,
+        "Description of my first dataset with service"@en ;
+    dcterms:spatial <http://dbpedia.org/resource/Earth>,
+        <http://publications.europa.eu/resource/authority/continent/EUROPE>,
+        <http://publications.europa.eu/resource/authority/country/ALB>,
+        <http://publications.europa.eu/resource/authority/place/AND_ALV>,
+        <https://linked.cuzk.cz/resource/ruian/stat/1> ;
+    dcterms:temporal [ a dcterms:PeriodOfTime ;
+            dcat:endDate "2020-01-17"^^xsd:date ;
+            dcat:startDate "2020-01-01"^^xsd:date ] ;
+    dcterms:title "První datová sada"@cs,
+        "First dataset"@en ;
+    dcat:contactPoint [ a vcard:Organization ;
+            vcard:fn "Jan Rohlík"@cs ;
+            vcard:hasEmail "rohlíček@seznam.cz" ] ;
+    dcat:distribution [ a dcat:Distribution ;
+            dcterms:conformsTo <https://schéma.cz/> ;
+            dcterms:format <http://publications.europa.eu/resource/authority/file-type/CSV> ;
+            dcterms:title "Distro1"@cs,
+                "Distribution 1"@en ;
+            dcat:compressFormat <http://www.iana.org/assignments/media-types/application/gzip> ;
+            dcat:downloadURL <https://download.url/> ;
+            dcat:mediaType <http://www.iana.org/assignments/media-types/application/gzip> ;
+            dcat:packageFormat <http://www.iana.org/assignments/media-types/application/prs.hpub+zip> ;
+            ns1:specifikace [ a ns1:Specifikace ;
+                    ns1:autorské-dílo <https://data.gov.cz/podmínky-užití/neobsahuje-autorská-díla/> ;
+                    ns1:databáze-chráněná-zvláštními-právy <https://data.gov.cz/podmínky-užití/není-chráněna-zvláštním-právem-pořizovatele-databáze/> ;
+                    ns1:databáze-jako-autorské-dílo <https://data.gov.cz/podmínky-užití/není-autorskoprávně-chráněnou-databází/> ;
+                    ns1:osobní-údaje <https://data.gov.cz/podmínky-užití/neobsahuje-osobní-údaje/> ] ],
+        [ a dcat:Distribution ;
+            dcterms:title "První služba"@cs,
+                "First data service"@en ;
+            dcat:accessService [ a dcat:DataService ;
+                    dcterms:title "První služba"@cs,
+                        "First data service"@en ;
+                    dcat:endpointDescription <https://data.service.1.cz/description> ;
+                    dcat:endpointURL <https://data.service.1.cz/> ;
+                    dcat:servesDataset <https://cuzk.cz/dataset> ] ;
+            dcat:accessURL <https://data.service.1.cz/> ;
+            ns1:specifikace [ a ns1:Specifikace ;
+                    ns1:autorské-dílo <https://data.gov.cz/podmínky-užití/neobsahuje-autorská-díla/> ;
+                    ns1:databáze-chráněná-zvláštními-právy <https://data.gov.cz/podmínky-užití/není-chráněna-zvláštním-právem-pořizovatele-databáze/> ;
+                    ns1:databáze-jako-autorské-dílo <https://data.gov.cz/podmínky-užití/není-autorskoprávně-chráněnou-databází/> ;
+                    ns1:osobní-údaje <https://data.gov.cz/podmínky-užití/neobsahuje-osobní-údaje/> ] ] ;
+    dcat:keyword "Klíč1"@cs,
+        "Klíč2"@cs,
+        "Key1"@en,
+        "Key2"@en ;
+    dcat:spatialResolutionInMeters "23" ;
+    dcat:temporalResolution "P20M"^^xsd:duration ;
+    dcat:theme <http://eurovoc.europa.eu/1230>,
+        <http://eurovoc.europa.eu/1236>,
+        <http://eurovoc.europa.eu/1603>,
+        <http://publications.europa.eu/resource/authority/data-theme/ECON>,
+        <http://publications.europa.eu/resource/authority/data-theme/ENER>,
+        <http://publications.europa.eu/resource/authority/data-theme/INTR>,
+        <https://github.com/linkedpipes/dcat-ap-viewer/tree/feature/dcat-ap-2> ;
+    foaf:page <https://moje-dokumentace.cz/> .
