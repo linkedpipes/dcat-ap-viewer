@@ -7,41 +7,41 @@ import gtmParts from "react-google-tag-manager";
 
 class GoogleTagManager extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.scriptId = "react-google-tag-manager-gtm";
-    }
+  constructor(props) {
+    super(props);
+    this.scriptId = "react-google-tag-manager-gtm";
+  }
 
-    componentDidMount() {
-        if (GOOGLE_TAG_MANAGER_ID) {
-            const dataLayerName = "dataLayer";
-            if (!window[dataLayerName]) {
-                const gtmScriptNode = document.getElementById(this.scriptId);
-                eval(gtmScriptNode.textContent);
-            }
-        }
+  componentDidMount() {
+    if (GOOGLE_TAG_MANAGER_ID) {
+      const dataLayerName = "dataLayer";
+      if (!window[dataLayerName]) {
+        const gtmScriptNode = document.getElementById(this.scriptId);
+        eval(gtmScriptNode.textContent);
+      }
     }
+  }
 
-    render() {
-        if (GOOGLE_TAG_MANAGER_ID) {
-            const gtm = gtmParts({
-                "id": GOOGLE_TAG_MANAGER_ID,
-                "dataLayerName": "dataLayer",
-                "additionalEvents": {}
-            });
-            return (
-                <div>
-                    <div>
-                        {gtm.noScriptAsReact()}
-                    </div>
-                    <div id={this.scriptId}>
-                        {gtm.scriptAsReact()}
-                    </div>
-                </div>
-            );
-        }
-        return null;
+  render() {
+    if (GOOGLE_TAG_MANAGER_ID) {
+      const gtm = gtmParts({
+        "id": GOOGLE_TAG_MANAGER_ID,
+        "dataLayerName": "dataLayer",
+        "additionalEvents": {},
+      });
+      return (
+        <div>
+          <div>
+            {gtm.noScriptAsReact()}
+          </div>
+          <div id={this.scriptId}>
+            {gtm.scriptAsReact()}
+          </div>
+        </div>
+      );
     }
+    return null;
+  }
 }
 
 export default GoogleTagManager;

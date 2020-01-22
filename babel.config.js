@@ -1,32 +1,35 @@
 module.exports = (api) => {
 
-    api.cache.using(() => process.env.NODE_ENV);
+  api.cache.using(() => process.env.NODE_ENV);
 
-    const presets = [
-        "@babel/preset-react",
-        [
-            "@babel/preset-env",
-            {
-                "targets": {
-                    "ei": 11,
-                    "chrome": 41
-                }
-            }
-        ]
-    ];
+  const presets = [
+    "@babel/preset-react",
+    ["@babel/preset-env", {
+      "targets": {
+        "chrome": 41,
+      },
+      "useBuiltIns": "usage",
+      "corejs": {
+        "version": 3,
+        "proposals": true,
+      },
+    }],
+  ];
 
-    const plugins = [];
+  const plugins = [];
 
-    const ignore = [];
+  const ignore = [ ];
 
-    if (api.env(["development"])) {
-        plugins.push("react-hot-loader/babel");
-        ignore.push("node_modules");
-    }
+  // We exclude node_modules as they would cause a lot of warnings.
+  ignore.push("node_modules");
 
-    return {
-        "presets": presets,
-        "plugins": plugins,
-        "ignore": ignore
-    }
+  if (api.env(["development"])) {
+    plugins.push("react-hot-loader/babel");
+  }
+
+  return {
+    "presets": presets,
+    "plugins": plugins,
+    "ignore": ignore,
+  }
 };

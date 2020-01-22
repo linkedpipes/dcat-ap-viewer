@@ -4,21 +4,25 @@ import {connect} from "react-redux";
 import {isLoaderActiveSelector} from "./loading-indicator-reducer";
 
 const _LoaderIndicator = ({active}) => {
-    if (active) {
-        return (
-            <div className="indeterminate-loader fixed-top">
-                <div className="progress"/>
-            </div>
-        )
-    } else {
-        return null;
-    }
+  if (active) {
+    return (
+      <div className="indeterminate-loader fixed-top">
+        <div className="progress"/>
+      </div>
+    )
+  } else {
+    return null;
+  }
+};
+
+_LoaderIndicator.propTypes = {
+  "active": PropTypes.bool.isRequired,
 };
 
 const LoaderIndicator = connect(
-    (state, ownProps) => ({
-        "active": isLoaderActiveSelector(state)
-    })
+  (state) => ({
+    "active": isLoaderActiveSelector(state),
+  }),
 )(_LoaderIndicator);
 
 export default LoaderIndicator;
