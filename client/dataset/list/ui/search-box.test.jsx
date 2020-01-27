@@ -8,7 +8,7 @@ Enzyme.configure({"adapter": new Adapter()});
 const noop = () => {
 };
 
-describe("Search box", () => {
+describe("search box", () => {
 
   function createComponent(userProps = {}) {
     const props = {
@@ -20,7 +20,7 @@ describe("Search box", () => {
     return mount(<SeachBox {...props} />);
   }
 
-  it("Renders component.", () => {
+  it("renders component.", () => {
     const component = createComponent();
     //
     expect(component.find("i")).toHaveLength(1);
@@ -30,7 +30,7 @@ describe("Search box", () => {
     component.unmount();
   });
 
-  it("Render default value.", () => {
+  it("render default value.", () => {
     const expectedValue = "init-value";
     const component = createComponent({"defaultValue": expectedValue});
     const actualValue = component.find("input.form-control").props().value;
@@ -40,7 +40,7 @@ describe("Search box", () => {
     component.unmount();
   });
 
-  it("Search by suggested value and enter.", () => {
+  it("search by suggested value and enter.", () => {
     const onSearch = jest.fn();
     const searchValue = "vts";
     const component = createComponent({"onSearch": onSearch});
