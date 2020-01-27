@@ -30,6 +30,11 @@ const ViewSelector = ({value, onChange}) => (
   </UncontrolledDropdown>
 );
 
+ViewSelector.propTypes = {
+  "onChange": PropTypes.func.isRequired,
+  "value": PropTypes.number.isRequired,
+};
+
 function indexToValue(index) {
   return values[index];
 }

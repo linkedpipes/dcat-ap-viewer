@@ -6,11 +6,15 @@ import {
   FETCH_DISTRIBUTION_FAILED,
   SET_DISTRIBUTION_PAGE_INDEX,
   SET_DISTRIBUTION_PAGE_SIZE,
+  FETCH_DISTRIBUTION_QUALITY_FAILED,
+  FETCH_DISTRIBUTION_QUALITY_SUCCESS,
 } from "./distribution-action";
 import {
+  STATUS_UNKNOWN,
   STATUS_FETCHING,
   STATUS_FETCHED,
 } from "../../../app-services/http-request";
+import {loadDistributionQuality} from "./jsonld-to-distribution";
 
 const reducerName = "dataset-detail-distribution";
 
@@ -36,6 +40,10 @@ function reducer(state = initialState, action) {
       return onSetDistributionPage(state, action);
     case SET_DISTRIBUTION_PAGE_SIZE:
       return onSetDistributionPageSize(state, action);
+    case FETCH_DISTRIBUTION_QUALITY_SUCCESS:
+      return onQualityRequestSuccess(state, action);
+    case FETCH_DISTRIBUTION_QUALITY_FAILED:
+      return onQualityRequestFailed(state, action);
     default:
       return state
   }
@@ -102,6 +110,44 @@ function onSetDistributionPageSize(state, action) {
   };
 }
 
+function onQualityRequestSuccess(state, action) {
+  const dist = state.distributions[action.iri];
+  return {
+    ...state,
+    "distributions": {
+      ...state.distributions,
+      [action.iri]: {
+        ...dist,
+        "data": {
+          ...dist.data,
+          "quality": loadDistributionQuality(action.data, dist.data),
+        },
+
+      },
+    },
+  }
+}
+
+function onQualityRequestFailed(state, action) {
+  const dist = state.distributions[action.iri];
+  return {
+    ...state,
+    "distributions": {
+      ...state.distributions,
+      [action.iri]: {
+        ...dist,
+        "data": {
+          ...dist.data,
+          "quality": {
+            ...dist.data.quality,
+            "ready": true,
+          },
+        },
+      },
+    },
+  }
+}
+
 export default {
   "name": reducerName,
   "reducer": reducer,
@@ -120,11 +166,11 @@ export function pageSizeSelector(state) {
 export function distributionStatusSelector(state, iri) {
   const distributions = reducerSelector(state)["distributions"];
   if (distributions === undefined) {
-    return undefined;
+    return STATUS_UNKNOWN;
   }
   const dist = distributions[iri];
   if (dist === undefined) {
-    return undefined;
+    return STATUS_UNKNOWN;
   } else {
     return dist["status"];
   }

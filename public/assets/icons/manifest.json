@@ -1,5 +1,6 @@
 {
-    "name": "",
+    "name": "Národní katalog otevřených dat",
+	"short_name": "NKOD",
     "icons": [
         {
             "src": "/assets/icons/android-chrome-192x192.png",
@@ -7,12 +8,12 @@
             "type": "image/png"
         },
         {
-            "src": "/assets/icons/android-chrome-256x256.png",
-            "sizes": "256x256",
+            "src": "/assets/icons/android-chrome-512x512.png",
+            "sizes": "512x512",
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
+    "theme_color": "#057fa5",
     "background_color": "#ffffff",
     "display": "standalone"
 }

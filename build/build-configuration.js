@@ -17,6 +17,9 @@ module.exports = {
     "BASE": asString(config["client"]["urlBase"]),
   },
   "DEREFERENCE": asString(config["client"]["dereferenceIri"]),
+  "FORM": {
+    "URL": asString(config["client"]["formUrl"]),
+  },
 };
 
 function asString(value) {

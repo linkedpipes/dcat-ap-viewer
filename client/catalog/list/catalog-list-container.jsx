@@ -40,9 +40,9 @@ class _CatalogsViewContainer extends React.Component {
 }
 
 _CatalogsViewContainer.propTypes = {
-  "status": PropTypes.string.isRequired,
-  "catalogs": PropTypes.array.isRequired,
   "fetchData": PropTypes.func.isRequired,
+  "status": PropTypes.string.isRequired,
+  "catalogs": PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -43,7 +43,7 @@ const QueryStatus = connect(mapStateToProps)(_QueryStatus);
 
 export default QueryStatus;
 
-const TagLine = ({values, size = 1}) => {
+function TagLine({values, size = 1}) {
   if (values === undefined) {
     return null;
   }
@@ -64,7 +64,7 @@ const TagLine = ({values, size = 1}) => {
       ))}
     </div>
   );
-};
+}
 
 TagLine.propTypes = {
   "values": PropTypes.arrayOf(PropTypes.string).isRequired,

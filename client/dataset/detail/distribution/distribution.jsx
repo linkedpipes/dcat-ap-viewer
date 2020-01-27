@@ -1,11 +1,23 @@
 import React from "react";
 import {getString} from "../../../app-services/strings";
-import {selectLabel, selectLabelNoIri} from "../../../app-services/labels/index";
+import {selectLabelNoIri} from "../../../app-services/labels/index";
+import {selectLabel} from "../../../app-services/labels";
+import authorship from "./terms-of-use/authorship";
+import databaseAuthorship from "./terms-of-use/database-authorship";
+import protectedDatabaseAuthorship
+  from "./terms-of-use/protected-database-authorship";
+import personalData from "./terms-of-use/personal-data";
+import downloadListItem from "./access/download-list-item";
+import schemaListItem from "./access/schema-list-item";
+import mediaTypeItem from "./access/media-type-item";
+import compressFormat from "./access/compress-format-item";
+import packageFormat from "./access/package-format-item";
+
 import {PropTypes} from "prop-types";
 
 export default class Distribution extends React.PureComponent {
   render() {
-    const {labels, distribution, isLoading} = this.props;
+    const {labels, distribution, isLoading, openModal} = this.props;
 
     if (isLoading) {
       // TODO Add loading indicator !!
@@ -15,9 +27,9 @@ export default class Distribution extends React.PureComponent {
     const title = selectLabelNoIri(labels, distribution);
 
     return (
-      <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
-        <div className="card" style={{"height": "100%"}}>
-          <div className="card-body">
+      <div className="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
+        <div className="card p-2">
+          <div className="card-body px-2">
             {title === undefined ?
               <span className="sr-only">
                 {getString("unnamed_distribution")}
@@ -29,11 +41,14 @@ export default class Distribution extends React.PureComponent {
             }
             {dataFormatItem(labels, distribution)}
           </div>
-          <ul className="list-group list-group-flush">
-            {downloadListItem(distribution)}
-            {schemaListItem(distribution)}
-            {licenseListItem(distribution)}
-          </ul>
+          <div className="row">
+            <div className="col-6 pr-1">
+              {licenseColumn(distribution, openModal)}
+            </div>
+            <div className="col-6 pl-1">
+              {accessColumn(labels, distribution, openModal)}
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -41,29 +56,17 @@ export default class Distribution extends React.PureComponent {
 }
 
 Distribution.propTypes = {
-  "labels": PropTypes.object.isRequired,
-  "distribution": PropTypes.object.isRequired,
   "isLoading": PropTypes.bool.isRequired,
+  "labels": PropTypes.object.isRequired,
+  "distribution": PropTypes.object,
+  "openModal": PropTypes.func,
 };
 
-function isEmpty(value) {
-  return value === undefined || value.length === 0;
-}
-
 function dataFormatItem(labels, distribution) {
-  const formatLabel = selectLabel(labels, distribution.format);
-  const mediaType = selectLabel(labels, distribution.mediaType);
-  let label;
-  if (formatLabel === undefined && mediaType === undefined) {
+  const label = selectLabel(labels, distribution.format);
+  if (label === undefined) {
     return null;
-  } else if (formatLabel === undefined) {
-    label = mediaType;
-  } else if (mediaType === undefined) {
-    label = formatLabel;
-  } else {
-    label = formatLabel + ", " + mediaType;
   }
-
   return (
     <h6 className="card-subtitle mb-2 text-muted">
       {label}
@@ -71,55 +74,35 @@ function dataFormatItem(labels, distribution) {
   )
 }
 
-function downloadListItem(distribution) {
-  let downloadUrl = undefined;
-  if (isEmpty(distribution.downloadURL)) {
-    if (isEmpty(distribution.accessURL)) {
-      console.error("Invalid data, missing accessURL", distribution);
-    } else {
-      downloadUrl = distribution.accessURL[0];
-    }
-  } else {
-    downloadUrl = distribution.downloadURL[0];
-  }
-
-  if (downloadUrl === undefined) {
-    return null;
-  }
-
+function licenseColumn(distribution, openModal) {
   return (
-    <li className="list-group-item">
-      <a href={downloadUrl} className="card-link">
-        {getString("download")}
-      </a>
-    </li>
+    <div className="card">
+      <h6 className="card-title text-muted pl-2 pt-2">
+        {getString("distribution_license")}
+      </h6>
+      <ul className="list-group list-group-flush">
+        {authorship(distribution, openModal)}
+        {databaseAuthorship(distribution, openModal)}
+        {protectedDatabaseAuthorship(distribution, openModal)}
+        {personalData(distribution, openModal)}
+      </ul>
+    </div>
   )
 }
 
-function schemaListItem(distribution) {
-  if (distribution.conformsTo.length === 0) {
-    return null;
-  }
+function accessColumn(labels, distribution, openModal) {
   return (
-    <li className="list-group-item">
-      <a href={distribution.conformsTo[0]}
-        className="card-link">
-        {getString("schema")}
-      </a>
-    </li>
-  )
-}
-
-function licenseListItem(distribution) {
-  if (distribution.license === undefined) {
-    return null;
-  }
-  return (
-    <li className="list-group-item">
-      <a href={distribution.license}
-        className="card-link">
-        {getString("licence")}
-      </a>
-    </li>
-  )
+    <div className="card">
+      <h6 className="card-title text-muted pl-2 pt-2">
+        {getString("distribution_access")}
+      </h6>
+      <ul className="list-group list-group-flush">
+        {downloadListItem(distribution, openModal)}
+        {schemaListItem(distribution, openModal)}
+        {mediaTypeItem(labels, distribution, openModal)}
+        {compressFormat(labels, distribution)}
+        {packageFormat(labels, distribution)}
+      </ul>
+    </div>
+  );
 }

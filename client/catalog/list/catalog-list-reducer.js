@@ -13,7 +13,7 @@ const reducerName = "catalog-list";
 
 const initialState = {
   "status": STATUS_INITIAL,
-  "catalogs": undefined,
+  "catalogs": [],
 };
 
 function reducer(state = initialState, action) {
@@ -51,7 +51,7 @@ function onCatalogsRequestFailed(state, action) {
   return {
     ...state,
     "status": action.error.status,
-    "catalogs": undefined,
+    "catalogs": [],
   };
 }
 

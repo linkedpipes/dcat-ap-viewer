@@ -143,13 +143,13 @@ class _QueryInput extends React.Component {
 }
 
 _QueryInput.propTypes = {
-  "query": PropTypes.object.isRequired,
-  "clearFilters": PropTypes.func.isRequired,
+  "setSearchString": PropTypes.func.isRequired,
   "setTemporalStart": PropTypes.func.isRequired,
   "setTemporalEnd": PropTypes.func.isRequired,
   "setTemporal": PropTypes.func.isRequired,
-  "setSearchString": PropTypes.func.isRequired,
   "setView": PropTypes.func.isRequired,
+  "clearFilters": PropTypes.func.isRequired,
+  "query": PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({

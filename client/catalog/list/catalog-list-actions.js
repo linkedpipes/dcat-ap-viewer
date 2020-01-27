@@ -1,8 +1,8 @@
 import {
   addLoaderStatusOn,
   addLoaderStatusOff,
-} from "app-ui/loading-indicator/index";
-import {fetchJson} from "app-services/http-request";
+} from "../../app-ui/loading-indicator/index";
+import {fetchJson} from "../../app-services/http-request";
 
 export const FETCH_CATALOGS_REQUEST = "FETCH_CATALOGS_REQUEST";
 export const FETCH_CATALOGS_SUCCESS = "FETCH_CATALOGS_SUCCESS";

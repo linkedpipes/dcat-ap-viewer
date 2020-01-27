@@ -2,6 +2,7 @@ import React from "react";
 import {formatNumber} from "../../app-services/formats";
 import {getString} from "../../app-services/strings";
 import {PropTypes} from "prop-types";
+import {getFormLink, CATALOG_DELETE} from "../../app/form-links";
 
 export const CatalogList = ({catalogs}) => (
   <div className="container p-3">
@@ -23,15 +24,16 @@ CatalogList.propTypes = {
 };
 
 function CatalogItem({catalog}) {
-  const {title, contactPoint, id} = catalog;
+  const {contactPoint, id} = catalog;
   const {name, email} = contactPoint;
   return (
     <div className="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 mb-3">
       <div className="card p-2">
         <div className="card-body px-2">
           <h5 className="card-title">
-            <span className="pr-2">{title}</span>
-            <a href={id} target="_blank" rel="noopener noreferrer">
+            <span className="pr-2">{catalog["publisherName"]}</span>
+            <a href={DEREFERENCE_IRI + catalog["publisherIRI"]}
+              target="_blank" rel="noopener noreferrer">
               <i className="material-icons md-18">open_in_new</i>
             </a>
           </h5>
@@ -52,8 +54,7 @@ function CatalogItem({catalog}) {
           <li className="list-group-item">
             {catalog["homepage"] &&
                         <a href={catalog["homepage"]}
-                          target="_blank" className="pr-2"
-                          rel="noopener noreferrer">
+                          target="_blank" rel="noopener noreferrer" className="pr-2">
                           <i className="material-icons md-24"
                             style={{"color": "gray"}}>
                                 home
@@ -61,11 +62,17 @@ function CatalogItem({catalog}) {
                         </a>
             }
             <a href={catalog["endpointURL"]}
-              target="_blank" className="pr-2"
-              rel="noopener noreferrer">
+              target="_blank" rel="noopener noreferrer" className="pr-2">
               <i className="material-icons md-24"
                 style={{"color": "gray"}}>
                                 link
+              </i>
+            </a>
+            <a href={getFormLink(CATALOG_DELETE, id)}
+              target="_blank" rel="nofollow noopener noreferrer">
+              <i className="material-icons md-24"
+                style={{"color": "gray"}}>
+                                delete_forever
               </i>
             </a>
           </li>

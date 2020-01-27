@@ -25,4 +25,8 @@ const LoaderIndicator = connect(
   }),
 )(_LoaderIndicator);
 
+_LoaderIndicator.propTypes = {
+  "active": PropTypes.bool.isRequired,
+};
+
 export default LoaderIndicator;

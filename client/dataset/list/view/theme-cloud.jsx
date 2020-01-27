@@ -50,7 +50,8 @@ function tagRenderer (labels, all, selected, tag, size)  {
     "display": "inline-block",
     "cursor": "pointer",
   };
-    // If all elements have the same count, then size is NaN.
+
+  // If all elements have the same count, then size is NaN.
   if (isNaN(size)) {
     size = 32;
   }
@@ -72,11 +73,11 @@ function tagRenderer (labels, all, selected, tag, size)  {
 }
 
 _ThemeCloud.propTypes = {
-  "all": PropTypes.array.isRequired,
-  "selected": PropTypes.array.isRequired,
-  "query": PropTypes.object.isRequired,
-  "labels": PropTypes.object.isRequired,
   "setThemeFacet": PropTypes.func.isRequired,
+  "labels": PropTypes.object.isRequired,
+  "all": PropTypes.object.isRequired,
+  "query": PropTypes.array.isRequired,
+  "selected": PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const mapStateToProps = (state) => ({

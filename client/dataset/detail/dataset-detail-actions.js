@@ -5,6 +5,7 @@ import {
 import {
   fetchDatasetDetail,
   fetchLabelsForDataset,
+  fetchDatasetQuality,
 } from "./dataset-api";
 import {jsonLdToDataset} from "./jsonld-to-dataset";
 
@@ -13,7 +14,8 @@ export const UNMOUNT_DATASET_DETAIL_LIST = "UNMOUNT_DATASET_DETAIL_LIST";
 export const FETCH_DATASET_REQUEST = "FETCH_DATASET_REQUEST";
 export const FETCH_DATASET_SUCCESS = "FETCH_DATASET_SUCCESS";
 export const FETCH_DATASET_FAILED = "FETCH_DATASET_FAILED";
-
+export const FETCH_DATASET_QUALITY_SUCCESS = "FETCH_DATASET_QUALITY_SUCCESS";
+export const FETCH_DATASET_QUALITY_FAILED = "FETCH_DATASET_QUALITY_FAILED";
 
 export function onMount() {
   return {
@@ -32,9 +34,10 @@ export function fetchDataset(iri) {
     dispatch(fetchDatasetRequest(iri));
     fetchDatasetDetail(iri).then((jsonld) => {
       const dataset = jsonLdToDataset(jsonld);
-      dispatch(fetchDatasetSuccess(jsonld, dataset));
+      dispatch(fetchDatasetSuccess(iri, jsonld, dataset));
       fetchLabelsForDataset(dataset, dispatch);
-    }).catch((error) => dispatch(fetchDatasetFailed(error)));
+      dispatch(fetchQuality(iri));
+    }).catch((error) => dispatch(fetchDatasetFailed(iri, error)));
   };
 }
 
@@ -45,18 +48,45 @@ function fetchDatasetRequest(iri) {
   });
 }
 
-function fetchDatasetSuccess(jsonld, data) {
+function fetchDatasetSuccess(iri, jsonld, data) {
   return addLoaderStatusOff({
     "type": FETCH_DATASET_SUCCESS,
+    "iri": iri,
     "jsonld": jsonld,
     "data": data,
   });
 }
 
-function fetchDatasetFailed(error) {
+function fetchDatasetFailed(iri, error) {
   console.error("Can't fetch dataset.", error);
   return addLoaderStatusOff({
     "type": FETCH_DATASET_FAILED,
+    "iri": iri,
     "error": error,
   });
+}
+
+function fetchQuality(iri) {
+  return (dispatch) => {
+    fetchDatasetQuality(iri).then((jsonld) => {
+      dispatch(fetchQualitySuccess(iri, jsonld));
+    }).catch((error) => dispatch(fetchQualityFailed(iri, error)));
+  };
+}
+
+function fetchQualitySuccess(iri, jsonld) {
+  return {
+    "type": FETCH_DATASET_QUALITY_SUCCESS,
+    "dataset": iri,
+    "data": jsonld,
+  }
+}
+
+function fetchQualityFailed(iri, error) {
+  console.error("Can't fetch dataset's quality.", error);
+  return {
+    "type": FETCH_DATASET_QUALITY_FAILED,
+    "dataset": iri,
+    "error": error,
+  }
 }

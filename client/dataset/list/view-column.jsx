@@ -45,7 +45,7 @@ export default class ViewColumn extends React.Component {
 }
 
 ViewColumn.propTypes = {
-  "status": PropTypes.string.isRequired,
+  "status": PropTypes.string,
   "location": PropTypes.object.isRequired,
   "view": PropTypes.number.isRequired,
 };

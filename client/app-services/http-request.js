@@ -1,5 +1,8 @@
 import Raven from "raven-js";
 
+// Used for not yet loaded objects.
+export const STATUS_UNKNOWN = "INITIAL";
+
 // Initial status no data available.
 export const STATUS_INITIAL = "INITIAL";
 

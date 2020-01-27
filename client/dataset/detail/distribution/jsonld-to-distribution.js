@@ -5,8 +5,12 @@ import {
   FOAF,
   ADMS,
   SPDX,
+  PU,
+  DQV,
+  SDMX,
+  QUALITY,
+  SKOS,
 } from "../../../app-services/vocabulary";
-
 
 // TODO Merge with action or leave in separated file.
 
@@ -20,6 +24,7 @@ export function jsonLdToDistribution(jsonld) {
   const mandatory = {
     "@id": triples.id(distribution),
     "accessURL": triples.resources(distribution, DCAT.accessURL),
+    ...parseTermsOfUse(distribution, jsonld),
   };
 
   const recommended = {
@@ -47,5 +52,130 @@ export function jsonLdToDistribution(jsonld) {
     "type": triples.resource(distribution, DCTERMS.type),
   };
 
-  return {...mandatory, ...recommended, ...optional, ...extension};
+  const quality = {
+    "quality": {
+      "ready": false,
+      "download": null,
+      "downloadLastCheck": null,
+      "downloadNone": null,
+      "schema": null,
+      "schemaLastCheck": null,
+      "schemaNone": null,
+      "mediaType": null,
+      "mediaTypeCheck": null,
+      "mediaTypeNote": null,
+      "authorshipCustom": null,
+      "authorshipCustomLastCheck": null,
+      "authorshipCustomNte": null,
+      "databaseAuthorship": null,
+      "databaseAuthorshipLastCheck": null,
+      "databaseAuthorshipNote": null,
+      "protectedDatabaseAuthorship": null,
+      "protectedDatabaseAuthorshipLastCheck": null,
+      "protectedDatabaseAuthorshipNote": null,
+    },
+  };
+
+  const dcat = {
+    "packageFormat": triples.entity(distribution, DCAT.packageFormat),
+    "compressFormat": triples.entity(distribution, DCAT.compressFormat),
+  };
+
+  return {
+    ...mandatory,
+    ...recommended,
+    ...optional,
+    ...extension,
+    ...quality,
+    ...dcat,
+  };
+}
+
+export function parseTermsOfUse(distribution, jsonld) {
+  const iri = triples.resource(distribution, PU.specification);
+  if (iri === undefined) {
+    return {
+      "authorship": "missing",
+      "author": "missing",
+      "databaseAuthorship": "missing",
+      "databaseAuthor": "missing",
+      "protectedDatabase": "missing",
+      "personalData": "missing",
+    };
+  }
+
+  const entity = graph.getByResource(jsonld, iri);
+
+  const authorship = triples.resource(entity, PU.authorship);
+  const author = triples.string(entity, PU.author);
+  const databaseAuthorship = triples.resource(entity, PU.databaseAuthorship);
+  const databaseAuthor = triples.string(entity, PU.databaseAuthor);
+  const protectedDatabase = triples.resource(entity, PU.protectedDatabase);
+  const personalData = triples.resource(entity, PU.personalData);
+
+  return {
+    "authorship": authorship,
+    "author": author,
+    "databaseAuthorship": databaseAuthorship,
+    "databaseAuthor": databaseAuthor,
+    "protectedDatabase": protectedDatabase,
+    "personalData": personalData,
+  };
+}
+
+export function loadDistributionQuality(jsonld, distribution) {
+  const measures = graph.getAllByType(jsonld, DQV.QualityMeasurement);
+  const quality = {
+    ...distribution.quality,
+    "ready": true,
+  };
+  measures.forEach((measure) => {
+    const period = triples.resource(measure, SDMX.refPeriod);
+    const measureOf = triples.resource(measure, DQV.isMeasurementOf);
+    const value = triples.value(measure, DQV.value);
+    switch (measureOf) {
+      case QUALITY.downloadAvailability:
+        quality["download"] = value;
+        quality["downloadLastCheck"] = sdmxRefToDate(period);
+        quality["downloadNote"] = triples.value(measure, SKOS.note);
+        break;
+      case QUALITY.mediaType:
+        quality["mediaType"] = value;
+        quality["mediaTypeLastCheck"] = sdmxRefToDate(period);
+        quality["mediaTypeNote"] = triples.value(measure, SKOS.note);
+        break;
+      case QUALITY.schemaAvailability:
+        quality["schema"] = value;
+        quality["schemaLastCheck"] = sdmxRefToDate(period);
+        quality["schemaNote"] = triples.value(measure, SKOS.note);
+        break;
+      case QUALITY.authorship:
+        quality["authorshipCustom"] = value;
+        quality["authorshipCustomLastCheck"] = sdmxRefToDate(period);
+        quality["authorshipCustomNote"] =
+          triples.value(measure, SKOS.note);
+        break;
+      case QUALITY.databaseAuthorship:
+        quality["databaseAuthorship"] = value;
+        quality["databaseAuthorshipLastCheck"] = sdmxRefToDate(period);
+        quality["databaseAuthorshipNote"] =
+          triples.value(measure, SKOS.note);
+        break;
+      case QUALITY.specialDatabaseAuthorship:
+        quality["protectedDatabaseAuthorship"] = value;
+        quality["protectedDatabaseAuthorshipLastCheck"] =
+          sdmxRefToDate(period);
+        quality["protectedDatabaseAuthorshipNote"] =
+          triples.value(measure, SKOS.note);
+        break;
+      default:
+        break;
+    }
+  });
+  return quality;
+}
+
+function sdmxRefToDate(iri) {
+  return iri.substr(iri.lastIndexOf("/") + 1)
+    .replace("T", " ");
 }

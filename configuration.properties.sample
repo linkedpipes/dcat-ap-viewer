@@ -40,5 +40,11 @@ google_tag_manager.id =
 # Tag cloud filter options.
 client.keyword_cloud.min = 100
 
+# Forms URL - with percent encoded of utf-8 characters.
+client.form_url = https://dev.nkod.opendata.cz/formulář/
+
 # Prefix used to create dereference IRI for datasets.
 client.dereference_prefix =
+
+# Endpoint with quality data.
+quality.sparql =

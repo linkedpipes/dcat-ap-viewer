@@ -5,16 +5,16 @@ import {PropTypes} from "prop-types";
 
 export default class DistributionList extends React.PureComponent {
   render() {
-    const {distributions} = this.props;
-    if (distributions.length === 0) {
+    const {records} = this.props;
+    if (records.length === 0) {
       return null;
     }
     const {recordsCount, page, pageSize, setPage, setPageSize} = this.props;
     return (
       <div>
         <div className="row">
-          {distributions.map((iri) => (
-            <DistributionContainer key={iri} iri={iri}/>
+          {records.map((record) => (
+            <DistributionContainer key={record} iri={record}/>
           ))}
         </div>
         <Paginator
@@ -31,10 +31,10 @@ export default class DistributionList extends React.PureComponent {
 }
 
 DistributionList.propTypes = {
-  "distributions": PropTypes.array.isRequired,
+  "setPageSize": PropTypes.func.isRequired,
+  "setPage": PropTypes.func.isRequired,
   "recordsCount": PropTypes.number.isRequired,
   "page": PropTypes.number.isRequired,
   "pageSize": PropTypes.number.isRequired,
-  "setPage": PropTypes.func.isRequired,
-  "setPageSize": PropTypes.func.isRequired,
+  "records": PropTypes.arrayOf(PropTypes.string).isRequired,
 };

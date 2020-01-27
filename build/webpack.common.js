@@ -42,10 +42,10 @@ module.exports = {
       "PAGE_TITLE_PREFIX": config.PAGE_TITLE.PREFIX,
       "PAGE_TITLE_SUFFIX": config.PAGE_TITLE.SUFFIX,
       "REPOSITORY_TYPE": config.REPOSITORY_TYPE,
+      "FORM_URL": config.FORM.URL,
       "URL_PREFIX": config.URL.PREFIX,
       "URL_BASE": config.URL.BASE,
       "DEREFERENCE_IRI": config.DEREFERENCE,
     }),
   ],
 };
-

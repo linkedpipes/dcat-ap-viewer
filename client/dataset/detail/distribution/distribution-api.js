@@ -17,8 +17,7 @@ function normalizeData(data) {
 }
 
 // TODO Generalize and merge.
-export function fetchLabelsForDistribution(entity, dispatch) {
-  const properties = ["format", "mediaType"];
+export function fetchLabelsForProperties(entity, dispatch, properties) {
   properties.forEach((property) => {
     const value = entity[property];
     if (value === undefined) {

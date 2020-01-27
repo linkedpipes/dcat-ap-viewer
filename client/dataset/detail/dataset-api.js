@@ -39,3 +39,10 @@ export function fetchLabelsForDataset(entity, dispatch) {
 function dispatchLabelRequest(dispatch, iri) {
   dispatch(fetchLabel(iri));
 }
+
+export function fetchDatasetQuality(iri) {
+  const url = "./api/v1/resource/quality?iri=" + encodeURI(iri);
+  return fetchJson(url).then((response) => {
+    return response.json;
+  });
+}

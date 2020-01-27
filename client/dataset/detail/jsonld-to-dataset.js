@@ -6,9 +6,12 @@ import {
   OWL,
   ADMS,
   VCARD,
-  SCHEMA,
   SKOS,
   EUA,
+  NKOD,
+  DQV,
+  SDMX,
+  QUALITY,
 } from "../../app-services/vocabulary";
 
 export function jsonLdToDataset(jsonld) {
@@ -17,6 +20,7 @@ export function jsonLdToDataset(jsonld) {
   // TODO Change to getString with specific structure (object with languages).
   const mandatory = {
     "@id": triples.id(dataset),
+    "@type": triples.type(dataset),
     "description": triples.string(dataset, DCTERMS.description),
   };
 
@@ -52,14 +56,43 @@ export function jsonLdToDataset(jsonld) {
     "versionNotes": triples.value(dataset, ADMS.versionNotes),
   };
 
+  const services = graph.getAllByType(jsonld, DCAT.DataService)
+    .filter((service) => {
+      const serves = triples.resource(service, DCAT.servesDataset);
+      return serves === triples.id(dataset);
+    });
+
+  const dcat = {
+    "services": services.map((service) => triples.id(service)),
+    "temporalResolution": triples.value(dataset, DCAT.temporalResolution),
+    "spatialResolutionInMeters": triples.value(dataset, DCAT.spatialResolutionInMeters),
+  };
+
   const catalog = graph.getByType(jsonld, DCAT.Catalog) || {};
   const catalogRecord = graph.getByType(jsonld, DCAT.CatalogRecord) || {};
   const external = {
     "catalog": triples.id(catalog),
     "catalogSource": triples.resource(catalogRecord, DCTERMS.source),
+    "lkod": triples.resource(dataset, NKOD.lkod),
   };
 
-  return {...mandatory, ...recommended, ...optional, ...external};
+  const quality = {
+    "quality": {
+      "ready": false,
+      "documentation": null,
+      "documentationLastCheck": null,
+      "documentationNote": null,
+    },
+  };
+
+  return {
+    ...mandatory,
+    ...recommended,
+    ...optional,
+    ...external,
+    ...quality,
+    ...dcat,
+  };
 }
 
 function loadThemes(jsonld, dataset) {
@@ -121,8 +154,39 @@ function loadTemporal(jsonld, dataset) {
   } else {
     return {
       "iri": temporalIri,
-      "startDate": triples.value(temporal, SCHEMA.startDate),
-      "endDate": triples.value(temporal, SCHEMA.endDate),
+      "startDate": triples.value(temporal, DCAT.startDate),
+      "endDate": triples.value(temporal, DCAT.endDate),
     };
   }
+}
+
+export function loadDatasetQuality(jsonld, dataset) {
+  const measures = graph.getAllByType(jsonld, DQV.QualityMeasurement);
+  const quality = {
+    ...dataset.quality,
+    "ready": true,
+  };
+
+  measures.forEach((measure) => {
+    const period = triples.resource(measure, SDMX.refPeriod);
+    const measureOf = triples.resource(measure, DQV.isMeasurementOf);
+    const value = triples.value(measure, DQV.value);
+    switch (measureOf) {
+      case QUALITY.documentationAvailability:
+        quality["documentation"] = value;
+        quality["documentationLastCheck"] = sdmxRefToDate(period);
+        quality["documentationNote"] = triples.value(measure, SKOS.note);
+        break;
+      default:
+        break;
+    }
+  });
+
+  return quality;
+}
+
+function sdmxRefToDate(iri) {
+  return iri.substr(iri.lastIndexOf("/") + 1)
+    .replace("T", " ")
+    .replace("-", ".");
 }

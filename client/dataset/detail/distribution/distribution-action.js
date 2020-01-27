@@ -1,8 +1,12 @@
 import {
   fetchDistributionDetail,
-  fetchLabelsForDistribution,
+  fetchLabelsForProperties,
 } from "./distribution-api";
 import {jsonLdToDistribution} from "./jsonld-to-distribution";
+import {jsonLdToDataService} from "./jsonld-to-data-service";
+import {fetchDatasetQuality} from "../../../dataset/detail/dataset-api";
+import {graph} from "../../../app-services/jsonld";
+import {DCAT} from "../../../app-services/vocabulary";
 
 export const MOUNT_DISTRIBUTION = "MOUNT_DISTRIBUTION";
 export const UNMOUNT_DISTRIBUTION = "UNMOUNT_DISTRIBUTION";
@@ -14,6 +18,10 @@ export const FETCH_DISTRIBUTION_FAILED = "FETCH_DISTRIBUTION_FAILED";
 export const SET_DISTRIBUTION_PAGE_INDEX = "SET_DISTRIBUTION_PAGE_INDEX";
 export const SET_DISTRIBUTION_PAGE_SIZE = "SET_DISTRIBUTION_PAGE_SIZE";
 
+export const FETCH_DISTRIBUTION_QUALITY_SUCCESS =
+    "FETCH_DISTRIBUTION_QUALITY_SUCCESS";
+export const FETCH_DISTRIBUTION_QUALITY_FAILED =
+    "FETCH_DISTRIBUTION_QUALITY_FAILED";
 
 export function onMount() {
   return {
@@ -28,15 +36,27 @@ export function onUnMount() {
 }
 
 export function fetchDistribution(iri) {
-
   return (dispatch) => {
     dispatch(fetchDistributionRequest(iri));
     fetchDistributionDetail(iri).then((jsonld) => {
-      const distribution = jsonLdToDistribution(jsonld);
-      dispatch(fetchDistributionSuccess(iri, jsonld, distribution));
-      fetchLabelsForDistribution(distribution, dispatch);
+      let data;
+      if (isDataService(jsonld)) {
+        data = jsonLdToDataService(jsonld);
+        data.resourceType = "dataService";
+      } else {
+        data = jsonLdToDistribution(jsonld);
+        data.resourceType = "distribution";
+      }
+      dispatch(fetchDistributionSuccess(iri, jsonld, data));
+      fetchLabelsForProperties(data, dispatch, ["format", "mediaType"]);
+      dispatch(fetchQuality(iri));
     }).catch((error) => dispatch(fetchDistributionFailed(iri, error)));
   };
+}
+
+function isDataService(jsonld) {
+  const dataService = graph.getByType(jsonld, DCAT.DataService);
+  return dataService !== undefined;
 }
 
 function fetchDistributionRequest(iri) {
@@ -74,5 +94,30 @@ export function setPageSize(size) {
   return {
     "type": SET_DISTRIBUTION_PAGE_SIZE,
     "size": size,
+  }
+}
+
+function fetchQuality(iri) {
+  return (dispatch) => {
+    fetchDatasetQuality(iri).then((jsonld) => {
+      dispatch(fetchQualitySuccess(iri, jsonld));
+    }).catch((error) => dispatch(fetchQualityFailed(iri, error)));
+  };
+}
+
+function fetchQualitySuccess(iri, jsonld) {
+  return {
+    "type": FETCH_DISTRIBUTION_QUALITY_SUCCESS,
+    "iri": iri,
+    "data": jsonld,
+  }
+}
+
+function fetchQualityFailed(iri, error) {
+  console.error("Can't fetch distribution's quality.", error);
+  return {
+    "type": FETCH_DISTRIBUTION_QUALITY_FAILED,
+    "iri": iri,
+    "error": error,
   }
 }

@@ -9,6 +9,7 @@ import {createStore} from "./app/store";
 import {createRoutes} from "./app/navigation";
 import {initialize as initializeStrings} from "./app-services/strings";
 
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.style.css";
 
 const history = createBrowserHistory();

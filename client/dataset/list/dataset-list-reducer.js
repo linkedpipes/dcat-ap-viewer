@@ -157,7 +157,6 @@ function onSetQueryString(state, action) {
 function onLocationChange(state, action) {
   const params = parseQueryString(action.payload.location.search);
   const queryString = params[getQuery(STRING_QUERY)];
-  console.log("onLocationChange", action.payload, params, queryString);
   return {
     ...state,
     "query": paramsToQuery(params),
@@ -177,7 +176,7 @@ function paramsToQuery(params) {
 
   let order = params[getQuery(SORT_QUERY)];
   if (order === undefined) {
-    order = "modified desc";
+    order = "title_sort asc";
   }
 
   let pageSize = parseInt(params[getQuery(PAGE_SIZE_QUERY)]);

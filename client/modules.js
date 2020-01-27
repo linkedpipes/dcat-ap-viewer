@@ -10,6 +10,8 @@ import "./keyword/tagcloud";
 import "./publisher";
 import "./publisher/list";
 
+import "./catalog/list";
+
 import "./theme";
 
 import "./format";

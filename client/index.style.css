@@ -143,6 +143,11 @@ dd {
     color: white;
 }
 
+.label {
+    font-size: 80%;
+    color: darkgray;
+}
+
 /* Icons size. */
 .material-icons.md-18 {
     font-size: 18px;

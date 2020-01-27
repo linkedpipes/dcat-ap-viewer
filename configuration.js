@@ -20,12 +20,16 @@
       "couchdb": properties.get("couchdb.url"),
       "repository": getRepositoryType(properties),
     },
+    "quality": {
+      "sparql": properties.get("quality.sparql"),
+    },
     "port": properties.get("port"),
     "client": {
       "title": properties.get("client.title_default") || "",
       "titlePrefix": properties.get("client.title_prefix") || "",
       "titleSuffix": properties.get("client.title_suffix") || "",
       "urlPrefix": getUrlPrefix(properties),
+      "formUrl": properties.get("client.form_url"),
       "urlBase": getUrl(properties),
       "dereferenceIri": properties.get("client.dereference_prefix") || "",
     },

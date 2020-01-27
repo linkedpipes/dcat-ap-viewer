@@ -25,7 +25,7 @@ export const KeywordTagCloud = ({tags}) => (
 );
 
 KeywordTagCloud.propTypes = {
-  "tags": PropTypes.arrayOf(PropTypes.string).isRequired,
+  "tags": PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 function tagRenderer(tag, size, color) {

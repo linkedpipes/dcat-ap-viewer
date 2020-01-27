@@ -3,7 +3,7 @@ import {getLanguage} from "../../app/navigation";
 // TODO Move language preferences to reducer.
 
 export const selectLabel = (labelState, resource) => {
-  const labels = selectLabels(labelState, resource);
+  const labels = selectLabelsFromState(labelState, resource);
   if (labels.length > 1) {
     console.warn("Using only first label for:", resource, "->", labels);
   }
@@ -15,7 +15,7 @@ export const selectLabel = (labelState, resource) => {
 
 export const selectLabelNoIri = (labelState, resource) => {
   const label = selectLabel(labelState, resource);
-  if (typeof(resource) === "object") {
+  if (typeof (resource) === "object") {
     resource = resource["@id"];
   }
   if (label === resource) {
@@ -24,7 +24,7 @@ export const selectLabelNoIri = (labelState, resource) => {
   return label;
 };
 
-export function selectLabels (labelState, resource) {
+function selectLabelsFromState(labelState, resource) {
   const languages = getLanguagePreferences();
   return selectLabelFromState(labelState, languages, resource);
 }
@@ -48,9 +48,8 @@ export function selectString(value, languages = undefined) {
   if (languages === undefined) {
     languages = getLanguagePreferences();
   }
-    
   for (let index in languages) {
-    if (!Object.prototype.isPrototypeOf.call(languages, index)) {
+    if (!Object.prototype.hasOwnProperty.call(languages, index)) {
       continue;
     }
     const lang = languages[index];
@@ -64,7 +63,7 @@ export function selectString(value, languages = undefined) {
   if (anyLanguageLabel) {
     return anyLanguageLabel;
   }
-  if(value["@id"] === undefined) {
+  if (value["@id"] === undefined) {
     return []
   }
   return [value["@id"]];

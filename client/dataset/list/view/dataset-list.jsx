@@ -66,12 +66,12 @@ class _DatasetList extends React.Component {
 }
 
 _DatasetList.propTypes = {
-  "query": PropTypes.object.isRequired,
-  "datasets": PropTypes.array.isRequired,
-  "datasetCount": PropTypes.number.isRequired,
+  "setSort": PropTypes.func.isRequired,
   "setPageIndex": PropTypes.func.isRequired,
   "setPageSize": PropTypes.func.isRequired,
-  "setSort": PropTypes.func.isRequired,
+  "query": PropTypes.object.isRequired,
+  "datasets": PropTypes.arrayOf(PropTypes.object).isRequired,
+  "datasetCount": PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -96,7 +96,7 @@ const DatasetList = connect(mapStateToProps, mapDispatchToProps)(_DatasetList);
 
 export default DatasetList;
 
-const DatasetListItem = ({value, showPublisher}) => {
+function DatasetListItem({value, showPublisher}) {
   const datasetUrl = getUrl(DATASET_DETAIL_URL, {
     [DATASET_QUERY]: value.iri,
   });
@@ -123,7 +123,7 @@ const DatasetListItem = ({value, showPublisher}) => {
       <hr/>
     </div>
   )
-};
+}
 
 DatasetListItem.propTypes = {
   "value": PropTypes.object.isRequired,
@@ -131,7 +131,7 @@ DatasetListItem.propTypes = {
 };
 
 // TODO Duplicity to query-status.line.jsx
-const TagLine = ({values, size = 1}) => {
+function TagLine({values, size = 1}) {
   if (values === undefined) {
     return null;
   }
@@ -152,9 +152,9 @@ const TagLine = ({values, size = 1}) => {
       ))}
     </div>
   );
-};
+}
 
 TagLine.propTypes = {
   "values": PropTypes.arrayOf(PropTypes.string).isRequired,
-  "size": PropTypes.number.isRequired,
+  "size": PropTypes.number,
 };

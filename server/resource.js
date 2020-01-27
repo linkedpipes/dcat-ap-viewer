@@ -10,6 +10,8 @@ const sparqlEndpoint = require("./resource-sparql");
   router.get("/codelist", createCodeListGet());
   router.get("/static", createStaticGet());
   router.get("/filter", createFilterCacheGet());
+  router.get("/quality", createQualityGet());
+  router.get("/quality-publishers", createPublishersQualityGet());
   module.exports = router;
 })();
 
@@ -58,4 +60,18 @@ function createFilterCacheGet() {
     // TODO Provide implementation #39.
     return (req, res) => res.status(200).json({"error": "not_implemented"});
   }
+}
+
+function createQualityGet() {
+  if (config.quality.sparql) {
+    return sparqlEndpoint.createQualityGet();
+  }
+  return (req, res) => res.status(200).json({"error": "not_implemented"});
+}
+
+function createPublishersQualityGet() {
+  if (config.quality.sparql) {
+    return sparqlEndpoint.createPublishersQualityGet();
+  }
+  return (req, res) => res.status(200).json({"error": "not_implemented"});
 }

@@ -53,10 +53,10 @@ class DatasetListViewComponent extends React.Component {
 }
 
 DatasetListViewComponent.propTypes = {
+  "fetchData": PropTypes.func.isRequired,
   "query": PropTypes.object.isRequired,
   "location": PropTypes.object.isRequired,
-  "status": PropTypes.string.isRequired,
-  "fetchData": PropTypes.func.isRequired,
+  "status": PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({

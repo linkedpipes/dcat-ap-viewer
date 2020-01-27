@@ -33,7 +33,6 @@ function initializeWebpack(app) {
       "chunks": false,
     },
   });
-
   app.use(middleware);
   app.use(webpackHotMiddleware(webpackCompiler));
   app.use("/*", (req, res, next) => {

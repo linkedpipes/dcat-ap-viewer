@@ -34,6 +34,12 @@ class _PublishersListContainer extends React.Component {
 
 }
 
+_PublishersListContainer.propTypes = {
+  "fetchData": PropTypes.func.isRequired,
+  "status": PropTypes.string,
+  "publishers": PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
 const mapStateToProps = (state) => ({
   "status": statusSelector(state),
   "publishers": publishersSelector(state),
@@ -42,12 +48,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   "fetchData": () => dispatch(fetchPublisherList()),
 });
-
-_PublishersListContainer.propTypes = {
-  "fetchData": PropTypes.func.isRequired,
-  "status": PropTypes.bool.isRequired,
-  "publishers": PropTypes.array.isRequired,
-};
 
 export const PublisherListContainer = connect(
   mapStateToProps,

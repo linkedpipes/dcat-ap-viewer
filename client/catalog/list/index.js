@@ -1,4 +1,4 @@
-import {register} from "../app/register.js";
+import {register} from "../../app/register.js";
 import {CatalogsViewContainer} from "./catalog-list-container";
 import {CATALOG_LIST_URL} from "../../app/navigation";
 import reducer from "./catalog-list-reducer";

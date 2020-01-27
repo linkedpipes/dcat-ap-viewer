@@ -24,6 +24,12 @@ class _InitialDataFetch extends React.Component {
 
 }
 
+_InitialDataFetch.propTypes = {
+  "fetchData": PropTypes.func.isRequired,
+  "isReady": PropTypes.bool.isRequired,
+  "children": PropTypes.element.isRequired,
+};
+
 const mapStateToProps = (state) => ({
   "isReady": isReady(state),
 });

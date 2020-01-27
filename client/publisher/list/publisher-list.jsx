@@ -21,7 +21,8 @@ export const PublisherList = ({publishers}) => {
               key={publisher["@id"]}
               iri={publisher["@id"]}
               label={publisher.label}
-              count={publisher.count}/>
+              count={publisher.count}
+              exceptional={publisher.exceptional}/>
           ))}
       </div>
     </div>
@@ -32,9 +33,13 @@ PublisherList.propTypes = {
   "publishers": PropTypes.array.isRequired,
 };
 
-const OrganisationListItem = ({iri, label, count}) => {
+const OrganisationListItem = ({iri, label, count, exceptional}) => {
   const url = getUrl(DATASET_LIST_URL, {[PUBLISHER_QUERY]: iri});
   const datasetCountLabel = getDatasetCountLabel(count);
+  const exceptionalStyle = {
+    "verticalAlign": "bottom",
+    "color": "#F9BC38",
+  };
   return (
     <div className="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 mb-3">
       <div className="card p-2">
@@ -49,6 +54,18 @@ const OrganisationListItem = ({iri, label, count}) => {
           <li className="list-group-item">
             {datasetCountLabel}
           </li>
+          {exceptional &&
+                    <li className="list-group-item">
+                      <i className="material-icons"
+                        style={exceptionalStyle}>
+                            star
+                      </i>
+                        &nbsp;
+                      <span>
+                        {getString("exceptional_publisher")}
+                      </span>
+                    </li>
+          }
         </ul>
       </div>
     </div>
@@ -57,11 +74,15 @@ const OrganisationListItem = ({iri, label, count}) => {
 
 function getDatasetCountLabel(count) {
   if (count === 1) {
-    return getString("one_dataset");
-  } else if (count <= 4) {
-    return count + getString("two_three_datasets");
-  } else {
-    return formatNumber(count) + getString("many_datasets");
+    if (count === undefined || count === null) {
+      return "";
+    } else if (count === 1) {
+      return getString("one_dataset");
+    } else if (count <= 4) {
+      return count + getString("two_three_datasets");
+    } else {
+      return formatNumber(count) + getString("many_datasets");
+    }
   }
 }
 
@@ -69,4 +90,5 @@ OrganisationListItem.propTypes = {
   "iri": PropTypes.string.isRequired,
   "label": PropTypes.string.isRequired,
   "count": PropTypes.number.isRequired,
+  "exceptional": PropTypes.bool,
 };

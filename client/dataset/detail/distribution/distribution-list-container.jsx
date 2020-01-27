@@ -49,7 +49,7 @@ class _DistributionListContainer extends React.Component {
   render() {
     return (
       <DistributionList
-        distributions={this.state.distributions}
+        records={this.state.distributions}
         recordsCount={this.props.dataset.distributions.length}
         page={this.props.page}
         pageSize={this.props.pageSize}
@@ -66,13 +66,13 @@ class _DistributionListContainer extends React.Component {
 }
 
 _DistributionListContainer.propTypes = {
-  "dataset": PropTypes.object.isRequired,
-  "page": PropTypes.number.isRequired,
-  "pageSize": PropTypes.number.isRequired,
   "onMount": PropTypes.func.isRequired,
   "onUnMount": PropTypes.func.isRequired,
   "setPage": PropTypes.func.isRequired,
   "setPageSize": PropTypes.func.isRequired,
+  "dataset": PropTypes.object.isRequired,
+  "page": PropTypes.number.isRequired,
+  "pageSize": PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state) => ({

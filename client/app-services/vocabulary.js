@@ -2,14 +2,14 @@ const DCTERMS_PREFIX = "http://purl.org/dc/terms/";
 export const DCTERMS = {
   "modified": DCTERMS_PREFIX + "modified",
   "accrualPeriodicity": DCTERMS_PREFIX + "accrualPeriodicity",
-  "description" : DCTERMS_PREFIX + "description",
-  "issued" : DCTERMS_PREFIX + "issued",
-  "publisher" : DCTERMS_PREFIX + "publisher",
-  "spatial" : DCTERMS_PREFIX + "spatial",
-  "title" : DCTERMS_PREFIX + "title",
-  "temporal" : DCTERMS_PREFIX + "temporal",
-  "format" : DCTERMS_PREFIX + "format",
-  "license" : DCTERMS_PREFIX + "license",
+  "description": DCTERMS_PREFIX + "description",
+  "issued": DCTERMS_PREFIX + "issued",
+  "publisher": DCTERMS_PREFIX + "publisher",
+  "spatial": DCTERMS_PREFIX + "spatial",
+  "title": DCTERMS_PREFIX + "title",
+  "temporal": DCTERMS_PREFIX + "temporal",
+  "format": DCTERMS_PREFIX + "format",
+  "license": DCTERMS_PREFIX + "license",
   "accessRights": DCTERMS_PREFIX + "accessRights",
   "conformsTo": DCTERMS_PREFIX + "conformsTo",
   "hasVersion": DCTERMS_PREFIX + "hasVersion",
@@ -45,14 +45,27 @@ const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";
 export const FOAF  = {
   "page" : FOAF_PREFIX + "page",
   "name": FOAF_PREFIX + "name",
+  "CatalogRecord": DCAT_PREFIX + "CatalogRecord",
+  "Catalog": DCAT_PREFIX + "Catalog",
+  "accessURL": DCAT_PREFIX + "accessURL",
+  "packageFormat": DCAT_PREFIX + "packageFormat",
+  "compressFormat": DCAT_PREFIX + "compressFormat",
+  "DataService": DCAT_PREFIX + "DataService",
+  "endpointURL": DCAT_PREFIX + "endpointURL",
+  "servesDataset": DCAT_PREFIX + "servesDataset",
+  "endpointDescription": DCAT_PREFIX + "endpointDescription",
+  "startDate": DCAT_PREFIX + "startDate",
+  "endDate": DCAT_PREFIX + "endDate",
+  "temporalResolution": DCAT_PREFIX + "temporalResolution",
+  "spatialResolutionInMeters": DCAT_PREFIX + "spatialResolutionInMeters",
 };
 
 const ADMS_PREFIX = "http://www.w3.org/ns/adms#";
 export const ADMS = {
-  "identifier" : ADMS_PREFIX + "identifier",
-  "sample" : ADMS_PREFIX + "sample",
-  "versionNotes" : ADMS_PREFIX + "versionNotes",
-  "status" : ADMS_PREFIX + "status",
+  "identifier": ADMS_PREFIX + "identifier",
+  "sample": ADMS_PREFIX + "sample",
+  "versionNotes": ADMS_PREFIX + "versionNotes",
+  "status": ADMS_PREFIX + "status",
 };
 
 const OWL_PREFIX = "http://www.w3.org/2002/07/owl#";
@@ -89,8 +102,43 @@ export const RDF = {
 
 export const EUA = {
   "dataTheme" : "http://publications.europa.eu/resource/authority/data-theme",
+  "note": SKOS_PREFIX + "note",
 };
 
+const PU_PREFIX = "https://data.gov.cz/slovník/podmínky-užití/";
+export const PU = {
+  "specification": PU_PREFIX + "specifikace",
+  "authorship": PU_PREFIX + "autorské-dílo",
+  "author": PU_PREFIX + "autor",
+  "databaseAuthorship": PU_PREFIX + "databáze-jako-autorské-dílo",
+  "databaseAuthor": PU_PREFIX + "autor-databáze",
+  "protectedDatabase": PU_PREFIX + "databáze-chráněná-zvláštními-právy",
+  "personalData": PU_PREFIX + "osobní-údaje",
+};
+
+const POU_PREFIX = "https://data.gov.cz/podmínky-užití/";
+export const PU_VALUES_MAPPING = {
+  [POU_PREFIX + "neobsahuje-autorská-díla/"]: "no",
+  [POU_PREFIX + "obsahuje-více-autorských-děl/"]: "multi",
+  "https://creativecommons.org/licenses/by/4.0/": "ccBy",
+  [POU_PREFIX + "není-autorskoprávně-chráněnou-databází/"]: "no",
+  "https://creativecommons.org/publicdomain/zero/1.0/": "cc0",
+  [POU_PREFIX + "není-chráněna-zvláštním-právem-pořizovatele-databáze/"]: "no",
+  [POU_PREFIX + "obsahuje-osobní-údaje/"]: "contains",
+  [POU_PREFIX + "neobsahuje-osobní-údaje/"]: "no",
+  [POU_PREFIX + "není-specifikováno-zda-obsahuje-osobní-údaje/"]: "unspecified",
+  "missing": "missing",
+};
+
+const NKOD_PREFIX = "https://data.gov.cz/slovník/nkod/";
+export const NKOD = {
+  "SourceForm": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/Formulář",
+  "SourceCkan": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/CkanLkod",
+  "SourceDcat": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkod",
+  "SourceSparql": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkodSparql",
+  "lkod": NKOD_PREFIX + "lkod",
+  "ExceptionalPublisher": NKOD_PREFIX + "VzornýPoskytovatel",
+};
 const RDFS_PREFIX = "http://www.w3.org/2000/01/rdf-schema#";
 export const RDFS = {
   "label": RDFS_PREFIX + "label",
@@ -99,4 +147,28 @@ export const RDFS = {
 const DCELEMENTS_PREFIX = "http://purl.org/dc/elements/1.1/";
 export const DCELEMENTS = {
   "source": DCELEMENTS_PREFIX + "source",
+};
+
+const DQV_PREFIX = "http://www.w3.org/ns/dqv#";
+export const DQV = {
+  "QualityMeasurement": DQV_PREFIX + "QualityMeasurement",
+  "computedOn": DQV_PREFIX + "computedOn",
+  "isMeasurementOf": DQV_PREFIX + "isMeasurementOf",
+  "value": DQV_PREFIX + "value",
+  "expectedDataType": DQV_PREFIX + "expectedDataType",
+};
+
+const QUALITY_PREFIX = "https://data.gov.cz/zdroj/datová-kvalita/metriky/";
+export const QUALITY = {
+  "documentationAvailability": QUALITY_PREFIX + "metrikaDostupnostiDokumentace",
+  "downloadAvailability": QUALITY_PREFIX + "metrikaDostupnostiDownloadURL",
+  "mediaType": QUALITY_PREFIX + "metrikaSprávnostiMediaTypu",
+  "schemaAvailability": QUALITY_PREFIX + "metrikaDostupnostiSchématu",
+  "authorship": QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíAutorskéDílo",
+  "databaseAuthorship": QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíAutorskáDatabáze",
+  "specialDatabaseAuthorship": QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíZvláštníPrávoPořizovateleDatabáze",
+};
+
+export const SDMX = {
+  "refPeriod": "http://purl.org/linked-data/sdmx/2009/dimension#refPeriod",
 };

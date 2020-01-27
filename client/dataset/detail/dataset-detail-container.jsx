@@ -22,6 +22,7 @@ import {parse as parseQueryString} from "query-string";
 import DatasetDetail from "./dataset-detail";
 import {DATASET_DETAIL_URL} from "../../app/navigation";
 import HeadLinks from "../../app-ui/head-links";
+import {showModal} from "../../app-services/modal";
 import {PropTypes} from "prop-types";
 
 class _DatasetDetailContainer extends React.Component {
@@ -63,7 +64,8 @@ class _DatasetDetailContainer extends React.Component {
           <DatasetDetail
             dataset={this.props.dataset}
             publisherUrl={publisherUrl}
-            labels={labels}/>
+            labels={labels}
+            openModal={this.props.openModal}/>
           <DistributionListContainer dataset={this.props.dataset}/>
           <DatasetWebPageMetadata
             dataset={this.props.dataset}
@@ -80,13 +82,14 @@ class _DatasetDetailContainer extends React.Component {
 }
 
 _DatasetDetailContainer.propTypes = {
-  "location": PropTypes.object.isRequired,
-  "status": PropTypes.string.isRequired,
-  "dataset": PropTypes.object.isRequired,
-  "labels": PropTypes.object.isRequired,
   "onMount": PropTypes.func.isRequired,
   "onUnMount": PropTypes.func.isRequired,
   "fetchDataset": PropTypes.func.isRequired,
+  "openModal": PropTypes.func.isRequired,
+  "status": PropTypes.string.isRequired,
+  "dataset": PropTypes.object,
+  "labels": PropTypes.object.isRequired,
+  "location": PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -101,6 +104,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   "fetchDataset": () => {
     dispatch(fetchDataset(getDatasetIriFromLocation(ownProps.location)));
   },
+  "openModal": (body) => dispatch(showModal(undefined, body)),
 });
 
 function getDatasetIriFromLocation(location) {

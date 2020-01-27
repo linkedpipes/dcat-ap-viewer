@@ -124,11 +124,11 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   "setKeywordsFacet": (value, isActive) => dispatch(updateQueryFilters(
     ownProps.location, KEYWORDS_QUERY, value, isActive,
   )),
-  "setPublisherFacet": (value, isActive) => dispatch(updateQueryFilters(
-    ownProps.location, PUBLISHER_QUERY, value, isActive,
-  )),
   "setFormatFacet": (value, isActive) => dispatch(updateQueryFilters(
     ownProps.location, FORMAT_QUERY, value, isActive,
+  )),
+  "setPublisherFacet": (value, isActive) => dispatch(updateQueryFilters(
+    ownProps.location, PUBLISHER_QUERY, value, isActive,
   )),
   "setThemeFacet": (value, isActive) => dispatch(updateQueryFilters(
     ownProps.location, THEME_QUERY, value, isActive,

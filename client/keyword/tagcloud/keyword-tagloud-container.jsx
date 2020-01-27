@@ -41,6 +41,14 @@ class _KeywordsViewContainer extends React.Component {
 
 }
 
+_KeywordsViewContainer.propTypes = {
+  "onMount": PropTypes.func.isRequired,
+  "fetchData": PropTypes.func.isRequired,
+  "onUnMount": PropTypes.func.isRequired,
+  "status": PropTypes.string,
+  "data": PropTypes.arrayOf(PropTypes.object),
+};
+
 const mapStateToProps = (state) => ({
   "status": statusSelector(state),
   "data": keywordsSelector(state),
@@ -51,14 +59,6 @@ const mapDispatchToProps = (dispatch) => ({
   "onUnMount": () => dispatch(onUnMount()),
   "fetchData": () => dispatch(fetchKeywords()),
 });
-
-_KeywordsViewContainer.propTypes = {
-  "status": PropTypes.object.isRequired,
-  "data": PropTypes.object.isRequired,
-  "onMount": PropTypes.func.isRequired,
-  "onUnMount": PropTypes.func.isRequired,
-  "fetchData": PropTypes.func.isRequired,
-};
 
 export const KeywordsViewContainer = connect(
   mapStateToProps,

@@ -18,7 +18,7 @@ export const HttpRequestStatus = ({status}) => {
 };
 
 HttpRequestStatus.propTypes = {
-  "status": PropTypes.string.isRequired,
+  "status": PropTypes.string,
 };
 
 function getMessage(status) {
