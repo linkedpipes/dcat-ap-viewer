@@ -23,6 +23,12 @@ export const DCTERMS = {
   "rights": DCTERMS_PREFIX + "rights",
 };
 
+const DCELEMENTS_PREFIX = "http://purl.org/dc/elements/1.1/";
+export const DCELEMENTS = {
+  "source": DCELEMENTS_PREFIX + "source",
+};
+
+
 const DCAT_PREFIX = "http://www.w3.org/ns/dcat#";
 export const DCAT = {
   "Dataset": DCAT_PREFIX + "Dataset",
@@ -36,14 +42,14 @@ export const DCAT = {
   "downloadURL": DCAT_PREFIX + "downloadURL",
   "mediaType": DCAT_PREFIX + "mediaType",
   "issued": DCAT_PREFIX + "issued",
-  "CatalogRecord" : DCAT_PREFIX + "CatalogRecord",
+  "CatalogRecord": DCAT_PREFIX + "CatalogRecord",
   "Catalog": DCAT_PREFIX + "Catalog",
   "accessURL": DCAT_PREFIX + "accessURL",
 };
 
 const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";
-export const FOAF  = {
-  "page" : FOAF_PREFIX + "page",
+export const FOAF = {
+  "page": FOAF_PREFIX + "page",
   "name": FOAF_PREFIX + "name",
   "CatalogRecord": DCAT_PREFIX + "CatalogRecord",
   "Catalog": DCAT_PREFIX + "Catalog",
@@ -70,24 +76,24 @@ export const ADMS = {
 
 const OWL_PREFIX = "http://www.w3.org/2002/07/owl#";
 export const OWL = {
-  "versionInfo" : OWL_PREFIX + "versionInfo",
+  "versionInfo": OWL_PREFIX + "versionInfo",
 };
 
 const SPDX_PREFIX = "http://spdx.org/rdf/terms#";
 export const SPDX = {
-  "checksum" : SPDX_PREFIX + "checksum",
+  "checksum": SPDX_PREFIX + "checksum",
 };
 
 const VCARD_PREFIX = "http://www.w3.org/2006/vcard/ns#";
 export const VCARD = {
-  "fn" : VCARD_PREFIX + "fn",
-  "hasEmail" : VCARD_PREFIX + "hasEmail",
+  "fn": VCARD_PREFIX + "fn",
+  "hasEmail": VCARD_PREFIX + "hasEmail",
 };
 
 const SCHEMA_PREFIX = "http://schema.org/";
 export const SCHEMA = {
-  "startDate" : SCHEMA_PREFIX + "startDate",
-  "endDate" : SCHEMA_PREFIX + "endDate",
+  "startDate": SCHEMA_PREFIX + "startDate",
+  "endDate": SCHEMA_PREFIX + "endDate",
 };
 
 const SKOS_PREFIX = "http://www.w3.org/2004/02/skos/core#";
@@ -97,11 +103,11 @@ export const SKOS = {
 };
 
 export const RDF = {
-  "type" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+  "type": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
 };
 
 export const EUA = {
-  "dataTheme" : "http://publications.europa.eu/resource/authority/data-theme",
+  "dataTheme": "http://publications.europa.eu/resource/authority/data-theme",
   "note": SKOS_PREFIX + "note",
 };
 
@@ -130,6 +136,11 @@ export const PU_VALUES_MAPPING = {
   "missing": "missing",
 };
 
+const RDFS_PREFIX = "http://www.w3.org/2000/01/rdf-schema#";
+export const RDFS = {
+  "label": RDFS_PREFIX + "label",
+};
+
 const NKOD_PREFIX = "https://data.gov.cz/slovník/nkod/";
 export const NKOD = {
   "SourceForm": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/Formulář",
@@ -138,15 +149,6 @@ export const NKOD = {
   "SourceSparql": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkodSparql",
   "lkod": NKOD_PREFIX + "lkod",
   "ExceptionalPublisher": NKOD_PREFIX + "VzornýPoskytovatel",
-};
-const RDFS_PREFIX = "http://www.w3.org/2000/01/rdf-schema#";
-export const RDFS = {
-  "label": RDFS_PREFIX + "label",
-};
-
-const DCELEMENTS_PREFIX = "http://purl.org/dc/elements/1.1/";
-export const DCELEMENTS = {
-  "source": DCELEMENTS_PREFIX + "source",
 };
 
 const DQV_PREFIX = "http://www.w3.org/ns/dqv#";
@@ -172,3 +174,4 @@ export const QUALITY = {
 export const SDMX = {
   "refPeriod": "http://purl.org/linked-data/sdmx/2009/dimension#refPeriod",
 };
+

@@ -24,6 +24,9 @@ export default class DatasetView extends React.PureComponent {
     const {dataset, publisherUrl, labels, openModal} = this.props;
     const title = selectLabel(labels, this.props.dataset);
 
+    // <SemanticRelatedDatasets dataset={dataset["@id"]}/>
+    // <SemanticTermsDatasets dataset={dataset["@id"]}/>
+
     return (
       <div>
         <h1>{title}
