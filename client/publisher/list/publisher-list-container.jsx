@@ -9,11 +9,23 @@ import {ORGANISATION_LIST_URL} from "@/app/navigation";
 import HeadLinks from "@/app-ui/head-links";
 import {getString} from "@/app-services/strings";
 import {PropTypes} from "prop-types";
+import {labelsSelector, fetchLabel} from "../../app-services/labels";
 
 class _PublishersListContainer extends React.Component {
 
   componentDidMount() {
     this.props.fetchData();
+    if (this.props.publishers) {
+      this.props.publishers.forEach(
+        (publisher) => this.props.fetchLabel(publisher["@id"]));
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.publishers && prevProps.publishers !== this.props.publishers) {
+      this.props.publishers.forEach(
+        (publisher) => this.props.fetchLabel(publisher["@id"]));
+    }
   }
 
   render() {
@@ -25,8 +37,11 @@ class _PublishersListContainer extends React.Component {
       return (
         <React.Fragment>
           <HeadLinks title={getString("publishers")}
-            url={ORGANISATION_LIST_URL}/>
-          <PublisherList publishers={this.props.publishers}/>
+                     url={ORGANISATION_LIST_URL}/>
+          <PublisherList
+            publishers={this.props.publishers}
+            labels={this.props.labels}
+          />
         </React.Fragment>
       );
     }
@@ -38,15 +53,19 @@ _PublishersListContainer.propTypes = {
   "fetchData": PropTypes.func.isRequired,
   "status": PropTypes.string.isRequired,
   "publishers": PropTypes.arrayOf(PropTypes.object).isRequired,
+  "labels": PropTypes.object.isRequired,
+  "fetchLabel": PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   "status": statusSelector(state),
   "publishers": publishersSelector(state),
+  "labels": labelsSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   "fetchData": () => dispatch(fetchPublisherList()),
+  "fetchLabel": (iri) => dispatch(fetchLabel(iri)),
 });
 
 export const PublisherListContainer = connect(

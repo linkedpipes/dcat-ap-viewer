@@ -1,17 +1,20 @@
-export function parseFacetFromSolrResponse(payload, facetName) {
-  const publisher = payload["facet_counts"]["facet_fields"][facetName];
+export function parseFacetFromSolrResponse(payload, facetName, iriAsLabel) {
+  const facet = payload["facet_counts"]["facet_fields"][facetName];
   const output = [];
-  for (let index = 0; index < publisher.length; index += 2) {
-    const iri = publisher[index];
-    const count = publisher[index + 1];
+  for (let index = 0; index < facet.length; index += 2) {
+    const iri = facet[index];
+    const count = facet[index + 1];
     if (count === undefined) {
-      console.warn("Invalid number of response in: ", publisher);
+      console.warn("Invalid number of response in: ", facet);
     }
-    output.push({
+    const entry = {
       "@id": iri,
-      "label": iri,
       "count": count,
-    });
+    };
+    if (iriAsLabel) {
+      entry["label"] = iri;
+    }
+    output.push(entry);
   }
   return output;
 }

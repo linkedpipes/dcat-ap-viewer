@@ -8,11 +8,12 @@ import {
   querySelector,
 } from "../../dataset-list-reducer";
 import {PropTypes} from "prop-types";
+import {labelsSelector, selectLabel} from "../../../../app-services/labels";
 
 class _QueryStatus extends React.PureComponent {
 
   render() {
-    const {query, datasetCount} = this.props;
+    const {query, datasetCount, labels} = this.props;
     return (
       <div>
         <h4>
@@ -21,9 +22,9 @@ class _QueryStatus extends React.PureComponent {
                     getString("query.with") + ": \"" + query.search + "\""
           }
         </h4>
-        <TagLine values={query.publisher}/>
-        <TagLine values={query.keyword}/>
-        <TagLine values={query.format}/>
+        <TagLine values={query.publisher} labels={labels}/>
+        <TagLine values={query.keyword} useIri={false} labels={labels}/>
+        <TagLine values={query.format} labels={labels}/>
       </div>
     );
   }
@@ -32,18 +33,20 @@ class _QueryStatus extends React.PureComponent {
 _QueryStatus.propTypes = {
   "query": PropTypes.object.isRequired,
   "datasetCount": PropTypes.number.isRequired,
+  "labels": PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   "datasetCount": datasetsTotalCountSelector(state),
   "query": querySelector(state),
+  "labels": labelsSelector(state)
 });
 
 const QueryStatus = connect(mapStateToProps)(_QueryStatus);
 
 export default QueryStatus;
 
-function TagLine({values, size = 1}) {
+export function TagLine({values, labels, size = 1, useIri=true}) {
   if (values === undefined) {
     return null;
   }
@@ -59,7 +62,7 @@ function TagLine({values, size = 1}) {
           color="info"
           pill
           key={item}>
-          {item}
+          {useIri ? selectLabel(labels, item) : item}
         </Badge>
       ))}
     </div>
@@ -69,5 +72,7 @@ function TagLine({values, size = 1}) {
 TagLine.propTypes = {
   "values": PropTypes.arrayOf(PropTypes.string).isRequired,
   "size": PropTypes.number,
+  "useIri": PropTypes.bool,
+  "labels": PropTypes.object.isRequired,
 };
 

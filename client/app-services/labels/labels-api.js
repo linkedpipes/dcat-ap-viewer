@@ -2,13 +2,17 @@ import {getLanguage} from "@/app/navigation";
 
 // TODO Move language preferences to reducer.
 
-export const selectLabel = (labelState, resource) => {
+export const selectLabel = (labelState, resource, returnIri = false) => {
   const labels = selectLabelsFromState(labelState, resource);
   if (labels.length > 1) {
     console.warn("Using only first label for:", resource, "->", labels);
   }
   if (labels.length === 0) {
-    return undefined;
+    if (returnIri) {
+      return resource;
+    } else {
+      return undefined;
+    }
   }
   return labels[0];
 };

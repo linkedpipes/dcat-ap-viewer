@@ -25,7 +25,7 @@ import {
   STATUS_FETCHED,
 } from "@/app-services/http-request";
 import {parse as parseQueryString} from "query-string";
-import {parseFacetFromSolrResponse} from "@/app-services/solr";
+import {parseFacetFromSolrResponse} from "../../app-services/solr";
 
 // TODO Isolate changes to minimize rendering.
 //  For example paginator re-render on every change of string query.
@@ -95,14 +95,15 @@ function onListRequest(state) {
 
 function onListRequestSuccess(state, action) {
   const json = action.data;
+  const language = action.language;
 
-  const keywords = parseFacetFromSolrResponse(json, "keyword");
+  const keywords = parseFacetFromSolrResponse(json, "keyword_" + language, true);
   keywords.sort((left, right) => right.count - left.count);
 
-  const publishers = parseFacetFromSolrResponse(json, "publisherName");
+  const publishers = parseFacetFromSolrResponse(json, "publisher");
   publishers.sort((left, right) => right.count - left.count);
 
-  const formats = parseFacetFromSolrResponse(json, "formatName");
+  const formats = parseFacetFromSolrResponse(json, "format");
   formats.sort((left, right) => right.count - left.count);
 
   const themes = parseFacetFromSolrResponse(json, "theme");
@@ -118,12 +119,12 @@ function onListRequestSuccess(state, action) {
         "iri": item.iri,
         "modified": item.modified,
         "accrualPeriodicity": item.accrualPeriodicity,
-        "description": item.description,
+        "description": item["description_" + language] || item["description_cs"],
         "issued": item.issued,
-        "publisher": item.publisherName,
-        "title": item.title,
-        "keyword": item.keyword,
-        "format": item.formatName === undefined ? [] : item.formatName,
+        "publisher": item.publisher,
+        "title": item["title_" + language] || item["title_cs"],
+        "keyword": item["keyword_" + language],
+        "format": item.format === undefined ? [] : item.format,
         "license": item.license,
       })),
       "keyword": keywords,

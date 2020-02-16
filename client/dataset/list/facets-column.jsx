@@ -25,6 +25,7 @@ import {connect} from "react-redux";
 import {Col, Button} from "reactstrap";
 import {labelsSelector} from "@/app-services/labels";
 import {PropTypes} from "prop-types";
+import {fetchLabel} from "../../app-services/labels";
 
 class _FacetsColumn extends React.Component {
 
@@ -63,6 +64,9 @@ class _FacetsColumn extends React.Component {
             values={this.props.publisherQuery}
             active={this.props.publisherSelected}
             onChange={this.props.setPublisherFacet}
+            useIris={true}
+            labels={this.props.labels}
+            fetchLabel={this.props.fetchLabel}
           />
           <FacetFilter
             label="themes"
@@ -71,18 +75,23 @@ class _FacetsColumn extends React.Component {
             onChange={this.props.setThemeFacet}
             useIris={true}
             labels={this.props.labels}
+            fetchLabel={this.props.fetchLabel}
           />
           <FacetFilter
             label="keywords"
             values={this.props.keywordQuery}
             active={this.props.keywordSelected}
             onChange={this.props.setKeywordsFacet}
+            fetchLabel={this.props.fetchLabel}
           />
           <FacetFilter
             label="formats"
             values={this.props.formatQuery}
             active={this.props.formatSelected}
             onChange={this.props.setFormatFacet}
+            useIris={true}
+            labels={this.props.labels}
+            fetchLabel={this.props.fetchLabel}
           />
         </div>
       </Col>
@@ -105,6 +114,7 @@ _FacetsColumn.propTypes = {
   "themeQuery": PropTypes.array.isRequired,
   "query": PropTypes.object.isRequired,
   "labels": PropTypes.object.isRequired,
+  "fetchLabel": PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -133,6 +143,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
   "setThemeFacet": (value, isActive) => dispatch(updateQueryFilters(
     ownProps.location, THEME_QUERY, value, isActive
   )),
+  "fetchLabel": (iri) => dispatch(fetchLabel(iri)),
 });
 
 const FacetsColumn = connect(

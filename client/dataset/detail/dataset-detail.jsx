@@ -27,7 +27,7 @@ export default class DatasetView extends React.PureComponent {
   render() {
     const {dataset, publisherUrl, labels, openModal} = this.props;
     const title = selectLabel(labels, this.props.dataset);
-
+    console.log(selectString(dataset.description));
     return (
       <div>
         <h1>{title}

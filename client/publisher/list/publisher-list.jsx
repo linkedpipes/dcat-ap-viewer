@@ -4,8 +4,9 @@ import {DATASET_LIST_URL, getUrl, PUBLISHER_QUERY} from "@/app/navigation";
 import {getString} from "@/app-services/strings";
 import {formatNumber} from "@/app-services/formats";
 import {Link} from "react-router-dom";
+import {selectLabel} from "../../app-services/labels";
 
-export const PublisherList = ({publishers}) => {
+export const PublisherList = ({publishers, labels}) => {
   return (
     <div className="container p-3">
       <h4>
@@ -20,7 +21,7 @@ export const PublisherList = ({publishers}) => {
             <OrganisationListItem
               key={publisher["@id"]}
               iri={publisher["@id"]}
-              label={publisher.label}
+              label={selectLabel(labels, publisher["@id"])}
               count={publisher.count}
               exceptional={publisher.exceptional}/>
           ))}
@@ -31,6 +32,7 @@ export const PublisherList = ({publishers}) => {
 
 PublisherList.propTypes = {
   "publishers": PropTypes.array.isRequired,
+  "labels": PropTypes.object.isRequired,
 };
 
 const OrganisationListItem = ({iri, label, count, exceptional}) => {
@@ -46,7 +48,7 @@ const OrganisationListItem = ({iri, label, count, exceptional}) => {
         <div className="card-body px-2">
           <h5 className="card-title">
             <Link to={url}>
-              <h4>{label}</h4>
+              <h4>{label ? label : iri}</h4>
             </Link>
           </h5>
         </div>
@@ -86,7 +88,7 @@ function getDatasetCountLabel(count) {
 
 OrganisationListItem.propTypes = {
   "iri": PropTypes.string.isRequired,
-  "label": PropTypes.string.isRequired,
+  "label": PropTypes.string,
   "count": PropTypes.number.isRequired,
   "exceptional": PropTypes.bool,
 };

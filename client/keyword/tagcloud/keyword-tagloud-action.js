@@ -22,10 +22,10 @@ export function onUnMount() {
   }
 }
 
-export function fetchKeywords() {
+export function fetchKeywords(lang) {
   return (dispatch) => {
     dispatch(fetchRequest());
-    fetchKeywordsByPublishers()
+    fetchKeywordsByPublishers(lang)
       .then((payload) => dispatch(fetchSuccess(payload)))
       .catch((error) => dispatch(fetchFailed(error)));
   };

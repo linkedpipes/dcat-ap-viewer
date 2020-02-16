@@ -18,12 +18,12 @@ export const FETCH_LIST_PAGE_SUCCESS = "FETCH_LIST_PAGE_SUCCESS";
 export const FETCH_LIST_PAGE_FAILED = "FETCH_LIST_PAGE_FAILED";
 export const SET_LIST_QUERY_STRING = "SET_LIST_QUERY_STRING";
 
-export function fetchData(query) {
+export function fetchData(query, language) {
   return (dispatch) => {
     dispatch(fetchDataRequest());
-    const url = constructSearchQueryUrl(query);
+    const url = constructSearchQueryUrl(query, language);
     fetchJson(url).then((response) => {
-      dispatch(fetchDataSuccess(response.json));
+      dispatch(fetchDataSuccess(response.json, language));
       fetchLabels(dispatch, response);
     }).catch((response) => {
       dispatch(fetchDataFailed(response));
@@ -37,10 +37,11 @@ function fetchDataRequest() {
   });
 }
 
-function fetchDataSuccess(json) {
+function fetchDataSuccess(json, language) {
   return addLoaderStatusOff({
     "type": FETCH_LIST_PAGE_SUCCESS,
     "data": json,
+    "language": language,
   });
 }
 

@@ -11,6 +11,7 @@ import {
 import HeadLinks from "@/app-ui/head-links";
 import {getString} from "@/app-services/strings";
 import {PropTypes} from "prop-types";
+import {getLanguage} from "../../app/navigation";
 
 class _KeywordsViewContainer extends React.Component {
 
@@ -46,7 +47,7 @@ _KeywordsViewContainer.propTypes = {
   "fetchData": PropTypes.func.isRequired,
   "onUnMount": PropTypes.func.isRequired,
   "status": PropTypes.string.isRequired,
-  "data": PropTypes.arrayOf(PropTypes.object).isRequired,
+  "data": PropTypes.arrayOf(PropTypes.object),
 };
 
 const mapStateToProps = (state) => ({
@@ -57,7 +58,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   "onMount": () => dispatch(onMount()),
   "onUnMount": () => dispatch(onUnMount()),
-  "fetchData": () => dispatch(fetchKeywords()),
+  "fetchData": () => dispatch(fetchKeywords(getLanguage())),
 });
 
 export const KeywordsViewContainer = connect(

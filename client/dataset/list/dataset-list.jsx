@@ -9,6 +9,7 @@ import {fetchData} from "./dataset-list-actions";
 import {DATASET_LIST_URL} from "@/app/navigation";
 import HeadLinks from "@/app-ui/head-links";
 import {PropTypes} from "prop-types";
+import {getLanguage} from "../../app/navigation";
 
 class DatasetListViewComponent extends React.Component {
 
@@ -65,7 +66,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  "fetchData": (query) => dispatch(fetchData(query)),
+  "fetchData": (query) => dispatch(fetchData(query, getLanguage())),
 });
 
 export const DatasetList = connect(

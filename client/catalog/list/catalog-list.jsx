@@ -3,8 +3,9 @@ import {formatNumber} from "@/app-services/formats";
 import {getString} from "@/app-services/strings";
 import {CATALOG_DELETE, getFormLink} from "@/app/form-links";
 import {PropTypes} from "prop-types";
+import {selectLabel} from "../../app-services/labels";
 
-export const CatalogList = ({catalogs}) => (
+export const CatalogList = ({catalogs, labels}) => (
   <div className="container p-3">
     <h4>
       {formatNumber(catalogs.length)}
@@ -13,7 +14,7 @@ export const CatalogList = ({catalogs}) => (
     <hr/>
     <div className="row">
       {catalogs.map((catalog) => (
-        <CatalogItem key={catalog.id} catalog={catalog}/>
+        <CatalogItem key={catalog.id} catalog={catalog} labels={labels}/>
       ))}
     </div>
   </div>
@@ -21,17 +22,18 @@ export const CatalogList = ({catalogs}) => (
 
 CatalogList.propTypes = {
   "catalogs": PropTypes.arrayOf(PropTypes.object).isRequired,
+  "labels": PropTypes.object.isRequired,
 };
 
-function CatalogItem({catalog}) {
-  const {title, contactPoint, id} = catalog;
+function CatalogItem({catalog, labels}) {
+  const {contactPoint, id} = catalog;
   const {name, email} = contactPoint;
   return (
     <div className="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 mb-3">
       <div className="card p-2">
         <div className="card-body px-2">
           <h5 className="card-title">
-            <span className="pr-2">{catalog["publisherName"]}</span>
+            <span className="pr-2">{selectLabel(labels, catalog["publisherIRI"], true)}</span>
             <a href={DEREFERENCE_IRI + catalog["publisherIRI"]}
               target="_blank" rel="noopener noreferrer">
               <i className="material-icons md-18">open_in_new</i>
@@ -40,7 +42,7 @@ function CatalogItem({catalog}) {
         </div>
         <ul className="list-group list-group-flush">
           <li className="list-group-item">
-            <span className="pr-2">{title}</span>
+            <span className="pr-2">{selectLabel(labels, id, true)}</span>
             <a href={DEREFERENCE_IRI + id} target="_blank"
               rel="noopener noreferrer">
               <i className="material-icons md-18">open_in_new</i>
@@ -85,6 +87,7 @@ function CatalogItem({catalog}) {
 
 CatalogItem.propTypes = {
   "catalog": PropTypes.object.isRequired,
+  "labels": PropTypes.object.isRequired,
 };
 
 

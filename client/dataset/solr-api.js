@@ -2,10 +2,10 @@
 // TODO Remove limits from keywords, filters etc ..
 // TODO Add function for fetching only facets and remove them from normal query.
 
-export function constructTypeaheadUrl(value, query) {
-  let url = "./api/v1/solr/query?rows=8&fl=title";
+export function constructTypeaheadUrl(value, query, language) {
+  let url = "./api/v1/solr/query?rows=8&fl=title_" + language;
   url += "&q=" + encodeURIComponent(prepareTypeaheadSolrQuery(value));
-  url += createFacetsFiltersQuery(query);
+  url += createFacetsFiltersQuery(query, language);
   url += createTemporalQuery(query);
   return url;
 }
@@ -20,10 +20,16 @@ function prepareTypeaheadSolrQuery(query) {
     return "";
   }
 
-  let solrQuery = "title_query:*" + tokens[0] + "*";
+  let solrQuery = "( title_query_en:*" + tokens[0] + "*";
   for (let index = 1; index < tokens.length; ++index) {
-    solrQuery += " AND title_query:*" + tokens[index] + "*";
+    solrQuery += " AND title_query_en:*" + tokens[index] + "*";
   }
+
+  solrQuery += ")  OR ( title_query_cs:*" + tokens[0] + "*";
+  for (let index = 1; index < tokens.length; ++index) {
+    solrQuery += " AND title_query_cs:*" + tokens[index] + "*";
+  }
+  solrQuery += " )";
 
   return solrQuery;
 }
@@ -50,19 +56,19 @@ function isSpecialCharacter(value) {
   return value[0] !== "\\" || value.length !== 2;
 }
 
-function createFacetsFiltersQuery(query) {
+function createFacetsFiltersQuery(query, language) {
   let url = "";
 
   query.keyword.forEach((item) => {
-    url += "&fq=keyword:\"" + encodeURIComponent(item) + "\""
+    url += "&fq=keyword_" + language + ":\"" + encodeURIComponent(item) + "\""
   });
 
   query.publisher.forEach((item) => {
-    url += "&fq=publisherName:\"" + encodeURIComponent(item) + "\""
+    url += "&fq=publisher:\"" + encodeURIComponent(item) + "\""
   });
 
   query.format.forEach((item) => {
-    url += "&fq=formatName:\"" + encodeURIComponent(item) + "\""
+    url += "&fq=format:\"" + encodeURIComponent(item) + "\""
   });
 
   query.theme.forEach((item) => {
@@ -95,11 +101,11 @@ function createTemporalQuery(query) {
   return url;
 }
 
-export function constructSearchQueryUrl(query) {
+export function constructSearchQueryUrl(query, language) {
   let url = "./api/v1/solr/query?" +
-        "facet.field=keyword&" +
-        "facet.field=formatName&" +
-        "facet.field=publisherName&" +
+        "facet.field=keyword_" + language + "&" +
+        "facet.field=format&" +
+        "facet.field=publisher&" +
         "facet.field=theme&" +
         "facet=true&" +
         "facet.limit=-1&" +
@@ -114,13 +120,15 @@ export function constructSearchQueryUrl(query) {
     url += "q=" + encodeURIComponent(prepareFullSolrQuery(query.search))
   }
 
-  url += createFacetsFiltersQuery(query);
+  url += createFacetsFiltersQuery(query, language);
   url += createTemporalQuery(query);
+
 
   if (query.sort === undefined) {
     url += "&sort=modified desc";
   } else {
-    url += "&sort=" + query.sort;
+    const sort = query.sort.replace("title_", "title_" + language + "_");
+    url += "&sort=" + sort;
   }
 
   url += "&rows=" + query.pageSize;

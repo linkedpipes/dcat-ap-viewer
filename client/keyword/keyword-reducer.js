@@ -3,20 +3,25 @@ import {randomColor} from "randomcolor";
 const reducerName = "keywords";
 
 const initialState = {
-  "keywords": [],
-  "keywordsMap": {},
+  "keywords_cs": [],
+  "keywords_en": [],
+  "keywords_cs_map": {},
+  "keywords_en_map": {},
 };
 
 function reducer(state = initialState, action) {
-  if (action.$keywords) {
-    return addKeywords(state, action.$keywords);
+  if (action.$keywords_cs) {
+    return addKeywords(state, action.$keywords_cs, "cs");
+  }
+  if (action.$keywords_en) {
+    return addKeywords(state, action.$keywords_en, "en");
   }
   return state;
 }
 
-function addKeywords(state, keywordsToAdd) {
+function addKeywords(state, keywordsToAdd, lang) {
   let newRecord = false;
-  const keywordsMap = {...state.keywordsMap};
+  const keywordsMap = {...state["keywords_" + lang + "_map"]};
   keywordsToAdd.forEach((keyword) => {
     const id = keyword["@id"];
     if (keywordsMap[id] === undefined) {
@@ -38,8 +43,9 @@ function addKeywords(state, keywordsToAdd) {
   }
   //
   return {
-    "keywords": keywords,
-    "keywordsMap": keywordsMap,
+    ...state,
+    ["keywords" + lang]: keywords,
+    ["keywords_" + lang + "_map"]: keywordsMap,
   };
 }
 
@@ -62,6 +68,6 @@ export default {
 
 const reducerSelector = (state) => state[reducerName];
 
-export function keywordsMapSelector(state) {
-  return reducerSelector(state).keywordsMap;
+export function keywordsMapSelector(state, lang) {
+  return reducerSelector(state)["keywords_" + lang + "_map"];
 }

@@ -56,38 +56,50 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
         }
     },
     "add-field-type" : {
-        "name" : "string_icu",
+        "name" : "string_icu_cs",
         "class" : "org.apache.solr.schema.ICUCollationField",
         "locale": "cs",
         "strength" : "primary"
     },    
+    "add-field-type" : {
+        "name" : "string_icu_en",
+        "class" : "org.apache.solr.schema.ICUCollationField",
+        "locale": "en",
+        "strength" : "primary"
+    },
     "add-field" : { "name" : "iri", "type" : "string" , "indexed" : false },
     "add-field" : { "name" : "modified", "type" : "pdate", "docValues" : true , "multiValued" : false},
     "add-field" : { "name" : "issued", "type" : "pdate", "docValues" : true },
     "add-field" : { "name" : "accrualPeriodicity", "type" : "string" },
-    "add-field" : { "name" : "description", "type" : "string" },
     "add-field" : { "name" : "publisher", "type" : "string" , "indexed" : false },
-    "add-field" : { "name" : "publisherName", "type" : "string" },
-    "add-field" : { "name" : "title", "type" : "string", "docValues" : true },
     "add-field" : { "name" : "format", "type" : "strings", "indexed" : false },
-    "add-field" : { "name" : "formatName", "type" : "strings" },
     "add-field" : { "name" : "license", "type" : "strings", "indexed" : false },
-    "add-field" : { "name" : "keyword", "type" : "strings" },
     "add-field" : { "name" : "theme", "type" : "strings" },
     "add-field" : { "name" : "temporal-start", "type" : "pdate", "docValues" : true },
     "add-field" : { "name" : "temporal-end", "type" : "pdate", "docValues" : true },
     "add-field" : { "name" : "spatial", "type" : "string" },
 
-    "add-field" : { "name" : "title_sort", "type" : "string_icu", "stored" : false },
-    "add-copy-field" : { "source" : "title", "dest" : "title_sort" },
-        
-    "add-field" : { "name" : "title_query", "type" : "ascii_string"},
-    "add-copy-field" : { "source" : "title", "dest" : "title_query" },
+    "add-field" : { "name" : "description_cs", "type" : "string" },
+    "add-field" : { "name" : "keyword_cs", "type" : "strings" },
+    "add-field" : { "name" : "title_cs", "type" : "string", "docValues" : true },
+    "add-field" : { "name" : "title_cs_sort", "type" : "string_icu_cs", "stored" : false },
+    "add-field" : { "name" : "title_cs_query", "type" : "ascii_string"},
+    "add-copy-field" : { "source" : "title_cs", "dest" : "title_cs_sort" },
+    "add-copy-field" : { "source" : "title_cs", "dest" : "title_cs_query" },
+
+    "add-field" : { "name" : "description_en", "type" : "string" },
+    "add-field" : { "name" : "keyword_en", "type" : "strings" },
+    "add-field" : { "name" : "title_en", "type" : "string", "docValues" : true },
+    "add-field" : { "name" : "title_en_sort", "type" : "string_icu_en", "stored" : false },
+    "add-field" : { "name" : "title_en_query", "type" : "ascii_string"},
+    "add-copy-field" : { "source" : "title_en", "dest" : "title_en_sort" },
+    "add-copy-field" : { "source" : "title_en", "dest" : "title_en_query" },
 
     "replace-field" : { "name": "_text_", "type" : "ascii_string", "multiValued" : true, "indexed" : true, "stored" : false },
-    "add-copy-field" : { "source" : "description", "dest" : "_text_" },
-    "add-copy-field" : { "source" : "title", "dest" : "_text_" },
-    "add-copy-field" : { "source" : "keyword", "dest" : "_text_" }        
+    "add-copy-field" : { "source" : "title_cs", "dest" : "_text_" },
+    "add-copy-field" : { "source" : "title_en", "dest" : "_text_" },    
+    "add-copy-field" : { "source" : "description_cs", "dest" : "_text_" },
+    "add-copy-field" : { "source" : "description_en", "dest" : "_text_" }
 }'
 ```
 - And then:

@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types";
 import {ListGroup, ListGroupItem} from "reactstrap";
 import {formatNumber} from "@/app-services/formats"
 import {getString} from "@/app-services/strings"
-import {selectLabel} from "@/app-services/labels";
+import {selectLabel} from "../../../app-services/labels";
 
 class FacetFilter extends React.Component {
 
@@ -12,9 +12,29 @@ class FacetFilter extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.createListItems = this.createListItems.bind(this);
     this.createListItem = this.createListItem.bind(this);
+    this.loadLabels = this.loadLabels.bind(this);
     this.state = {
       "showAll": false,
     };
+  }
+
+  componentDidMount() {
+    this.loadLabels();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.values !== prevProps.values) {
+      this.loadLabels();
+    }
+  }
+
+  loadLabels() {
+    if (this.props.useIris && this.props.values) {
+      this.props.values.forEach((entry) => {
+        this.props.fetchLabel(entry["@id"]);
+      });
+    }
+
   }
 
   toggle() {
@@ -115,6 +135,7 @@ FacetFilter.propTypes = {
   "onChange": PropTypes.func.isRequired,
   "useIris": PropTypes.bool,
   "labels": PropTypes.object,
+  "fetchLabel": PropTypes.func.isRequired,
 };
 
 export default FacetFilter;

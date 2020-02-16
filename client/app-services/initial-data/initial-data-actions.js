@@ -37,15 +37,20 @@ function fetchDataRequest() {
 }
 
 function fetchDataSuccess(data) {
+  const publishers = data.publishers.filter(entity => entity.labels);
   return addLoaderStatusOff({
     "type": FETCH_INITIAL_DATA_SUCCESS,
-    "$publishers": data.publishers,
+    "$publishers": publishers,
     "$themes": data.themes.map((theme) => ({
       "@id": theme["@id"],
     })),
-    "$keywords": data.keywords,
+    "$keywords_cs": data.keywords_cs,
+    "$keywords_en": data.keywords_en,
     // Only themes contains labels.
-    "$labels": data.themes,
+    "$labels": [
+      ...data.themes,
+      ...publishers
+    ],
   });
 }
 
@@ -72,29 +77,31 @@ function fetchSolrRequest() {
 }
 
 function constructQueryUrl() {
-  const url = "./api/v1/solr/query?" +
-        "facet.field=keyword&" +
-        "facet.field=formatName&" +
-        "facet.field=publisherName&" +
+  return "./api/v1/solr/query?" +
+        "facet.field=keyword_cs&" +
+        "facet.field=keyword_en&" +
+        "facet.field=format&" +
+        "facet.field=publisher&" +
         "facet.field=theme&" +
         "facet=true&" +
         "facet.mincount=1&" +
         "q=*:*&" +
         "facet.limit=-1&" +
         "rows=0";
-  return url;
 }
 
 function fetchSolrSuccess(response) {
-  const publishers = parseFacetFromSolrResponse(response, "publisherName");
+  const publishers = parseFacetFromSolrResponse(response, "publisher");
   const themes = parseFacetFromSolrResponse(response, "theme");
-  const keywords = parseFacetFromSolrResponse(response, "keyword");
-  const formats = parseFacetFromSolrResponse(response, "formatName");
+  const keywords_cs = parseFacetFromSolrResponse(response, "keyword_cs", true);
+  const keywords_en = parseFacetFromSolrResponse(response, "keyword_en", true);
+  const formats = parseFacetFromSolrResponse(response, "format");
   return addLoaderStatusOff({
     "type": FETCH_INITIAL_SOLR_SUCCESS,
     "$publishers": publishers,
     "$themes": themes,
-    "$keywords": keywords,
+    "$keywords_cs": keywords_cs,
+    "$keywords_en": keywords_en,
     "$formats": formats,
     "$labels": [],
   });

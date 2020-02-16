@@ -1,18 +1,18 @@
 import {fetchJson} from "app-services/http-request";
 import {parseFacetFromSolrResponse} from "@/app-services/solr";
 import {graph, triples} from "@/app-services/jsonld";
-import {NKOD, FOAF} from "@/app-services/vocabulary";
+import {NKOD} from "@/app-services/vocabulary";
 
 export function fetchPublishersFromSolr() {
   const url = constructQueryUrl();
   return fetchJson(url).then((entry) => {
-    return parseFacetFromSolrResponse(entry.json, "publisherName");
+    return parseFacetFromSolrResponse(entry.json, "publisher", false);
   });
 }
 
 function constructQueryUrl() {
   return "./api/v1/solr/query?" +
-        "facet.field=publisherName&" +
+        "facet.field=publisher&" +
         "facet=true&" +
         "facet.mincount=1&" +
         "q=*:*&" +
@@ -27,12 +27,5 @@ export function fetchPublishersQuality() {
 
 function parsePublisherQualityResponse(response) {
   return graph.getAllByType(response.json, NKOD.ExceptionalPublisher)
-    .map((entity) => {
-      const name = triples.string(entity, FOAF.name);
-      if (name["cs"]) {
-        return name["cs"][0];
-      } else {
-        return name[""][0];
-      }
-    });
+    .map((entity) => triples.id(entity));
 }

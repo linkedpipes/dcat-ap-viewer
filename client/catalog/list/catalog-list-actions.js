@@ -28,6 +28,10 @@ function fetchSuccess(data) {
   return addLoaderStatusOff({
     "type": FETCH_CATALOGS_SUCCESS,
     "catalogs": data["json"]["json"],
+    "$labels": data["json"]["json"].map(item => ({
+      "@id": item["id"],
+      "labels": item["labels"]
+    }))
   });
 }
 

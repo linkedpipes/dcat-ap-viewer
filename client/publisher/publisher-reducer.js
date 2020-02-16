@@ -34,12 +34,6 @@ function reducer(state = initialState, action) {
     default:
       break;
   }
-  if (action.$publishers) {
-    return {
-      ...state,
-      ...addPublishers(state, action.$publishers),
-    }
-  }
   return state;
 }
 

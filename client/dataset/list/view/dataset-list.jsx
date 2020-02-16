@@ -25,6 +25,8 @@ import SortSelector from "./ui/sort-selector";
 import {Row, Col} from "reactstrap";
 import QueryStatus from "./ui/query-status";
 import {PropTypes} from "prop-types";
+import {selectLabel, labelsSelector} from "../../../app-services/labels";
+import {TagLine} from "./ui/query-status";
 
 class _DatasetList extends React.Component {
 
@@ -49,7 +51,9 @@ class _DatasetList extends React.Component {
           <DatasetListItem
             key={dataset.id}
             value={dataset}
-            showPublisher={showPublisher}/>
+            showPublisher={showPublisher}
+            labels={this.props.labels}
+          />
         ))}
         <Paginator
           recordsCount={this.props.datasetCount}
@@ -72,12 +76,14 @@ _DatasetList.propTypes = {
   "query": PropTypes.object.isRequired,
   "datasets": PropTypes.arrayOf(PropTypes.object).isRequired,
   "datasetCount": PropTypes.number.isRequired,
+  "labels": PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   "query": querySelector(state),
   "datasets": datasetsSelector(state),
   "datasetCount": datasetsTotalCountSelector(state),
+  "labels": labelsSelector(state)
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
@@ -96,7 +102,7 @@ const DatasetList = connect(mapStateToProps, mapDispatchToProps)(_DatasetList);
 
 export default DatasetList;
 
-function DatasetListItem({value, showPublisher}) {
+function DatasetListItem({labels, value, showPublisher}) {
   const datasetUrl = getUrl(DATASET_DETAIL_URL, {
     [DATASET_QUERY]: value.iri,
   });
@@ -109,7 +115,9 @@ function DatasetListItem({value, showPublisher}) {
         <h4>{value.title}</h4>
       </Link>
       {showPublisher &&
-            <Link to={publisherUrl}>{value.publisher}</Link>
+            <Link to={publisherUrl}>
+              {selectLabel(labels, value.publisher)}
+            </Link>
       }
       <p style={{
         "overflow": "hidden",
@@ -119,7 +127,7 @@ function DatasetListItem({value, showPublisher}) {
       }}>
         {value.description}
       </p>
-      <TagLine values={value.format} size={0.7}/>
+      <TagLine values={value.format} size={0.7}  labels={labels}/>
       <hr/>
     </div>
   )
@@ -128,33 +136,6 @@ function DatasetListItem({value, showPublisher}) {
 DatasetListItem.propTypes = {
   "value": PropTypes.object.isRequired,
   "showPublisher": PropTypes.bool.isRequired,
+  "labels": PropTypes.object.isRequired,
 };
 
-// TODO Duplicity to query-status.line.jsx
-function TagLine({values, size = 1}) {
-  if (values === undefined) {
-    return null;
-  }
-  return (
-    <div style={{"marginTop": "0.2em"}}>
-      {values.map((item) => (
-        <Badge
-          style={{
-            "marginLeft": "1em",
-            "marginBottom": "0.5em",
-            "fontSize": size + "em",
-          }}
-          color="info"
-          pill
-          key={item}>
-          {item}
-        </Badge>
-      ))}
-    </div>
-  );
-}
-
-TagLine.propTypes = {
-  "values": PropTypes.arrayOf(PropTypes.string).isRequired,
-  "size": PropTypes.number,
-};

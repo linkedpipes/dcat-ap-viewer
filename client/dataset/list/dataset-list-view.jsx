@@ -31,7 +31,7 @@ import {
   SORT_QUERY,
   PAGE_SIZE_QUERY,
   TEMPORAL_START,
-  TEMPORAL_END,
+  TEMPORAL_END, getLanguage,
 } from "../../app/navigation";
 import {getString} from "../../app/strings";
 import setPageTitle from "../../app-services/page-title";
@@ -65,7 +65,7 @@ QueryStatusLine.propTypes = {
   "query": PropTypes.object.isRequired,
 };
 
-const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPageSize, showPublisher, onSearch, onFetchOptions}) => (
+const DatasetListLoaded = ({datasetCount, query, datasets, status, setPageIndex, setPageSize, showPublisher, onSearch, onFetchOptions}) => (
   <div>
     <QueryStatusLine
       resultSize={datasetCount}
@@ -77,6 +77,7 @@ const DatasetListLoaded = ({datasetCount, query, datasets, setPageIndex, setPage
     <DatasetList
       values={datasets}
       showPublisher={showPublisher}
+      status={status}
     />
     <br/>
     <Paginator
@@ -99,6 +100,7 @@ DatasetListLoaded.propTypes = {
   "datasetCount": PropTypes.number.isRequired,
   "query": PropTypes.object.isRequired,
   "datasets": PropTypes.object.isRequired,
+  "status": PropTypes.string.isRequired,
 };
 
 class FilterBox extends React.Component {
@@ -342,6 +344,7 @@ class DatasetListViewComponent extends React.Component {
               <br/>
               {showDatasetList &&
                             <DatasetListLoaded datasetCount={props.datasetCount}
+                              status={props.status}
                               query={props.query}
                               datasets={props.datasets}
                               setPageIndex={props.setPageIndex}
@@ -518,7 +521,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
   },
   "onFetchOptions": (query, onSuccess, onFail) => {
-    const url = constructTypeaheadUrl(query);
+    const url = constructTypeaheadUrl(query, getLanguage());
     return fetchJson(url).then((data) => {
       onSuccess(data.json.response.docs.map((item) => item.title));
     }).catch(onFail);

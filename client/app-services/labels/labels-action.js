@@ -1,5 +1,6 @@
 import {fetchJson} from "@/app-services/http-request";
 import {reducerName} from "./labels-reducer";
+import {getLanguage} from "../../app/navigation";
 
 export const FETCH_LABEL_SUCCESS = "FETCH_LABEL_SUCCESS";
 
@@ -7,7 +8,8 @@ export const fetchLabel = (iri) => {
   const url = "./api/v1/resource/codelist?iri=" + encodeURIComponent(iri);
   return (dispatch, getState) => {
     const state = getState()[reducerName];
-    if (state[iri]) {
+    if (state[iri] && state[iri][getLanguage()]
+      && state[iri][getLanguage()].length > 0) {
       // We already have the data.
       return;
     }

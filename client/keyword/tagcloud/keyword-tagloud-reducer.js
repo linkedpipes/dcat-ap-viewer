@@ -13,7 +13,12 @@ import {
 
 const reducerName = "keyword-tagcloud";
 
-function reducer(state = {}, action) {
+const initialState = {
+  "status": STATUS_INITIAL,
+  "keywords": undefined,
+};
+
+function reducer(state = initialState, action) {
   switch (action.type) {
     case MOUNT_KEYWORDS_LIST:
       return onMount();
