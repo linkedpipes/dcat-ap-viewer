@@ -5,7 +5,7 @@ import {getRegisteredElement} from "../../app/register";
 import {ELEMENT_PUBLISHER_LIST} from "../../app/component-list";
 import {
   selectPublishers,
-  selectFailed,
+  selectError,
   selectReady,
 } from "./publisher-list-reducer";
 import {
@@ -13,6 +13,7 @@ import {
   publisherListUnMount,
 } from "./publisher-list-action";
 import {fetchPublisherList} from "../../api/api-action";
+
 
 class PublishersListContainer extends React.Component {
 
@@ -22,23 +23,10 @@ class PublishersListContainer extends React.Component {
 
   render() {
     const PublisherList = getRegisteredElement(ELEMENT_PUBLISHER_LIST);
-    if (this.props.failed) {
-      return (
-        <div>
-          publisher-list : loading ... failed
-        </div>
-      );
-    } else if (this.props.ready) {
-      return (
-        <PublisherList publishers={this.props.publishers}/>
-      )
-    } else {
-      return (
-        <div>
-          publisher-list : loading ...
-        </div>
-      );
-    }
+    const {ready, error, publishers} = this.props;
+    return (
+      <PublisherList ready={ready} error={error} publishers={publishers}/>
+    )
   }
 
   componentWillUnmount() {
@@ -49,7 +37,7 @@ class PublishersListContainer extends React.Component {
 
 PublishersListContainer.propTypes = {
   "ready": PropTypes.bool.isRequired,
-  "failed": PropTypes.bool.isRequired,
+  "error": PropTypes.number.isRequired,
   "publishers": PropTypes.arrayOf(PropTypes.object).isRequired,
   "onMount": PropTypes.func.isRequired,
   "onUnMount": PropTypes.func.isRequired,
@@ -57,7 +45,7 @@ PublishersListContainer.propTypes = {
 
 const mapStateToProps = (state) => ({
   "ready": selectReady(state),
-  "failed": selectFailed(state),
+  "error": selectError(state),
   "publishers": selectPublishers(state),
 });
 

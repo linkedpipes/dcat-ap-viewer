@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
 import {connectRouter, routerMiddleware} from "connected-react-router";
-import {getRegistered} from "./register";
+import {getRegisteredReducers} from "./register";
 import {createStore as createReduxStore, compose, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
 
@@ -20,9 +20,12 @@ function prepareReducer(history) {
 }
 
 function addRegisteredReducers(configuration) {
-  getRegistered().forEach((entry) => {
+  getRegisteredReducers().forEach((entry) => {
     if (entry.reducer === undefined) {
       return;
+    }
+    if (process.env.NODE_ENV !== "production" && configuration[entry.name]) {
+      console.warn("Re-registering reducer for name:", entry.name);
     }
     configuration[entry.name] = entry.reducer;
   });

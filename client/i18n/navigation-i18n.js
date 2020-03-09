@@ -1,0 +1,51 @@
+// For production purpose this file is generated during build.
+module.exports = {
+  "cs": {
+    "url": {
+      "/datasets": "/datové-sady",
+      "/catalogs": "/lokální-katalogy",
+      "/publishers": "/poskytovatelé",
+      "/keywords": "/klíčová-slova",
+      "/dataset": "/datová-sata",
+    },
+    "query": {
+      "keyword": "klíčová slova",
+      "theme": "témata",
+      "format": "formáty",
+      "page": "stránka",
+      "page-size": "velikost stránky",
+      "search": "dotaz",
+      "temporal-end": "časové období začátek",
+      "temporal-start": "časové období konec",
+      "view": "vizualizace",
+      "sort": "pořadí",
+      "publisher": "poskytovatel",
+      "language": "jazyk",
+      "iri": "iri",
+    },
+  },
+  "en": {
+    "url": {
+      "/datasets": "/datasets",
+      "/catalogs": "/local-catalogs",
+      "/publishers": "/publishers",
+      "/keywords": "/keywords",
+      "/dataset": "/dataset",
+    },
+    "query": {
+      "keyword": "keyword",
+      "theme": "themes",
+      "format": "formats",
+      "page": "page",
+      "page-size": "page size",
+      "search": "query",
+      "temporal-end": "temporal end",
+      "temporal-start": "temporal start",
+      "view": "visualization",
+      "sort": "sort",
+      "publisher": "publisher",
+      "language": "language",
+      "iri": "iri",
+    },
+  },
+};

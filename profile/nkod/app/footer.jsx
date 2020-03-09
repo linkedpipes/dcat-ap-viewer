@@ -1,5 +1,7 @@
 import React from "react";
-import {register, ELEMENT_FOOTER} from "./../../../client/app/component-api";
+import {register,
+  ELEMENT_FOOTER,
+} from "./../../client-api";
 import {PropTypes} from "prop-types";
 
 function Footer({t}) {

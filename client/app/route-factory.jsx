@@ -1,86 +1,62 @@
+//
+// Register all components, this require that we have a knowledge of
+// all components before the registration is running.
+//
+
 import React from "react";
 import {App} from "./app";
 import {Router, Route, Switch} from "react-router-dom";
-import {getRegistered} from "./register";
-import {navigation} from "./navigation";
-import {get} from "./language";
+import {getRegisteredViews, getRegisteredElement} from "./register";
+import {getAllNamesForView} from "./navigation";
+import {ELEMENT_PAGE_NOT_FOUND} from "./component-list";
+import {initializeNavigation} from "./navigation";
 
-export const createRoutes = (history) => (
-  <Router history={history}>
-    <App>
-      <Switch>
-        {getRouteObjects().map(page =>
-          <Route key={page.id}
-                 path={page.link}
-                 component={page.component}
-                 exact={page.exact}
-          />)}
-        <Route path="*" component={PageNotFound}/>
-      </Switch>
-    </App>
-  </Router>
-);
+const PageNotFound = getRegisteredElement(ELEMENT_PAGE_NOT_FOUND);
+
+export function createRoutes(history) {
+  initializeNavigation();
+  return (
+    <Router history={history}>
+      <App>
+        <Switch>
+          {getRouteObjects().map(page =>
+            <Route
+              key={page.id}
+              path={page.link}
+              component={page.component}
+              exact={page.exact}
+            />)}
+          <Route path="*" component={PageNotFound}/>
+        </Switch>
+      </App>
+    </Router>
+  )
+}
 
 function getRouteObjects() {
   const routes = [];
-  const languages = Object.keys(Routes);
-  getRegistered().forEach((entry) => {
-    if (entry.url === undefined || entry.component === undefined) {
-      return;
-    }
-    languages.forEach((language) => {
-      const url = navigation[language][PAGE][entry.url];
+  getRegisteredViews().forEach((view) => {
+    getAllNamesForView(view.url).forEach(({language, value}) => {
+      routes.push({
+        "id": view.name + "-" + language,
+        "link": value,
+        "component": view.view,
+        "exact": view.exact,
+      });
       // Some browsers (IE, Edge) does not escape national characters,
-      // while others (Firefox, Chrome) do, therefore we need to be ready
-      // to handle both variants. So we add escaped version for all
+      // while others (Firefox, Chrome) do; therefore, we need to be ready
+      // to handle both variants. That is why, we add escaped version for all
       // but english.
-      if (language !== "en") {
+      if (encodeURI(value) !== value) {
         routes.push({
-          "id": entry.name + "-" + language,
-          "link": URL_PREFIX + "/" + encodeURI(url),
-          "component": entry.component,
-          "exact": false,
+          "id": view.name + "-" + language + "-encoded",
+          "link": encodeURI(value),
+          "component": view.view,
+          "exact": view.exact,
         });
       }
-      routes.push({
-        "id": entry.name + "-" + language,
-        "link": URL_PREFIX + "/" + (url),
-        "component": entry.component,
-        "exact": false,
-      });
     });
-    if (entry.homepage) {
-      routes.push({
-        "id": "homepage",
-        "link": URL_PREFIX + "/",
-        "component": entry.component,
-        "exact": true,
-      });
-    }
-
   });
+  console.log("Route:", getRegisteredViews(), "->", routes);
   return routes;
-}
-
-export function translate(value, type, targetLanguage) {
-  for (let language in navigation) {
-    const value_map = navigation[language][type];
-    for (let key in value_map) {
-      if (value === value_map[key]) {
-        return navigation[targetLanguage][type][key];
-      }
-    }
-  }
-}
-
-export function getLanguageForUrl(value) {
-  for (let language in navigation) {
-    const value_map = navigation[language][PAGE];
-    for (let key in value_map) {
-      if (value === value_map[key]) {
-        return language;
-      }
-    }
-  }
-  return getDefaultLanguage();
 }

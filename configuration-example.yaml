@@ -1,0 +1,30 @@
+dcat-ap-viewer:
+  version: 2
+  port: 8030
+  server-static-content: false
+  providers:
+    - type: solr
+      url: http://localhost:8983/solr/dcat-ap-viewer
+      default-language: cs
+      languages:
+        - cs
+        - en
+    - type: couchdb
+      url: http://127.0.0.1:5984
+    - type: sparql
+      url: https://localhost:8890/sparql
+      filter:
+        - v2-quality-dataset
+        - v2-quality-distribution
+        - v2-quality-publishers
+  client:
+    profile: nkod
+    # Public URL without url-subdirectory, used to create full links.
+    url-base: "http://localhost:8030/"
+    # If application is served from subdirectory, name of the subdirectory.
+    url-subdirectory: ""
+    #
+    title-default: "Národní katalog"
+    title-prefix: ""
+    title-suffix: " - NKOD"
+    form-url: "https://dev.nkod.opendata.cz/formulář/"

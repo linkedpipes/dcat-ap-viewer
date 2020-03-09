@@ -1,61 +1,110 @@
-const request = require("request");
-const config = require("./../configuration");
+const {handleError} = require("./../http-utils");
+const {executeCouchDBGet} = require("./couchdb-api");
 
-module.exports = {
-  "createDatasetsGet": createDatasetsGet,
-  "createDistributionsGet": createDistributionsGet,
-  "createCodeListGet": createCodeListGet,
-  "createStaticGet": createStaticGet,
-  "createFilterCacheGet": createFilterCacheGet,
-};
+(function initialize() {
+  module.exports = {
+    "createProvider": createProvider
+  };
+})();
 
-function createDatasetsGet() {
-  return (req, res) => {
-    const datasetIri = req.query.iri;
-    queryDataFromCouchDB("datasets", res, datasetIri);
+function createProvider(configuration) {
+  return {
+    "v2-dataset-item": createDatasetsItemGet(configuration),
+    "v2-distribution-item": createDistributionItemGet(configuration),
+    "v2-keyword-list": createKeywordListGet(configuration),
+    "v2-label-item": createLabelItem(configuration),
+    "v2-init-data": createInitDataGet(configuration),
+    "v2-catalog-list": createCatalogListGet(configuration),
   }
 }
 
-function queryDataFromCouchDB(database, res, recordId) {
-  // TODO Update response content-type.
-  const url = config.data.couchdb + "/" + database + "/" +
-        encodeURIComponent(recordId);
-  request.get({"url": url}).on("error", (error) => {
-    handleError(res, error);
-  }).pipe(res);
-}
-
-function handleError(res, error) {
-  // TODO Improve logging and error handling #38.
-  console.error("Request failed: ", error);
-  res.status(500).json({
-    "error": "service_request_failed",
-  });
-}
-
-function createDistributionsGet() {
+function createDatasetsItemGet(configuration) {
   return (req, res) => {
-    const distributionIri = req.query.iri;
-    queryDataFromCouchDB("distributions", res, distributionIri);
+    const id = req.query.iri;
+    executeCouchDBGet(configuration, "datasets", id)
+      .then(transformDatasetItem)
+      .then(data => responseJsonLd(res, data))
+      .catch(error => handleError(res, error));
   }
 }
 
-function createCodeListGet() {
+function transformDatasetItem(content) {
+  return content["jsonld"];
+}
+
+/**
+ * Send response with JsonLD content.
+ */
+function responseJsonLd(res, data) {
+  res.setHeader("Content-Type", "application/ld+json");
+  res.end(JSON.stringify(data));
+}
+
+function createDistributionItemGet(configuration) {
   return (req, res) => {
-    const itemIri = req.query.iri;
-    queryDataFromCouchDB("codelists", res, itemIri);
+    const id = req.query.iri;
+    executeCouchDBGet(configuration, "distributions", id)
+      .then(transformDistributionItem)
+      .then(data => responseJsonLd(res, data))
+      .catch(error => handleError(res, error));
   }
 }
 
-function createStaticGet() {
+function transformDistributionItem(content) {
+  return content["jsonld"];
+}
+
+function createKeywordListGet(configuration) {
   return (req, res) => {
-    const itemId = req.query.id;
-    queryDataFromCouchDB("static", res, itemId);
+    let language = req.query.language || configuration["default-language"];
+    executeCouchDBGet(
+      configuration, "static", "keywords_by_publishers_" + language)
+      .then(transformKeywordList)
+      .then(data => responseJsonLd(res, data))
+      .catch(error => handleError(res, error));
   }
 }
 
-function createFilterCacheGet() {
+function transformKeywordList(content) {
+  return content["jsonld"];
+}
+
+function createLabelItem(configuration) {
   return (req, res) => {
-    queryDataFromCouchDB("static", res, "initial_data_cache");
+    const id = req.query.iri;
+    executeCouchDBGet(configuration, "labels", id)
+      .then(transformLabelItem)
+      .then(data => responseJsonLd(res, data))
+      .catch(error => handleError(res, error));
   }
+}
+
+function transformLabelItem(content) {
+  return content["jsonld"];
+}
+
+function createInitDataGet(configuration) {
+  return (req, res) => {
+    executeCouchDBGet(configuration, "static", "initial_data_cache")
+      .then(transformInitData)
+      .then(data => responseJsonLd(res, data))
+      .catch(error => handleError(res, error));
+  }
+}
+
+function transformInitData(content) {
+  return content["jsonld"];
+}
+
+function createCatalogListGet(configuration) {
+  return (req, res) => {
+    executeCouchDBGet(configuration, "static", "local_catalogs")
+      .then(transformCatalogList)
+      .then(data => responseJsonLd(res, data))
+      .catch(error => handleError(res, error));
+  }
+}
+
+function transformCatalogList(content) {
+  return content["jsonld"];
 }

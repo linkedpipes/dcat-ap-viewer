@@ -16,12 +16,8 @@ import {
 import {
   register,
   ELEMENT_HEADER,
-  // VIEW_DATASET_LIST,
-  // VIEW_ORGANISATION_LIST,
-  // VIEW_KEYWORD_LIST,
-  // VIEW_CATALOG_LIST,
 } from "./../../../client/app/component-api";
-// import {NavLink as RouterLink} from "react-router-dom";
+import {NavLink as RouterLink} from "react-router-dom";
 import LanguageSelector from "./language-selector";
 import {PropTypes} from "prop-types";
 
@@ -50,7 +46,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const {t} = this.props;
+    const {t, tUrl} = this.props;
     return (
       <Container>
         <Navbar expand="md" className="navbar-light">
@@ -70,34 +66,34 @@ class Header extends React.Component {
                   {t("news")}
                 </NavLink>
               </NavItem>
-              {/*<NavItem>*/}
-              {/*  <RouterLink*/}
-              {/*    to={tUrl(VIEW_DATASET_LIST)}*/}
-              {/*    className="nav-link"*/}
-              {/*    activeClassName="active"*/}
-              {/*    isActive={isDatasetActive}*/}
-              {/*  >*/}
-              {/*    {t("datasets")}*/}
-              {/*  </RouterLink>*/}
-              {/*</NavItem>*/}
-              {/*<NavItem>*/}
-              {/*  <RouterLink*/}
-              {/*    to={tUrl(VIEW_ORGANISATION_LIST)}*/}
-              {/*    className="nav-link"*/}
-              {/*    activeClassName="active"*/}
-              {/*  >*/}
-              {/*    {t("publishers")}*/}
-              {/*  </RouterLink>*/}
-              {/*</NavItem>*/}
-              {/*<NavItem>*/}
-              {/*  <RouterLink*/}
-              {/*    to={tUrl(VIEW_KEYWORD_LIST)}*/}
-              {/*    className="nav-link"*/}
-              {/*    activeClassName="active"*/}
-              {/*  >*/}
-              {/*    {t("keywords")}*/}
-              {/*  </RouterLink>*/}
-              {/*</NavItem>*/}
+              <NavItem>
+                <RouterLink
+                  to={tUrl("/datasets")}
+                  className="nav-link"
+                  activeClassName="active"
+                  // isActive={isDatasetActive}
+                >
+                  {t("datasets")}
+                </RouterLink>
+              </NavItem>
+              <NavItem>
+                <RouterLink
+                  to={tUrl("/publishers")}
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  {t("publishers")}
+                </RouterLink>
+              </NavItem>
+              <NavItem>
+                <RouterLink
+                  to={tUrl("/keywords")}
+                  className="nav-link"
+                  activeClassName="active"
+                >
+                  {t("keywords")}
+                </RouterLink>
+              </NavItem>
               <NavItem>
                 <Dropdown
                   isOpen={this.state.isMoreOpen}
@@ -120,13 +116,13 @@ class Header extends React.Component {
                     <DropdownItem href="https://opendata.gov.cz">
                       {t("for_publishers")}
                     </DropdownItem>
-                    {/*<DropdownItem*/}
-                    {/*  tag={RouterLink}*/}
-                    {/*  to={tUrl(VIEW_CATALOG_LIST)}*/}
-                    {/*  activeClassName="active"*/}
-                    {/*>*/}
-                    {/*  {t("catalogs")}*/}
-                    {/*</DropdownItem>*/}
+                    <DropdownItem
+                      tag={RouterLink}
+                      to={tUrl("/catalogs")}
+                      activeClassName="active"
+                    >
+                      {t("catalogs")}
+                    </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
               </NavItem>

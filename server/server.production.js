@@ -1,20 +1,34 @@
+const express = require("express");
+const path = require("path");
+const configuration = require("./server-configuration");
+
+const httpApi = require("./http-api");
+
 /**
  * Entry point for running the backend.
  */
-(function initialize() {
-  const express = require("express");
+(function main() {
   const app = express();
-  const server = require("./server-common");
-  server.initializeApi(app);
-  initializeStatic(app, express);
-  server.start(app);
+  if (configuration.serve_static_content) {
+    initializeStatic(app, express);
+  }
+  httpApi.initializeHttpApi(app);
+  start(app);
 })();
 
 function initializeStatic(app, express) {
-  const path = require("path");
   app.use(express.static(path.join(__dirname, "..", "dist")));
-  // All else to index.html to support non-root access.
   app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "dist", "index.html"));
+  });
+}
+
+function start(app) {
+  const port = configuration["port"];
+  app.listen(port, function onStart(error) {
+    if (error) {
+      console.error(error);
+    }
+    console.info("Listening on port %s.", port);
   });
 }

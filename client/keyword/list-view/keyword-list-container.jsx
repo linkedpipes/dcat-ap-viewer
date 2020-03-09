@@ -1,11 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
-import {onMount, onUnMount} from "./keyword-tagloud-action";
+import {onMount, onUnMount} from "./keyword-list-action";
 import {
   selectKeywords,
-  selectFailed,
+  selectError,
   selectReady,
-} from "./keyword-tagloud-reducer";
+} from "./keyword-list-reducer";
 import {fetchKeywordList} from "../../api/api-action";
 import {getRegisteredElement} from "../../app/register";
 import {ELEMENT_KEYWORD_LIST} from "../../app/component-list";
@@ -20,23 +20,10 @@ class KeywordListContainer extends React.Component {
 
   render() {
     const KeywordList = getRegisteredElement(ELEMENT_KEYWORD_LIST);
-    if (this.props.failed) {
-      return (
-        <div>
-          publisher-list : loading ... failed
-        </div>
-      );
-    } else if (this.props.ready) {
-      return (
-        <KeywordList keywords={this.props.keywords}/>
-      )
-    } else {
-      return (
-        <div>
-          publisher-list : loading ...
-        </div>
-      );
-    }
+    const {ready, error, keywords} = this.props;
+    return (
+      <KeywordList ready={ready} error={error} keywords={keywords}/>
+    )
   }
 
   componentWillUnmount() {
@@ -47,7 +34,7 @@ class KeywordListContainer extends React.Component {
 
 KeywordListContainer.propTypes = {
   "ready": PropTypes.bool.isRequired,
-  "failed": PropTypes.bool.isRequired,
+  "error": PropTypes.number.isRequired,
   "keywords": PropTypes.arrayOf(PropTypes.object).isRequired,
   "onMount": PropTypes.func.isRequired,
   "onUnMount": PropTypes.func.isRequired,
@@ -55,7 +42,7 @@ KeywordListContainer.propTypes = {
 
 const mapStateToProps = (state) => ({
   "ready": selectReady(state),
-  "failed": selectFailed(state),
+  "error": selectError(state),
   "keywords": selectKeywords(state),
 });
 

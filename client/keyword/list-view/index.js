@@ -1,13 +1,15 @@
-import {register} from "../../app/register.js";
-import reducer from "./keyword-tagloud-reducer";
-import {KeywordsViewContainer} from "./keyword-tagloud-container";
-import {KEYWORDS_LIST_URL} from "../../app/navigation";
+import {register} from "../../app/component-api";
+import KeywordListContainer from "./keyword-list-container";
+import reducer from "./keyword-list-reducer";
 
 register({
-  "reducer": reducer.reducer,
   "name": reducer.name,
-  "url": [KEYWORDS_LIST_URL],
-  "component": KeywordsViewContainer,
-  "strings": {
-  },
+  "reducer": reducer.function,
+});
+
+register({
+  "name": reducer.name + "-container",
+  "url": "/keywords",
+  "query": [],
+  "view": KeywordListContainer,
 });

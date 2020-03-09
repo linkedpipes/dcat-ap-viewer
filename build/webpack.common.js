@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const config = require("./build-configuration");
+const configuration = require("./../configuration");
 
 module.exports = {
   "entry": [
@@ -31,21 +31,36 @@ module.exports = {
   "plugins": [
     new HtmlWebpackPlugin({
       "filename": "index.html",
-      "title": config.PAGE_TITLE.DEFAULT,
-      "template": path.join(__dirname, "..", "public", "index.html"),
+      "title": configuration.client.title.default,
+      "template": path.join(
+        __dirname, "..", "profile",
+        configuration.client.profile, "index.html"),
       "inject": true,
     }),
     new webpack.DefinePlugin({
-      "SENTRY_REPORT": config.SENTRY.ACTIVE,
-      "SENTRY_URL": config.SENTRY.URL,
-      "GOOGLE_TAG_MANAGER_ID": config.GOOGLE_TAG_MANAGER,
-      "PAGE_TITLE_PREFIX": config.PAGE_TITLE.PREFIX,
-      "PAGE_TITLE_SUFFIX": config.PAGE_TITLE.SUFFIX,
-      "REPOSITORY_TYPE": config.REPOSITORY_TYPE,
-      "FORM_URL": config.FORM.URL,
-      "URL_PREFIX": config.URL.PREFIX,
-      "URL_BASE": config.URL.BASE,
-      "DEREFERENCE_IRI": config.DEREFERENCE,
+      "DEF_PAGE_TITLE_PREFIX":
+        JSON.stringify(configuration.client.title.prefix),
+      "DEF_PAGE_TITLE_SUFFIX":
+        JSON.stringify(configuration.client.title.suffix),
+      "DEF_FORM_URL":
+        JSON.stringify(configuration.client.form_url),
+      "DEF_URL_BASE":
+        JSON.stringify(configuration.client.url.base),
+      "DEF_DEREFERENCE_PREFIX":
+        JSON.stringify(configuration.client.url.subdirectory),
     }),
   ],
 };
+
+console.log("CONFIG", {
+  "DEF_PAGE_TITLE_PREFIX":
+    JSON.stringify(configuration.client.title.prefix),
+  "DEF_PAGE_TITLE_SUFFIX":
+    JSON.stringify(configuration.client.title.suffix),
+  "DEF_FORM_URL":
+    JSON.stringify(configuration.client.form_url),
+  "DEF_URL_BASE":
+    JSON.stringify(configuration.client.url.base),
+  "DEF_DEREFERENCE_PREFIX":
+    JSON.stringify(configuration.client.url.subdirectory),
+});

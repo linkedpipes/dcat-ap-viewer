@@ -31,6 +31,8 @@ export const DCELEMENTS = {
 
 const DCAT_PREFIX = "http://www.w3.org/ns/dcat#";
 export const DCAT = {
+  "CatalogRecord" : DCAT_PREFIX + "CatalogRecord",
+  "Catalog": DCAT_PREFIX + "Catalog",
   "Dataset": DCAT_PREFIX + "Dataset",
   "Distribution": DCAT_PREFIX + "Distribution",
   "keyword": DCAT_PREFIX + "keyword",
@@ -42,17 +44,6 @@ export const DCAT = {
   "downloadURL": DCAT_PREFIX + "downloadURL",
   "mediaType": DCAT_PREFIX + "mediaType",
   "issued": DCAT_PREFIX + "issued",
-  "CatalogRecord": DCAT_PREFIX + "CatalogRecord",
-  "Catalog": DCAT_PREFIX + "Catalog",
-  "accessURL": DCAT_PREFIX + "accessURL",
-};
-
-const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";
-export const FOAF = {
-  "page": FOAF_PREFIX + "page",
-  "name": FOAF_PREFIX + "name",
-  "CatalogRecord": DCAT_PREFIX + "CatalogRecord",
-  "Catalog": DCAT_PREFIX + "Catalog",
   "accessURL": DCAT_PREFIX + "accessURL",
   "packageFormat": DCAT_PREFIX + "packageFormat",
   "compressFormat": DCAT_PREFIX + "compressFormat",
@@ -60,10 +51,15 @@ export const FOAF = {
   "endpointURL": DCAT_PREFIX + "endpointURL",
   "servesDataset": DCAT_PREFIX + "servesDataset",
   "endpointDescription": DCAT_PREFIX + "endpointDescription",
-  "startDate": DCAT_PREFIX + "startDate",
-  "endDate": DCAT_PREFIX + "endDate",
   "temporalResolution": DCAT_PREFIX + "temporalResolution",
   "spatialResolutionInMeters": DCAT_PREFIX + "spatialResolutionInMeters",
+};
+
+const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";
+export const FOAF = {
+  "page": FOAF_PREFIX + "page",
+  "name": FOAF_PREFIX + "name",
+  "email": FOAF_PREFIX + "email",
 };
 
 const ADMS_PREFIX = "http://www.w3.org/ns/adms#";
@@ -94,21 +90,24 @@ const SCHEMA_PREFIX = "http://schema.org/";
 export const SCHEMA = {
   "startDate": SCHEMA_PREFIX + "startDate",
   "endDate": SCHEMA_PREFIX + "endDate",
+  "Organization": SCHEMA_PREFIX + "Organization",
 };
 
 const SKOS_PREFIX = "http://www.w3.org/2004/02/skos/core#";
 export const SKOS = {
   "prefLabel": SKOS_PREFIX + "prefLabel",
   "inScheme": SKOS_PREFIX + "inScheme",
+  "note": SKOS_PREFIX + "note",
 };
 
+const RDF_PREFIX = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 export const RDF = {
-  "type": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+  "type": RDF_PREFIX + "type",
+  "label": RDF_PREFIX + "label",
 };
 
 export const EUA = {
   "dataTheme": "http://publications.europa.eu/resource/authority/data-theme",
-  "note": SKOS_PREFIX + "note",
 };
 
 const PU_PREFIX = "https://data.gov.cz/slovník/podmínky-užití/";
@@ -149,6 +148,7 @@ export const NKOD = {
   "SourceSparql": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkodSparql",
   "lkod": NKOD_PREFIX + "lkod",
   "ExceptionalPublisher": NKOD_PREFIX + "VzornýPoskytovatel",
+  "CkanApiLkod": NKOD_PREFIX + "CkanApiLkod",
 };
 
 const DQV_PREFIX = "http://www.w3.org/ns/dqv#";
@@ -175,10 +175,24 @@ export const SDMX = {
   "refPeriod": "http://purl.org/linked-data/sdmx/2009/dimension#refPeriod",
 };
 
-const LP_PREFIX = "http://dcat-ap.linkedpipes.com/";
+const LP_PREFIX = "urn:";
 export const LP = {
-  "DatasetListMetadata": LP_PREFIX + "DatasetListMetadata",
+  "datasetsCount": LP_PREFIX + "datasetsCount",
   "count": LP_PREFIX + "count",
+  "usedByPublishersCount": LP_PREFIX + "usedByPublishersCount",
+  "Keyword": LP_PREFIX + "Keyword",
+  "DatasetListMetadata": LP_PREFIX + "DatasetListMetadata",
   "Facet": LP_PREFIX + "Facet",
   "facet": LP_PREFIX + "facet",
+  "keyword": LP_PREFIX + "keyword",
+  "format": LP_PREFIX + "format",
+  "publisher": LP_PREFIX + "publisher",
+  "theme": LP_PREFIX + "theme",
+  "code": LP_PREFIX + "code",
 };
+
+const FEL_PREFIX = "http://onto.fel.cvut.cz/ontologies/slovnik/agendovy/popis-dat/pojem/";
+export const FEL = {
+  "jePojmemZeSlovniku": FEL_PREFIX + "je-pojmem-ze-slovniku",
+};
+

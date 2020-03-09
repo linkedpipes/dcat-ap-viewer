@@ -8,13 +8,14 @@ import {
   fetchLabels,
   ELEMENT_PUBLISHER_LIST,
   register,
-} from "../../../client/app/component-api";
-import {formatNumber} from "../utils";
+} from "../../../../client/app/component-api";
+import {formatNumber} from "../../utils";
 import PublisherListItem from "./publisher-list-item";
 import {
   fetchQualityPublisherList,
   selectExceptionalPublishers,
-} from "../../../client/quality/publisher/list";
+} from "../../../../client/quality/publisher";
+import withStatus from "../../user-iterface/status";
 
 class PublisherList extends React.PureComponent {
 
@@ -69,5 +70,5 @@ register({
   }), (dispatch) => ({
     "fetchLabels": (iris) => dispatch(fetchLabels(iris)),
     "fetchQuality": () => dispatch(fetchQualityPublisherList()),
-  }))(PublisherList),
+  }))(withStatus(PublisherList)),
 });

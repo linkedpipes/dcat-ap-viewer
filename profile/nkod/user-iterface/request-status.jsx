@@ -1,0 +1,25 @@
+import React from "react";
+import {PropTypes} from "prop-types";
+
+export function RequestStatus({failed}) {
+  return (
+    <div
+      style={{"textAlign": "center", "fontSize": "2em", "marginTop": "3REM"}}
+    >
+      {getMessage(t, failed)}
+    </div>
+  );
+}
+
+RequestStatus.propTypes = {
+  "t": PropTypes.func,
+  "failed": PropTypes.string,
+};
+
+function getMessage(t, failed) {
+  if (failed) {
+    return t("http.error_response");
+  } else {
+    return t("http.fetching");
+  }
+}

@@ -6,15 +6,10 @@ module.exports = {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
   },
   "modulePaths": [
-    "<rootDir>/client/",
+    "./client/",
   ],
   "transform": {
     "^.+\\.tsx?$": "ts-jest",
     ".*": "babel-jest",
   },
-  "roots" : [
-    "<rootDir>/client/",
-    "<rootDir>/test/",
-  ],
 };
-
