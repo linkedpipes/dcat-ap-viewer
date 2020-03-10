@@ -6,7 +6,7 @@ import {
   PUBLISHER_LIST_MOUNT,
   PUBLISHER_LIST_UNMOUNT,
 } from "./publisher-list-action";
-import {jsonLdToPublisherList} from "./jsonld-to-Publisher-list";
+import {jsonLdToPublisherList} from "./jsonld-to-publisher-list";
 
 const NAME = "publisher-list";
 
