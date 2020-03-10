@@ -267,7 +267,7 @@ export function fetchLanguage(language: string) {
       "type": FETCH_LANGUAGE,
       "language": language,
     });
-    fetchJson("./assets/i18/" + language + ".json")
+    fetchJson("./assets/" + language + ".json")
       .then((response) => {
         dispatch({
           "type": FETCH_LANGUAGE_SUCCESS,

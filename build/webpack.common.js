@@ -51,16 +51,3 @@ module.exports = {
     }),
   ],
 };
-
-console.log("CONFIG", {
-  "DEF_PAGE_TITLE_PREFIX":
-    JSON.stringify(configuration.client.title.prefix),
-  "DEF_PAGE_TITLE_SUFFIX":
-    JSON.stringify(configuration.client.title.suffix),
-  "DEF_FORM_URL":
-    JSON.stringify(configuration.client.form_url),
-  "DEF_URL_BASE":
-    JSON.stringify(configuration.client.url.base),
-  "DEF_DEREFERENCE_PREFIX":
-    JSON.stringify(configuration.client.url.subdirectory),
-});

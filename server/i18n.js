@@ -10,7 +10,6 @@ module.exports = {
   "loadTranslationFiles": loadTranslationFiles
 };
 
-// TODO Load translations from the profile.
 function loadTranslationFiles() {
 
   const translations = {

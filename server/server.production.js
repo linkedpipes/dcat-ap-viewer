@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const configuration = require("./server-configuration");
+const config = require("./server-configuration");
 
 const httpApi = require("./http-api");
 
@@ -9,7 +9,7 @@ const httpApi = require("./http-api");
  */
 (function main() {
   const app = express();
-  if (configuration.serve_static_content) {
+  if (config.serve_static_content) {
     initializeStatic(app, express);
   }
   httpApi.initializeHttpApi(app);
@@ -24,7 +24,7 @@ function initializeStatic(app, express) {
 }
 
 function start(app) {
-  const port = configuration["port"];
+  const port = config["port"];
   app.listen(port, function onStart(error) {
     if (error) {
       console.error(error);

@@ -6,6 +6,29 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const common = Object.assign({}, require("./webpack.common"));
+const fs = require("fs");
+
+const i18n = require("../server/i18n");
+
+class BuildI18Files {
+  apply(compiler) {
+    compiler.hooks.afterEmit.tap(
+      "Prepare i18 files.",
+      () => buildI18Files())
+  }
+}
+
+function buildI18Files() {
+  const files = i18n.loadTranslationFiles();
+  Object.keys(files)
+    .filter(key => key !== "navigation")
+    .forEach(language => {
+      const data = files[language];
+      const filePath = path.join(
+        common.output.path, "assets", language + ".json");
+      fs.writeFileSync(filePath, JSON.stringify(data));
+    });
+}
 
 module.exports = merge(common, {
   "mode": "production",
@@ -58,6 +81,6 @@ module.exports = merge(common, {
       "from": path.join(__dirname, "..", "public", "assets"),
       "to": path.join(__dirname, "..", "dist", "assets"),
     }]),
+    new BuildI18Files(),
   ],
 });
-

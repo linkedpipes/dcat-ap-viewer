@@ -31,7 +31,7 @@ function initializeStatic(app) {
 }
 
 function initializeI18nFiles(app) {
-  app.get("/assets/i18/:file", (req, res) => {
+  app.get("/assets/:file", (req, res) => {
     const reqFile = req.params.file;
     const files = i18n.loadTranslationFiles();
     const language = reqFile.substr(0, reqFile.lastIndexOf("."));
