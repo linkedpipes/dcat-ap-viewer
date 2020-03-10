@@ -16,6 +16,7 @@ nb-configuration.xml
 node_modules/
 dist/
 *.log
+*.d.ts
 
 # All files/directiries starting with dot.
 .*
