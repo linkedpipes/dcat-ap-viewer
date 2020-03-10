@@ -13,15 +13,22 @@ const httpApi = require("./http-api");
     initializeStatic(app, express);
   }
   httpApi.initializeHttpApi(app);
+  if (config.serve_static_content) {
+    initializeStaticFallback(app, express);
+  }
   start(app);
 })();
 
 function initializeStatic(app, express) {
   app.use(express.static(path.join(__dirname, "..", "dist")));
+}
+
+function initializeStaticFallback(app, express) {
   app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "dist", "index.html"));
   });
 }
+
 
 function start(app) {
   const port = config["port"];

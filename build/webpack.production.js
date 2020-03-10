@@ -7,6 +7,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const common = Object.assign({}, require("./webpack.common"));
 const fs = require("fs");
+const config = require("../configuration");
 
 const i18n = require("../server/i18n");
 
@@ -80,6 +81,10 @@ module.exports = merge(common, {
     new CopyWebpackPlugin([{
       "from": path.join(__dirname, "..", "public", "assets"),
       "to": path.join(__dirname, "..", "dist", "assets"),
+    }, {
+      "from": path.join(
+        __dirname, "..", "profile", config.client.profile, "assets"),
+      "to": path.join(__dirname, "..", "public", "assets"),
     }]),
     new BuildI18Files(),
   ],

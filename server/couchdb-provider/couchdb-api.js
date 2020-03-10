@@ -12,7 +12,7 @@ function executeCouchDBGet(configuration, dataset, id) {
   return new Promise((resolve, reject) => {
     request({"url": url}, (error, response, body) => {
       if (!isResponseOk(response, error)) {
-        reject(new ApiError(error, "Can't query endpoint."));
+        reject(new ApiError(error, "Bad response from couchdb."));
       }
       try {
         return resolve(JSON.parse(body));
