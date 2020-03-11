@@ -13,14 +13,15 @@ import {
   fetchLabels,
   selectT,
   getGlobal,
+  register,
+  PAGE_SIZE_DEFAULT,
 } from "../../../client-api";
 import TagLine from "../../user-iterface/tag-line";
 import Paginator from "../../user-iterface/paginator";
 import DatasetsViewHeader from "./datasets-view-header";
+import {DATASET_LIST_DATASET_VIEW} from "../../nkod-component-names";
 
-export const DEFAULT_PAGE_SIZE = getGlobal("page-size-default");
-
-const PAGE_SIZES = [DEFAULT_PAGE_SIZE, 20, 40, 80];
+const PAGE_SIZES = [getGlobal(PAGE_SIZE_DEFAULT), 20, 40, 80];
 
 function DatasetsView(props) {
   return (
@@ -75,14 +76,17 @@ DatasetsView.propTypes = {
   "query": PropTypes.object.isRequired,
 };
 
-export default connect((state) => ({
-  "t": selectT(state),
-  "tLabel": selectTLabel(state),
-  "tUrl": selectTUrl(state),
-  "tLiteral": selectTLiteral(state),
-}), (dispatch) => ({
-  "fetchLabels": (iris) => dispatch(fetchLabels(iris)),
-}))(DatasetsView);
+register({
+  "name": DATASET_LIST_DATASET_VIEW,
+  "element": connect((state) => ({
+    "t": selectT(state),
+    "tLabel": selectTLabel(state),
+    "tUrl": selectTUrl(state),
+    "tLiteral": selectTLiteral(state),
+  }), (dispatch) => ({
+    "fetchLabels": (iris) => dispatch(fetchLabels(iris)),
+  }))(DatasetsView),
+});
 
 function DatasetListItem(
   {tLabel, tLiteral, tUrl, showPublisher, dataset, fetchLabels}) {

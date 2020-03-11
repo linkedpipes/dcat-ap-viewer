@@ -7,7 +7,7 @@ import {
   register,
   ELEMENT_PAGE_NOT_FOUND,
   ELEMENT_DATASET_LIST,
-} from "./../../../client/app/component-api";
+} from "./../../client-api";
 import {PropTypes} from "prop-types";
 import {connect} from "react-redux";
 

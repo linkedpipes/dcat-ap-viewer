@@ -5,11 +5,13 @@ import {
   URL_DATASET_LIST,
   QUERY_DATASET_LIST_KEYWORD,
 } from "../../../client-api";
+import {register} from "../../../client-api";
+import {DATASET_DETAIL_KEYWORDS} from "../../nkod-component-names";
 
 /**
  * Show all keywords in given language.
  */
-export default function Keywords({t, tUrl, keywords, language}) {
+function Keywords({t, tUrl, keywords, language}) {
   const filteredKeywords = keywords
     .filter(item => item[language])
     .map(item => item[language]);
@@ -40,3 +42,8 @@ Keywords.propTypes = {
   "keywords": PropTypes.array.isRequired,
   "language": PropTypes.string.isRequired,
 };
+
+register({
+  "name": DATASET_DETAIL_KEYWORDS,
+  "element": Keywords,
+});

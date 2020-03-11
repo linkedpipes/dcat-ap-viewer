@@ -6,10 +6,11 @@ import {
   URL_DATASET_LIST,
   QUERY_DATASET_LIST_THEME,
 } from "../../../client-api";
+import {register} from "../../../client-api";
+import {DATASET_DETAIL_PROPERTIES} from "../../nkod-component-names";
 
-export default function Properties(
-  {t, tLabel, tUrl, dataset, quality, openModal}) {
-  //
+
+function Properties({t, tLabel, tUrl, dataset, quality, openModal}) {
   return (
     <div className="row">
       {firstColumn(t, tLabel, tUrl, dataset)}
@@ -28,6 +29,11 @@ Properties.propTypes = {
   "quality": PropTypes.object,
   "openModal": PropTypes.func.isRequired,
 };
+
+register({
+  "name": DATASET_DETAIL_PROPERTIES,
+  "element": Properties,
+});
 
 function firstColumn(t, tLabel, tUrl, dataset) {
   const hasThemes = isNotEmpty(dataset.themes);

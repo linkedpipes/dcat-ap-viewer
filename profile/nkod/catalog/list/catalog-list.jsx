@@ -7,31 +7,35 @@ import {
   ELEMENT_CATALOG_LIST,
   register,
   selectLanguage,
+  getRegisteredElement,
 } from "../../../client-api";
-import CatalogListItem from "./catalog-list-item";
 import {formatNumber} from "../../utils";
 import {PropTypes} from "prop-types";
 import withStatus from "../../user-iterface/status";
+import {CATALOG_LIST_ITEM} from "../../nkod-component-names";
 
-const CatalogList = ({catalogs, t, tLabel, fetchLabels, language}) => (
-  <div className="container p-3">
-    <h4>
-      {formatNumber(catalogs.length)}&nbsp;{t("catalogs_found")}
-    </h4>
-    <hr/>
-    <div className="row">
-      {catalogs.map((catalog) => (
-        <CatalogListItem
-          key={catalog.iri}
-          tLabel={tLabel}
-          fetchLabels={fetchLabels}
-          catalog={catalog}
-          language={language}
-        />
-      ))}
+function CatalogList({catalogs, t, tLabel, fetchLabels, language}) {
+  const CatalogListItem = getRegisteredElement(CATALOG_LIST_ITEM);
+  return (
+    <div className="container p-3">
+      <h4>
+        {formatNumber(catalogs.length)}&nbsp;{t("catalogs_found")}
+      </h4>
+      <hr/>
+      <div className="row">
+        {catalogs.map((catalog) => (
+          <CatalogListItem
+            key={catalog.iri}
+            tLabel={tLabel}
+            fetchLabels={fetchLabels}
+            catalog={catalog}
+            language={language}
+          />
+        ))}
+      </div>
     </div>
-  </div>
-);
+  )
+}
 
 CatalogList.propTypes = {
   "catalogs": PropTypes.arrayOf(PropTypes.object).isRequired,

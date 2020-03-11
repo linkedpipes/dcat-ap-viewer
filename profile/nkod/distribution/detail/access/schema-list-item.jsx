@@ -1,8 +1,9 @@
 import React from "react";
-import {Spinner} from "reactstrap";
 import {PropTypes} from "prop-types";
+import QualitySchemaIcon from "../quality/quality-schema-icon";
 
-export default function SchemaListItem({t, tLiteral, distribution, openModal}) {
+export default function SchemaListItem(
+  {t, tLiteral, distribution, quality, openModal}) {
   if (distribution.conformsTo.length === 0) {
     return null;
   }
@@ -16,7 +17,12 @@ export default function SchemaListItem({t, tLiteral, distribution, openModal}) {
       >
         {t("schema")}
       </a>
-      {qualityIcon(t, tLiteral, distribution, openModal)}
+      <QualitySchemaIcon
+        t={t}
+        tLiteral={tLiteral}
+        openModal={openModal}
+        quality={quality}
+      />
     </li>
   )
 }
@@ -27,43 +33,5 @@ SchemaListItem.propTypes = {
   "tLiteral": PropTypes.func.isRequired,
   "openModal": PropTypes.func.isRequired,
   "distribution": PropTypes.object.isRequired,
+  "quality": PropTypes.object,
 };
-
-function qualityIcon(t, tLiteral, distribution, openModal) {
-  if (!distribution.quality) {
-    return null;
-  }
-  if (!distribution.quality.ready) {
-    return (
-      <Spinner size="sm" color="secondary" className="float-right"/>
-    )
-  }
-  if (distribution.quality.schema === null) {
-    return null;
-  }
-  const strArgs = {
-    "date": distribution.quality.schemaLastCheck,
-    "note": tLiteral(distribution.quality.schemaNote),
-  };
-  if (distribution.quality.schema) {
-    return (
-      <i
-        className="material-icons text-success float-right"
-        title={t("schema_available", strArgs)}
-        onClick={() => openModal(t("schema_available", strArgs))}
-      >
-        verified_user
-      </i>
-    )
-  } else {
-    return (
-      <i
-        className="material-icons text-danger float-right"
-        title={t("schema_unavailable", strArgs)}
-        onClick={() => openModal(t("schema_unavailable", strArgs))}
-      >
-        link_off
-      </i>
-    )
-  }
-}

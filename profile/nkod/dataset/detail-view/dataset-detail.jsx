@@ -2,14 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import {PropTypes} from "prop-types";
 import {register} from "../../../../client/app/register";
-import {
-  ELEMENT_DATASET_DETAIL,
-  QUERY_DATASET_LIST_PUBLISHER,
-  URL_DATASET_LIST,
-} from "../../../../client/app/component-list";
 import {connect} from "react-redux";
-import Keywords from "./keywords";
-import Properties from "./properies";
 import {
   fetchLabels,
   selectT,
@@ -18,35 +11,42 @@ import {
   selectTLiteral,
   getGlobal,
   selectLanguage,
+  getRegisteredElement,
   showModal,
+  QUERY_DATASET_LIST_PUBLISHER,
+  URL_DATASET_LIST,
+  ELEMENT_DATASET_DETAIL,
 } from "../../../client-api";
 import {
   fetchQualityDataset,
   selectDatasetQuality,
 } from "../../../../client/quality/dataset";
-import {DistributionList} from "../../../../client/distribution/list/index";
 import withStatus from "../../user-iterface/status";
-import {NKOD} from "../../../../client/vocabulary/vocabulary";
-import {
-  getFormLink,
-  DATASET_EDIT,
-  DATASET_DELETE,
-  CATALOG_DELETE,
-} from "../../../../client/form";
 import {selectFormData} from "../../../../client/form/dataset";
+import {
+  DATASET_DETAIL_FORM_LINKS,
+  DATASET_DETAIL_KEYWORDS,
+  DATASET_DETAIL_PROPERTIES,
+} from "../../nkod-component-names";
+// TODO Find out how to make this accessible.
+import {DistributionList} from "../../../../client/distribution/list";
 
 class DatasetView extends React.PureComponent {
 
-  componentDidMount() {
-    this.props.fetchQuality(this.props.dataset.iri);
+  constructor(props) {
+    super(props);
+    this.FormLinks = getRegisteredElement(DATASET_DETAIL_FORM_LINKS);
+    this.Keywords = getRegisteredElement(DATASET_DETAIL_KEYWORDS);
+    this.Properties = getRegisteredElement(DATASET_DETAIL_PROPERTIES);
   }
 
-  render() {
-    const {
-      t, tUrl, tLabel, tLiteral, dataset, quality,
-      language, openModal, fetchLabels, form,
-    } = this.props;
-    // TODO Optimize and write best-practice where to put.
+  componentDidMount() {
+    this.fetchRelatedData();
+  }
+
+  fetchRelatedData() {
+    this.props.fetchQuality(this.props.dataset.iri);
+    const {dataset, fetchLabels} = this.props;
     const toFetch = [
       dataset.publisher,
       ...asArray(dataset.frequency),
@@ -55,11 +55,21 @@ class DatasetView extends React.PureComponent {
       ...asArray(dataset.datasetThemes),
     ];
     fetchLabels(toFetch);
-    // TODO <SemanticRelatedDatasets dataset={dataset["@id"]}/>
-    // TODO <SemanticTermsDatasets dataset={dataset["@id"]}/>
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.dataset !== prevProps.dataset) {
+      this.fetchRelatedData();
+    }
+  }
+
+  render() {
+    const {
+      t, tUrl, tLabel, tLiteral, dataset, quality,
+      language, openModal, form,
+    } = this.props;
     const link = (getGlobal("dereference-iri-prefix") || "") + dataset.iri;
-    const datasetListUrl = tUrl(URL_DATASET_LIST,
-      {[QUERY_DATASET_LIST_PUBLISHER]: dataset.publisher});
+    const {FormLinks, Keywords, Properties} = this;
     return (
       <div className="container">
         <h1>
@@ -71,11 +81,15 @@ class DatasetView extends React.PureComponent {
           >
             <i className="material-icons pl-2">open_in_new</i>
           </a>
-          {dialogLinks(dataset, t, form, language)}
+          <FormLinks
+            t={t}
+            form={form}
+            dataset={dataset}
+            language={language}
+          />
         </h1>
         <h2>
-          {/* TODO Update link to search. */}
-          <Link to={datasetListUrl}>
+          <Link to={this.getPublisherSearchLink()}>
             {tLabel(dataset.publisher)}
           </Link>
         </h2>
@@ -99,6 +113,11 @@ class DatasetView extends React.PureComponent {
         <DistributionList/>
       </div>
     )
+  }
+
+  getPublisherSearchLink() {
+    return this.props.tUrl(URL_DATASET_LIST,
+      {[QUERY_DATASET_LIST_PUBLISHER]: this.props.dataset.publisher});
   }
 
 }
@@ -133,57 +152,6 @@ register({
     "openModal": (body) => dispatch(showModal(undefined, body)),
   }))(withStatus(DatasetView)),
 });
-
-function dialogLinks(dataset, t, form, language) {
-  const isFromForm = dataset["@type"].includes(NKOD.SourceForm);
-  const isFromLkod =
-    dataset["@type"].includes(NKOD.SourceCkan) ||
-    dataset["@type"].includes(NKOD.SourceDcat) ||
-    dataset["@type"].includes(NKOD.SourceSparql);
-  const actionStyle = {"color": "grey"};
-  if (isFromForm) {
-    return (
-      <span>
-        <a
-          href={getFormLink(language, DATASET_EDIT, dataset.iri)}
-          title={t("edit_dataset")}
-          target="_blank"
-          rel="nofollow noopener noreferrer"
-        >
-          <i className="material-icons pl-2" style={actionStyle}>
-            edit
-          </i>
-        </a>
-        <a
-          href={getFormLink(language, DATASET_DELETE, dataset.iri)}
-          title={t("delete_dataset")}
-          target="_blank"
-          rel="nofollow noopener noreferrer"
-        >
-          <i className="material-icons pl-2" style={actionStyle}>
-            delete_forever
-          </i>
-        </a>
-      </span>
-    )
-  } else if (isFromLkod) {
-    return (
-      <span>
-        <a
-          href={getFormLink(language, CATALOG_DELETE, form["lkod"])}
-          title={t("delete_catalog")}
-          target="_blank"
-          rel="nofollow noopener noreferrer"
-        >
-          <i className="material-icons pl-2" style={actionStyle}>
-            delete_forever
-          </i>
-        </a>
-      </span>
-    )
-  }
-  return null;
-}
 
 function asArray(value) {
   if (value === undefined) {

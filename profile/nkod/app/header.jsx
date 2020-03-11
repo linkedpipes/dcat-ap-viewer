@@ -15,10 +15,11 @@ import {
 } from "reactstrap";
 import {
   register,
+  getRegisteredElement,
   ELEMENT_HEADER,
-} from "./../../../client/app/component-api";
+} from "./../../client-api";
+import {LANGUAGE_SELECTOR} from "../nkod-component-names";
 import {NavLink as RouterLink} from "react-router-dom";
-import LanguageSelector from "./language-selector";
 import {PropTypes} from "prop-types";
 
 class Header extends React.Component {
@@ -31,6 +32,7 @@ class Header extends React.Component {
       "isOpen": false,
       "isMoreOpen": false,
     };
+    this.LanguageSelector = getRegisteredElement(LANGUAGE_SELECTOR);
   }
 
   toggleNavbar() {
@@ -47,6 +49,7 @@ class Header extends React.Component {
 
   render() {
     const {t, tUrl} = this.props;
+    const LanguageSelector = this.LanguageSelector;
     return (
       <Container>
         <Navbar expand="md" className="navbar-light">
@@ -71,7 +74,6 @@ class Header extends React.Component {
                   to={tUrl("/datasets")}
                   className="nav-link"
                   activeClassName="active"
-                  // isActive={isDatasetActive}
                 >
                   {t("datasets")}
                 </RouterLink>
@@ -137,7 +139,6 @@ class Header extends React.Component {
       </Container>
     )
   }
-
 }
 
 Header.propTypes = {
@@ -146,15 +147,6 @@ Header.propTypes = {
   "language": PropTypes.string,
   "location": PropTypes.object.isRequired,
 };
-
-// function isDatasetActive(match, location) {
-//   if (match) {
-//     return true;
-//   }
-//   // const rootPath = URL_PREFIX + "/";
-//   const rootPath = "/";
-//   return location.pathname === rootPath;
-// }
 
 register({
   "name": ELEMENT_HEADER,

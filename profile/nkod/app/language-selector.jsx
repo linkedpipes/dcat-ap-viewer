@@ -8,9 +8,10 @@ import {
   NavLink,
 } from "reactstrap";
 import {PropTypes} from "prop-types";
-import {getAllLanguages} from "../../../client/app/navigation";
+import {getAllLanguages, register} from "../../client-api";
+import {LANGUAGE_SELECTOR} from "../nkod-component-names";
 
-export default class LanguageSelector extends React.PureComponent {
+class LanguageSelector extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -59,6 +60,11 @@ LanguageSelector.propTypes = {
   "location": PropTypes.object.isRequired,
   "language": PropTypes.string.isRequired,
 };
+
+register({
+  "name": LANGUAGE_SELECTOR,
+  "element": LanguageSelector,
+});
 
 function createBaseUrl(location) {
   let search = location.search;

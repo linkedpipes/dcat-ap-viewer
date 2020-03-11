@@ -3,8 +3,9 @@ import React from "react";
 import {
   getFormLink,
   CATALOG_DELETE,
-} from "../../../../client/form/dataset";
-import {getGlobal} from "../../../client-api";
+} from "../../../../client/form";
+import {getGlobal, register} from "../../../client-api";
+import {CATALOG_LIST_ITEM} from "../../nkod-component-names";
 
 function CatalogListItem({catalog, tLabel, fetchLabels, language}) {
   fetchLabels([catalog.publisher, catalog.contact]);
@@ -100,4 +101,7 @@ CatalogListItem.propTypes = {
   "language": PropTypes.string.isRequired,
 };
 
-export default CatalogListItem;
+register({
+  "name": CATALOG_LIST_ITEM,
+  "element": CatalogListItem,
+});

@@ -1,9 +1,10 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import {QUERY_DATASET_LIST_KEYWORD} from "../../../client-api";
+import {QUERY_DATASET_LIST_KEYWORD, register} from "../../../client-api";
 import FacetView from "../../user-iterface/facet-view";
+import {DATASET_LIST_KEYWORD_VIEW} from "../../nkod-component-names";
 
-export default function KeywordContainer(
+function KeywordContainer(
   {keywords, onToggleFacet, onFetchMoreFacets}) {
   //
   return (
@@ -20,3 +21,8 @@ KeywordContainer.propTypes = {
   "onToggleFacet": PropTypes.func.isRequired,
   "onFetchMoreFacets": PropTypes.func.isRequired,
 };
+
+register({
+  "name": DATASET_LIST_KEYWORD_VIEW,
+  "element": KeywordContainer,
+});

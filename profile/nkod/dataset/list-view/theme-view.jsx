@@ -1,10 +1,10 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import {QUERY_DATASET_LIST_THEME} from "../../../client-api";
+import {QUERY_DATASET_LIST_THEME, register} from "../../../client-api";
 import FacetView from "../../user-iterface/facet-view";
+import {DATASET_LIST_THEME_VIEW} from "../../nkod-component-names";
 
-export default function ThemeContainer(
-  {themes, onToggleFacet, onFetchMoreFacets}) {
+function ThemeContainer({themes, onToggleFacet, onFetchMoreFacets}) {
   //
   return (
     <FacetView
@@ -20,3 +20,7 @@ ThemeContainer.propTypes = {
   "onToggleFacet": PropTypes.func.isRequired,
   "onFetchMoreFacets": PropTypes.func.isRequired,
 };
+register({
+  "name": DATASET_LIST_THEME_VIEW,
+  "element": ThemeContainer,
+});

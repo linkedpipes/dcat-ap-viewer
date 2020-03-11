@@ -153,6 +153,7 @@ function accessColumn(t, tLabel, tLiteral, dataService, quality, openModal) {
           tLabel={tLabel}
           tLiteral={tLiteral}
           distribution={dataService}
+          quality={quality}
           openModal={openModal}/>
         <MediaTypeItem
           t={t}

@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import {PropTypes} from "prop-types";
 import {ListGroup, ListGroupItem} from "reactstrap";
 import {formatNumber} from "../../utils";
+import {register} from "../../../client-api";
+import {DATASET_LIST_FACET_FILTER} from "../../nkod-component-names";
 
 const DEFAULT_VISIBLE_COUNT = 7;
 
@@ -17,7 +19,7 @@ const SHOW_MORE_STEP = 10;
  * If more elements are required and the facet is later set to default size
  * and re-expanded again, the already available data are fetched.
  */
-export default function FacetFilter(props) {
+function FacetFilter(props) {
   const [visibleCount, setVisibleCount] = useState(DEFAULT_VISIBLE_COUNT);
   // We allays show all selected first.
   let visible = [
@@ -114,6 +116,11 @@ FacetFilter.propTypes = {
   "fetchLabels": PropTypes.func.isRequired,
   "fetchLabelsFromRemote": PropTypes.bool,
 };
+
+register({
+  "name": DATASET_LIST_FACET_FILTER,
+  "element": FacetFilter,
+});
 
 function selectSubArray(array, size, ignore) {
   const filtered = array.filter(item => !ignore.includes(item));

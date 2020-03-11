@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React from "react";
 import {connect} from "react-redux";
-import {Button, Col, Container, Row} from "reactstrap";
+import {Col, Container, Row} from "reactstrap";
 import {
   ELEMENT_DATASET_LIST,
   register,
@@ -9,23 +9,23 @@ import {
   selectQuery,
   QUERY_DATASET_LIST_VIEW,
   QUERY_DATASET_LIST_PUBLISHER,
-  QUERY_DATASET_LIST_THEME,
-  QUERY_DATASET_LIST_KEYWORD,
-  QUERY_DATASET_LIST_FORMAT,
   QUERY_DATASET_LIST_PAGE,
-  QUERY_DATASET_LIST_PAGE_SIZE, getGlobal,
+  QUERY_DATASET_LIST_PAGE_SIZE,
+  getGlobal,
+  getRegisteredElement,
+  PAGE_SIZE_DEFAULT,
 } from "../../../client-api";
 import {PropTypes} from "prop-types";
-import DatasetsView, {DEFAULT_PAGE_SIZE} from "./datasets-view";
-import FacetFilter from "./facet-filter";
-import QueryElement from "./query-element";
-import KeywordView from "./keyword-view";
-import ThemeView from "./theme-view";
 import {Status} from "../../user-iterface/status";
+import {
+  DATASET_LIST_DATASET_VIEW,
+  DATASET_LIST_FACET_FILTERS,
+  DATASET_LIST_KEYWORD_VIEW,
+  DATASET_LIST_THEME_VIEW,
+} from "../../nkod-component-names";
+import QueryElement from "./query-element";
 
 function DatasetList(props) {
-  const [facetsOpen, setFacetsOpen] = useState(false);
-
   if (props.error > 0 || !props.ready) {
     // TODO Use only for initial data loading !
     return (
@@ -33,8 +33,7 @@ function DatasetList(props) {
     )
   }
 
-  const facetClassName = "collapse-sm-down" + (facetsOpen ? " show" : "");
-  const FacetContainer = props.facetContainer;
+  const FacetFilters = getRegisteredElement(DATASET_LIST_FACET_FILTERS);
   const QueryInputContainer = props.queryInputContainer;
   const ViewContainer = props.viewContainer;
 
@@ -50,59 +49,14 @@ function DatasetList(props) {
     })
   };
 
-  const selectKeywordId = (item) => item.code;
-
   return (
     <Container>
       <Row>
-        <Col xs={12} md={3}>
-          <div className="d-sm-none">
-            <Button
-              onClick={() => setFacetsOpen(!facetsOpen)}
-              style={{"margin": "1em"}}
-            >
-              {props.t(facetsOpen ? "facet.hide" : "facet.show")}
-            </Button>
-          </div>
-          <div className={facetClassName}>
-            <FacetContainer
-              group={QUERY_DATASET_LIST_PUBLISHER}
-              component = {FacetFilter}
-              t={props.t}
-              label="publishers"
-              getFacetLabel={(item) => props.tLabel(item.iri)}
-              fetchLabelsFromRemote={true}
-            >
-            </FacetContainer>
-            <FacetContainer
-              group={QUERY_DATASET_LIST_THEME}
-              component = {FacetFilter}
-              t={props.t}
-              label="themes"
-              getFacetLabel={(item) => props.tLabel(item.iri)}
-              fetchLabelsFromRemote={true}
-            >
-            </FacetContainer>
-            <FacetContainer
-              group={QUERY_DATASET_LIST_KEYWORD}
-              component = {FacetFilter}
-              t={props.t}
-              label="keywords"
-              getFacetLabel={selectKeywordId}
-              getFacetId={selectKeywordId}
-            >
-            </FacetContainer>
-            <FacetContainer
-              group={QUERY_DATASET_LIST_FORMAT}
-              component = {FacetFilter}
-              t={props.t}
-              label="formats"
-              getFacetLabel={(item) => props.tLabel(item.iri)}
-              fetchLabelsFromRemote={true}
-            >
-            </FacetContainer>
-          </div>
-        </Col>
+        <FacetFilters
+          t={props.t}
+          tLabel={props.tLabel}
+          facetContainer={props.facetContainer}
+        />
         <Col xs={12} md={9}>
           <div className="m-md-1">
             <QueryInputContainer>
@@ -146,6 +100,10 @@ register({
 });
 
 function ActiveView(props) {
+  const DatasetsView = getRegisteredElement(DATASET_LIST_DATASET_VIEW);
+  const KeywordView = getRegisteredElement(DATASET_LIST_KEYWORD_VIEW);
+  const ThemeView = getRegisteredElement(DATASET_LIST_THEME_VIEW);
+  //
   const view = props.query[QUERY_DATASET_LIST_VIEW] ?
     parseInt(props.query[QUERY_DATASET_LIST_VIEW][0]) : 0;
   switch (view) {
@@ -197,8 +155,9 @@ function getPage(query) {
 }
 
 function getPageSize(query) {
+  const defaultPageSize = getGlobal(PAGE_SIZE_DEFAULT);
   return query[QUERY_DATASET_LIST_PAGE_SIZE] ?
-    parseInt(query[QUERY_DATASET_LIST_PAGE_SIZE][0]) : DEFAULT_PAGE_SIZE;
+    parseInt(query[QUERY_DATASET_LIST_PAGE_SIZE][0]) : defaultPageSize;
 }
 
 function onUpdatePage(page, action) {
@@ -213,7 +172,8 @@ function onUpdatePage(page, action) {
 
 function onUpdatePageSize(pageSize, action) {
   // Hyde default values.
-  if (pageSize === DEFAULT_PAGE_SIZE) {
+  const defaultPageSize = getGlobal(PAGE_SIZE_DEFAULT);
+  if (pageSize === defaultPageSize) {
     action(undefined);
   } else {
     action(pageSize);

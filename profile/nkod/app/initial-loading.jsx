@@ -3,7 +3,7 @@ import {Container} from "reactstrap";
 import {
   register,
   ELEMENT_INITIAL_LOADING,
-} from "./../../../client/app/component-api";
+} from "./../../client-api";
 import {PropTypes} from "prop-types";
 
 // In this component no translation is loaded, so we need
