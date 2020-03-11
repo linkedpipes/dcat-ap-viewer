@@ -65,40 +65,41 @@ function DatasetList(props) {
             </Button>
           </div>
           <div className={facetClassName}>
-            <FacetContainer group={QUERY_DATASET_LIST_PUBLISHER}>
-              <FacetFilter
-                t={props.t}
-                label="publishers"
-                getFacetLabel={(item) => props.tLabel(item.iri)}
-                fetchLabelsFromRemote={true}
-              />
+            <FacetContainer
+              group={QUERY_DATASET_LIST_PUBLISHER}
+              component = {FacetFilter}
+              t={props.t}
+              label="publishers"
+              getFacetLabel={(item) => props.tLabel(item.iri)}
+              fetchLabelsFromRemote={true}
+            >
             </FacetContainer>
-            <FacetContainer group={QUERY_DATASET_LIST_THEME}>
-              <FacetFilter
-                t={props.t}
-                label="themes"
-                getFacetLabel={(item) => props.tLabel(item.iri)}
-                fetchLabelsFromRemote={true}
-              />
+            <FacetContainer
+              group={QUERY_DATASET_LIST_THEME}
+              component = {FacetFilter}
+              t={props.t}
+              label="themes"
+              getFacetLabel={(item) => props.tLabel(item.iri)}
+              fetchLabelsFromRemote={true}
+            >
             </FacetContainer>
             <FacetContainer
               group={QUERY_DATASET_LIST_KEYWORD}
+              component = {FacetFilter}
+              t={props.t}
+              label="keywords"
+              getFacetLabel={selectKeywordId}
               getFacetId={selectKeywordId}
             >
-              <FacetFilter
-                t={props.t}
-                label="keywords"
-                getFacetLabel={selectKeywordId}
-                getFacetId={selectKeywordId}
-              />
             </FacetContainer>
-            <FacetContainer group={QUERY_DATASET_LIST_FORMAT}>
-              <FacetFilter
-                t={props.t}
-                label="formats"
-                getFacetLabel={(item) => props.tLabel(item.iri)}
-                fetchLabelsFromRemote={true}
-              />
+            <FacetContainer
+              group={QUERY_DATASET_LIST_FORMAT}
+              component = {FacetFilter}
+              t={props.t}
+              label="formats"
+              getFacetLabel={(item) => props.tLabel(item.iri)}
+              fetchLabelsFromRemote={true}
+            >
             </FacetContainer>
           </div>
         </Col>

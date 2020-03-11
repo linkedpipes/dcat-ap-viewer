@@ -11,26 +11,34 @@ function FacetContainer(props) {
   const getFacetId = props.getFacetId || ((item) => item.iri);
   const actives = props.facetData
     .filter(item => query.includes(getFacetId(item)));
-  return React.cloneElement(
-    props.children, {
-      "facets": props.facetData,
-      "fetchMore": props.fetchMore,
-      "isAllFetched": props.isAllFetched,
-      "activeFacets": actives,
-      "onToggleFacet": props.toggle,
-      "fetchLabels": props.fetchLabels,
-    });
+  const Component = props.component;
+  const componentsProps = {
+    "facets": props.facetData,
+    "fetchMore": props.fetchMore,
+    "isAllFetched": props.isAllFetched,
+    "activeFacets": actives,
+    "onToggleFacet": props.toggle,
+    "fetchLabels": props.fetchLabels,
+    ...props,
+    "facetData": undefined,
+    "toggle": undefined,
+    "query": undefined,
+  };
+  return (
+    <Component {...componentsProps}/>
+  );
 }
 
 FacetContainer.propTypes = {
   "group": PropTypes.string.isRequired,
   "facetData": PropTypes.array.isRequired,
-  "children": PropTypes.element.isRequired,
+  "component": PropTypes.func.isRequired,
   "fetchMore": PropTypes.func.isRequired,
   "isAllFetched": PropTypes.bool.isRequired,
   "toggle": PropTypes.func.isRequired,
   "getFacetId": PropTypes.func,
   "fetchLabels": PropTypes.func.isRequired,
+  "query": PropTypes.object.isRequired,
 };
 
 export default connect((state, ownProps) => ({
@@ -39,6 +47,6 @@ export default connect((state, ownProps) => ({
   "query": selectQuery(state),
 }), (dispatch, ownProps) => ({
   "fetchMore": (amount) => dispatch(fetchMoreFacets(ownProps.group, amount)),
-  "toggle": (value) => dispatch(toggleFacet(ownProps.group,value)),
+  "toggle": (value) => dispatch(toggleFacet(ownProps.group, value)),
   "fetchLabels": (values) => dispatch(fetchLabels(values)),
 }))(FacetContainer);
