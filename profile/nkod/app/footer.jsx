@@ -1,10 +1,16 @@
 import React from "react";
-import {register,
+import {
+  register,
   ELEMENT_FOOTER,
 } from "./../../client-api";
 import {PropTypes} from "prop-types";
+import {
+  getFormLink,
+  DATASET_CREATE,
+  CATALOG_CREATE,
+} from "../../../client/form";
 
-function Footer({t}) {
+function Footer({language, t}) {
   return (
     <footer className="footer bg-light py-4 mt-2 border-top">
       <div className="container">
@@ -13,12 +19,12 @@ function Footer({t}) {
             <strong>{t("f_nkod_registration")}</strong>
             <ul>
               <li>
-                <a href={t("f_register_dataset_url")}>
+                <a href={getFormLink(language, DATASET_CREATE)}>
                   {t("f_register_dataset")}
                 </a>
               </li>
               <li>
-                <a href={t("f_register_local_catalog_url")}>
+                <a href={getFormLink(language, CATALOG_CREATE)}>
                   {t("f_register_local_catalog")}
                 </a>
               </li>
@@ -101,6 +107,7 @@ function Footer({t}) {
 }
 
 Footer.propTypes = {
+  "language": PropTypes.string.isRequired,
   "t": PropTypes.func.isRequired,
   "tUrl": PropTypes.func.isRequired,
 };

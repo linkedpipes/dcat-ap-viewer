@@ -46,7 +46,10 @@
       "f_opz_logo_link": "/images/ozp_logo_en.jpg",
       "close": "Close",
       "en": "English",
-      "cs": "Čeština"
+      "cs": "Čeština",
+      "edit_dataset": "Edit dataset",
+      "delete_dataset": "Delete dataset",
+      "delete_catalog": "Delete catalog"
     }
   }
 }

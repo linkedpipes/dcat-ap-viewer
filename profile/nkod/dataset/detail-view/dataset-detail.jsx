@@ -32,7 +32,7 @@ import {
   DATASET_EDIT,
   DATASET_DELETE,
   CATALOG_DELETE,
-} from "../../../../client/form/dataset";
+} from "../../../../client/form";
 import {selectFormData} from "../../../../client/form/dataset";
 
 class DatasetView extends React.PureComponent {
@@ -64,10 +64,14 @@ class DatasetView extends React.PureComponent {
       <div className="container">
         <h1>
           {tLabel(dataset.iri)}
-          <a href={link} target="_blank" rel="noopener noreferrer">
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <i className="material-icons pl-2">open_in_new</i>
           </a>
-          {dialogLinks(dataset, form, language)}
+          {dialogLinks(dataset, t, form, language)}
         </h1>
         <h2>
           {/* TODO Update link to search. */}
@@ -130,7 +134,7 @@ register({
   }))(withStatus(DatasetView)),
 });
 
-function dialogLinks(dataset, form, language) {
+function dialogLinks(dataset, t, form, language) {
   const isFromForm = dataset["@type"].includes(NKOD.SourceForm);
   const isFromLkod =
     dataset["@type"].includes(NKOD.SourceCkan) ||
@@ -142,6 +146,7 @@ function dialogLinks(dataset, form, language) {
       <span>
         <a
           href={getFormLink(language, DATASET_EDIT, dataset.iri)}
+          title={t("edit_dataset")}
           target="_blank"
           rel="nofollow noopener noreferrer"
         >
@@ -151,6 +156,7 @@ function dialogLinks(dataset, form, language) {
         </a>
         <a
           href={getFormLink(language, DATASET_DELETE, dataset.iri)}
+          title={t("delete_dataset")}
           target="_blank"
           rel="nofollow noopener noreferrer"
         >
@@ -165,6 +171,7 @@ function dialogLinks(dataset, form, language) {
       <span>
         <a
           href={getFormLink(language, CATALOG_DELETE, form["lkod"])}
+          title={t("delete_catalog")}
           target="_blank"
           rel="nofollow noopener noreferrer"
         >

@@ -34,7 +34,7 @@ const values: { [key: string]: any } = {
   "dataset-list-sort-default": "title asc",
 };
 
-export function getGlobal<T>(key: string, defaultValue: T): T | undefined {
+export function getGlobal<T>(key: string, defaultValue?: T): T | undefined {
   if (values[key]) {
     return values[key];
   }

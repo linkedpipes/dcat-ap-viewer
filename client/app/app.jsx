@@ -104,6 +104,7 @@ class AppComponent extends React.Component {
           {React.cloneElement(this.props.children, {})}
           <Footer
             t={this.props.t}
+            language={this.props.language}
             tUrl={this.props.tUrl}
           />
           <ModalContainer/>
