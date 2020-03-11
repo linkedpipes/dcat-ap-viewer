@@ -65,6 +65,11 @@ function FacetFilter(props) {
               tag="button"
             >
               {props.getFacetLabel(item)} ({formatNumber(item.count)})
+              { index < props.activeFacets.length &&
+                <i className="material-icons center pl-2">
+                  close
+                </i>
+              }
             </ListGroupItem>
           ))
         }
