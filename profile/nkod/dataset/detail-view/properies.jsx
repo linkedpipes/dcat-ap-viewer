@@ -310,7 +310,7 @@ function documentationLabel(t, dataset, quality, openModal) {
         <Spinner size="sm" color="secondary" className="float-right"/>
       </dt>
     )
-  } else if (quality.documentation === null) {
+  } else if (quality.documentation === undefined) {
     return (
       <dt>
         {t("documentation")}

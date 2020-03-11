@@ -51,7 +51,7 @@ function qualityIcon(t, tLiteral, quality, openModal) {
       <Spinner size="sm" color="secondary" className="float-right"/>
     )
   }
-  if (quality.mediaType === null) {
+  if (quality.mediaType === undefined) {
     return null;
   }
   if (quality.mediaType) {

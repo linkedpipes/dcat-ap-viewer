@@ -6,7 +6,6 @@ import {
   getStrings,
 } from "../../jsonld";
 
-
 export function jsonLdToQualityDistribution(jsonld) {
   const measures = getEntitiesByType(jsonld, DQV.QualityMeasurement);
   const quality = {
@@ -53,7 +52,6 @@ export function jsonLdToQualityDistribution(jsonld) {
         break;
     }
   });
-  console.log()
   return quality;
 }
 

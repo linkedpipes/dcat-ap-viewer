@@ -61,7 +61,7 @@ function qualityIcon(t, tLiteral, quality, openModal) {
     "date": quality.downloadLastCheck,
     "note": tLiteral(quality.downloadNote),
   };
-  if (quality.download === null) {
+  if (quality.download === undefined) {
     return null;
   }
   if (quality.download) {
