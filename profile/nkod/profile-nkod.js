@@ -18,7 +18,7 @@ import "./keyword/list/keyword-list"
 import "./dataset/detail-view/dataset-detail";
 import "./distribution/list/distribution-list";
 import "./distribution/detail/distribution-detail";
-// import "./distribution/detail/data-service"; // TODO Allow and implement.
+import "./distribution/detail/data-service-detail";
 import "./dataset/list-view/dataset-list";
 
 import "./style.css";

@@ -2,6 +2,7 @@ import React from "react";
 import {PropTypes} from "prop-types";
 
 export default function EndpointUrl({t, dataSource}) {
+  console.log(">>", dataSource);
   if (dataSource.endpointURL === undefined) {
     return null;
   }
@@ -21,5 +22,5 @@ export default function EndpointUrl({t, dataSource}) {
 
 EndpointUrl.propTypes = {
   "t": PropTypes.func.isRequired,
-  "dataSource": PropTypes.func.isRequired,
+  "dataSource": PropTypes.object.isRequired,
 };

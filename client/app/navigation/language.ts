@@ -32,7 +32,10 @@ function objectToParsedQuery(args?: object): ParsedQuery {
 }
 
 export function createLiteralFunction(language: string) {
-  return (literal: Literal | Literal[]) => {
+  return (literal: Literal | Literal[] | undefined) => {
+    if (literal === undefined) {
+      return "";
+    }
     const literals: Literal[] = Array.isArray(literal) ? literal : [literal];
     for (let item of literals) {
       if (item[language]) {

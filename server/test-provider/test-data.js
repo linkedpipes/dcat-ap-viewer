@@ -6,12 +6,18 @@ const DATASETS = {};
 
 const DISTRIBUTIONS = {};
 
+const LABELS = {};
+
+const QUALITY = {};
+
 (function initialize() {
   module.exports = {
     "initial-data": INITIAL_DATA,
     "dataset-list": DATASET_LIST,
     "datasets": DATASETS,
-    "distributions": DISTRIBUTIONS
+    "distributions": DISTRIBUTIONS,
+    "labels": LABELS,
+    "quality": QUALITY,
   };
 })();
 
@@ -57,7 +63,7 @@ DATASET_LIST.push([
   },
 ]);
 
-DATASETS[""] = {
+DATASETS["urn:ds"] = {
   "@id": "urn:ds",
   "@type": [
     "http://www.w3.org/ns/dcat#Dataset",
@@ -285,4 +291,78 @@ DISTRIBUTIONS["urn:ds/dist/001"] = {
   }
 };
 
+LABELS["http://publications.europa.eu/resource/authority/frequency/MONTHLY"] = {
+  "@id": "http://publications.europa.eu/resource/authority/frequency/MONTHLY",
+  "http://purl.org/dc/terms/title": "měsíční",
+};
 
+LABELS["https://data.gov.cz/zdroj/ovm/00075370"] = {
+  "@id": "https://data.gov.cz/zdroj/ovm/00075370",
+  "http://purl.org/dc/terms/title": "Statutární město Plzeň",
+};
+
+LABELS["http://publications.europa.eu/resource/authority/file-type/CSV"] = {
+  "@id": "http://publications.europa.eu/resource/authority/file-type/CSV",
+  "http://purl.org/dc/terms/title": "CSV",
+};
+
+LABELS["http://publications.europa.eu/resource/authority/data-theme/ENER"] = {
+  "@id": "http://publications.europa.eu/resource/authority/data-theme/ENER",
+  "http://purl.org/dc/terms/title": "Energie",
+};
+
+LABELS["http://publications.europa.eu/resource/authority/data-theme/ECON"] = {
+  "@id": "http://publications.europa.eu/resource/authority/data-theme/ECON",
+  "http://purl.org/dc/terms/title": "Hospodářství a finance",
+};
+
+LABELS["http://publications.europa.eu/resource/authority/data-theme/INTR"] = {
+  "@id": "http://publications.europa.eu/resource/authority/data-theme/INTR",
+  "http://purl.org/dc/terms/title": "Mezinárodní otázky",
+};
+
+LABELS["http://eurovoc.europa.eu/1230"] = {
+  "@id": "http://eurovoc.europa.eu/1230",
+  "http://purl.org/dc/terms/title": "Hamburk",
+};
+
+LABELS["http://eurovoc.europa.eu/1236"] = {
+  "@id": "http://eurovoc.europa.eu/1236",
+  "http://purl.org/dc/terms/title": "Burkina Faso",
+};
+
+LABELS["http://eurovoc.europa.eu/1603"] = {
+  "@id": "http://eurovoc.europa.eu/1603",
+  "http://purl.org/dc/terms/title": "cibulová zelenina",
+};
+
+LABELS["https://linked.cuzk.cz/resource/ruian/stat/1"] = {
+  "@id": "https://linked.cuzk.cz/resource/ruian/stat/1",
+  "http://purl.org/dc/terms/title": "Česká Republika",
+};
+
+LABELS["http://publications.europa.eu/resource/authority/continent/EUROPE"] = {
+  "@id": "http://publications.europa.eu/resource/authority/continent/EUROPE",
+  "http://purl.org/dc/terms/title": "Evropa",
+};
+
+LABELS["http://publications.europa.eu/resource/authority/country/ALB"] = {
+  "@id": "http://publications.europa.eu/resource/authority/country/ALB",
+  "http://purl.org/dc/terms/title": "Albánie",
+};
+
+LABELS["http://publications.europa.eu/resource/authority/place/AND_ALV"] = {
+  "@id": "http://publications.europa.eu/resource/authority/place/AND_ALV",
+  "http://purl.org/dc/terms/title": "Andorra la Vella",
+};
+
+LABELS["http://dbpedia.org/resource/Earth"] = {
+  "@id": "http://dbpedia.org/resource/Earth",
+  "http://purl.org/dc/terms/title": "Země",
+};
+
+QUALITY["urn:ds"] = [];
+
+QUALITY["urn:ds/dist/000"] = [];
+
+QUALITY["urn:ds/dist/001"] = [];

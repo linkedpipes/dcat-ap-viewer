@@ -47,10 +47,13 @@ class DatasetView extends React.PureComponent {
       language, openModal, fetchLabels, form,
     } = this.props;
     // TODO Optimize and write best-practice where to put.
-    const toFetch = [dataset.publisher];
-    if (dataset.frequency) {
-      toFetch.push(dataset.frequency);
-    }
+    const toFetch = [
+      dataset.publisher,
+      ...asArray(dataset.frequency),
+      ...asArray(dataset.spatial),
+      ...asArray(dataset.themes),
+      ...asArray(dataset.datasetThemes),
+    ];
     fetchLabels(toFetch);
     // TODO <SemanticRelatedDatasets dataset={dataset["@id"]}/>
     // TODO <SemanticTermsDatasets dataset={dataset["@id"]}/>
@@ -133,7 +136,6 @@ function dialogLinks(dataset, form, language) {
     dataset["@type"].includes(NKOD.SourceCkan) ||
     dataset["@type"].includes(NKOD.SourceDcat) ||
     dataset["@type"].includes(NKOD.SourceSparql);
-  console.log(">", dataset["@type"], form);
   const actionStyle = {"color": "grey"};
   if (isFromForm) {
     return (
@@ -174,4 +176,14 @@ function dialogLinks(dataset, form, language) {
     )
   }
   return null;
+}
+
+function asArray(value) {
+  if (value === undefined) {
+    return [];
+  }
+  if (Array.isArray(value)) {
+    return value;
+  }
+  return [value];
 }

@@ -11,7 +11,7 @@ export function fetchLabels(iris) {
     const language = selectLanguage(state);
     for (const iri of iris) {
       // We can not fetch information about blank nodes.
-      if (isBlankNode(iri)) {
+      if (iri === undefined || iri === null || isBlankNode(iri)) {
         continue;
       }
       if (shouldFetch(state, iri, language)) {

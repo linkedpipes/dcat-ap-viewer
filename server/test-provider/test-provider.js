@@ -43,7 +43,7 @@ function createDatasetFacet() {
 
 function createDatasetItem() {
   return (req, res) => {
-    res.status(200).json(data["datasets"][req.query.url]);
+    res.status(200).json(data["datasets"][req.query.iri]);
   };
 }
 
@@ -55,7 +55,7 @@ function createDatasetTypeahead() {
 
 function createDistributionItem() {
   return (req, res) => {
-    res.status(200).json(data["distributions"][req.query.url]);
+    res.status(200).json(data["distributions"][req.query.iri]);
   };
 }
 
@@ -73,7 +73,7 @@ function createKeywordList() {
 
 function createLabelItem() {
   return (req, res) => {
-    res.status(500).json({});
+    res.status(200).json(data["labels"][req.query.iri]);
   };
 }
 
@@ -85,13 +85,13 @@ function createInitialData() {
 
 function createQualityDataset() {
   return (req, res) => {
-    res.status(500).json({});
+    res.status(200).json(data["quality"][req.query.iri]);
   };
 }
 
 function createQualityDistribution() {
   return (req, res) => {
-    res.status(500).json({});
+    res.status(200).json(data["quality"][req.query.iri]);
   };
 }
 

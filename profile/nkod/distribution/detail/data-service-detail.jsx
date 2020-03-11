@@ -1,5 +1,16 @@
 import React from "react";
+import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
+import {
+  selectT,
+  selectTLabel,
+  selectTLiteral,
+  register,
+  ELEMENT_DATA_SERVICE_DETAIL,
+  showModal,
+  fetchLabels,
+} from "../../../client-api";
+import {selectLegalDistribution} from "../../../../client/legal/distribution";
 import SchemaListItem from "./access/schema-list-item";
 import MediaTypeItem from "./access/media-type-item";
 import CompressFormat from "./access/compress-format-item";
@@ -8,17 +19,12 @@ import Authorship from "./legal/authorship";
 import DatabaseAuthorship from "./legal/database-authorship";
 import PersonalData from "./legal/personal-data";
 import ProtectedDatabaseAuthorship from "./legal/protected-database-authorship";
-import {register} from "../../../../client/app/register";
-import {ELEMENT_DATA_SERVICE_DETAIL} from "../../../../client/app/component-list";
-import {connect} from "react-redux";
-import {selectT} from "../../../../client/app/language";
-import {selectTLabel, showModal} from "../../../client-api";
-import {selectLegalDistribution} from "../../../../client/legal/distribution";
 import {
   fetchQualityDistribution,
   selectQualityDistribution,
 } from "../../../../client/quality/distribution";
-
+import EndpointDescription from "./access/endpoint-description-item";
+import EndpointUrl from "./access/endpoint-url-item";
 
 class DataServiceDetail extends React.PureComponent {
 
@@ -28,8 +34,12 @@ class DataServiceDetail extends React.PureComponent {
   }
 
   render() {
-    const {t, tLabel, distribution, quality, openModal, legal} = this.props;
-    const title = tLabel(distribution.iri);
+    const {
+      t, tLabel, tLiteral, dataService, quality, openModal, legal,
+      fetchLabels,
+    } = this.props;
+    const title = tLabel(dataService.iri);
+    fetchLabels([dataService.format]);
     return (
       <div className="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
         <div className="card p-2">
@@ -43,29 +53,33 @@ class DataServiceDetail extends React.PureComponent {
                 {title}
               </h5>
             }
-            {dataFormatItem(tLabel, distribution.format)}
+            {dataFormatItem(tLabel, dataService.format)}
           </div>
           <div className="row">
             <div className="col-6 pr-1">
-              {licenseColumn(t, legal, quality, openModal)}
+              {licenseColumn(t, tLiteral, legal, quality, openModal)}
             </div>
             <div className="col-6 pl-1">
-              {accessColumn(t, tLabel, distribution, quality, openModal)}
+              {accessColumn(
+                t, tLabel, tLiteral, dataService, quality, openModal)}
             </div>
           </div>
         </div>
       </div>
     )
   }
+
 }
 
 DataServiceDetail.propTypes = {
   "t": PropTypes.func.isRequired,
   "tLabel": PropTypes.func.isRequired,
+  "tLiteral": PropTypes.func.isRequired,
   "openModal": PropTypes.func.isRequired,
-  "distribution": PropTypes.object.isRequired,
+  "dataService": PropTypes.object.isRequired,
   "legal": PropTypes.object.isRequired,
   "quality": PropTypes.object,
+  "fetchLabels": PropTypes.func.isRequired,
   "fetchQuality": PropTypes.func.isRequired,
 };
 
@@ -81,7 +95,7 @@ function dataFormatItem(tLabel, format) {
   )
 }
 
-function licenseColumn(t, legal, quality, openModal) {
+function licenseColumn(t, tLiteral, legal, quality, openModal) {
   return (
     <div className="card">
       <h6 className="card-title text-muted pl-2 pt-2">
@@ -90,12 +104,21 @@ function licenseColumn(t, legal, quality, openModal) {
       <ul className="list-group list-group-flush">
         <Authorship
           t={t}
+          tLiteral={tLiteral}
           legal={legal}
           quality={quality}
           openModal={openModal}
         />
         <DatabaseAuthorship
           t={t}
+          tLiteral={tLiteral}
+          legal={legal}
+          quality={quality}
+          openModal={openModal}
+        />
+        <ProtectedDatabaseAuthorship
+          t={t}
+          tLiteral={tLiteral}
           legal={legal}
           quality={quality}
           openModal={openModal}
@@ -105,61 +128,64 @@ function licenseColumn(t, legal, quality, openModal) {
           legal={legal}
           openModal={openModal}
         />
-        <ProtectedDatabaseAuthorship
-          t={t}
-          legal={legal}
-          quality={quality}
-          openModal={openModal}
-        />
       </ul>
     </div>
   )
 }
 
-function accessColumn(t, tLabel, distribution, quality, openModal) {
+function accessColumn(t, tLabel, tLiteral, dataService, quality, openModal) {
   return (
     <div className="card">
       <h6 className="card-title text-muted pl-2 pt-2">
         {t("distribution_access")}
       </h6>
       <ul className="list-group list-group-flush">
-        <EndpointDescription/>
-        <EndpointUrl/>
+        <EndpointDescription
+          t={t}
+          dataSource={dataService}
+        />
+        <EndpointUrl
+          t={t}
+          dataSource={dataService}
+        />
         <SchemaListItem
           t={t}
           tLabel={tLabel}
-          distribution={distribution}
+          tLiteral={tLiteral}
+          distribution={dataService}
           openModal={openModal}/>
         <MediaTypeItem
           t={t}
           tLabel={tLabel}
-          distribution={distribution}
+          tLiteral={tLiteral}
+          distribution={dataService}
           quality={quality}
           openModal={openModal}/>
         <CompressFormat
           tLabel={tLabel}
-          distribution={distribution}
+          distribution={dataService}
           openModal={openModal}/>
         <PackageFormat
           tLabel={tLabel}
-          distribution={distribution}
+          distribution={dataService}
           openModal={openModal}/>
       </ul>
     </div>
   );
 }
 
-
 register({
   "name": ELEMENT_DATA_SERVICE_DETAIL,
   "element": connect((state, ownProps) => ({
     "t": selectT(state),
     "tLabel": selectTLabel(state),
-    "legal": selectLegalDistribution(state, ownProps.distribution.iri),
-    "quality": selectQualityDistribution(state, ownProps.distribution.iri),
+    "tLiteral": selectTLiteral(state),
+    "legal": selectLegalDistribution(state, ownProps.dataService.iri),
+    "quality": selectQualityDistribution(state, ownProps.dataService.iri),
   }), (dispatch, ownProps) => ({
+    "fetchLabels": (iris) => dispatch(fetchLabels(iris)),
     "fetchQuality": () => dispatch(
-      fetchQualityDistribution(ownProps.distribution.iri)),
+      fetchQualityDistribution(ownProps.dataService.iri)),
     "openModal": (body) => dispatch(showModal(undefined, body)),
   }))(DataServiceDetail),
 });

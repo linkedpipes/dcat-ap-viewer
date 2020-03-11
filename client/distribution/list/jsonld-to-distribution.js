@@ -15,40 +15,40 @@ import {
 } from "../../jsonld";
 
 export function jsonLdToDistribution(jsonld) {
-  const entity = getEntityByType(jsonld, DCAT.Distribution);
-  if (entity === undefined) {
+  const distribution = getEntityByType(jsonld, DCAT.Distribution);
+  if (distribution === undefined) {
     return undefined;
   }
 
   // TODO Change to getString with specific structure (object with languages).
   const mandatory = {
-    "iri": getId(entity),
-    "accessURL": getResource(entity, DCAT.accessURL),
+    "iri": getId(distribution),
+    "accessURL": getResource(distribution, DCAT.accessURL),
   };
 
   const recommended = {
-    "description": (entity, DCTERMS.description),
-    "format": getResource(entity, DCTERMS.format),
-    "license": getResource(entity, DCTERMS.license),
+    "description": getStrings(distribution, DCTERMS.description),
+    "format": getResource(distribution, DCTERMS.format),
+    "license": getResource(distribution, DCTERMS.license),
   };
 
   const optional = {
-    "byteSize": getValue(entity, DCAT.byteSize),
-    "checksum": getStrings(entity, SPDX.checksum),
-    "documentation": getResources(entity, FOAF.page),
-    "downloadURL": getResources(entity, DCAT.downloadURL),
-    "language": getResources(entity, DCTERMS.language),
-    "conformsTo": getResources(entity, DCTERMS.conformsTo),
-    "mediaType": getResource(entity, DCAT.mediaType),
-    "issued": getValue(entity, DCTERMS.issued),
-    "rights": getResource(entity, DCTERMS.rights),
-    "status": getResource(entity, ADMS.status),
+    "byteSize": getValue(distribution, DCAT.byteSize),
+    "checksum": getStrings(distribution, SPDX.checksum),
+    "documentation": getResources(distribution, FOAF.page),
+    "downloadURL": getResources(distribution, DCAT.downloadURL),
+    "language": getResources(distribution, DCTERMS.language),
+    "conformsTo": getResources(distribution, DCTERMS.conformsTo),
+    "mediaType": getResource(distribution, DCAT.mediaType),
+    "issued": getValue(distribution, DCTERMS.issued),
+    "rights": getResource(distribution, DCTERMS.rights),
+    "status": getResource(distribution, ADMS.status),
     // "title": Parsed by label service.
-    "modified": getResource(entity, DCTERMS.modified),
+    "modified": getResource(distribution, DCTERMS.modified),
   };
 
   const extension = {
-    "type": getResource(entity, DCTERMS.type),
+    "type": getResource(distribution, DCTERMS.type),
   };
 
   const dcat = {
