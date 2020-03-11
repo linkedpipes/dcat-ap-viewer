@@ -1,6 +1,6 @@
-const {handleError} = require("./../http-utils");
+const {handleApiError} = require("./../http-utils");
 const {executeSolrQuery} = require("./solr-api");
-
+const {measureTime} = require("../logging-utils");
 
 (function initialize() {
   module.exports = {
@@ -11,7 +11,8 @@ const {executeSolrQuery} = require("./solr-api");
 function createProvider(configuration) {
   return {
     "v1-info": createV1InfoGet(configuration),
-    "v2-dataset-list": createV2DatasetListGet(configuration),
+    "v2-dataset-list": measureTime("dataset-list",
+      createV2DatasetListGet(configuration)),
     "v2-dataset-facet": createV2DatasetFacetGet(configuration),
     "v2-dataset-typeahead": createV2DatasetTypeaheadGet(configuration),
     "v2-publisher-list": createV2PublisherListGet(configuration),
@@ -33,7 +34,7 @@ function createV1InfoGet(configuration) {
         res.json(responseJson);
       })
       .catch(error => {
-        handleError(res, error);
+        handleApiError(res, error);
       });
   };
 }
@@ -70,7 +71,7 @@ function createV2DatasetListGet(configuration) {
       (content) => solrResponseToDatasets(
         content, language, configuration["languages"]))
       .then(data => responseJsonLd(res, data))
-      .catch(error => handleError(res, error));
+      .catch(error => handleApiError(res, error));
   };
 }
 
@@ -134,7 +135,6 @@ function parseDatasetUserQuery(query) {
     result["sort_by"] = by;
     result["sort_order"] = order;
   }
-  console.log("parseDatasetUserQuery", result);
   addUserQueryFacet(query, result, "keyword");
   addUserQueryFacet(query, result, "publisher");
   addUserQueryFacet(query, result, "format");
@@ -397,7 +397,7 @@ function createV2DatasetFacetGet(configuration) {
     const url = configuration.url + "/query?" + buildFacetSolrQuery(req.query);
     executeSolrQuery(url, solrResponseToFacets)
       .then(data => responseJsonLd(res, data))
-      .catch(error => handleError(res, error));
+      .catch(error => handleApiError(res, error));
   };
 }
 
@@ -450,7 +450,7 @@ function createV2DatasetTypeaheadGet(configuration) {
         res.json(data);
       })
       .catch(error => {
-        handleError(res, error);
+        handleApiError(res, error);
       });
   };
 }
@@ -520,7 +520,7 @@ function createV2PublisherListGet(configuration) {
       + "&rows=0";
     executeSolrQuery(url, solrResponseToPublishers)
       .then(data => responseJsonLd(res, data))
-      .catch(error => handleError(res, error));
+      .catch(error => handleApiError(res, error));
   };
 }
 

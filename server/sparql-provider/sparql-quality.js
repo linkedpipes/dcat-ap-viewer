@@ -1,4 +1,4 @@
-const {handleError} = require("./../http-utils");
+const {handleApiError} = require("./../http-utils");
 const {executeSparqlConstruct} = require("./sparql-api");
 
 (function initialize() {
@@ -21,7 +21,7 @@ function createV2QualityDataset(configuration) {
     const query = qualitySparql(iri);
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
-      .catch(error => handleError(res, error));
+      .catch(error => handleApiError(res, error));
   };
 }
 
@@ -59,7 +59,7 @@ function createV2QualityDistribution(configuration) {
     const query = qualitySparql(iri);
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
-      .catch(error => handleError(res, error));
+      .catch(error => handleApiError(res, error));
   };
 }
 
@@ -68,7 +68,7 @@ function createV2QualityPublisher(configuration) {
     const query = qualityPublisherSparql();
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
-      .catch(error => handleError(res, error));
+      .catch(error => handleApiError(res, error));
   };
 }
 

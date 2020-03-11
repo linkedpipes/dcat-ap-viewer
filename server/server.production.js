@@ -3,6 +3,7 @@ const path = require("path");
 const config = require("./server-configuration");
 
 const httpApi = require("./http-api");
+const logger = require("./logging");
 
 /**
  * Entry point for running the backend.
@@ -14,7 +15,7 @@ const httpApi = require("./http-api");
   }
   httpApi.initializeHttpApi(app);
   if (config.serve_static_content) {
-    initializeStaticFallback(app, express);
+    initializeStaticFallback(app);
   }
   start(app);
 })();
@@ -23,19 +24,18 @@ function initializeStatic(app, express) {
   app.use(express.static(path.join(__dirname, "..", "dist")));
 }
 
-function initializeStaticFallback(app, express) {
+function initializeStaticFallback(app) {
   app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "dist", "index.html"));
   });
 }
 
-
 function start(app) {
-  const port = config["port"];
+  const port = config.port;
   app.listen(port, function onStart(error) {
     if (error) {
-      console.error(error);
+      logger.error("Can't start server.", {"error": error});
     }
-    console.info("Listening on port %s.", port);
+    logger.info("Server has been started.", {"port": port});
   });
 }

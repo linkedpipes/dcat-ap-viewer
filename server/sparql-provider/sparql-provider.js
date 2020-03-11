@@ -1,6 +1,7 @@
-const {handleError} = require("./../http-utils");
+const {handleApiError} = require("./../http-utils");
 const {executeSparqlConstruct} = require("./sparql-api");
 const quality = require("./sparql-quality");
+const logger = require("../logging");
 
 (function initialize() {
   module.exports = {
@@ -23,7 +24,13 @@ function createDatasetsItemGet(configuration) {
     const query = datasetSparql(iri);
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
-      .catch(error => handleError(res, error));
+      .catch(error => {
+        logger.error("Can't get dataset from SPARQL.", {
+          "error": error,
+          "iri": iri
+        });
+        handleApiError(res);
+      });
   };
 }
 
@@ -106,7 +113,13 @@ function createDistributionItemGet(configuration) {
     const query = distributionSparql(iri);
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
-      .catch(error => handleError(res, error));
+      .catch(error => {
+        logger.error("Can't get distribution from SPARQL.", {
+          "error": error,
+          "iri": iri
+        });
+        handleApiError(res);
+      });
   };
 }
 
@@ -135,7 +148,12 @@ function createPublishersGet(configuration) {
     const query = publishersSparql();
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
-      .catch(error => handleError(res, error));
+      .catch(error => {
+        logger.error("Can't get publisher list from SPARQL.", {
+          "error": error
+        });
+        handleApiError(res);
+      });
   };
 }
 

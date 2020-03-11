@@ -1,4 +1,4 @@
-const {handleError} = require("./../http-utils");
+const {handleApiError} = require("./../http-utils");
 const {executeCouchDBGet} = require("./couchdb-api");
 
 (function initialize() {
@@ -24,7 +24,7 @@ function createDatasetsItemGet(configuration) {
     executeCouchDBGet(configuration, "datasets", id)
       .then(transformDatasetItem)
       .then(data => responseJsonLd(res, data))
-      .catch(error => handleError(res, error));
+      .catch(error => handleApiError(res, error));
   }
 }
 
@@ -46,7 +46,7 @@ function createDistributionItemGet(configuration) {
     executeCouchDBGet(configuration, "distributions", id)
       .then(transformDistributionItem)
       .then(data => responseJsonLd(res, data))
-      .catch(error => handleError(res, error));
+      .catch(error => handleApiError(res, error));
   }
 }
 
@@ -61,7 +61,7 @@ function createKeywordListGet(configuration) {
       configuration, "static", "keywords_by_publishers_" + language)
       .then(transformKeywordList)
       .then(data => responseJsonLd(res, data))
-      .catch(error => handleError(res, error));
+      .catch(error => handleApiError(res, error));
   }
 }
 
@@ -75,7 +75,7 @@ function createLabelItem(configuration) {
     executeCouchDBGet(configuration, "labels", id)
       .then(transformLabelItem)
       .then(data => responseJsonLd(res, data))
-      .catch(error => handleError(res, error));
+      .catch(error => handleApiError(res, error));
   }
 }
 
@@ -88,7 +88,7 @@ function createInitDataGet(configuration) {
     executeCouchDBGet(configuration, "static", "initial_data_cache")
       .then(transformInitData)
       .then(data => responseJsonLd(res, data))
-      .catch(error => handleError(res, error));
+      .catch(error => handleApiError(res, error));
   }
 }
 
@@ -101,7 +101,7 @@ function createCatalogListGet(configuration) {
     executeCouchDBGet(configuration, "static", "local_catalogs")
       .then(transformCatalogList)
       .then(data => responseJsonLd(res, data))
-      .catch(error => handleError(res, error));
+      .catch(error => handleApiError(res, error));
   }
 }
 

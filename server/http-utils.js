@@ -1,22 +1,79 @@
-function isResponseOk(response, error) {
-  return error === null && response && response.statusCode === 200;
+const logger = require("./logging");
+
+const REQUEST_FAILED = "REQUEST_FAILED";
+
+const ERROR_RESPONSE = "ERROR_RESPONSE";
+
+const INVALID_DATA = "INVALID_DATA";
+
+function isResponseOk(response) {
+  return response && response.statusCode === 200;
 }
 
-function handleError(res, error) {
-  // TODO Improve logging and error handling #38.
-  console.error("Request failed: ", error);
-  res.status(500).json({
-    "error": "service_request_failed",
-  });
+function handleApiError(res, error) {
+  switch (error.type) {
+    case REQUEST_FAILED:
+      logger.error("Request failed.", {
+        "error": error.error,
+        "url": error.url,
+      });
+      res.status(500).json({
+        "error": "service request failed",
+      });
+      return;
+    case ERROR_RESPONSE:
+      if (isErrorCode(error.response.statusCode)) {
+        logger.error("Error response.", {
+          "url": error.url,
+          "status": error.response.statusCode,
+        });
+      }
+      res.status(error.response.statusCode).json({});
+      return;
+    case INVALID_DATA:
+      logger.error("Invalid data.", {
+        "error": error.error,
+        "exception": error.exception,
+      });
+      res.status(500).json({
+        "error": "service request failed",
+      });
+      return;
+    default:
+      logger.error("Unknown API error.", {"error": error});
+      res.status(500).json({
+        "error": "service request failed",
+      });
+      return;
+  }
 }
 
-function ApiError(error, message) {
+function isErrorCode(statusCode) {
+  return statusCode > 499 && statusCode < 501;
+}
+
+function RequestFailed(url, error) {
+  this.url = url;
   this.error = error;
-  this.message = message;
+  this.type = REQUEST_FAILED;
+}
+
+function ErrorResponse(url, response) {
+  this.url = url;
+  this.response = response;
+  this.type = ERROR_RESPONSE;
+}
+
+function InvalidData(url, exception) {
+  this.url = url;
+  this.type = INVALID_DATA;
+  this.exception = exception;
 }
 
 module.exports = {
   "isResponseOk": isResponseOk,
-  "handleError": handleError,
-  "ApiError": ApiError,
+  "handleApiError": handleApiError,
+  "RequestFailed": RequestFailed,
+  "ErrorResponse": ErrorResponse,
+  "InvalidData": InvalidData,
 };

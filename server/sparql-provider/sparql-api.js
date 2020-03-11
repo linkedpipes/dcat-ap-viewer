@@ -1,5 +1,7 @@
 const request = require("request");
-const {isResponseOk, ApiError} = require("./../http-utils");
+const {
+  isResponseOk, RequestFailed, ErrorResponse, InvalidData,
+} = require("./../http-utils");
 
 (function initialize() {
   module.exports = {
@@ -14,18 +16,17 @@ function executeSparqlConstruct(endpoint, query) {
     "query=" + encodeURIComponent(query);
   return new Promise((resolve, reject) => {
     request({"url": url}, (error, response, body) => {
-      if (!isResponseOk(response, error)) {
-        reject(new ApiError(error, "Can't query SPARQL"));
-        return;
+      if (error) {
+        reject(new RequestFailed(url, error));
       }
-      let result;
+      if (!isResponseOk(response)) {
+        reject(new ErrorResponse(url, response));
+      }
       try {
-        result = JSON.parse(body);
+        resolve(JSON.parse(body));
       } catch (ex) {
-        reject(new ApiError(ex, "Can't process response."));
-        return;
+        reject(new InvalidData(url, ex));
       }
-      return resolve(result);
     });
   });
 }

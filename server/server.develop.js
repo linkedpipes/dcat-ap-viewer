@@ -8,6 +8,7 @@ const config = require("./server-configuration");
 
 const httpApi = require("./http-api");
 const i18n = require("./i18n");
+const logger = require("./logging");
 
 /**
  * Entry point for running the backend.
@@ -63,8 +64,8 @@ function start(app) {
   const port = config.port;
   app.listen(port, function onStart(error) {
     if (error) {
-      console.error(error);
+      logger.error("Can't start server.", {"error": error});
     }
-    console.info("Listening on port %s.", port);
+    logger.info("Server has been started.", {"port": port});
   });
 }
