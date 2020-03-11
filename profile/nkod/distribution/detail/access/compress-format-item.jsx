@@ -8,7 +8,7 @@ export default function CompressFormat({tLabel, distribution}) {
   return (
     <li className="list-group-item px-2">
       {tLabel(distribution.compressFormat, true)}
-      <a href={distribution.compressFormat["@id"]}
+      <a href={distribution.compressFormat}
         rel="nofollow noopener noreferrer"
         target="_blank">
         {linkIcon()}
