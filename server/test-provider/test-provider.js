@@ -3,6 +3,8 @@
 // It also showcase the format and content the API should return.
 //
 
+const data = require("./test-data");
+
 (function initialize() {
   module.exports = {
     "createProvider": createProvider
@@ -28,53 +30,79 @@ function createProvider() {
 }
 
 function createDatasetList() {
-
+  return (req, res) => {
+    res.status(200).json(data["dataset-list"]);
+  };
 }
 
 function createDatasetFacet() {
-
+  return (req, res) => {
+    res.status(500).json({});
+  };
 }
 
 function createDatasetItem() {
-
+  return (req, res) => {
+    res.status(200).json(data["datasets"][req.query.url]);
+  };
 }
 
 function createDatasetTypeahead() {
-
+  return (req, res) => {
+    res.status(500).json({});
+  };
 }
 
 function createDistributionItem() {
-
+  return (req, res) => {
+    res.status(200).json(data["distributions"][req.query.url]);
+  };
 }
 
 function createPublisherList() {
-
+  return (req, res) => {
+    res.status(500).json({});
+  };
 }
 
 function createKeywordList() {
-
+  return (req, res) => {
+    res.status(500).json({});
+  };
 }
 
 function createLabelItem() {
-
+  return (req, res) => {
+    res.status(500).json({});
+  };
 }
 
 function createInitialData() {
-
+  return (req, res) => {
+    res.status(200).json(data["initial-data"]);
+  };
 }
 
 function createQualityDataset() {
-
+  return (req, res) => {
+    res.status(500).json({});
+  };
 }
 
 function createQualityDistribution() {
-
+  return (req, res) => {
+    res.status(500).json({});
+  };
 }
 
 function createQualityPublisher() {
-
+  return (req, res) => {
+    res.status(500).json({});
+  };
 }
 
 function createCatalogList() {
-
+  return (req, res) => {
+    res.status(500).json({});
+  };
 }
