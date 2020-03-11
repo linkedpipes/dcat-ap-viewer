@@ -5,7 +5,7 @@ const {
 
 (function initialize() {
   module.exports = {
-    "executeSparqlConstruct": executeSparqlConstruct
+    "executeSparqlConstruct": executeSparqlConstruct,
   };
 })();
 

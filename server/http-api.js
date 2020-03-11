@@ -6,7 +6,7 @@ const sparqlProvider = require("./sparql-provider/sparql-provider");
 const testProvider = require("./test-provider/test-provider");
 
 module.exports = {
-  "initializeHttpApi": initializeHttpApi
+  "initializeHttpApi": initializeHttpApi,
 };
 
 function initializeHttpApi(app) {

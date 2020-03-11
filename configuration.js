@@ -29,7 +29,7 @@ const YAML  = require("yaml");
       "url": {
         "base": configuration["client"]["url-base"],
         "subdirectory": configuration["client"]["url-subdirectory"],
-      }
+      },
     },
   };
 })();

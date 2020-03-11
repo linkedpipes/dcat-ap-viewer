@@ -7,7 +7,7 @@ const data = require("./test-data");
 
 (function initialize() {
   module.exports = {
-    "createProvider": createProvider
+    "createProvider": createProvider,
   };
 })();
 

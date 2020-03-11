@@ -4,7 +4,7 @@ const {measureTime} = require("../logging-utils");
 
 (function initialize() {
   module.exports = {
-    "createProvider": createProvider
+    "createProvider": createProvider,
   };
 })();
 
@@ -28,8 +28,8 @@ function createV1InfoGet(configuration) {
           "data": {
             "numberOfDatasets": statistics["count"]["datasets"],
             "numberOfPublishers": statistics["count"]["publishers"],
-            "numberOfKeywords": statistics["count"]["keywords"]
-          }
+            "numberOfKeywords": statistics["count"]["keywords"],
+          },
         };
         res.json(responseJson);
       })
@@ -58,7 +58,7 @@ function solrResponseToStatistics(content, language) {
       "datasets": content["response"]["numFound"],
       "publishers": facetFields["publisher"].length / 2,
       "keywords": facetFields["keyword_" + language].length / 2,
-    }
+    },
   }
 }
 
@@ -485,7 +485,7 @@ function solrResponseToTypeaheadDatasets(content, language, defaultLanguage) {
       ...content["response"]["docs"]
         .map(item => solrDocToTypeaheadDatasets(
           item, language, defaultLanguage)),
-    ]
+    ],
   };
 }
 

@@ -3,7 +3,7 @@ const {executeSparqlConstruct} = require("./sparql-api");
 
 (function initialize() {
   module.exports = {
-    "createProvider": createProvider
+    "createProvider": createProvider,
   };
 })();
 

@@ -5,7 +5,7 @@ const logger = require("../logging");
 
 (function initialize() {
   module.exports = {
-    "createProvider": createProvider
+    "createProvider": createProvider,
   };
 })();
 
@@ -19,22 +19,23 @@ function createProvider(configuration) {
 }
 
 function createDatasetsItemGet(configuration) {
+  const datasetPerGraph = configuration["dataset-per-graph"] === true;
   return (req, res) => {
     const iri = req.query.iri;
-    const query = datasetSparql(iri);
+    const query = datasetSparql(datasetPerGraph, iri);
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
       .catch(error => {
         logger.error("Can't get dataset from SPARQL.", {
           "error": error,
-          "iri": iri
+          "iri": iri,
         });
         handleApiError(res);
       });
   };
 }
 
-function datasetSparql(iri) {
+function datasetSparql(datasetPerGraph, iri) {
   return `
 PREFIX dcat: <http://www.w3.org/ns/dcat#> 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -65,7 +66,7 @@ CONSTRUCT {
         foaf:primaryTopic ?dataset ;
         dcterms:source ?source .
 } WHERE {
-    ` + (config.data.datasetPerGraph ? "GRAPH ?g {" : "") + `
+    ` + (datasetPerGraph ? "GRAPH ?g {" : "") + `
     
     ?dataset ?p ?o .
     
@@ -100,7 +101,7 @@ CONSTRUCT {
             dcterms:source ?source .
     }
     
-    ` + (config.data.datasetPerGraph ? "}" : "") + `
+    ` + (datasetPerGraph ? "}" : "") + `
         
     VALUES (?dataset) { (<` + iri + `>) }
 }`;
@@ -116,7 +117,7 @@ function createDistributionItemGet(configuration) {
       .catch(error => {
         logger.error("Can't get distribution from SPARQL.", {
           "error": error,
-          "iri": iri
+          "iri": iri,
         });
         handleApiError(res);
       });
@@ -150,7 +151,7 @@ function createPublishersGet(configuration) {
       .then(data => res.json(data))
       .catch(error => {
         logger.error("Can't get publisher list from SPARQL.", {
-          "error": error
+          "error": error,
         });
         handleApiError(res);
       });

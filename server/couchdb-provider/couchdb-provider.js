@@ -3,7 +3,7 @@ const {executeCouchDBGet} = require("./couchdb-api");
 
 (function initialize() {
   module.exports = {
-    "createProvider": createProvider
+    "createProvider": createProvider,
   };
 })();
 

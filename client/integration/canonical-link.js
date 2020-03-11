@@ -19,19 +19,19 @@ export default class HeadLinks extends React.PureComponent {
     const languages = listLanguages();
     return (
       <Helmet>
-      <title>{this.props.title}</title>
-      <link rel="canonical"
-    href={prepareQuery(url, query, params)}/>
-    {
-      languages.map((lang) => (
-        <link rel="alternate"
-      href={prepareQuery(url, query, params, lang)}
-      hrefLang={lang}
-      key={lang}/>
-    ))
-    }
-  </Helmet>
-  )
+        <title>{this.props.title}</title>
+        <link rel="canonical"
+          href={prepareQuery(url, query, params)}/>
+        {
+          languages.map((lang) => (
+            <link rel="alternate"
+              href={prepareQuery(url, query, params, lang)}
+              hrefLang={lang}
+              key={lang}/>
+          ))
+        }
+      </Helmet>
+    )
   }
 
 }

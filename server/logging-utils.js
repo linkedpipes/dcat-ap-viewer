@@ -6,7 +6,7 @@ const NS_PER_MS = 1e6;
 
 (function initialize() {
   module.exports = {
-    "measureTime": measureTime
+    "measureTime": measureTime,
   };
 })();
 

@@ -5,7 +5,7 @@ const {
 
 (function initialize() {
   module.exports = {
-    "executeSolrQuery": executeSolrQuery
+    "executeSolrQuery": executeSolrQuery,
   };
 })();
 

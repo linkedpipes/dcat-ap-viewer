@@ -7,7 +7,7 @@ const fs = require("fs");
 const configuration = require("./server-configuration");
 
 module.exports = {
-  "loadTranslationFiles": loadTranslationFiles
+  "loadTranslationFiles": loadTranslationFiles,
 };
 
 function loadTranslationFiles() {
@@ -16,7 +16,7 @@ function loadTranslationFiles() {
     "url": {},
     "query": {},
     "string": {},
-    "languages": new Set()
+    "languages": new Set(),
   };
 
   const fileHandler = (filePath, fileName) => {
@@ -56,9 +56,9 @@ function loadTranslationFiles() {
     "navigation": {
       "url": translations["url"],
       "query": translations["query"],
-      "languages": [...translations["languages"]]
+      "languages": [...translations["languages"]],
     },
-    ...translations["string"]
+    ...translations["string"],
   };
 }
 

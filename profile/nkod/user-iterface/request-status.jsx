@@ -1,7 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 
-export function RequestStatus({failed}) {
+export function RequestStatus({t, failed}) {
   return (
     <div
       style={{"textAlign": "center", "fontSize": "2em", "marginTop": "3REM"}}
