@@ -5,6 +5,7 @@ import {
   getStrings,
   getValue,
 } from "../../jsonld";
+import {sdmxRefToDate} from "../parse-quality-utils";
 
 export default function loadDatasetQuality(jsonld) {
   const quality = {
@@ -26,10 +27,4 @@ export default function loadDatasetQuality(jsonld) {
     }
   });
   return quality;
-}
-
-function sdmxRefToDate(iri) {
-  return iri.substr(iri.lastIndexOf("/") + 1)
-    .replace("T", " ")
-    .replace("-", ".");
 }

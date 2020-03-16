@@ -5,6 +5,7 @@ import {
   getValue,
   getStrings,
 } from "../../jsonld";
+import {sdmxRefToDate} from "../parse-quality-utils";
 
 export function jsonLdToQualityDistribution(jsonld) {
   const measures = getEntitiesByType(jsonld, DQV.QualityMeasurement);
@@ -53,10 +54,4 @@ export function jsonLdToQualityDistribution(jsonld) {
     }
   });
   return quality;
-}
-
-function sdmxRefToDate(iri) {
-  return iri.substr(iri.lastIndexOf("/") + 1)
-    .replace("T", " ")
-    .replace("-", ".");
 }
