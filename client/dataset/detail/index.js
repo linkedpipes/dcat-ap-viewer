@@ -35,7 +35,7 @@ register({
             , "spatial": "Spatial coverage"
             , "temporal": "Temporal coverage"
             , "dataset_topic": "Dataset Theme"
-            , "topic": "Dataset Theme"
+            , "topic": "EuroVoc Theme"
             , "unnamed_distribution": "Distribution"
             , "download": "Download"
             , "schema": "Schema"
