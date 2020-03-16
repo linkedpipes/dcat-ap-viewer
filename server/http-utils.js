@@ -31,7 +31,8 @@ function handleApiError(res, error) {
       res.status(error.response.statusCode).json({});
       return;
     case INVALID_DATA:
-      logger.error("Invalid data.", {
+      logger.error("Can't parse response.", {
+        "url": error.url,
         "error": error.error,
         "exception": error.exception,
       });

@@ -24,16 +24,22 @@ export const BASE_CLIENT_URL_PREFIX = "BASE_CLIENT_URL_PREFIX";
 
 export const PAGE_SIZE_DEFAULT = "PAGE_SIZE_DEFAULT";
 
+export const DATASET_SORT_DEFAULT = "DATASET_SORT_DEFAULT";
+
+export const DEFAULT_FACET_SIZE = "DEFAULT_FACET_SIZE";
+
+export const MAIN_LANGUAGE = "MAIN_LANGUAGE";
+
 const values: { [key: string]: any } = {
   [PAGE_TITLE_PREFIX]: DEF_PAGE_TITLE_PREFIX,
   [PAGE_TITLE_SUFFIX]: DEF_PAGE_TITLE_SUFFIX,
   [FORM_URL]: DEF_FORM_URL,
   [BASE_CLIENT_URL]: DEF_URL_BASE,
   [BASE_CLIENT_URL_PREFIX]: DEF_DEREFERENCE_PREFIX,
-  "main-language": "cs",
   [PAGE_SIZE_DEFAULT]: 10,
-  "dataset-list-sort": undefined,
-  "dataset-list-sort-default": "title asc",
+  [DATASET_SORT_DEFAULT]: "title asc",
+  [DEFAULT_FACET_SIZE]: 7,
+  [MAIN_LANGUAGE]: "cs",
 };
 
 export function getGlobal<T>(key: string, defaultValue?: T): T | undefined {

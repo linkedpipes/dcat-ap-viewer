@@ -1,12 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
-import {Link} from "react-router-dom";
 import {
-  URL_DATASET_LIST,
-  URL_DATASET_DETAIL,
-  QUERY_DATASET_LIST_PUBLISHER,
-  QEURY_DATASET_DETAIL_IRI,
   selectTLabel,
   selectTUrl,
   selectTLiteral,
@@ -15,10 +10,11 @@ import {
   getGlobal,
   register,
   PAGE_SIZE_DEFAULT,
+  QUERY_DATASET_LIST_PUBLISHER,
 } from "../../../client-api";
-import TagLine from "../../user-iterface/tag-line";
 import Paginator from "../../user-iterface/paginator";
 import DatasetsViewHeader from "./datasets-view-header";
+import DatasetListItem from "./datasets-view-item";
 import {DATASET_LIST_DATASET_VIEW} from "../../nkod-component-names";
 
 const PAGE_SIZES = [getGlobal(PAGE_SIZE_DEFAULT), 20, 40, 80];
@@ -31,7 +27,7 @@ function DatasetsView(props) {
         tLabel={props.tLabel}
         query={props.query}
         datasetCount={props.datasetsCount}
-        onSortSet={props.onSortSet}
+        onSortSet={props.onDatasetsSort}
       />
       <div>
         {props.datasets.map(dataset => (
@@ -40,7 +36,7 @@ function DatasetsView(props) {
             tLabel={props.tLabel}
             tLiteral={props.tLiteral}
             tUrl={props.tUrl}
-            showPublisher={props.showPublisher}
+            showPublisher={getShowPublisher(props.query)}
             dataset={dataset}
             fetchLabels={props.fetchLabels}
           />
@@ -49,31 +45,30 @@ function DatasetsView(props) {
       <br/>
       <Paginator
         recordsCount={props.datasetsCount}
-        pageIndex={props.page}
-        pageSize={props.pageSize}
-        onIndexChange={props.onUpdatePage}
-        onSizeChange={props.onUpdatePageSize}
+        pageIndex={props.query["page"]}
+        pageSize={props.query["pageSize"]}
+        onIndexChange={props.onDatasetsPage}
+        onSizeChange={props.onDatasetsPageSize}
         sizes={PAGE_SIZES}/>
     </React.Fragment>
   )
 }
 
 DatasetsView.propTypes = {
-  "datasetsCount": PropTypes.number.isRequired,
-  "datasets": PropTypes.array.isRequired,
+  // From connect.
   "t": PropTypes.func.isRequired,
   "tLabel": PropTypes.func.isRequired,
-  "tLiteral": PropTypes.func.isRequired,
   "tUrl": PropTypes.func.isRequired,
-  "showPublisher": PropTypes.bool.isRequired,
-  "fetchLabels": PropTypes.func.isRequired,
-  "page": PropTypes.number.isRequired,
-  "pageSize": PropTypes.number.isRequired,
-  "onFetchMore": PropTypes.func.isRequired,
-  "onUpdatePage": PropTypes.func.isRequired,
-  "onUpdatePageSize": PropTypes.func.isRequired,
-  "onSortSet": PropTypes.func.isRequired,
+  "tLiteral": PropTypes.func.isRequired,
+  // From dataset-list.
   "query": PropTypes.object.isRequired,
+  "onDatasetsPage": PropTypes.func.isRequired,
+  "onDatasetsPageSize": PropTypes.func.isRequired,
+  "onDatasetsSort": PropTypes.func.isRequired,
+  "fetchLabels": PropTypes.func.isRequired,
+  // From view container.
+  "datasets": PropTypes.array.isRequired,
+  "datasetsCount": PropTypes.number.isRequired,
 };
 
 register({
@@ -88,47 +83,7 @@ register({
   }))(DatasetsView),
 });
 
-function DatasetListItem(
-  {tLabel, tLiteral, tUrl, showPublisher, dataset, fetchLabels}) {
-  fetchLabels([dataset.iri, dataset.publisher, ...dataset.formats]);
-  const datasetUrl = tUrl(
-    URL_DATASET_DETAIL,
-    {[QEURY_DATASET_DETAIL_IRI]: dataset.iri});
-  const publisherUrl = tUrl(
-    URL_DATASET_LIST,
-    {[QUERY_DATASET_LIST_PUBLISHER]: dataset.publisher});
-  return (
-    <div>
-      <Link to={datasetUrl}>
-        <h4>{tLabel(dataset.iri)}</h4>
-      </Link>
-      {
-        showPublisher &&
-        <Link to={publisherUrl}>{tLabel(dataset.publisher)}</Link>
-      }
-      <p style={{
-        "overflow": "hidden",
-        "display": "-webkit-box",
-        "WebkitLineClamp": "3",
-        "WebkitBoxOrient": "vertical",
-      }}>
-        {tLiteral(dataset.description)}
-      </p>
-      <TagLine
-        items={dataset.formats}
-        size={0.7}
-        labelFunction={(iri) => tLabel(iri, iri)}
-      />
-      <hr/>
-    </div>
-  )
+function getShowPublisher(query) {
+  return !(query[QUERY_DATASET_LIST_PUBLISHER] &&
+    query[QUERY_DATASET_LIST_PUBLISHER].length > 0);
 }
-
-DatasetListItem.propTypes = {
-  "tLabel": PropTypes.func.isRequired,
-  "tLiteral": PropTypes.func.isRequired,
-  "tUrl": PropTypes.func.isRequired,
-  "showPublisher": PropTypes.bool.isRequired,
-  "dataset": PropTypes.object.isRequired,
-  "fetchLabels": PropTypes.func.isRequired,
-};

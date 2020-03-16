@@ -95,13 +95,6 @@ export const FETCH_LANGUAGE_SUCCESS =
 export const FETCH_LANGUAGE_FAILED =
   "FETCH_LANGUAGE_FAILED";
 
-export const FETCH_FACETS =
-  "FETCH_FACETS";
-export const FETCH_FACETS_SUCCESS =
-  "FETCH_FACETS_SUCCESS";
-export const FETCH_FACETS_FAILED =
-  "FETCH_FACETS_FAILED";
-
 export const FETCH_REQUEST = "FETCH_REQUEST";
 
 export const FETCH_SUCCESS = "FETCH_SUCCESS";
@@ -111,6 +104,7 @@ export const FETCH_FAILED = "FETCH_FAILED";
 let apiAdapter = createApiImplementation();
 
 export function fetchDatasetList(query: DatasetListQuery) {
+  //
   return callApi(
     (lang) => apiAdapter.fetchDatasetList(lang, query),
     FETCH_DATASET_LIST,
@@ -123,24 +117,21 @@ export function fetchDatasetList(query: DatasetListQuery) {
  */
 function callApi(
   call: (lang: string) => FlatJsonLdPromise,
-  beforeAction: string,
-  successAction: string,
-  failAction: string,
-  iri?: string,
-  silent: boolean = false) {
+  beforeAction: string, successAction: string, failAction: string,
+  args: any = {}, silent: boolean = false) {
   return (dispatch: any, getState: any) => {
     const language = selectLanguage(getState());
     dispatch({
+      ...args,
       "type": beforeAction,
-      "iri": iri,
       "fetch": FETCH_REQUEST,
     });
     call(language)
       .then(response => {
         dispatch({
+          ...args,
           "type": successAction,
           "jsonld": response,
-          "iri": iri,
           "fetch": FETCH_SUCCESS,
         });
       })
@@ -149,9 +140,9 @@ function callApi(
           console.error("API call error", error);
         }
         dispatch({
+          ...args,
           "type": failAction,
           "error": error,
-          "iri": iri,
           "fetch": FETCH_FAILED,
         });
       })
@@ -164,15 +155,15 @@ export function fetchDataset(iri: string) {
     FETCH_DATASET,
     FETCH_DATASET_SUCCESS,
     FETCH_DATASET_FAILED,
-    iri);
+    {"iri": iri});
 }
 
 /**
  * This does not behave as a redux action.
  */
 export function fetchDatasetTypeahead(
-  language: string, text: string, query: DatasetListQuery) {
-  return apiAdapter.fetchDatasetTypeahead(language, text, query);
+  query: DatasetListQuery, language: string, text: string) {
+  return apiAdapter.fetchDatasetTypeahead(language, query, text);
 }
 
 export function fetchDistribution(iri: string) {
@@ -181,7 +172,7 @@ export function fetchDistribution(iri: string) {
     FETCH_DISTRIBUTION,
     FETCH_DISTRIBUTION_SUCCESS,
     FETCH_DISTRIBUTION_FAILED,
-    iri);
+    {"iri": iri});
 }
 
 export function fetchPublisherList() {
@@ -206,7 +197,7 @@ export function fetchLabel(iri: string) {
     FETCH_LABEL,
     FETCH_LABEL_SUCCESS,
     FETCH_LABEL_FAILED,
-    iri,
+    {iri},
     true);
 }
 
@@ -224,7 +215,7 @@ export function fetchQualityDataset(iri: string) {
     FETCH_QUALITY_DATASET,
     FETCH_QUALITY_DATASET_SUCCESS,
     FETCH_QUALITY_DATASET_FAILED,
-    iri);
+    {"iri": iri});
 }
 
 export function fetchQualityDistribution(iri: string) {
@@ -233,7 +224,7 @@ export function fetchQualityDistribution(iri: string) {
     FETCH_QUALITY_DISTRIBUTION,
     FETCH_QUALITY_DISTRIBUTION_SUCCESS,
     FETCH_QUALITY_DISTRIBUTION_FAILED,
-    iri);
+    {"iri": iri});
 }
 
 export function fetchQualityPublisherList() {
@@ -250,14 +241,6 @@ export function fetchCatalogList() {
     FETCH_CATALOG_LIST,
     FETCH_CATALOG_LIST_SUCCESS,
     FETCH_CATALOG_LIST_FAILED);
-}
-
-export function fetchFacets(group: string, amount: number) {
-  return callApi(
-    (lang) => apiAdapter.fetchDatasetFacets(lang, group, amount),
-    FETCH_FACETS,
-    FETCH_FACETS_SUCCESS,
-    FETCH_FACETS_FAILED);
 }
 
 export function fetchLanguage(language: string) {

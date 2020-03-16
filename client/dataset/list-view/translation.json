@@ -3,6 +3,7 @@
     "string": {
       "facet.show_popular": "Zobrazit pouze populární",
       "facet.show_more": "Zobrazit další",
+      "facet.show_all": "Zobrazit vše",
       "query.temporal": "Časové pokrytí",
       "query.from": "od",
       "query.to": "do",
@@ -35,6 +36,7 @@
     "string": {
       "facet.show_popular": "Show popular only",
       "facet.show_more": "Show more",
+      "facet.show_all": "Show all",
       "query.temporal": "Temporal coverage",
       "query.from": "from",
       "query.to": "to",

@@ -21,31 +21,24 @@ class HttpApi implements Api {
     return fetchJsonLd(url);
   }
 
-  fetchDatasetFacets(language: string, name: string, amount: number)
-    : FlatJsonLdPromise {
-    //
-    let url = "./api/v2/dataset/facet?";
-    url += "facet=" + encodeURIComponent(name) + "&";
-    url += "limit=" + amount;
-    if (language) {
-      url += "&language=" + language;
-    }
-    return fetchJsonLd(url);
-  }
-
   fetchDatasetList(language: string, query: DatasetListQuery)
     : FlatJsonLdPromise {
-    const params = datasetQueryToUrlParams(language, query);
-    return fetchJsonLd("./api/v2/dataset" + params);
+    let params = datasetQueryFiltersToUrlParams(language, query);
+    params += "&offset=" + query.offset;
+    params += "&limit=" + query.limit;
+    if (query.sort !== undefined) {
+      params += "&sort=" + encodeURIComponent(query.sort);
+    }
+    return fetchJsonLd("./api/v2/dataset?" + params);
   }
 
   fetchDatasetTypeahead(
-    language: string, text: string, query: DatasetListQuery)
+    language: string, query: DatasetListQuery, text: string)
     : FlatJsonLdPromise {
     //
     query.search = text;
-    const params = datasetQueryToUrlParams(language, query);
-    return fetchJsonLd("./api/v2/dataset/typeahead" + params);
+    const params = datasetQueryFiltersToUrlParams(language, query);
+    return fetchJsonLd("./api/v2/dataset/typeahead?" + params);
   }
 
   fetchDistribution(language: string, iri: string): FlatJsonLdPromise {
@@ -145,18 +138,14 @@ function fetchJsonLd(url: string): FlatJsonLdPromise {
   });
 }
 
-function datasetQueryToUrlParams(language: string, query: DatasetListQuery) {
-  let params: string = "?language=" + encodeURIComponent(language);
-  if (query.page && query.pageSize) {
-    params += "&offset=" + (query.page * query.pageSize);
-    params += "&limit=" + query.pageSize;
-  }
+function datasetQueryFiltersToUrlParams(
+  language: string, query: DatasetListQuery) {
+  let params: string = "language=" + encodeURIComponent(language);
   params += query.search ? "&text=" + encodeURIComponent(query.search) : "";
-  params += query.sort ? "&sort=" + encodeURIComponent(query.sort) : "";
-  params += stringArrayToArgs(query.keyword, "keyword");
-  params += stringArrayToArgs(query.publisher, "publisher");
-  params += stringArrayToArgs(query.format, "format");
-  params += stringArrayToArgs(query.theme, "theme");
+  params += facetToParams(query.keyword, query.keywordLimit, "keyword");
+  params += facetToParams(query.publisher, query.publisherLimit, "publisher");
+  params += facetToParams(query.format, query.formatLimit, "format");
+  params += facetToParams(query.theme, query.themeLimit, "theme");
   params += query.temporalStart ?
     ("&temporal-start=" + query.temporalStart) : "";
   params += query.temporalEnd ?
@@ -164,11 +153,8 @@ function datasetQueryToUrlParams(language: string, query: DatasetListQuery) {
   return params;
 }
 
-function stringArrayToArgs(values: string[] | undefined, name: string): string {
-  if (values === undefined) {
-    return "";
-  }
-  let result = "";
+function facetToParams(values: string[], limit: number, name: string): string {
+  let result = "&" + name + "Limit=" + String(limit);
   for (let value of values) {
     result += "&" + name + "=" + encodeURIComponent(value);
   }

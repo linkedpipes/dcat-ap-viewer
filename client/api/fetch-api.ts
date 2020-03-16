@@ -1,6 +1,3 @@
-/**
- * Error types.
- */
 export enum ErrorType {
   NONE = 0,
   FETCH = 1,

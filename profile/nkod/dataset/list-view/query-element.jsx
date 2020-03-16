@@ -4,50 +4,17 @@ import {PropTypes} from "prop-types";
 import SearchBox from "../../user-iterface/search-box";
 import {Button, Col, Input, Row} from "reactstrap";
 import ViewSelector from "./view-selector";
-import {
-  selectT,
-  QUERY_DATASET_LIST_VIEW,
-  QUERY_DATASET_LIST_SEARCH,
-  QUERY_DATASET_LIST_TEMPORAL_START,
-  QUERY_DATASET_LIST_TEMPORAL_END,
-} from "../../../client-api";
+import {selectT} from "../../../client-api";
 
-function QueryElement(
-  {t, query, onSearch, onSetView, onFetchTypeahead}) {
-  //
+function QueryElement(props) {
   let searchBox = undefined;
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [temporalStart, setTemporalStart] = useState(
-    query[QUERY_DATASET_LIST_TEMPORAL_START] ?
-      query[QUERY_DATASET_LIST_TEMPORAL_START][0] : undefined,
-  );
-  const [temporalEnd, setTemporalEnd] = useState(
-    query[QUERY_DATASET_LIST_TEMPORAL_END] ?
-      query[QUERY_DATASET_LIST_TEMPORAL_END][0] : undefined,
-  );
+  const [temporalStart, setTemporalStart] = useState(props.query.temporalStart);
+  const [temporalEnd, setTemporalEnd] = useState(props.query.temporalEnd);
 
   const onClearAllFilters = () => {
     searchBox.clear();
-    // Search with empty query removing all filters (even facets).
-    onSearch({});
-  };
-
-  const onSetTemporal = (start, end) => {
-    onSearch({
-      ...query,
-      [QUERY_DATASET_LIST_TEMPORAL_START]: start,
-      [QUERY_DATASET_LIST_TEMPORAL_END]: end,
-    });
-  };
-
-  const onSetSearch = (value) => {
-    if (value === "") {
-      value = undefined;
-    }
-    onSearch({
-      ...query,
-      [QUERY_DATASET_LIST_SEARCH]: value,
-    });
+    props.onClearFilters();
   };
 
   return (
@@ -59,21 +26,21 @@ function QueryElement(
       "marginBottom": "1rem",
     }}>
       <SearchBox
-        t={t}
-        defaultValue={getSearchString(query)}
+        t={props.t}
+        defaultValue={props.query.search}
         ref={(ref) => searchBox = ref}
-        onSetValue={onSetSearch}
-        onFetchTypeahead={onFetchTypeahead}
+        onSetValue={props.onSetSearchText}
+        fetchTypeahead={props.fetchTypeahead}
       />
       {
         showAdvanced &&
         <TemporalFilters
-          t={t}
+          t={props.t}
           start={temporalStart}
           setStart={setTemporalStart}
           end={temporalEnd}
           setEnd={setTemporalEnd}
-          setTemporal={onSetTemporal}
+          setTemporal={props.onSetTemporal}
         />
       }
       <Row>
@@ -82,21 +49,23 @@ function QueryElement(
             className="mt-2 mr-2"
             onClick={() => setShowAdvanced(!showAdvanced)}
           >
-            {showAdvanced ? t("query.hide_filters") : t("query.show_filters")}
+            {showAdvanced ?
+              props.t("query.hide_filters")
+              : props.t("query.show_filters")}
           </Button>
           <Button
             className="mt-2"
             onClick={onClearAllFilters}
           >
-            {t("query.clear_filters")}
+            {props.t("query.clear_filters")}
           </Button>
         </Col>
         <Col className="mt-2">
           <div className="float-lg-right">
             <ViewSelector
-              t={t}
-              value={getActiveView(query)}
-              onChange={onSetView}
+              t={props.t}
+              value={props.query.view}
+              onChange={props.onSetView}
             />
           </div>
         </Col>
@@ -108,24 +77,17 @@ function QueryElement(
 QueryElement.propTypes = {
   "t": PropTypes.func.isRequired,
   "query": PropTypes.object.isRequired,
-  "onSearch": PropTypes.func.isRequired,
   "onSetView": PropTypes.func.isRequired,
-  "onFetchTypeahead": PropTypes.func.isRequired,
+  "onSetSearchText": PropTypes.func.isRequired,
+  "onClearFilters": PropTypes.func.isRequired,
+  "onSetTemporal": PropTypes.func.isRequired,
+  // From with-typeahead-props.jsx
+  "fetchTypeahead": PropTypes.func.isRequired,
 };
 
 export default connect((state) => ({
   "t": selectT(state),
 }))(QueryElement);
-
-function getActiveView(query) {
-  return query[QUERY_DATASET_LIST_VIEW] ?
-    parseInt(query[QUERY_DATASET_LIST_VIEW][0]) : 0;
-}
-
-function getSearchString(query) {
-  return query[QUERY_DATASET_LIST_SEARCH] ?
-    query[QUERY_DATASET_LIST_SEARCH][0] : "";
-}
 
 function TemporalFilters({t, start, setStart, end, setEnd, setTemporal}) {
 

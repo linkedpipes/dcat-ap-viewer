@@ -88,7 +88,7 @@ export default class SearchBox extends React.Component {
       this.setState({"options": []});
     }
     this.setState({"isLoading": true});
-    this.props.onFetchTypeahead(textQuery)
+    this.props.fetchTypeahead(textQuery)
       .then((data) => {
         this.setState({
           "isLoading": false,
@@ -175,5 +175,5 @@ SearchBox.propTypes = {
   "t": PropTypes.func.isRequired,
   "defaultValue": PropTypes.string,
   "onSetValue": PropTypes.func.isRequired,
-  "onFetchTypeahead": PropTypes.func.isRequired,
+  "fetchTypeahead": PropTypes.func.isRequired,
 };

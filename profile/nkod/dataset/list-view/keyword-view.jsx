@@ -1,25 +1,33 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {QUERY_DATASET_LIST_KEYWORD, register} from "../../../client-api";
-import FacetView from "../../user-iterface/facet-view";
+import FacetView from "./facet-view";
 import {DATASET_LIST_KEYWORD_VIEW} from "../../nkod-component-names";
 
-function KeywordContainer(
-  {keywords, onToggleFacet, onFetchMoreFacets}) {
-  //
+function KeywordContainer(props) {
+  const toggleFacet = (item) =>
+    props.toggleFacet(QUERY_DATASET_LIST_KEYWORD, item.code);
+  const fetchMore = (value) =>
+    props.fetchMoreFacet(QUERY_DATASET_LIST_KEYWORD, value);
   return (
     <FacetView
-      items={keywords}
-      onToggle={(item) => onToggleFacet(QUERY_DATASET_LIST_KEYWORD, item.iri)}
-      fetchMore={(value) => onFetchMoreFacets(QUERY_DATASET_LIST_KEYWORD, value)}
-    />
+      t={props.t}
+      itemToLabel={(item) => item["code"]}
+      items={props.keywords}
+      count={props.keywordsCount}
+      allFetched={props.keywordsAllFetched}
+      toggleFacet={toggleFacet}
+      fetchMore={fetchMore}/>
   )
 }
 
 KeywordContainer.propTypes = {
+  "t": PropTypes.func.isRequired,
   "keywords": PropTypes.arrayOf(PropTypes.object).isRequired,
-  "onToggleFacet": PropTypes.func.isRequired,
-  "onFetchMoreFacets": PropTypes.func.isRequired,
+  "keywordsCount": PropTypes.number.isRequired,
+  "keywordsAllFetched": PropTypes.bool.isRequired,
+  "toggleFacet": PropTypes.func.isRequired,
+  "fetchMoreFacet": PropTypes.func.isRequired,
 };
 
 register({

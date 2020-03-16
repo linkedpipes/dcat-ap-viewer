@@ -42,13 +42,13 @@ export const QUERY_DATASET_LIST_FORMAT = "format";
 
 export const QUERY_DATASET_LIST_PAGE = "page";
 
-export const QUERY_DATASET_LIST_PAGE_SIZE = "page-size";
+export const QUERY_DATASET_LIST_PAGE_SIZE = "pagesize";
 
 export const QUERY_DATASET_LIST_SEARCH = "search";
 
-export const QUERY_DATASET_LIST_TEMPORAL_END = "temporal-end";
+export const QUERY_DATASET_LIST_TEMPORAL_END = "temporalEnd";
 
-export const QUERY_DATASET_LIST_TEMPORAL_START = "temporal-start";
+export const QUERY_DATASET_LIST_TEMPORAL_START = "temporalStart";
 
 export const QUERY_DATASET_LIST_VIEW = "view";
 
@@ -58,4 +58,12 @@ export const QUERY_DATASET_LIST_PUBLISHER = "publisher";
 
 export const QUERY_LANGUAGE = "language";
 
-export const QEURY_DATASET_DETAIL_IRI = "iri";
+export const QUERY_DATASET_DETAIL_IRI = "iri";
+
+export const PUBLISHERS = "publisher";
+
+export const KEYWORDS = "keyword";
+
+export const THEMES = "theme";
+
+export const FORMATS = "format";

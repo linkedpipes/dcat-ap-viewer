@@ -16,9 +16,13 @@ class DatasetList {
   datasets: Dataset[] = [];
   datasetsCount?: number;
   themes: Facet[] = [];
+  themesCount?: number;
   keywords: Facet[] = [];
+  keywordsCount?: number;
   publishers: Facet[] = [];
+  publishersCount?: number;
   formats: Facet[] = [];
+  formatsCount?: number;
 }
 
 class Dataset {
@@ -32,17 +36,19 @@ class Dataset {
   spatial?: string;
   keywords: Literal[] = [];
   themes: string[] = [];
+  order: number;
 
-  constructor(iri: string) {
+  constructor(iri: string, order: number) {
     this.iri = iri;
+    this.order = order;
   }
 }
 
 interface Facet {
   iri: string;
   count: number;
-  // Used if IRI can not be used to identify the facet.
-  code?: string;
+  // Used to identify the facet for purpose of query.
+  code: string;
 }
 
 export default function jsonLdToDatasetList(jsonld: JsonLdEntity[])
@@ -50,14 +56,22 @@ export default function jsonLdToDatasetList(jsonld: JsonLdEntity[])
   //
   const result = new DatasetList();
   const metadataEntry = getEntityByType(jsonld, LP.DatasetListMetadata);
-  result.datasetsCount = Number(getValue(metadataEntry, LP.datasetsCount));
+  if (metadataEntry) {
+    result.datasetsCount = Number(getValue(metadataEntry, LP.datasetsCount));
+  }
   const facetEntries = getEntitiesByType(jsonld, LP.Facet);
   for (let entry of facetEntries) {
     const count = Number(getValue(entry, LP.count));
     const type = getResource(entry, LP.facet);
+    let code = getValue(entry, LP.code);
+    if (code === undefined) {
+      code = getId(entry);
+    } else {
+      code = String(code);
+    }
     const facet: Facet = {
       "iri": getId(entry),
-      "code": String(getValue(entry, LP.code)),
+      "code": code,
       "count": count,
     };
     switch (type) {
@@ -75,10 +89,28 @@ export default function jsonLdToDatasetList(jsonld: JsonLdEntity[])
         break;
     }
   }
-
+  const facetMetadataEntries = getEntitiesByType(jsonld, LP.FacetMetadata);
+  for (let entry of facetMetadataEntries) {
+    const count = Number(getValue(entry, LP.count));
+    switch (getResource(entry, LP.facet)) {
+      case LP.keyword:
+        result.keywordsCount = count;
+        break;
+      case LP.format:
+        result.formatsCount = count;
+        break;
+      case LP.publisher:
+        result.publishersCount = count;
+        break;
+      case LP.theme:
+        result.themesCount = count;
+        break;
+    }
+  }
   const datasetEntries = getEntitiesByType(jsonld, DCAT.Dataset);
   for (let entry of datasetEntries) {
-    const dataset = new Dataset(getId(entry));
+    const order = Number(getValue(entry, LP.order));
+    const dataset = new Dataset(getId(entry), order);
     dataset.accrualPeriodicity = getResource(entry, DCTERMS.accrualPeriodicity);
     dataset.description = getStrings(entry, DCTERMS.description);
     dataset.formats = getResources(entry, DCTERMS.format);
@@ -90,8 +122,7 @@ export default function jsonLdToDatasetList(jsonld: JsonLdEntity[])
     dataset.themes = getResources(entry, DCAT.theme);
     result.datasets.push(dataset);
   }
-
-  // Sort in decreasing order.
+  // Sort, facets in decreasing order, datasets in increasing.
   result.keywords.sort(
     (left, right) => -(left.count - right.count));
   result.formats.sort(
@@ -100,6 +131,7 @@ export default function jsonLdToDatasetList(jsonld: JsonLdEntity[])
     (left, right) => -(left.count - right.count));
   result.themes.sort(
     (left, right) => -(left.count - right.count));
-
+  result.datasets.sort(
+    (left, right) => left.order - right.order);
   return result;
 }

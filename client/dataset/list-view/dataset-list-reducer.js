@@ -1,6 +1,7 @@
 import {
   DATASET_LIST_MOUNT,
   DATASET_LIST_UNMOUNT,
+  // DATASET_LIST_SET_VISIBLE_FACETS,
 } from "./dataset-list-actions";
 import {
   FETCH_DATASET_LIST,
@@ -9,13 +10,19 @@ import {
 } from "../../api/api-action";
 import jsonLdToDatasetList from "./jsonld-to-dataset-list";
 import {randomColor} from "randomcolor";
+import {
+  THEMES,
+  KEYWORDS,
+  PUBLISHERS,
+  FORMATS,
+} from "../../app/component-list";
 
 const NAME = "dataset-list";
 
 const initialStatus = {
   "mounted": false,
   /**
-   * Set to true once data ara available. The data may not be up-to date.
+   * If false a loading dialog is shown.
    */
   "ready": false,
   /**
@@ -26,13 +33,17 @@ const initialStatus = {
   "datasetsCount": undefined,
   "datasets": [],
   "themes": [],
-  "themesFetched": false,
+  "themesCount": undefined,
+  // "themesVisible": DEFAULT_FACET_SIZE,
   "keywords": [],
-  "keywordsFetched": false,
+  "keywordsCount": undefined,
+  // "keywordsVisible": DEFAULT_FACET_SIZE,
   "publishers": [],
-  "publishersFetched": false,
+  "publishersCount": undefined,
+  // "publishersVisible": DEFAULT_FACET_SIZE,
   "formats": [],
-  "formatsFetched": false,
+  "formatsCount": undefined,
+  // "formatsVisible": DEFAULT_FACET_SIZE,
   // We store entities here
   "colors": {},
 };
@@ -43,6 +54,8 @@ function reducer(state = initialStatus, action) {
       return onMount(state);
     case DATASET_LIST_UNMOUNT:
       return onUnMount(state);
+    // case DATASET_LIST_SET_VISIBLE_FACETS:
+    //   return onSetFacetVisibleSize(state, action);
     case FETCH_DATASET_LIST:
       return onFetchDatasetList(state, action);
     case FETCH_DATASET_LIST_SUCCESS:
@@ -69,7 +82,7 @@ function onUnMount(state) {
     "ready": false,
     "locked": false,
     "error": 0,
-    "datasets": false,
+    "datasets": [],
   };
 }
 
@@ -95,13 +108,13 @@ function onFetchDatasetListSuccess(state, action) {
     "datasetsCount": data.datasetsCount,
     "datasets": data.datasets,
     "themes": data.themes,
-    "themesFetched": false,
+    "themesCount": data.themesCount,
     "keywords": data.keywords,
-    "keywordsFetched": false,
+    "keywordsCount": data.keywordsCount,
     "publishers": data.publishers,
-    "publishersFetched": false,
+    "publishersCount": data.publishersCount,
     "formats": data.formats,
-    "formatsFetched": false,
+    "formatsCount": data.formatsCount,
     "colors": colors,
   }
 }
@@ -171,13 +184,13 @@ export function selectDatasetListLocked(state) {
 
 export function selectFacet(state, type) {
   switch (type) {
-    case "publisher": // TODO Replace with CONST from component-list file
+    case PUBLISHERS:
       return reducerSelector(state).publishers;
-    case "theme":
+    case THEMES:
       return reducerSelector(state).themes;
-    case "keyword":
+    case KEYWORDS:
       return reducerSelector(state).keywords;
-    case "format":
+    case FORMATS:
       return reducerSelector(state).formats;
     default:
       console.error("Unknown facet type:", type);
@@ -185,19 +198,36 @@ export function selectFacet(state, type) {
   }
 }
 
-export function selectFacetAllFetched() { // state, type
-  // switch (type) {
-  //   case "publisher":
-  //     return reducerSelector(state).publishersFetched;
-  //   case "theme":
-  //     return reducerSelector(state).themesFetched;
-  //   case "keyword":
-  //     return reducerSelector(state).keywordsFetched;
-  //   case "format":
-  //     return reducerSelector(state).formatsFetched;
-  //   default:
-  //     console.error("Unknown facet type:", type);
-  //     return true;
-  // }
-  return true;
+export function selectFacetCount(state, type) {
+  state = reducerSelector(state);
+  switch (type) {
+    case PUBLISHERS:
+      return state.publishersCount;
+    case THEMES:
+      return state.themesCount;
+    case KEYWORDS:
+      return state.keywordsCount;
+    case FORMATS:
+      return state.formatsCount;
+    default:
+      console.error("Unknown facet type:", type);
+      return true;
+  }
+}
+
+export function selectFacetAllFetched(state, type) {
+  state = reducerSelector(state);
+  switch (type) {
+    case PUBLISHERS:
+      return state.publishers.length === state.publishersCount;
+    case THEMES:
+      return state.themes.length === state.themesCount;
+    case KEYWORDS:
+      return state.keywords.length === state.keywordsCount;
+    case FORMATS:
+      return state.formats.length === state.formatsCount;
+    default:
+      console.error("Unknown facet type:", type);
+      return true;
+  }
 }

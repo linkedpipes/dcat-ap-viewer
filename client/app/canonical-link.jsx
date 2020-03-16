@@ -3,11 +3,10 @@ import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
 import {Helmet} from "react-helmet";
 import {selectUrl, createUrl, getAllLanguages} from "./navigation";
-import {getGlobal} from "./globals";
+import {getGlobal, MAIN_LANGUAGE} from "./globals";
 
 function CanonicalLink({url}) {
-  // TODO Get default language from configuration.
-  const mainLanguage = getGlobal("main-language");
+  const mainLanguage = getGlobal(MAIN_LANGUAGE);
   return (
     <Helmet>
       <link

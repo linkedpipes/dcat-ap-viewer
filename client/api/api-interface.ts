@@ -2,14 +2,18 @@ import {JsonLdEntity} from "../jsonld/model";
 import {createServerHttpApi} from "./api-server-http";
 
 export interface DatasetListQuery {
-  search?:string;
+  offset: number; // Dataset
+  limit: number; // Dataset
+  sort?: string;
+  search?: string;
   publisher: string[];
+  publisherLimit: number;
   theme: string[];
+  themeLimit: number;
   keyword: string[];
+  keywordLimit: number;
   format: string[];
-  page: number;
-  pageSize: number;
-  sort: string;
+  formatLimit: number;
   temporalStart?: string;
   temporalEnd?: string;
 }
@@ -24,10 +28,7 @@ export interface Api {
   fetchDataset(language: string, iri: string): FlatJsonLdPromise;
 
   fetchDatasetTypeahead(
-    language: string, text: string, query: DatasetListQuery): FlatJsonLdPromise;
-
-  fetchDatasetFacets(language: string, name: string, amount: number)
-    : FlatJsonLdPromise;
+    language: string, query: DatasetListQuery, text: string): FlatJsonLdPromise;
 
   fetchDistribution(language: string, iri: string): FlatJsonLdPromise;
 
@@ -51,4 +52,41 @@ export interface Api {
 
 export function createApiImplementation(): Api {
   return createServerHttpApi();
+}
+
+export function areDatasetListQueryEqual(
+  left: DatasetListQuery,
+  right?: DatasetListQuery): boolean {
+  if (right === undefined) {
+    return false;
+  }
+  return left.offset === right.offset
+    && left.limit === right.limit
+    && left.sort === right.sort
+    && left.search === right.search
+    && arraysAreEqual(left.publisher, right.publisher)
+    && left.publisherLimit === right.publisherLimit
+    && arraysAreEqual(left.theme, right.theme)
+    && left.themeLimit === right.themeLimit
+    && arraysAreEqual(left.keyword, right.keyword)
+    && left.keywordLimit === right.keywordLimit
+    && arraysAreEqual(left.format, right.format)
+    && left.formatLimit === right.formatLimit
+    && left.temporalStart === right.temporalStart
+    && left.temporalEnd === right.temporalEnd;
+}
+
+function arraysAreEqual(left: string[], right?: string[]): boolean {
+  if (right === undefined) {
+    return false;
+  }
+  if (left.length !== right.length) {
+    return false;
+  }
+  for (let index = 0; index < left.length; ++index) {
+    if (left[index] !== right[index]) {
+      return false;
+    }
+  }
+  return true;
 }

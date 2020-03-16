@@ -1,19 +1,11 @@
 import React from "react";
-import {connect} from "react-redux";
 import {Col, Container, Row} from "reactstrap";
 import {
   ELEMENT_DATASET_LIST,
   register,
-  selectT,
-  selectTLabel,
-  selectQuery,
-  QUERY_DATASET_LIST_VIEW,
-  QUERY_DATASET_LIST_PUBLISHER,
-  QUERY_DATASET_LIST_PAGE,
-  QUERY_DATASET_LIST_PAGE_SIZE,
-  getGlobal,
   getRegisteredElement,
-  PAGE_SIZE_DEFAULT,
+  selectT,
+  selectTLabel, getGlobal, DEFAULT_FACET_SIZE,
 } from "../../../client-api";
 import {PropTypes} from "prop-types";
 import {Status} from "../../user-iterface/status";
@@ -24,70 +16,227 @@ import {
   DATASET_LIST_THEME_VIEW,
 } from "../../nkod-component-names";
 import QueryElement from "./query-element";
+import {connect} from "react-redux";
+import {
+  paramsToViewQuery,
+  viewQueryToDatasetListQuery,
+  viewQueryToNavigation,
+  createDefaultQuery,
+} from "./dataset-list-query";
 
-function DatasetList(props) {
-  if (props.error > 0 || !props.ready) {
-    // TODO Use only for initial data loading !
-    return (
-      <Status t={props.t} error={props.error} ready={props.ready}/>
-    )
+// We ask for more facets by default that we need to prevent
+// immediate fetch as user expand the facets.
+const REQUEST_ADDITIONAL_FACETS = 3;
+
+class DatasetList extends React.PureComponent {
+
+  constructor(props) {
+    super(props);
+    this.fetchMoreFacet = this.fetchMoreFacet.bind(this);
+    this.toggleFacet = this.toggleFacet.bind(this);
+    this.updateView = this.updateView.bind(this);
+    this.selectViewElement = this.selectViewElement.bind(this);
+    this.onDatasetsPage = this.onDatasetsPage.bind(this);
+    this.onDatasetsPageSize = this.onDatasetsPageSize.bind(this);
+    this.onDatasetsSort = this.onDatasetsSort.bind(this);
+    this.onSetSearchText = this.onSetSearchText.bind(this);
+    this.onClearFilters = this.onClearFilters.bind(this);
+    this.onSetTemporal = this.onSetTemporal.bind(this);
+    //
+    const facetSize = getGlobal(DEFAULT_FACET_SIZE);
+    this.state = {
+      "publisherLimit": facetSize * REQUEST_ADDITIONAL_FACETS,
+      "themeLimit": facetSize * REQUEST_ADDITIONAL_FACETS,
+      "keywordLimit": facetSize * REQUEST_ADDITIONAL_FACETS,
+      "formatLimit": facetSize * REQUEST_ADDITIONAL_FACETS,
+      "initialised": true,
+      "showMore": 0,
+    };
   }
 
-  const FacetFilters = getRegisteredElement(DATASET_LIST_FACET_FILTERS);
-  const QueryInputContainer = props.queryInputContainer;
-  const ViewContainer = props.viewContainer;
+  // TODO We may compute query only once and add it to props.
+  // static getDerivedStateFromProps(props, state) {
+  //   return {
+  //     "viewQuery": paramsToViewQuery(props.query, state),
+  //   };
+  // }
 
-  const onSetView = (value) => {
-    if (value === 0) {
-      // For 0 we use no value - i.e. the default.
-      value = undefined;
-    }
-    // We keep all other values so user can go back to the dataset list.
-    props.search({
-      ...props.query,
-      [QUERY_DATASET_LIST_VIEW]: value,
-    })
-  };
+  componentDidMount() {
+    const viewQuery = paramsToViewQuery(this.props.query, this.state);
+    const datasetQuery = viewQueryToDatasetListQuery(viewQuery);
+    this.props.onFetchDatasets(datasetQuery);
+    //
+    this.FacetFilters = getRegisteredElement(DATASET_LIST_FACET_FILTERS);
+    this.QueryElement = this.props.withTypeaheadProps(QueryElement);
+    this.DatasetView = this.props.withViewProps(
+      getRegisteredElement(DATASET_LIST_DATASET_VIEW));
+    this.KeywordView = this.props.withViewProps(
+      getRegisteredElement(DATASET_LIST_KEYWORD_VIEW));
+    this.ThemeView = this.props.withViewProps(
+      getRegisteredElement(DATASET_LIST_THEME_VIEW));
+    //
+    this.setState({"initialised": true});
+  }
 
-  return (
-    <Container>
-      <Row>
-        <FacetFilters
-          t={props.t}
-          tLabel={props.tLabel}
-          facetContainer={props.facetContainer}
+  componentDidUpdate(prevProps, prevState) {
+    const nextViewQuery = paramsToViewQuery(this.props.query, this.state);
+    const nextDatasetQuery = viewQueryToDatasetListQuery(nextViewQuery);
+    const prevViewQuery = paramsToViewQuery(prevProps.query, prevState);
+    const prevDatasetQuery = viewQueryToDatasetListQuery(prevViewQuery);
+    this.props.onFetchDatasets(nextDatasetQuery, prevDatasetQuery);
+  }
+
+  render() {
+    if (this.props.error > 0 || !this.props.ready) {
+      return (
+        <Status
+          t={this.props.t}
+          error={this.props.error}
+          ready={this.props.ready}
         />
-        <Col xs={12} md={9}>
-          <div className="m-md-1">
-            <QueryInputContainer>
-              <QueryElement onSetView={onSetView}/>
-            </QueryInputContainer>
-          </div>
-          <div className="m-md-1">
-            <ViewContainer>
-              {ActiveView(props)}
-            </ViewContainer>
-          </div>
-        </Col>
-      </Row>
-    </Container>
-  )
+      )
+    }
+    //
+    const query = paramsToViewQuery(this.props.query, this.state);
+    const {FacetFilters, QueryElement} = this;
+    const ViewElement = this.selectViewElement(query.view);
+    return (
+      <Container>
+        <Row>
+          <Col xs={12} md={3}>
+            <FacetFilters
+              t={this.props.t}
+              tLabel={this.props.tLabel}
+              withFacetProps={this.props.withFacetProps}
+              fetchMoreFacet={this.fetchMoreFacet}
+              toggleFacet={this.toggleFacet}
+              activeFacet={query}
+              fetchLabels={this.props.fetchLabels}
+            />
+          </Col>
+          <Col xs={12} md={9}>
+            <div className="m-md-1">
+              <QueryElement
+                t={this.props.t}
+                query={query}
+                onSetView={this.updateView}
+                onSetSearchText={this.onSetSearchText}
+                onClearFilters={this.onClearFilters}
+                onSetTemporal={this.onSetTemporal}
+              />
+            </div>
+            <div className="m-md-1">
+              <ViewElement
+                t={this.props.t}
+                tLabel={this.props.tLabel}
+                query={query}
+                onDatasetsPage={this.onDatasetsPage}
+                onDatasetsPageSize={this.onDatasetsPageSize}
+                onDatasetsSort={this.onDatasetsSort}
+                toggleFacet={this.toggleFacet}
+                fetchMoreFacet={this.fetchMoreFacet}
+                fetchLabels={this.props.fetchLabels}
+              />
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
+
+  fetchMoreFacet(facetName, count) {
+    const key = facetName + "Limit";
+    this.setState({[key]: count});
+  }
+
+  toggleFacet(facetName, value) {
+    const query = paramsToViewQuery(this.props.query, this.state);
+    const index = query[facetName].indexOf(value);
+    if (index > -1) {
+      query[facetName].splice(index, 1)
+    } else {
+      query[facetName].push(value);
+    }
+    this.props.onUpdateNavigation(viewQueryToNavigation(query));
+  }
+
+  updateView(value) {
+    const query = paramsToViewQuery(
+      this.props.query, this.state, ["page", "pageSize", "sort"]);
+    query.view = value;
+    this.props.onUpdateNavigation(viewQueryToNavigation(query));
+  }
+
+  selectViewElement(view) {
+    switch (view) {
+      case 1:
+        return this.KeywordView;
+      case 2:
+        return this.ThemeView;
+      case 0:
+      default:
+        return this.DatasetView;
+    }
+  }
+
+  onDatasetsPage(page) {
+    const query = paramsToViewQuery(this.props.query, this.state);
+    query.page = page;
+    this.props.onUpdateNavigation(viewQueryToNavigation(query));
+  }
+
+  onDatasetsPageSize(size) {
+    const query = paramsToViewQuery(this.props.query, this.state);
+    query.page = 0;
+    query.pageSize = size;
+    this.props.onUpdateNavigation(viewQueryToNavigation(query));
+  }
+
+  onDatasetsSort(sortBy) {
+    const query = paramsToViewQuery(this.props.query, this.state);
+    query.sort = sortBy;
+    this.props.onUpdateNavigation(viewQueryToNavigation(query));
+  }
+
+  onSetSearchText(search) {
+    const query = paramsToViewQuery(
+      this.props.query, this.state, ["page", "pageSize", "sort"]);
+    query.search = search;
+    this.props.onUpdateNavigation(viewQueryToNavigation(query));
+  }
+
+  onClearFilters() {
+    const query = createDefaultQuery();
+    this.props.onUpdateNavigation(viewQueryToNavigation(query));
+  }
+
+  onSetTemporal(start, end) {
+    const query = paramsToViewQuery(
+      this.props.query, this.state, ["page", "pageSize", "sort"]);
+    query.temporalStart = start;
+    query.temporalEnd = end;
+    this.props.onUpdateNavigation(viewQueryToNavigation(query));
+  }
+
+  onShowMoreDatasets() {
+
+  }
+
 }
 
 DatasetList.propTypes = {
   "t": PropTypes.func.isRequired,
   "tLabel": PropTypes.func.isRequired,
-  "facetContainer": PropTypes.object.isRequired,
-  "queryInputContainer": PropTypes.object.isRequired,
-  "viewContainer": PropTypes.object.isRequired,
+  //
   "ready": PropTypes.bool.isRequired,
   "error": PropTypes.number.isRequired,
   "query": PropTypes.object.isRequired,
-  "search": PropTypes.func.isRequired,
-  "onFetchMore": PropTypes.func.isRequired,
-  "onUpdatePage": PropTypes.func.isRequired,
-  "onUpdatePageSize": PropTypes.func.isRequired,
-  "onSortSet": PropTypes.func.isRequired,
+  "onFetchDatasets": PropTypes.func.isRequired,
+  "onUpdateNavigation": PropTypes.func.isRequired,
+  "withFacetProps": PropTypes.func.isRequired,
+  "withTypeaheadProps": PropTypes.func.isRequired,
+  "withViewProps": PropTypes.func.isRequired,
+  "fetchLabels": PropTypes.func.isRequired,
 };
 
 register({
@@ -95,95 +244,5 @@ register({
   "element": connect((state) => ({
     "t": selectT(state),
     "tLabel": selectTLabel(state),
-    "query": selectQuery(state),
   }))(DatasetList),
 });
-
-function ActiveView(props) {
-  const DatasetsView = getRegisteredElement(DATASET_LIST_DATASET_VIEW);
-  const KeywordView = getRegisteredElement(DATASET_LIST_KEYWORD_VIEW);
-  const ThemeView = getRegisteredElement(DATASET_LIST_THEME_VIEW);
-  //
-  const view = props.query[QUERY_DATASET_LIST_VIEW] ?
-    parseInt(props.query[QUERY_DATASET_LIST_VIEW][0]) : 0;
-  switch (view) {
-    case 1:
-      return (
-        <KeywordView/>
-      );
-    case 2:
-      return (
-        <ThemeView/>
-      );
-    case 0:
-    default:
-      // TODO ADD FUNCTION IMPLEMENTATION
-      return (
-        <DatasetsView
-          showPublisher={getShowPublisher(props.query)}
-          page={getPage(props.query)}
-          pageSize={getPageSize(props.query)}
-          onFetchMore={props.onFetchMore}
-          onUpdatePage={(page) => onUpdatePage(page, props.onUpdatePage)}
-          onUpdatePageSize={
-            (size) => onUpdatePageSize(size, props.onUpdatePageSize)}
-          onSortSet={(value) => onUpdateSort(value, props.onSortSet)}
-          query={props.query}
-        />
-      );
-  }
-}
-
-ActiveView.propTypes = {
-  "query": PropTypes.object.isRequired,
-  "themes": PropTypes.array.isRequired,
-  "keywords": PropTypes.array.isRequired,
-  "onFetchMore": PropTypes.func.isRequired,
-  "onUpdatePage": PropTypes.func.isRequired,
-  "onUpdatePageSize": PropTypes.func.isRequired,
-  "onSortSet": PropTypes.func.isRequired,
-};
-
-function getShowPublisher(query) {
-  return !(query[QUERY_DATASET_LIST_PUBLISHER] &&
-    query[QUERY_DATASET_LIST_PUBLISHER].length > 0);
-}
-
-function getPage(query) {
-  return query[QUERY_DATASET_LIST_PAGE] ?
-    parseInt(query[QUERY_DATASET_LIST_PAGE][0]) - 1 : 0;
-}
-
-function getPageSize(query) {
-  const defaultPageSize = getGlobal(PAGE_SIZE_DEFAULT);
-  return query[QUERY_DATASET_LIST_PAGE_SIZE] ?
-    parseInt(query[QUERY_DATASET_LIST_PAGE_SIZE][0]) : defaultPageSize;
-}
-
-function onUpdatePage(page, action) {
-  if (page === 0) {
-    page = undefined;
-  } else {
-    // We count from 1 not 0.
-    page += 1;
-  }
-  action(page);
-}
-
-function onUpdatePageSize(pageSize, action) {
-  // Hyde default values.
-  const defaultPageSize = getGlobal(PAGE_SIZE_DEFAULT);
-  if (pageSize === defaultPageSize) {
-    action(undefined);
-  } else {
-    action(pageSize);
-  }
-}
-
-function onUpdateSort(value, action) {
-  const defaultSort = getGlobal("dataset-list-sort-default");
-  if (value === defaultSort) {
-    value = undefined;
-  }
-  action(value);
-}

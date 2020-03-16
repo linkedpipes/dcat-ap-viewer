@@ -183,12 +183,14 @@ export const LP = {
   "Keyword": LP_PREFIX + "Keyword",
   "DatasetListMetadata": LP_PREFIX + "DatasetListMetadata",
   "Facet": LP_PREFIX + "Facet",
+  "FacetMetadata": LP_PREFIX + "FacetMetadata",
   "facet": LP_PREFIX + "facet",
   "keyword": LP_PREFIX + "keyword",
   "format": LP_PREFIX + "format",
   "publisher": LP_PREFIX + "publisher",
   "theme": LP_PREFIX + "theme",
   "code": LP_PREFIX + "code",
+  "order": LP_PREFIX + "order",
 };
 
 const FEL_PREFIX = "http://onto.fel.cvut.cz/ontologies/slovnik/agendovy/popis-dat/pojem/";
