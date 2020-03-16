@@ -13,6 +13,7 @@ export function paramsToViewQuery(params, state, keepDefault = []) { // params
     "themeLimit": state["themeLimit"],
     "keywordLimit": state["keywordLimit"],
     "formatLimit": state["formatLimit"],
+    "showMore": state["showMore"],
   };
   // We may need to preserve some defaults, can be used
   // to hyde them in URL params.
@@ -80,12 +81,13 @@ export function viewQueryToDatasetListQuery(query) {
   const result = {
     ...query,
     "offset": query["page"] * query["pageSize"],
-    "limit": query["pageSize"],
+    "limit": query["pageSize"] + query["showMore"],
   };
   // Remove parameters specific to this component.
   delete result["page"];
   delete result["pageSize"];
   delete result["view"];
+  delete result["showMore"];
   return result;
 }
 

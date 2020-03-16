@@ -16,6 +16,7 @@ import Paginator from "../../user-iterface/paginator";
 import DatasetsViewHeader from "./datasets-view-header";
 import DatasetListItem from "./datasets-view-item";
 import {DATASET_LIST_DATASET_VIEW} from "../../nkod-component-names";
+import {Button} from "reactstrap";
 
 const PAGE_SIZES = [getGlobal(PAGE_SIZE_DEFAULT), 20, 40, 80];
 
@@ -43,6 +44,14 @@ function DatasetsView(props) {
         ))}
       </div>
       <br/>
+      {getShowMoreVisible(props.datasetsCount, props.query, props.datasets) && (
+        <React.Fragment>
+          <Button onClick={props.onShowMoreDatasets}>
+            {props.t("facet.show_more")}
+          </Button>
+          <br/>
+        </React.Fragment>
+      )}
       <Paginator
         recordsCount={props.datasetsCount}
         pageIndex={props.query["page"]}
@@ -65,6 +74,7 @@ DatasetsView.propTypes = {
   "onDatasetsPage": PropTypes.func.isRequired,
   "onDatasetsPageSize": PropTypes.func.isRequired,
   "onDatasetsSort": PropTypes.func.isRequired,
+  "onShowMoreDatasets": PropTypes.func.isRequired,
   "fetchLabels": PropTypes.func.isRequired,
   // From view container.
   "datasets": PropTypes.array.isRequired,
@@ -86,4 +96,9 @@ register({
 function getShowPublisher(query) {
   return !(query[QUERY_DATASET_LIST_PUBLISHER] &&
     query[QUERY_DATASET_LIST_PUBLISHER].length > 0);
+}
+
+function getShowMoreVisible(datasetCount, query, datasets) {
+  const lastVisible = (query["page"] * query["pageSize"]) + datasets.length;
+  return lastVisible < datasetCount;
 }

@@ -28,13 +28,15 @@ import {
 // immediate fetch as user expand the facets.
 const REQUEST_ADDITIONAL_FACETS = 3;
 
+const SHOW_MORE_DATASETS = 12;
+
 class DatasetList extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.fetchMoreFacet = this.fetchMoreFacet.bind(this);
-    this.toggleFacet = this.toggleFacet.bind(this);
-    this.updateView = this.updateView.bind(this);
+    this.onFetchMoreFacet = this.onFetchMoreFacet.bind(this);
+    this.onToggleFacet = this.onToggleFacet.bind(this);
+    this.onSetView = this.onSetView.bind(this);
     this.selectViewElement = this.selectViewElement.bind(this);
     this.onDatasetsPage = this.onDatasetsPage.bind(this);
     this.onDatasetsPageSize = this.onDatasetsPageSize.bind(this);
@@ -42,6 +44,7 @@ class DatasetList extends React.PureComponent {
     this.onSetSearchText = this.onSetSearchText.bind(this);
     this.onClearFilters = this.onClearFilters.bind(this);
     this.onSetTemporal = this.onSetTemporal.bind(this);
+    this.onShowMoreDatasets = this.onShowMoreDatasets.bind(this);
     //
     const facetSize = getGlobal(DEFAULT_FACET_SIZE);
     this.state = {
@@ -108,8 +111,8 @@ class DatasetList extends React.PureComponent {
               t={this.props.t}
               tLabel={this.props.tLabel}
               withFacetProps={this.props.withFacetProps}
-              fetchMoreFacet={this.fetchMoreFacet}
-              toggleFacet={this.toggleFacet}
+              fetchMoreFacet={this.onFetchMoreFacet}
+              toggleFacet={this.onToggleFacet}
               activeFacet={query}
               fetchLabels={this.props.fetchLabels}
             />
@@ -119,7 +122,7 @@ class DatasetList extends React.PureComponent {
               <QueryElement
                 t={this.props.t}
                 query={query}
-                onSetView={this.updateView}
+                onSetView={this.onSetView}
                 onSetSearchText={this.onSetSearchText}
                 onClearFilters={this.onClearFilters}
                 onSetTemporal={this.onSetTemporal}
@@ -133,8 +136,9 @@ class DatasetList extends React.PureComponent {
                 onDatasetsPage={this.onDatasetsPage}
                 onDatasetsPageSize={this.onDatasetsPageSize}
                 onDatasetsSort={this.onDatasetsSort}
-                toggleFacet={this.toggleFacet}
-                fetchMoreFacet={this.fetchMoreFacet}
+                onShowMoreDatasets={this.onShowMoreDatasets}
+                toggleFacet={this.onToggleFacet}
+                fetchMoreFacet={this.onFetchMoreFacet}
                 fetchLabels={this.props.fetchLabels}
               />
             </div>
@@ -144,12 +148,12 @@ class DatasetList extends React.PureComponent {
     );
   }
 
-  fetchMoreFacet(facetName, count) {
+  onFetchMoreFacet(facetName, count) {
     const key = facetName + "Limit";
     this.setState({[key]: count});
   }
 
-  toggleFacet(facetName, value) {
+  onToggleFacet(facetName, value) {
     const query = paramsToViewQuery(this.props.query, this.state);
     const index = query[facetName].indexOf(value);
     if (index > -1) {
@@ -157,13 +161,15 @@ class DatasetList extends React.PureComponent {
     } else {
       query[facetName].push(value);
     }
+    this.setState({"showMore": 0});
     this.props.onUpdateNavigation(viewQueryToNavigation(query));
   }
 
-  updateView(value) {
+  onSetView(value) {
     const query = paramsToViewQuery(
       this.props.query, this.state, ["page", "pageSize", "sort"]);
     query.view = value;
+    this.setState({"showMore": 0});
     this.props.onUpdateNavigation(viewQueryToNavigation(query));
   }
 
@@ -182,6 +188,7 @@ class DatasetList extends React.PureComponent {
   onDatasetsPage(page) {
     const query = paramsToViewQuery(this.props.query, this.state);
     query.page = page;
+    this.setState({"showMore": 0});
     this.props.onUpdateNavigation(viewQueryToNavigation(query));
   }
 
@@ -189,6 +196,7 @@ class DatasetList extends React.PureComponent {
     const query = paramsToViewQuery(this.props.query, this.state);
     query.page = 0;
     query.pageSize = size;
+    this.setState({"showMore": 0});
     this.props.onUpdateNavigation(viewQueryToNavigation(query));
   }
 
@@ -202,11 +210,14 @@ class DatasetList extends React.PureComponent {
     const query = paramsToViewQuery(
       this.props.query, this.state, ["page", "pageSize", "sort"]);
     query.search = search;
+    this.setState({"showMore": 0});
     this.props.onUpdateNavigation(viewQueryToNavigation(query));
+
   }
 
   onClearFilters() {
     const query = createDefaultQuery();
+    this.setState({"showMore": 0});
     this.props.onUpdateNavigation(viewQueryToNavigation(query));
   }
 
@@ -215,11 +226,12 @@ class DatasetList extends React.PureComponent {
       this.props.query, this.state, ["page", "pageSize", "sort"]);
     query.temporalStart = start;
     query.temporalEnd = end;
+    this.setState({"showMore": 0});
     this.props.onUpdateNavigation(viewQueryToNavigation(query));
   }
 
   onShowMoreDatasets() {
-
+    this.setState({"showMore": this.state.showMore + SHOW_MORE_DATASETS});
   }
 
 }
