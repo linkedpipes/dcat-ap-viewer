@@ -6,7 +6,7 @@ module.exports = {
       "/catalogs": "/lokální-katalogy",
       "/publishers": "/poskytovatelé",
       "/keywords": "/klíčová-slova",
-      "/dataset": "/datová-sata",
+      "/dataset": "/datová-sada",
     },
     "query": {
       "keyword": "klíčová slova",
