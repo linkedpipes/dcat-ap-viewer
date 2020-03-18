@@ -117,5 +117,6 @@ export function viewQueryToNavigation(query) {
   delete result["themeLimit"];
   delete result["keywordLimit"];
   delete result["formatLimit"];
+  delete result["showMore"];
   return result;
 }
