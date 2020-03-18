@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types";
 import QualitySchemaIcon from "../quality/quality-schema-icon";
 
 export default function SchemaListItem(
-  {t, tLiteral, distribution, quality, openModal}) {
+  {t, tLabel, tLiteral, distribution, quality, openModal}) {
   if (distribution.conformsTo.length === 0) {
     return null;
   }
@@ -19,6 +19,7 @@ export default function SchemaListItem(
       </a>
       <QualitySchemaIcon
         t={t}
+        tLabel={tLabel}
         tLiteral={tLiteral}
         openModal={openModal}
         quality={quality}

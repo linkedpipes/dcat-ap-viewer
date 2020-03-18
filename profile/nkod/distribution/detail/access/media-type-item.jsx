@@ -24,6 +24,7 @@ export default function MediaTypeItem(
       </a>
       <QualityMediaTypeIcon
         t={t}
+        tLabel={tLabel}
         tLiteral={tLiteral}
         openModal={openModal}
         quality={quality}
