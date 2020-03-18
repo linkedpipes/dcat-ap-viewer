@@ -1,4 +1,4 @@
-import {getEntityByIri, getResource, getValue} from "../../jsonld";
+import {getEntityByIri, getResource, getStrings} from "../../jsonld";
 import {getEntityByType} from "../../jsonld";
 import {PU, DCAT} from "../../vocabulary/vocabulary";
 
@@ -21,9 +21,9 @@ export function jsonLdToTermsOfUse(jsonld) {
   const entity = getEntityByIri(jsonld, iri);
   return {
     "authorship": getResource(entity, PU.authorship),
-    "author": getValue(entity, PU.author),
+    "author": getStrings(entity, PU.author),
     "databaseAuthorship": getResource(entity, PU.databaseAuthorship),
-    "databaseAuthor": getValue(entity, PU.databaseAuthor),
+    "databaseAuthor": getStrings(entity, PU.databaseAuthor),
     "protectedDatabase": getResource(entity, PU.protectedDatabase),
     "personalData": getResource(entity, PU.personalData),
   };

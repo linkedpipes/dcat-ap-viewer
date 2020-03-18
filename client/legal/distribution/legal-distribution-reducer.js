@@ -37,6 +37,7 @@ function onUnMount() {
 }
 
 function onDistributionRequestSuccess(state, action) {
+  console.log("legal", jsonLdToTermsOfUse(action.jsonld));
   return {
     ...state,
     "distributions": {
