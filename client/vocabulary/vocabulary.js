@@ -53,6 +53,8 @@ export const DCAT = {
   "endpointDescription": DCAT_PREFIX + "endpointDescription",
   "temporalResolution": DCAT_PREFIX + "temporalResolution",
   "spatialResolutionInMeters": DCAT_PREFIX + "spatialResolutionInMeters",
+  "startDate": DCAT_PREFIX + "startDate",
+  "endDate": DCAT_PREFIX + "endDate",
 };
 
 const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";
@@ -88,8 +90,6 @@ export const VCARD = {
 
 const SCHEMA_PREFIX = "http://schema.org/";
 export const SCHEMA = {
-  "startDate": SCHEMA_PREFIX + "startDate",
-  "endDate": SCHEMA_PREFIX + "endDate",
   "Organization": SCHEMA_PREFIX + "Organization",
 };
 

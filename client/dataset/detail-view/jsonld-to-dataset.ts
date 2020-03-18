@@ -146,8 +146,8 @@ function loadTemporal(jsonld: JsonLdEntity[], dataset: JsonLdEntity) {
     return undefined;
   } else {
     return {
-      "startDate": getValue(temporal, SCHEMA.startDate),
-      "endDate": getValue(temporal, SCHEMA.endDate),
+      "startDate": getValue(temporal, DCAT.startDate),
+      "endDate": getValue(temporal, DCAT.endDate),
     };
   }
 }
