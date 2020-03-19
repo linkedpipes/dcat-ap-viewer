@@ -65,9 +65,9 @@ function convertDistribution(distribution) {
     "@type": "DataDownload",
   };
   let empty = true;
-  if (distribution["downloadUrl"]) {
+  if (distribution["downloadURL"]) {
     empty = false;
-    result["contentUrl"] = distribution["downloadURL"];
+    result["contentUrl"] = getFirst(distribution["downloadURL"]);
   }
   if (distribution["format"]) {
     empty = false;
@@ -77,4 +77,12 @@ function convertDistribution(distribution) {
     return undefined;
   }
   return result;
+}
+
+function getFirst(values) {
+  if (Array.isArray(values)) {
+    return values[0];
+  } else {
+    return values;
+  }
 }
