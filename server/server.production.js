@@ -1,7 +1,8 @@
 const express = require("express");
 const path = require("path");
-const config = require("./server-configuration");
+const helmet = require('helmet')
 
+const config = require("./server-configuration");
 const httpApi = require("./http-api");
 const logger = require("./logging");
 
@@ -10,6 +11,7 @@ const logger = require("./logging");
  */
 (function main() {
   const app = express();
+  app.use(helmet(config.helmet));
   if (config.serve_static_content) {
     initializeStatic(app, express);
   }

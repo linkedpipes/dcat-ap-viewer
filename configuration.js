@@ -18,6 +18,7 @@ const YAML  = require("yaml");
     "port": configuration["port"],
     "serve_static_content": configuration["server-static-content"],
     "providers": configuration["providers"],
+    "helmet": configuration["helmet"] || {},
     "client": {
       "profile": configuration["client"]["profile"],
       "title": {

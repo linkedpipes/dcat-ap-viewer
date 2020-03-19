@@ -4,8 +4,9 @@ const webpack = require("webpack");
 const webpackConfig = require("../build/webpack.develop.js");
 const webpackMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
-const config = require("./server-configuration");
+const helmet = require('helmet')
 
+const config = require("./server-configuration");
 const httpApi = require("./http-api");
 const i18n = require("./i18n");
 const logger = require("./logging");
@@ -15,6 +16,7 @@ const logger = require("./logging");
  */
 (function main() {
   const app = express();
+  app.use(helmet(config.helmet));
   httpApi.initializeHttpApi(app);
   initializeI18nFiles(app);
   initializeStatic(app);
