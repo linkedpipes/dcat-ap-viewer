@@ -54,13 +54,13 @@ function createJsonLdDescription({tLabel, tLiteral, dataset, distributions}) {
 
   context["distribution"] = distributions
     .filter(distribution => distribution !== undefined)
-    .map(convertDistribution)
+    .map(distribution => convertDistribution(distribution, tLabel))
     .filter(distribution => distribution !== undefined);
 
   return JSON.stringify(context, null, 2);
 }
 
-function convertDistribution(distribution) {
+function convertDistribution(distribution, tLabel) {
   const result = {
     "@type": "DataDownload",
   };
@@ -71,7 +71,7 @@ function convertDistribution(distribution) {
   }
   if (distribution["format"]) {
     empty = false;
-    result["encodingFormat"] = distribution["format"];
+    result["encodingFormat"] = tLabel(distribution["format"]);
   }
   if (empty) {
     return undefined;
