@@ -72,7 +72,10 @@ function FacetFilter(props) {
             >
               {props.getFacetLabel(item)} ({formatNumber(item.count)})
               {index < props.facetActive.length &&
-              <i className="material-icons center pl-2">
+              <i
+                className="material-icons center pl-2"
+                style={{"float": "right"}}
+              >
                 close
               </i>
               }
