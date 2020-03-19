@@ -1,7 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 
-export default function PackageFormat({tLabel, distribution}) {
+export default function PackageFormat({t, tLabel, distribution}) {
   if (distribution.packageFormat === undefined) {
     return null;
   }
@@ -14,6 +14,7 @@ export default function PackageFormat({tLabel, distribution}) {
       {tLabel(distribution.packageFormat, "")}
       <a
         href={distribution.packageFormat}
+        title={t("follow_link")}
         rel="nofollow noopener noreferrer"
         target="_blank"
       >
@@ -24,6 +25,7 @@ export default function PackageFormat({tLabel, distribution}) {
 }
 
 PackageFormat.propTypes = {
+  "t": PropTypes.func.isRequired,
   "tLabel": PropTypes.func.isRequired,
   "distribution": PropTypes.object.isRequired,
 };

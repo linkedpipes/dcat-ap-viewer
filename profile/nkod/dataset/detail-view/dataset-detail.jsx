@@ -76,6 +76,7 @@ class DatasetView extends React.PureComponent {
           {tLabel(dataset.iri)}
           <a
             href={link}
+            title={t("follow_link")}
             target="_blank"
             rel="noopener noreferrer"
           >

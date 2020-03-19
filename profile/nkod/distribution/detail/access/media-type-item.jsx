@@ -17,6 +17,7 @@ export default function MediaTypeItem(
       {tLabel(distribution.mediaType, "")}
       <a
         href={distribution.mediaType}
+        title={t("follow_link")}
         rel="nofollow noopener noreferrer"
         target="_blank"
       >

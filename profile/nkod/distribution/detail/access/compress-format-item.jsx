@@ -1,7 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types"
 
-export default function CompressFormat({tLabel, distribution}) {
+export default function CompressFormat({t, tLabel, distribution}) {
   if (distribution.compressFormat === undefined) {
     return null;
   }
@@ -12,9 +12,12 @@ export default function CompressFormat({tLabel, distribution}) {
   return (
     <li className="list-group-item px-2">
       {tLabel(distribution.compressFormat, true)}
-      <a href={distribution.compressFormat}
+      <a
+        href={distribution.compressFormat}
+        title={t("follow_link")}
         rel="nofollow noopener noreferrer"
-        target="_blank">
+        target="_blank"
+      >
         <i className="material-icons" style={iconStyle}>
           open_in_new
         </i>
@@ -24,6 +27,7 @@ export default function CompressFormat({tLabel, distribution}) {
 }
 
 CompressFormat.propTypes = {
+  "t": PropTypes.func.isRequired,
   "tLabel": PropTypes.func.isRequired,
   "distribution": PropTypes.object.isRequired,
 };

@@ -159,10 +159,12 @@ function accessColumn(t, tLabel, tLiteral, dataService, quality, openModal) {
           quality={quality}
           openModal={openModal}/>
         <CompressFormat
+          t={t}
           tLabel={tLabel}
           distribution={dataService}
           openModal={openModal}/>
         <PackageFormat
+          t={t}
           tLabel={tLabel}
           distribution={dataService}
           openModal={openModal}/>

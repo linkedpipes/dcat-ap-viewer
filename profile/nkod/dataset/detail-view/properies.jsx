@@ -49,7 +49,7 @@ function firstColumn(t, tLabel, tUrl, dataset) {
         {
           dataset.datasetThemes.map(iri =>
             searchableLabeledLinkEntitiesAsDd(
-              tLabel, tUrl, iri, QUERY_DATASET_LIST_THEME))
+              t, tLabel, tUrl, iri, QUERY_DATASET_LIST_THEME))
         }
       </dl>
       }
@@ -59,7 +59,7 @@ function firstColumn(t, tLabel, tUrl, dataset) {
         {
           dataset.themes.map(iri =>
             searchableLabeledLinkEntitiesAsDd(
-              tLabel, tUrl, iri, QUERY_DATASET_LIST_THEME))
+              t, tLabel, tUrl, iri, QUERY_DATASET_LIST_THEME))
         }
       </dl>
       }
@@ -72,13 +72,18 @@ function isNotEmpty(value) {
   return value !== undefined && value.length !== 0;
 }
 
-function searchableLabeledLinkEntitiesAsDd(tLabel, tUrl, iri, queryName) {
+function searchableLabeledLinkEntitiesAsDd(t, tLabel, tUrl, iri, queryName) {
   return (
     <dd key={iri}>
       <Link to={tUrl(URL_DATASET_LIST, {[queryName]: iri})}>
         {tLabel(iri)}
       </Link>
-      <a href={iri} rel="nofollow noopener noreferrer" target="_blank">
+      <a
+        href={iri}
+        title={t("follow_link")}
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+      >
         {linkIcon()}
       </a>
       <br/>
@@ -126,16 +131,21 @@ function spatialCoverage(t, tLabel, dataset) {
   return (
     <React.Fragment>
       <dt>{t("spatial")}</dt>
-      {dataset.spatial.map(iri => labeledLinkEntitiesAsDd(tLabel, iri))}
+      {dataset.spatial.map(iri => labeledLinkEntitiesAsDd(t, tLabel, iri))}
     </React.Fragment>
   )
 }
 
-function labeledLinkEntitiesAsDd(tLabel, iri) {
+function labeledLinkEntitiesAsDd(t, tLabel, iri) {
   return (
     <dd key={iri}>
       {tLabel(iri)}
-      <a href={iri} rel="nofollow noopener noreferrer" target="_blank">
+      <a
+        href={iri}
+        title={t("follow_link")}
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+      >
         {linkIcon()}
       </a>
       <br/>
@@ -405,7 +415,7 @@ function fourthColumn(t, tLabel, dataset) {
     <div className="col-12 col-sm-6 col-md-3">
       <dl>
         <dt>{t("frequency")}</dt>
-        {labeledLinkEntitiesAsDd(tLabel, dataset.frequency)}
+        {labeledLinkEntitiesAsDd(t, tLabel, dataset.frequency)}
       </dl>
     </div>
   )
