@@ -37,20 +37,16 @@ class DistributionDetail extends React.PureComponent {
       t, tLabel, tLiteral, distribution, quality, openModal, legal,
       fetchLabels,
     } = this.props;
-    const title = tLabel(distribution.iri);
+    const title = tLabel(distribution.iri, null);
     fetchLabels([distribution.format]);
     return (
       <div className="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
         <div className="card p-2">
           <div className="card-body px-2">
-            {title === undefined ?
-              <span className="sr-only">
-                {t("unnamed_distribution")}
-              </span>
-              :
-              <h5 className="card-title">
-                {title}
-              </h5>
+            {title !== null &&
+            <h5 className="card-title">
+              {title}
+            </h5>
             }
             {dataFormatItem(tLabel, distribution.format)}
           </div>
