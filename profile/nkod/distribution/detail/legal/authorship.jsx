@@ -56,7 +56,7 @@ export default function Authorship({t, tLiteral, legal, quality, openModal}) {
             </i>
           </div>
           <div className="label">
-            {t(legal.author)}
+            {tLiteral(legal.author)}
           </div>
         </li>
       );
