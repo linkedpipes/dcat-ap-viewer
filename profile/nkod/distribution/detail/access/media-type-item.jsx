@@ -14,7 +14,7 @@ export default function MediaTypeItem(
   };
   return (
     <li className="list-group-item px-2">
-      {tLabel(distribution.mediaType, true)}
+      {tLabel(distribution.mediaType, "")}
       <a
         href={distribution.mediaType}
         rel="nofollow noopener noreferrer"

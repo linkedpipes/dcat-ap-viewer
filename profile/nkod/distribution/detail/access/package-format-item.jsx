@@ -11,7 +11,7 @@ export default function PackageFormat({tLabel, distribution}) {
   };
   return (
     <li className="list-group-item px-2">
-      {tLabel(distribution.packageFormat, true)}
+      {tLabel(distribution.packageFormat, "")}
       <a
         href={distribution.packageFormat}
         rel="nofollow noopener noreferrer"

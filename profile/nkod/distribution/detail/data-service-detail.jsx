@@ -39,7 +39,7 @@ class DataServiceDetail extends React.PureComponent {
       fetchLabels,
     } = this.props;
     const title = tLabel(dataService.iri, null);
-    fetchLabels([dataService.format]);
+    fetchLabels([dataService.format, dataService.mediaType]);
     return (
       <div className="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
         <div className="card p-2">
