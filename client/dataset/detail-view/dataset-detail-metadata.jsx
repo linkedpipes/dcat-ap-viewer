@@ -1,6 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 
+// TODO Use connect to remove dependencies from dataset-detail-container
 export default function DatasetWebPageMetadata(props) {
   return (
     <script type="application/ld+json">
@@ -13,9 +14,10 @@ DatasetWebPageMetadata.propTypes = {
   "tLabel": PropTypes.func.isRequired,
   "tLiteral": PropTypes.func.isRequired,
   "dataset": PropTypes.object.isRequired,
+  "distributions": PropTypes.array.isRequired,
 };
 
-function createJsonLdDescription({tLabel, tLiteral, dataset}) {
+function createJsonLdDescription({tLabel, tLiteral, dataset, distributions}) {
   const context = {
     "@context": "http://schema.org/",
     "@type": "Dataset",
@@ -50,5 +52,29 @@ function createJsonLdDescription({tLabel, tLiteral, dataset}) {
     }
   }
 
+  context["distribution"] = distributions
+    .filter(distribution => distribution !== undefined)
+    .map(convertDistribution)
+    .filter(distribution => distribution !== undefined);
+
   return JSON.stringify(context, null, 2);
+}
+
+function convertDistribution(distribution) {
+  const result = {
+    "@type": "DataDownload",
+  };
+  let empty = true;
+  if (distribution["downloadUrl"]) {
+    empty = false;
+    result["contentUrl"] = distribution["downloadURL"];
+  }
+  if (distribution["format"]) {
+    empty = false;
+    result["encodingFormat"] = distribution["format"];
+  }
+  if (empty) {
+    return undefined;
+  }
+  return result;
 }

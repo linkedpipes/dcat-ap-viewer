@@ -17,6 +17,7 @@ import {
 } from "./dataset-detail-reducer";
 import {fetchDataset} from "../../api/api-action";
 import {selectIri} from "../../app/navigation";
+import {selectDistribution} from "../../distribution/list/distribution-reducer";
 
 class DatasetDetailContainer extends React.Component {
 
@@ -39,6 +40,7 @@ class DatasetDetailContainer extends React.Component {
           tLabel={this.props.tLabel}
           tLiteral={this.props.tLiteral}
           dataset={this.props.dataset}
+          distributions={this.props.distributions}
         />
         }
         <DatasetDetail
@@ -64,6 +66,7 @@ DatasetDetailContainer.propTypes = {
   "ready": PropTypes.bool.isRequired,
   "error": PropTypes.number.isRequired,
   "dataset": PropTypes.object,
+  "distributions": PropTypes.array,
   "location": PropTypes.object.isRequired,
   "tLabel": PropTypes.func.isRequired,
   "tLiteral": PropTypes.func.isRequired,
@@ -74,6 +77,7 @@ const mapStateToProps = (state) => ({
   "ready": selectReady(state),
   "error": selectError(state),
   "dataset": selectDatasetDetail(state),
+  "distributions": selectDistributions(state),
   "tLabel": selectTLabel(state),
   "tLiteral": selectTLiteral(state),
 });
@@ -94,3 +98,11 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(DatasetDetailContainer);
+
+function selectDistributions(state) {
+  const dataset = selectDatasetDetail(state);
+  if (dataset === undefined || dataset.distributions === undefined) {
+    return [];
+  }
+  return dataset.distributions.map(iri => selectDistribution(state, iri));
+}

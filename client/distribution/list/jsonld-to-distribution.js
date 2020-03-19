@@ -20,7 +20,6 @@ export function jsonLdToDistribution(jsonld) {
     return undefined;
   }
 
-  // TODO Change to getString with specific structure (object with languages).
   const mandatory = {
     "iri": getId(distribution),
     "accessURL": getResource(distribution, DCAT.accessURL),
