@@ -7,23 +7,19 @@ export default function TagCloud(
   {tags, renderFunction, onClick = undefined}) {
   // TODO Can we generate same colors every time?
   return (
-    <div className="container">
-      <div className="row">
-        <div
-          className="col col-sm-12 col-md-9 offset-md-1"
-          style={{"textAlign": "center", "display": "block"}}
-        >
-          <ReactTagCloud
-            minSize={20}
-            maxSize={52}
-            shuffle={false}
-            tags={tags}
-            colorOptions={{"luminosity": "dark", "hue": "random"}}
-            renderer={renderFunction}
-            onClick={onClick}
-          />
-        </div>
-      </div>
+    <div
+      className="offset-md-1"
+      style={{"textAlign": "center", "display": "block"}}
+    >
+      <ReactTagCloud
+        minSize={20}
+        maxSize={52}
+        shuffle={false}
+        tags={tags}
+        colorOptions={{"luminosity": "dark", "hue": "random"}}
+        renderer={renderFunction}
+        onClick={onClick}
+      />
     </div>
   );
 }
