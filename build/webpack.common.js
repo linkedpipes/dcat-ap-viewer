@@ -53,6 +53,6 @@ module.exports = {
         configuration.client.profile, "index.html"),
       "inject": true,
     }),
-    new webpack.DefinePlugin({constants}),
+    new webpack.DefinePlugin(constants),
   ],
 };
