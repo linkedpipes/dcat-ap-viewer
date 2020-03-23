@@ -29,12 +29,11 @@ import {
 } from "./app-reducer";
 import {QUERY_LANGUAGE} from "./component-list";
 import CanonicalLink from "./canonical-link";
+import PageTitle from "./page-title";
 
 const Header = getRegisteredElement(ELEMENT_HEADER);
 const Footer = getRegisteredElement(ELEMENT_FOOTER);
 const InitialLoadingIndicator = getRegisteredElement(ELEMENT_INITIAL_LOADING);
-
-// http://localhost:8030/datensätze?poskytovatel=franta&výraz=ABC&jazyk=cs
 
 const INITIAL_LOAD_TIME_IN_MS = 250;
 
@@ -93,6 +92,7 @@ class AppComponent extends React.Component {
       return (
         <div>
           <CanonicalLink/>
+          <PageTitle/>
           <Header
             location={this.props.location}
             language={this.props.language}
@@ -100,7 +100,6 @@ class AppComponent extends React.Component {
             tUrl={this.props.tUrl}
           />
           <LoaderIndicator/>
-          {/* TODO Page Canonical link. */}
           {React.cloneElement(this.props.children, {})}
           <Footer
             t={this.props.t}

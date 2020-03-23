@@ -22,9 +22,9 @@ const YAML  = require("yaml");
     "client": {
       "profile": configuration["client"]["profile"],
       "title": {
-        "default": configuration["client"]["title-default"],
-        "prefix": configuration["client"]["title-prefix"],
-        "suffix": configuration["client"]["title-suffix"],
+        "default": configuration["client"]["title-default"] || "",
+        "prefix": configuration["client"]["title-prefix"] || "",
+        "suffix": configuration["client"]["title-suffix"] || "",
       },
       "form_url": configuration["client"]["form-url"],
       "url": {

@@ -2,6 +2,8 @@
 // This file contain global properties as provided in the configuration.
 //
 
+declare var DEF_DEFAULT_PAGE_TITLE: string;
+
 declare var DEF_PAGE_TITLE_PREFIX: string;
 
 declare var DEF_PAGE_TITLE_SUFFIX: string;
@@ -11,6 +13,8 @@ declare var DEF_FORM_URL: string;
 declare var DEF_URL_BASE: string;
 
 declare var DEF_DEREFERENCE_PREFIX: string;
+
+export const PAGE_TITLE_DEFAULT = "PAGE_TITLE_DEFAULT";
 
 export const PAGE_TITLE_PREFIX = "PAGE_TITLE_PREFIX";
 
@@ -31,6 +35,7 @@ export const DEFAULT_FACET_SIZE = "DEFAULT_FACET_SIZE";
 export const MAIN_LANGUAGE = "MAIN_LANGUAGE";
 
 const values: { [key: string]: any } = {
+  [PAGE_TITLE_DEFAULT]: DEF_DEFAULT_PAGE_TITLE,
   [PAGE_TITLE_PREFIX]: DEF_PAGE_TITLE_PREFIX,
   [PAGE_TITLE_SUFFIX]: DEF_PAGE_TITLE_SUFFIX,
   [FORM_URL]: DEF_FORM_URL,
@@ -43,8 +48,9 @@ const values: { [key: string]: any } = {
 };
 
 export function getGlobal<T>(key: string, defaultValue?: T): T | undefined {
-  if (values[key]) {
-    return values[key];
+  const value = values[key];
+  if (value === undefined) {
+    return defaultValue;
   }
-  return defaultValue;
+  return value;
 }

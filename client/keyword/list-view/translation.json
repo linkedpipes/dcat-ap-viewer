@@ -4,13 +4,17 @@
       "/keywords": "/klíčová-slova"
     },
     "query": {},
-    "string": {}
+    "string": {
+      "/keywords": "Klíčová slova"
+    }
   },
   "en": {
     "url": {
       "/keywords": "/keywords"
     },
     "query": {},
-    "string": {}
+    "string": {
+      "/keywords": "Keywords"
+    }
   }
 }

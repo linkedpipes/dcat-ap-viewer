@@ -1,5 +1,21 @@
 {
   "cs": {
+    "url": {
+      "/datasets": "/datové-sady"
+    },
+    "query": {
+      "keyword": "klíčová slova",
+      "theme": "témata",
+      "format": "formáty",
+      "page": "stránka",
+      "pageSize": "velikost stránky",
+      "search": "dotaz",
+      "temporalEnd": "časové období začátek",
+      "temporalStart": "časové období konec",
+      "view": "vizualizace",
+      "sort": "pořadí",
+      "publisher": "poskytovatel"
+    },
     "string": {
       "facet.show_popular": "Zobrazit pouze populární",
       "facet.show_more": "Zobrazit další",
@@ -29,10 +45,28 @@
       "themes": "Témata",
       "formats": "Formáty",
       "query.last_year": "Minulý rok",
-      "query.this_year": "Tento rok"
+      "query.this_year": "Tento rok",
+      "/datasets": "Datové sady"
     }
   },
   "en": {
+    "url": {
+      "/datasets": "/datasets"
+    },
+    "query": {
+      "keyword": "keyword",
+      "theme": "themes",
+      "format": "formats",
+      "page": "page",
+      "pageSize": "page size",
+      "search": "query",
+      "temporalEnd": "temporal end",
+      "temporalStart": "temporal start",
+      "view": "visualization",
+      "sort": "sort",
+      "publisher": "publisher",
+      "language": "language"
+    },
     "string": {
       "facet.show_popular": "Show popular only",
       "facet.show_more": "Show more",
@@ -62,7 +96,8 @@
       "themes": "Themes",
       "formats": "Formats",
       "query.last_year": "Last year",
-      "query.this_year": "This year"
+      "query.this_year": "This year",
+      "/datasets": "Datasets"
     }
   }
 }

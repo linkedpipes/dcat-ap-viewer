@@ -6,7 +6,8 @@
     "query": {},
     "string": {
       "catalogs_found": "katalogů nalezeno",
-      "catalogs": "Katalogy"
+      "catalogs": "Katalogy",
+      "/catalogs": "Lokální katalogy"
     }
   },
   "en": {
@@ -16,7 +17,8 @@
     "query": {},
     "string": {
       "catalogs_found": "catalogs found",
-      "catalogs": "Catalogs"
+      "catalogs": "Catalogs",
+      "/catalogs": "Local catalogs"
     }
   }
 }
