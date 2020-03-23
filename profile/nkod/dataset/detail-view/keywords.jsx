@@ -23,7 +23,7 @@ function Keywords({t, tUrl, keywords, language}) {
       <span className="sr-only">{t("keywords") + ":"}</span>
       {filteredKeywords.map((keyword) => (
         <Link
-          className="btn btn-light mx-1"
+          className="btn badge-info mx-1"
           to={tUrl(URL_DATASET_LIST, {[QUERY_DATASET_LIST_KEYWORD]: keyword})}
           role="button"
           key={keyword}

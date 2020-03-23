@@ -31,5 +31,6 @@ import "./distribution/list/distribution-list";
 import "./distribution/detail/distribution-detail";
 import "./distribution/detail/data-service-detail";
 
-
 import "./style.css";
+import "./style-mode-default.css";
+import "./style-mode-dark.css";

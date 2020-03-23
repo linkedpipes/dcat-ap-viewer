@@ -12,7 +12,7 @@ import {
 
 function Footer({language, t}) {
   return (
-    <footer className="footer bg-light py-4 mt-2 border-top">
+    <footer className="footer py-4 mt-2 border-top">
       <div className="container">
         <div className="row">
           <div className="col-md-4">

@@ -33,7 +33,7 @@ export default class Paginator extends React.PureComponent {
     };
 
     return (
-      <div className="row">
+      <div className="row paginator">
         <ul className="col-sm-12 col-md-11" style={paginationStyle}>
           {pageItems}
         </ul>

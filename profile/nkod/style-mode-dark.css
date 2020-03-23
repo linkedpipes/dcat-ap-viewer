@@ -1,0 +1,33 @@
+@media (prefers-color-scheme: dark) {
+
+    :root {
+        --color-background: #222;
+        --color-background-footer: #333;
+        --color-text-default: #ddd;
+        --color-text-inverted: #222;
+        --color-text-accent: white;
+        --color-text-accent-inverted: white;
+        --color-base: #057fa544;
+    }
+
+    nav a, .page-item a.page-link {
+        text-decoration: underline;
+    }
+
+    nav a:hover, .page-item.active a.page-link {
+        text-decoration: none;
+    }
+
+    button.navbar-toggler {
+        background-color: var(--color-background-footer);
+    }
+
+    .paginator button.dropdown-item {
+        text-decoration: underline;
+    }
+
+    .paginator button.dropdown-item:hover {
+        text-decoration: none;
+    }
+
+}

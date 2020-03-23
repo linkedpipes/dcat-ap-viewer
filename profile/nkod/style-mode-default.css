@@ -1,0 +1,10 @@
+
+:root {
+    --color-background: white ;
+    --color-background-footer: #fff;
+    --color-text-default: black ;
+    --color-text-inverted: white ;
+    --color-text-accent: #057fa5 ;
+    --color-text-accent-inverted: black ;
+    --color-base: #057fa5 ;
+}
