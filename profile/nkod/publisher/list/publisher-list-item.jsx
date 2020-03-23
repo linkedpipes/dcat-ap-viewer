@@ -24,8 +24,8 @@ export default function PublisherListItem(
           {isExceptional &&
           <li className="list-group-item">
             <i
-              className="material-icons"
-              style={{"verticalAlign": "bottom", "color": "#F9BC38"}}
+              className="material-icons exceptional-publisher-icon"
+              style={{"verticalAlign": "bottom"}}
             >
               star
             </i>&nbsp;<span>{t("exceptional_publisher")}</span>

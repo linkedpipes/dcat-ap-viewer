@@ -68,7 +68,6 @@ function FacetFilter(props) {
               className="filter-button"
               active={index < props.facetActive.length}
               style={{"wordWrap": "break-word"}}
-              tag="button"
             >
               {props.getFacetLabel(item)} ({formatNumber(item.count)})
               {index < props.facetActive.length &&
@@ -87,7 +86,6 @@ function FacetFilter(props) {
           onClick={showMore}
           action
           className="filter-button"
-          tag="button"
         >
           <strong>{props.t("facet.show_more")}</strong>
         </ListGroupItem>
@@ -97,7 +95,6 @@ function FacetFilter(props) {
           onClick={showPopular}
           action
           className="filter-button"
-          tag="button"
         >
           <strong>{props.t("facet.show_popular")}</strong>
         </ListGroupItem>

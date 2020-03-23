@@ -5,10 +5,9 @@ import {PropTypes} from "prop-types";
 // https://www.npmjs.com/package/react-tagcloud
 export default function TagCloud(
   {tags, renderFunction, onClick = undefined}) {
-  //
   // TODO Can we generate same colors every time?
   return (
-    <div className="container pt-5 pb-4">
+    <div className="container">
       <div className="row">
         <div
           className="col col-sm-12 col-md-9 offset-md-1"

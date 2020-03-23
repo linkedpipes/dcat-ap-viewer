@@ -21,7 +21,7 @@ class KeywordList extends React.PureComponent {
   }
 
   render() {
-    const {keywords, tUrl, tLabel} = this.props;
+    const {t, tUrl, tLabel, keywords} = this.props;
     const tags = keywords.map(item => {
       const label = tLabel(item.iri);
       return {
@@ -33,6 +33,10 @@ class KeywordList extends React.PureComponent {
     });
     return (
       <div className="container p-3">
+        <h4>
+          {t("keywords")}
+        </h4>
+        <hr/>
         <TagCloud tags={tags} renderFunction={renderTag}/>
       </div>
     )
@@ -40,6 +44,7 @@ class KeywordList extends React.PureComponent {
 }
 
 KeywordList.propTypes = {
+  "t": PropTypes.func.isRequired,
   "keywords": PropTypes.array.isRequired,
   "tUrl": PropTypes.func.isRequired,
   "tLabel": PropTypes.func.isRequired,

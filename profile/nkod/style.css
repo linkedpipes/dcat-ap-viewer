@@ -39,6 +39,10 @@ input.form-control {
     color: var(--color-text-default);
 }
 
+.exceptional-publisher-icon {
+    color: #F9BC38;
+}
+
 a {
     color: var(--color-text-accent);
 }
@@ -210,6 +214,18 @@ a.dropdown-item:hover {
 }
 
 /* Filter */
+
+.filter-button {
+    cursor: pointer;
+
+}
+
+.filter-button.active {
+    background-color: var(--color-text-accent);
+    border-color: var(--color-text-inverted);
+    color: var(--color-text-inverted);
+    cursor: pointer;
+}
 
 .filter-button:focus {
     outline: 0;
