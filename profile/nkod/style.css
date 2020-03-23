@@ -149,6 +149,7 @@ dd {
 }
 
 /* Icons size. */
+
 .material-icons.md-18 {
     font-size: 18px;
 }
@@ -167,4 +168,10 @@ dd {
 
 .material-icons.center {
     vertical-align: middle
+}
+
+/* Fixes to bootstrap. */
+
+.list-group-flush .list-group-item:first-child {
+    border-top-width: 1px
 }
