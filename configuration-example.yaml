@@ -1,30 +1,46 @@
 dcat-ap-viewer:
   version: 2
+  # Port used for dcat-ap-viewer.
   port: 8030
+  # Set to true if you want dcat-ap-viewer to serve static content. This
+  # value should be set to false in a production.
   server-static-content: false
   providers:
-    - type: solr
+  # For more information about providers and their configuration please
+  # see https://github.com/linkedpipes/dcat-ap-viewer/wiki/Providers.
+    - type:
+      # Path to the Solr instance, including solr core.
       url: http://localhost:8983/solr/dcat-ap-viewer
+      # Default API language.
       default-language: cs
+      # List of all languages in Solr.
       languages:
         - cs
         - en
     - type: couchdb
+      # Address of
       url: http://127.0.0.1:5984
+      # Default API language.
+      default-language: cs
     - type: sparql
+      # SPARQL enpoint.
       url: https://localhost:8890/sparql
+      # We use SPARQL endpoint only for quality related data.
       filter:
         - v2-quality-dataset
         - v2-quality-distribution
         - v2-quality-publishers
   client:
+    # Name of a profile, i.e. name of directory in ./profile/
     profile: nkod
     # Public URL without url-subdirectory, used to create full links.
     url-base: "http://localhost:8030/"
     # If application is served from subdirectory, name of the subdirectory.
     url-subdirectory: ""
-    #
+    # Default page title show for example during loading.
     title-default: "Národní katalog"
+    # Prefix and suffix used as a page title.
     title-prefix: ""
     title-suffix: " - NKOD"
+    # URL of dcat-ap-forms.
     form-url: "https://dev.nkod.opendata.cz/formulář/"
