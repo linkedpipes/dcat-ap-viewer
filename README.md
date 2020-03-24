@@ -11,28 +11,28 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 ## Requirements
 - [Node.js] & npm
 - [OpenJDK] 8 or 12 for Apache Solr
-- [Apache Solr] 8.0 ([Docker](https://hub.docker.com/_/solr/))
+- [Apache Solr] 8.5 ([Docker](https://hub.docker.com/_/solr/))
 - [Apache CouchDB] 2.3 and up ([Docker](https://hub.docker.com/_/couchdb/))
 
 ### Requirements for data preparation
 - [LinkedPipes ETL], the [preparation pipeline] and the [codelist pipeline]
 
 ## Installation
-[Install Solr](https://lucene.apache.org/solr/guide/7_7/installing-solr.html) or run in it [Docker](https://hub.docker.com/_/solr/).
+[Install Solr](https://lucene.apache.org/solr/guide/8_5/installing-solr.html) or run in it [Docker](https://hub.docker.com/_/solr/).
 It will contain the search index. 
 For installation, you may proceed like this:
-- [Download Apache Solr](http://lucene.apache.org/solr/) - e.g. ```solr-8.0.0.tgz```
-- Extract the service installer ```tar xzf solr-8.0.0.tgz solr-8.0.0/bin/install_solr_service.sh --strip-components=2```
-- Run the service installer ```sudo bash ./install_solr_service.sh solr-8.0.0.tgz```
+- [Download Apache Solr](http://lucene.apache.org/solr/) - e.g. ```solr-8.5.0.tgz```
+- Extract the service installer ```tar xzf solr-8.5.0.tgz solr-8.5.0/bin/install_solr_service.sh --strip-components=2```
+- Run the service installer ```sudo bash ./install_solr_service.sh solr-8.5.0.tgz```
 
 Next, configure Solr like this:
 - Create Solr core ```sudo -u solr /opt/solr/bin/solr create -c dcat-ap-viewer```
 
 - Add following to `dcat-ap-viewer/conf/solrconfig.xml` file (adjust the version numbers as necessary) and restart Solr.
 ```
-  <lib path="${solr.install.dir:../../../..}/dist/solr-analysis-extras-8.0.0.jar" />  
+  <lib path="${solr.install.dir:../../../..}/dist/solr-analysis-extras-8.5.0.jar" />  
   <lib path="${solr.install.dir:../../../..}/contrib/analysis-extras/lib/icu4j-62.1.jar" />  
-  <lib path="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs/lucene-analyzers-icu-8.0.0.jar" />
+  <lib path="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs/lucene-analyzers-icu-8.5.0.jar" />
 ```
 
 - Prepare Solr schema (change locale to your language, the example bellow is for `cs` and `en`):
@@ -66,37 +66,35 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
         "locale": "en",
         "strength" : "primary"
     },
-    "add-field" : { "name" : "iri", "type" : "string" , "indexed" : false },
-    "add-field" : { "name" : "modified", "type" : "pdate", "docValues" : true , "multiValued" : false},
-    "add-field" : { "name" : "issued", "type" : "pdate", "docValues" : true },
-    "add-field" : { "name" : "accrualPeriodicity", "type" : "string" },
-    "add-field" : { "name" : "publisher", "type" : "string" , "indexed" : false },
+    "add-field" : { "name" : "iri", "type" : "string" , "indexed" : false, "multiValued" : false },
+    "add-field" : { "name" : "modified", "type" : "pdate", "multiValued" : false},
+    "add-field" : { "name" : "issued", "type" : "pdate", "multiValued" : false },
+    "add-field" : { "name" : "accrualPeriodicity", "type" : "string", "multiValued" : false },
+    "add-field" : { "name" : "publisher", "type" : "string" , "indexed" : false, "multiValued" : false },
     "add-field" : { "name" : "format", "type" : "strings", "indexed" : false },
     "add-field" : { "name" : "license", "type" : "strings", "indexed" : false },
     "add-field" : { "name" : "theme", "type" : "strings" },
-    "add-field" : { "name" : "temporal-start", "type" : "pdate", "docValues" : true },
-    "add-field" : { "name" : "temporal-end", "type" : "pdate", "docValues" : true },
-    "add-field" : { "name" : "spatial", "type" : "string" },
+    "add-field" : { "name" : "temporal-start", "type" : "pdate", "docValues" : true, "multiValued" : false },
+    "add-field" : { "name" : "temporal-end", "type" : "pdate", "docValues" : true, "multiValued" : false },
+    "add-field" : { "name" : "spatial", "type" : "strings" },
 
-    "add-field" : { "name" : "description_cs", "type" : "string" },
+    "add-field" : { "name" : "description_cs", "type" : "string", "multiValued" : false },
     "add-field" : { "name" : "keyword_cs", "type" : "strings" },
-    "add-field" : { "name" : "title_cs", "type" : "string", "docValues" : true },
-    "add-field" : { "name" : "title_cs_sort", "type" : "string_icu_cs", "stored" : false },
-    "add-field" : { "name" : "title_cs_query", "type" : "ascii_string"},
-    "add-copy-field" : { "source" : "title_cs", "dest" : "title_cs_sort" },
+    "add-field" : { "name" : "title_cs", "type" : "string", "multiValued" : false },
+    "add-field" : { "name" : "title_cs_sort", "type" : "string_icu_cs", "docValues" : true, "multiValued" : false },
+    "add-field" : { "name" : "title_cs_query", "type" : "ascii_string", "multiValued" : false },
     "add-copy-field" : { "source" : "title_cs", "dest" : "title_cs_query" },
 
-    "add-field" : { "name" : "description_en", "type" : "string" },
+    "add-field" : { "name" : "description_en", "type" : "string", "multiValued" : false },
     "add-field" : { "name" : "keyword_en", "type" : "strings" },
-    "add-field" : { "name" : "title_en", "type" : "string", "docValues" : true },
-    "add-field" : { "name" : "title_en_sort", "type" : "string_icu_en", "stored" : false },
-    "add-field" : { "name" : "title_en_query", "type" : "ascii_string"},
-    "add-copy-field" : { "source" : "title_en", "dest" : "title_en_sort" },
+    "add-field" : { "name" : "title_en", "type" : "string", "multiValued" : false },
+    "add-field" : { "name" : "title_en_sort", "type" : "string_icu_en", "docValues" : true, "multiValued" : false },
+    "add-field" : { "name" : "title_en_query", "type" : "ascii_string", "multiValued" : false },
     "add-copy-field" : { "source" : "title_en", "dest" : "title_en_query" },
 
     "replace-field" : { "name": "_text_", "type" : "ascii_string", "multiValued" : true, "indexed" : true, "stored" : false },
     "add-copy-field" : { "source" : "title_cs", "dest" : "_text_" },
-    "add-copy-field" : { "source" : "title_en", "dest" : "_text_" },    
+    "add-copy-field" : { "source" : "title_en", "dest" : "_text_" },
     "add-copy-field" : { "source" : "description_cs", "dest" : "_text_" },
     "add-copy-field" : { "source" : "description_en", "dest" : "_text_" }
 }'

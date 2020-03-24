@@ -93,7 +93,7 @@ function buildDatasetSolrQuery(query, defaultLanguage) {
   //
   let sort;
   if (userQuery.sortBy === "title") {
-    sort = userQuery.sortBy + "_" + userQuery.language + " "
+    sort = userQuery.sortBy + "_" + userQuery.language + "_sort "
       + userQuery.sortOrder;
   } else {
     sort = userQuery.sortBy + " " + userQuery.sortOrder;
