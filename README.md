@@ -3,7 +3,7 @@
 This is a native DCAT-AP 2.0.0 catalog viewer. 
 It is originally developed for OpenData.cz projects, however, it is completely open-source and resuable. 
 It addresses the most painful disadvantages of CKAN when it comes to representing DCAT compatible data such as
-- native [DCAT-AP 2.0.0]https://joinup.ec.europa.eu/solution/dcat-application-profile-data-portals-europe/release/200) input
+- native [DCAT-AP 2.0.0](https://joinup.ec.europa.eu/solution/dcat-application-profile-data-portals-europe/release/200) input
 - handles large numbers of distributions of a single dataset
 - handles licenses attached to distributions
 - supports [EU Vocabularies](https://publications.europa.eu/en/web/eu-vocabularies/controlled-vocabularies) codelists
