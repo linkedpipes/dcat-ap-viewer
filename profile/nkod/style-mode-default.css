@@ -1,6 +1,7 @@
 
 :root {
     --color-background: white ;
+    --color-border: rgba(0,0,0,.125);
     --color-background-footer: #fff;
     --color-text-default: black ;
     --color-text-inverted: white ;

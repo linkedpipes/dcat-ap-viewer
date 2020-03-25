@@ -2,23 +2,18 @@
 
 body {
     color: var(--color-text-default);
-    background-color: var(--color-background);
 }
 
-.card {
-    background-color: var(--color-background);
-}
-
-.card-body {
+body, .card, .card-body, .dropdown-menu, .list-group-item {
     background-color: var(--color-background);
 }
 
 .list-group-item {
-    background-color: var(--color-background);
+    color: var(--color-text-default);
 }
 
-.dropdown-menu {
-    background-color: var(--color-background);
+hr, .list-group-item, .card {
+    border-color: var(--color-border);
 }
 
 .footer {
@@ -27,7 +22,7 @@ body {
 
 .badge-info {
     background-color: var(--color-base);
-    color: var(--color-text-default);
+    color: var(--color-text-inverted);
 }
 
 .label {
