@@ -1,16 +1,16 @@
 # LinkedPipes DCAT-AP Viewer
 
-This is a native DCAT-AP v1.2 catalog viewer. 
+This is a native DCAT-AP 2.0.0 catalog viewer. 
 It is originally developed for OpenData.cz projects, however, it is completely open-source and resuable. 
 It addresses the most painful disadvantages of CKAN when it comes to representing DCAT compatible data such as
-- native [DCAT-AP v1.2](https://joinup.ec.europa.eu/release/dcat-ap/12) input
+- native [DCAT-AP 2.0.0]https://joinup.ec.europa.eu/solution/dcat-application-profile-data-portals-europe/release/200) input
 - handles large numbers of distributions of a single dataset
 - handles licenses attached to distributions
 - supports [EU Vocabularies](https://publications.europa.eu/en/web/eu-vocabularies/controlled-vocabularies) codelists
 
 ## Requirements
 - [Node.js] & npm
-- [OpenJDK] 8 or 12 for Apache Solr
+- [OpenJDK] 8 or 13 for Apache Solr, if not dockerized
 - [Apache Solr] 8.5 ([Docker](https://hub.docker.com/_/solr/))
 - [Apache CouchDB] 2.3 and up ([Docker](https://hub.docker.com/_/couchdb/))
 
