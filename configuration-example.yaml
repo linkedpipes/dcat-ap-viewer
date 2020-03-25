@@ -8,7 +8,7 @@ dcat-ap-viewer:
   providers:
   # For more information about providers and their configuration please
   # see https://github.com/linkedpipes/dcat-ap-viewer/wiki/Providers.
-    - type:
+    - type: solr
       # Path to the Solr instance, including solr core.
       url: http://localhost:8983/solr/dcat-ap-viewer
       # Default API language.
@@ -23,7 +23,7 @@ dcat-ap-viewer:
       # Default API language.
       default-language: cs
     - type: sparql
-      # SPARQL enpoint.
+      # SPARQL endpoint.
       url: https://localhost:8890/sparql
       # We use SPARQL endpoint only for quality related data.
       filter:
