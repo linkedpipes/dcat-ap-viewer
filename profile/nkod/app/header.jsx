@@ -131,7 +131,7 @@ class Header extends React.Component {
               <LanguageSelector
                 t={this.props.t}
                 language={this.props.language}
-                location={this.props.location}
+                url={this.props.url}
               />
             </Nav>
           </Collapse>
@@ -144,8 +144,8 @@ class Header extends React.Component {
 Header.propTypes = {
   "t": PropTypes.func.isRequired,
   "tUrl": PropTypes.func.isRequired,
+  "url": PropTypes.object.isRequired,
   "language": PropTypes.string,
-  "location": PropTypes.object.isRequired,
 };
 
 register({

@@ -8,7 +8,12 @@ import {
   NavLink,
 } from "reactstrap";
 import {PropTypes} from "prop-types";
-import {getAllLanguages, register} from "../../client-api";
+import {
+  getAllLanguages,
+  register,
+  createUrl,
+  QUERY_DATASET_LIST_KEYWORD,
+} from "../../client-api";
 import {LANGUAGE_SELECTOR} from "../nkod-component-names";
 
 class LanguageSelector extends React.PureComponent {
@@ -22,8 +27,7 @@ class LanguageSelector extends React.PureComponent {
   }
 
   render() {
-    const {t, language, location} = this.props;
-    const baseUrl = createBaseUrl(location);
+    const {t, language, url} = this.props;
     return (
       <NavItem>
         <Dropdown
@@ -39,7 +43,7 @@ class LanguageSelector extends React.PureComponent {
           </DropdownToggle>
           <DropdownMenu className="language-drop-down">
             {getOtherLanguages(language).map((lang) => (
-              createDropdownItem(baseUrl, lang, t(lang))
+              createDropdownItem(url, lang, t(lang))
             ))}
           </DropdownMenu>
         </Dropdown>
@@ -57,7 +61,7 @@ class LanguageSelector extends React.PureComponent {
 
 LanguageSelector.propTypes = {
   "t": PropTypes.func.isRequired,
-  "location": PropTypes.object.isRequired,
+  "url": PropTypes.object.isRequired,
   "language": PropTypes.string.isRequired,
 };
 
@@ -65,16 +69,6 @@ register({
   "name": LANGUAGE_SELECTOR,
   "element": LanguageSelector,
 });
-
-function createBaseUrl(location) {
-  let search = location.search;
-  if (search === "") {
-    search = "?"
-  } else {
-    search += "&";
-  }
-  return location.pathname + search;
-}
 
 /**
  * Return all languages but the given one.
@@ -87,7 +81,10 @@ function getOtherLanguages(active) {
 }
 
 function createDropdownItem(url, lang, label) {
-  const link = url + "language=" + lang;
+  const link = createUrl(url.path, lang, {
+    ...url.query,
+    [QUERY_DATASET_LIST_KEYWORD]: undefined,
+  });
   return (
     <DropdownItem key={lang} tag={NavLink} href={link}>
       <img

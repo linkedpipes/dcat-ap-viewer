@@ -94,7 +94,7 @@ class AppComponent extends React.Component {
           <CanonicalLink/>
           <PageTitle/>
           <Header
-            location={this.props.location}
+            url={this.props.url}
             language={this.props.language}
             t={this.props.t}
             tUrl={this.props.tUrl}
@@ -130,7 +130,6 @@ class AppComponent extends React.Component {
 
 AppComponent.propTypes = {
   "language": PropTypes.string.isRequired,
-  "location": PropTypes.object.isRequired,
   "dispatch": PropTypes.func.isRequired,
   "children": PropTypes.element.isRequired,
   "t": PropTypes.func.isRequired,
