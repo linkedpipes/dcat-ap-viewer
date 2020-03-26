@@ -3,6 +3,7 @@
     :root {
         --color-background: #222;
         --color-background-footer: #333;
+        --color-border: rgba(255, 255, 255, 0.125);
         --color-text-default: #ddd;
         --color-text-inverted: #222;
         --color-text-accent: white;
@@ -14,8 +15,16 @@
         text-decoration: underline;
     }
 
-    nav a:hover, .page-item.active a.page-link {
+    .text-muted {
+        color: var(--color-text-default);
+    }
+
+    a:hover, nav a:hover, .page-item.active a.page-link {
         text-decoration: none;
+    }
+
+    a {
+        text-decoration: underline;
     }
 
     button.navbar-toggler {
@@ -29,5 +38,10 @@
     .paginator button.dropdown-item:hover {
         text-decoration: none;
     }
+
+    .badge-info {
+        background-color: var(--color-base);
+        color: var(--color-text);
+    }    
 
 }
