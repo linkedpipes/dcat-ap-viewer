@@ -12,6 +12,9 @@ import {
   URL_DATASET_LIST,
   URL_DATASET_DETAIL,
   QUERY_DATASET_LIST_PUBLISHER,
+  QUERY_DATASET_LIST_THEME,
+  QUERY_DATASET_LIST_KEYWORD,
+  QUERY_DATASET_LIST_FORMAT,
   QUERY_DATASET_DETAIL_IRI,
 } from "./component-list";
 
@@ -39,9 +42,9 @@ export default connect((state) => ({
 function getTitle(t, tLabel, url) {
   let title = undefined;
   // Handling of special cases.
-  if (url.path === URL_DATASET_LIST && url.query[QUERY_DATASET_LIST_PUBLISHER]) {
-    const publisher = url.query[QUERY_DATASET_LIST_PUBLISHER];
-    title = tLabel(publisher);
+  if (url.path === URL_DATASET_LIST) {
+    let iri = getIriForDatasetList(url);
+    title = iri ? tLabel(iri) : undefined;
     if (title !== undefined) {
       return title + titleSuffix;
     }
@@ -60,4 +63,30 @@ function getTitle(t, tLabel, url) {
     title = titlePrefix + title + titleSuffix;
   }
   return title;
+}
+
+function getIriForDatasetList(url) {
+  if (url.query[QUERY_DATASET_LIST_FORMAT] !== undefined) {
+    return undefined;
+  }
+  const values = [
+    ...asArray(url.query[QUERY_DATASET_LIST_PUBLISHER]),
+    ...asArray(url.query[QUERY_DATASET_LIST_THEME]),
+    ...asArray(url.query[QUERY_DATASET_LIST_KEYWORD]),
+  ];
+  if (values.length === 1) {
+    return values[0];
+  } else {
+    return undefined;
+  }
+}
+
+function asArray(value) {
+  if (value === undefined) {
+    return [];
+  } else if (Array.isArray(value)) {
+    return value;
+  } else {
+    return [value];
+  }
 }
