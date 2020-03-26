@@ -49,7 +49,7 @@ function createRootProvider() {
  */
 function defaultProvider() {
   const notImplemented = (req, res) => {
-    res.status(404).json({"error": "not_implemented"});
+    res.status(404).json({"error": "not_supported"});
   };
   return {
     "v1-info": notImplemented,
