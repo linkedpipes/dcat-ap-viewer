@@ -16,6 +16,7 @@ import {
   QUERY_DATASET_LIST_PUBLISHER,
   URL_DATASET_LIST,
   ELEMENT_DATASET_DETAIL,
+  DEREFERENCE_PREFIX,
 } from "../../../client-api";
 import {
   fetchQualityDataset,
@@ -68,7 +69,7 @@ class DatasetView extends React.PureComponent {
       t, tUrl, tLabel, tLiteral, dataset, quality,
       language, openModal, form,
     } = this.props;
-    const link = (getGlobal("dereference-iri-prefix") || "") + dataset.iri;
+    const link = getGlobal(DEREFERENCE_PREFIX) + dataset.iri;
     const {FormLinks, Keywords, Properties} = this;
     return (
       <div className="container">

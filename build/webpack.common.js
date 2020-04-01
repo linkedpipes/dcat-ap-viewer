@@ -16,7 +16,7 @@ const constants = {
   "DEF_URL_BASE":
     JSON.stringify(configuration.client.url.base),
   "DEF_DEREFERENCE_PREFIX":
-    JSON.stringify(configuration.client.url.subdirectory),
+    JSON.stringify(configuration.client.dereference_prefix),
 };
 
 module.exports = {

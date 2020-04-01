@@ -29,8 +29,8 @@ const YAML  = require("yaml");
       "form_url": configuration["client"]["form-url"],
       "url": {
         "base": configuration["client"]["url-base"],
-        "subdirectory": configuration["client"]["url-subdirectory"],
       },
+      "dereference_prefix": configuration["client"]["dereference-prefix"] || "",
     },
   };
 })();
