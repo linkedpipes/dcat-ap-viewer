@@ -91,12 +91,6 @@ function custom(t, tLiteral, legal, quality, openModal) {
           {t("license_db_custom")}
         </a>
         <div className="float-right">
-          <QualityOfCustomDatabaseAuthorship
-            t={t}
-            tLiteral={tLiteral}
-            quality={quality}
-            openModal={openModal}
-          />
           <i
             className="material-icons text-warning"
             title={t("license_db_custom_comment")}
@@ -104,6 +98,12 @@ function custom(t, tLiteral, legal, quality, openModal) {
           >
             help
           </i>
+          <QualityOfCustomDatabaseAuthorship
+            t={t}
+            tLiteral={tLiteral}
+            quality={quality}
+            openModal={openModal}
+          />
         </div>
       </div>
       <div className="label">
@@ -135,7 +135,7 @@ function QualityOfCustomDatabaseAuthorship({t, tLiteral, quality, openModal}) {
   };
   return (
     <i
-      className="material-icons text-danger float-right"
+      className="material-icons text-danger"
       title={t("license_db_custom_unavailable", strArgs)}
       onClick={() => openModal(t("license_db_custom_unavailable", strArgs))}
     >

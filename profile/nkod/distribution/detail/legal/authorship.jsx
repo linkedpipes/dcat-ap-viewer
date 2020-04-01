@@ -108,12 +108,6 @@ function custom(t, tLiteral, legal, quality, openModal) {
           {t("license_author_custom")}
         </a>
         <div className="float-right">
-          <QualityOfCustomLicense
-            t={t}
-            tLiteral={tLiteral}
-            quality={quality}
-            openModal={openModal}
-          />
           <i
             className="material-icons text-warning"
             title={t("license_author_custom_comment")}
@@ -121,6 +115,12 @@ function custom(t, tLiteral, legal, quality, openModal) {
           >
             help
           </i>
+          <QualityOfCustomLicense
+            t={t}
+            tLiteral={tLiteral}
+            quality={quality}
+            openModal={openModal}
+          />
         </div>
       </div>
       <div className="label">
