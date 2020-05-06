@@ -5,9 +5,8 @@ import {
 } from "./../../client-api";
 import {PropTypes} from "prop-types";
 import {
-  getFormLink,
-  DATASET_CREATE,
-  CATALOG_CREATE,
+  getCreateDatasetFormLink,
+  getCreateCatalogFormLink,
 } from "../../../client/form";
 
 function Footer({language, t}) {
@@ -19,12 +18,12 @@ function Footer({language, t}) {
             <strong>{t("f_nkod_registration")}</strong>
             <ul>
               <li>
-                <a href={getFormLink(language, DATASET_CREATE)}>
+                <a href={getCreateDatasetFormLink(language)}>
                   {t("f_register_dataset")}
                 </a>
               </li>
               <li>
-                <a href={getFormLink(language, CATALOG_CREATE)}>
+                <a href={getCreateCatalogFormLink(language)}>
                   {t("f_register_local_catalog")}
                 </a>
               </li>

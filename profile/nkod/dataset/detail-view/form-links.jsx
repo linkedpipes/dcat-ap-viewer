@@ -1,9 +1,9 @@
 import {NKOD} from "../../../../client/vocabulary/vocabulary";
 import {
-  CATALOG_DELETE,
-  DATASET_DELETE,
-  DATASET_EDIT,
-  getFormLink,
+  getDeleteCatalogFormLink,
+  getDeleteDatasetFormLink,
+  getEditDatasetFormLink,
+  getCopyDatasetFormLink,
 } from "../../../../client/form";
 import React from "react";
 import {register} from "../../../client-api";
@@ -21,7 +21,7 @@ function DatasetFormLinks({t, language, dataset, form}) {
     return (
       <span>
         <a
-          href={getFormLink(language, DATASET_EDIT, dataset.iri)}
+          href={getEditDatasetFormLink(language, dataset.iri)}
           title={t("edit_dataset")}
           target="_blank"
           rel="nofollow noopener noreferrer"
@@ -31,7 +31,17 @@ function DatasetFormLinks({t, language, dataset, form}) {
           </i>
         </a>
         <a
-          href={getFormLink(language, DATASET_DELETE, dataset.iri)}
+          href={getCopyDatasetFormLink(language, dataset.iri)}
+          title={t("edit_dataset")}
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+        >
+          <i className="material-icons pl-2" style={actionStyle}>
+            file_copy
+          </i>
+        </a>
+        <a
+          href={getDeleteDatasetFormLink(language, dataset.iri)}
           title={t("delete_dataset")}
           target="_blank"
           rel="nofollow noopener noreferrer"
@@ -46,7 +56,7 @@ function DatasetFormLinks({t, language, dataset, form}) {
     return (
       <span>
         <a
-          href={getFormLink(language, CATALOG_DELETE, form["lkod"])}
+          href={getDeleteCatalogFormLink(language, form["lkod"])}
           title={t("delete_catalog")}
           target="_blank"
           rel="nofollow noopener noreferrer"

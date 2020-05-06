@@ -1,9 +1,6 @@
 import {PropTypes} from "prop-types";
 import React from "react";
-import {
-  getFormLink,
-  CATALOG_DELETE,
-} from "../../../../client/form";
+import {getDeleteCatalogFormLink} from "../../../../client/form";
 import {getGlobal, register} from "../../../client-api";
 import {CATALOG_LIST_ITEM} from "../../nkod-component-names";
 
@@ -77,7 +74,7 @@ function CatalogListItem({catalog, tLabel, fetchLabels, language}) {
               </i>
             </a>
             <a
-              href={getFormLink(language, CATALOG_DELETE, catalog.iri)}
+              href={getDeleteCatalogFormLink(language, catalog.iri)}
               target="_blank"
               rel="nofollow noopener noreferrer">
               <i

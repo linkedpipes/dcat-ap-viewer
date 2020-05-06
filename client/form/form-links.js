@@ -1,12 +1,12 @@
 import {getGlobal, FORM_URL} from "../app/globals";
 
-export const DATASET_CREATE = "DATASET_CREATE";
-export const DATASET_EDIT = "DATASET_EDIT";
-export const DATASET_DELETE = "DATASET_DELETE";
+const DATASET_CREATE = "DATASET_CREATE";
+const DATASET_EDIT = "DATASET_EDIT";
+const DATASET_DELETE = "DATASET_DELETE";
 
-export const CATALOG_CREATE = "CATALOG_CREATE";
-export const CATALOG_EDIT = "CATALOG_EDIT";
-export const CATALOG_DELETE = "CATALOG_DELETE";
+const CATALOG_CREATE = "CATALOG_CREATE";
+const CATALOG_EDIT = "CATALOG_EDIT";
+const CATALOG_DELETE = "CATALOG_DELETE";
 
 const FormLinks = {
   "cs": {
@@ -27,11 +27,35 @@ const FormLinks = {
   },
 };
 
-export function getFormLink(language, type, url) {
-  let result = getGlobal(FORM_URL) + FormLinks[language][type];
-  if (url) {
-    return result + "?url=" + encodeURIComponent(url);
-  } else {
-    return result;
-  }
+export function getCreateDatasetFormLink(language) {
+  return getGlobal(FORM_URL) + FormLinks[language][DATASET_CREATE];
+}
+
+export function getEditDatasetFormLink(language, url) {
+  return getGlobal(FORM_URL) + FormLinks[language][DATASET_EDIT]
+    + "?dataset=" + encodeURIComponent(url);
+}
+
+export function getCopyDatasetFormLink(language, url) {
+  return getGlobal(FORM_URL) + FormLinks[language][DATASET_EDIT]
+    + "?dataset=" + encodeURIComponent(url) + "&kopie=1";
+}
+
+export function getDeleteDatasetFormLink(language, url) {
+  return getGlobal(FORM_URL) + FormLinks[language][DATASET_DELETE]
+    + "?dataset=" + encodeURIComponent(url);
+}
+
+export function getCreateCatalogFormLink(language) {
+  return getGlobal(FORM_URL) + FormLinks[language][CATALOG_CREATE];
+}
+
+export function getEditCatalogFormLink(language, url) {
+  return getGlobal(FORM_URL) + FormLinks[language][CATALOG_EDIT]
+    + "?catalog=" + encodeURIComponent(url);
+}
+
+export function getDeleteCatalogFormLink(language, url) {
+  return getGlobal(FORM_URL) + FormLinks[language][CATALOG_DELETE]
+    + "?catalog=" + encodeURIComponent(url);
 }
