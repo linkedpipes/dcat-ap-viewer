@@ -32,7 +32,7 @@ function DatasetFormLinks({t, language, dataset, form}) {
         </a>
         <a
           href={getCopyDatasetFormLink(language, dataset.iri)}
-          title={t("edit_dataset")}
+          title={t("copy_as_new_dataset")}
           target="_blank"
           rel="nofollow noopener noreferrer"
         >
@@ -55,6 +55,16 @@ function DatasetFormLinks({t, language, dataset, form}) {
   } else if (isFromLkod) {
     return (
       <span>
+        <a
+          href={getCopyDatasetFormLink(language, dataset.iri)}
+          title={t("copy_as_new_dataset")}
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+        >
+          <i className="material-icons pl-2" style={actionStyle}>
+            file_copy
+          </i>
+        </a>
         <a
           href={getDeleteCatalogFormLink(language, form["lkod"])}
           title={t("delete_catalog")}

@@ -50,7 +50,8 @@
       "edit_dataset": "Edit dataset",
       "delete_dataset": "Delete dataset",
       "delete_catalog": "Delete catalog",
-      "follow_link": "Dereference link"
+      "follow_link": "Dereference link",
+      "copy_as_new_dataset": "Copy as new dataset"
     }
   }
 }

@@ -50,7 +50,8 @@
       "edit_dataset": "Uprav datovou sadu",
       "delete_dataset": "Smaž datovou sadu",
       "delete_catalog": "Smaž katalog",
-      "follow_link": "Přejít na odkaz"
+      "follow_link": "Přejít na odkaz",
+      "copy_as_new_dataset": "Zkopírovat jako novou datovou sadu"
     }
   }
 }
