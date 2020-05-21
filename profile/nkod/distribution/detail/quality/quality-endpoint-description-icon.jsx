@@ -2,7 +2,8 @@ import {Spinner} from "reactstrap";
 import React from "react";
 import {PropTypes} from "prop-types";
 
-export default function QualitySchemaIcon({t, tLiteral, quality, openModal}) {
+export default function QualityEndpointDescriptionIcon(
+  {t, tLiteral, quality, openModal}) {
   if (!quality) {
     return null;
   }
@@ -11,19 +12,19 @@ export default function QualitySchemaIcon({t, tLiteral, quality, openModal}) {
       <Spinner size="sm" color="secondary" className="float-right"/>
     );
   }
-  if (quality.schema === undefined) {
+  if (quality.endpointDescription === undefined) {
     return null;
   }
   const strArgs = {
-    "date": quality.schemaLastCheck,
-    "note": tLiteral(quality.schemaNote),
+    "date": quality.endpointDescriptionLastCheck,
+    "note": tLiteral(quality.endpointDescriptionNote),
   };
-  if (quality.schema) {
+  if (quality.endpointDescription) {
     return (
       <i
         className="material-icons text-success float-right"
-        title={t("schema_available", strArgs)}
-        onClick={() => openModal(t("schema_available", strArgs))}
+        title={t("endpoint_description_available", strArgs)}
+        onClick={() => openModal(t("endpoint_description_available", strArgs))}
       >
         verified_user
       </i>
@@ -32,8 +33,9 @@ export default function QualitySchemaIcon({t, tLiteral, quality, openModal}) {
     return (
       <i
         className="material-icons text-danger float-right"
-        title={t("schema_unavailable", strArgs)}
-        onClick={() => openModal(t("schema_unavailable", strArgs))}
+        title={t("endpoint_description_unavailable", strArgs)}
+        onClick={() => openModal(
+          t("endpoint_description_unavailable", strArgs))}
       >
         link_off
       </i>
@@ -41,9 +43,8 @@ export default function QualitySchemaIcon({t, tLiteral, quality, openModal}) {
   }
 }
 
-QualitySchemaIcon.propTypes = {
+QualityEndpointDescriptionIcon.propTypes = {
   "t": PropTypes.func.isRequired,
-  "tLabel": PropTypes.func.isRequired,
   "tLiteral": PropTypes.func.isRequired,
   "openModal": PropTypes.func.isRequired,
   "quality": PropTypes.object,

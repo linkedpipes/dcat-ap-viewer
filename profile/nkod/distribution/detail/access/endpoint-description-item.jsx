@@ -1,7 +1,11 @@
 import React from "react";
 import {PropTypes} from "prop-types";
+import QualityEndpointDescriptionIcon
+  from "../quality/quality-endpoint-description-icon";
 
-export default function EndpointDescription({t, dataSource}) {
+export default function EndpointDescription(
+  {t, tLiteral, dataSource, openModal, quality}) {
+  //
   if (dataSource.endpointDescription === undefined) {
     return null;
   }
@@ -15,11 +19,20 @@ export default function EndpointDescription({t, dataSource}) {
       >
         {t("endpoint_description")}
       </a>
+      <QualityEndpointDescriptionIcon
+        t={t}
+        tLiteral={tLiteral}
+        openModal={openModal}
+        quality={quality}
+      />
     </li>
   );
 }
 
 EndpointDescription.propTypes = {
   "t": PropTypes.func.isRequired,
+  "tLiteral": PropTypes.func.isRequired,
   "dataSource": PropTypes.object.isRequired,
+  "openModal": PropTypes.func.isRequired,
+  "quality": PropTypes.object,
 };

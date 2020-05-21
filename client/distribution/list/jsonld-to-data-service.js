@@ -2,6 +2,7 @@ import {
   DCAT,
 } from "../../vocabulary/vocabulary";
 import {
+  getId,
   getEntityByType,
   getResource,
 } from "../../jsonld";
@@ -21,5 +22,6 @@ export function jsonLdToDataService(jsonld) {
     // is pointed by dataset.
     "endpointDescription": getResource(dataService, DCAT.endpointDescription),
     "endpointURL": getResource(dataService, DCAT.endpointURL),
+    "dataService": getId(dataService),
   };
 }

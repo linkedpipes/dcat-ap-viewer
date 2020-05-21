@@ -172,6 +172,10 @@ export const QUALITY = {
   "specialDatabaseAuthorship":
     QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíZvláštní" +
     "PrávoPořizovateleDatabáze",
+  "endpointDescription":
+    QUALITY_PREFIX + "metrikaDostupnostiEndpointDescription",
+  "endpointUrl":
+    QUALITY_PREFIX + "metrikaDostupnostiEndpointURL",
 };
 
 export const SDMX = {

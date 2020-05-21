@@ -49,6 +49,16 @@ export function jsonLdToQualityDistribution(jsonld) {
       quality["protectedDatabaseAuthorshipNote"] =
           getStrings(measure, SKOS.note);
       break;
+    case QUALITY.endpointDescription:
+      quality["endpointDescription"] = value;
+      quality["endpointDescriptionLastCheck"] = sdmxRefToDate(period);
+      quality["endpointDescriptionNote"] = getStrings(measure, SKOS.note);
+      break;
+    case QUALITY.endpointUrl:
+      quality["endpointUrl"] = value;
+      quality["endpointUrlLastCheck"] = sdmxRefToDate(period);
+      quality["endpointUrlNote"] = getStrings(measure, SKOS.note);
+      break;
     default:
       break;
     }
