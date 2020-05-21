@@ -102,7 +102,7 @@ function Footer({language, t}) {
         </div>
       </div>
     </footer>
-  )
+  );
 }
 
 Footer.propTypes = {

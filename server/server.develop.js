@@ -4,7 +4,7 @@ const webpack = require("webpack");
 const webpackConfig = require("../build/webpack.develop.js");
 const webpackMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
-const helmet = require('helmet')
+const helmet = require("helmet")
 
 const config = require("./server-configuration");
 const httpApi = require("./http-api");

@@ -12,7 +12,7 @@ export function datasetDetailMount(iri) {
 export function datasetDetailUnMount() {
   return {
     "type": DATASET_DETAIL_UNMOUNT,
-  }
+  };
 }
 
 /**

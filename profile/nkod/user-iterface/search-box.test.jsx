@@ -50,7 +50,7 @@ describe("search box", () => {
     inputComponent.simulate("keyDown", {
       "key": "Enter",
       "target": {"value": searchValue},
-    },
+    }
     );
     //
     expect(onSearch.mock.calls).toHaveLength(1);

@@ -51,7 +51,7 @@ function DatasetFormLinks({t, language, dataset, form}) {
           </i>
         </a>
       </span>
-    )
+    );
   } else if (isFromLkod) {
     return (
       <span>
@@ -76,7 +76,7 @@ function DatasetFormLinks({t, language, dataset, form}) {
           </i>
         </a>
       </span>
-    )
+    );
   }
   return null;
 }

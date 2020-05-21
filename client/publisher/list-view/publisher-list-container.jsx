@@ -26,7 +26,7 @@ class PublishersListContainer extends React.Component {
     const {ready, error, publishers} = this.props;
     return (
       <PublisherList ready={ready} error={error} publishers={publishers}/>
-    )
+    );
   }
 
   componentWillUnmount() {
@@ -61,5 +61,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(PublishersListContainer);

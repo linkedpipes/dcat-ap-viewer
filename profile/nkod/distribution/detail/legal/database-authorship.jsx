@@ -8,62 +8,62 @@ export default function DatabaseAuthorship(
   //
   const mapped = PU_VALUES_MAPPING[legal.databaseAuthorship];
   switch (mapped) {
-    case "no":
-      return (
-        <li className="list-group-item px-2">
-          <div>
-            {t("license_author_no")}
-            <i
-              className="material-icons text-success float-right"
-              title={t("license_db_no_comment")}
-              onClick={() => openModal(t("license_db_no_comment"))}
-            >
+  case "no":
+    return (
+      <li className="list-group-item px-2">
+        <div>
+          {t("license_author_no")}
+          <i
+            className="material-icons text-success float-right"
+            title={t("license_db_no_comment")}
+            onClick={() => openModal(t("license_db_no_comment"))}
+          >
               check
-            </i>
-          </div>
-          <div className="label">
-            {t("license_db_type")}
-          </div>
-        </li>
-      );
-    case "ccBy":
-      return (
-        <li className="list-group-item px-2">
-          <div>
-            {t("license_author_ccBy")}
-            <i
-              className="material-icons text-warning float-right"
-              title={t("license_db_ccBy_comment")}
-              onClick={() => openModal(t("license_db_ccBy_comment"))}
-            >
+          </i>
+        </div>
+        <div className="label">
+          {t("license_db_type")}
+        </div>
+      </li>
+    );
+  case "ccBy":
+    return (
+      <li className="list-group-item px-2">
+        <div>
+          {t("license_author_ccBy")}
+          <i
+            className="material-icons text-warning float-right"
+            title={t("license_db_ccBy_comment")}
+            onClick={() => openModal(t("license_db_ccBy_comment"))}
+          >
               turned_in
-            </i>
-          </div>
-          <div className="label">
-            {tLiteral(legal.databaseAuthor)}
-          </div>
-        </li>
-      );
-    case "missing":
-      return (
-        <li className="list-group-item px-2">
-          <div>
-            {t("license_missing")}
-            <i
-              className="material-icons text-danger float-right"
-              title={t("license_missing_comment")}
-              onClick={() => openModal(t("license_missing_comment"))}
-            >
+          </i>
+        </div>
+        <div className="label">
+          {tLiteral(legal.databaseAuthor)}
+        </div>
+      </li>
+    );
+  case "missing":
+    return (
+      <li className="list-group-item px-2">
+        <div>
+          {t("license_missing")}
+          <i
+            className="material-icons text-danger float-right"
+            title={t("license_missing_comment")}
+            onClick={() => openModal(t("license_missing_comment"))}
+          >
               warning
-            </i>
-          </div>
-          <div className="label">
-            {t("license_db_type")}
-          </div>
-        </li>
-      );
-    default:
-      return custom(t, tLiteral, legal, quality, openModal);
+          </i>
+        </div>
+        <div className="label">
+          {t("license_db_type")}
+        </div>
+      </li>
+    );
+  default:
+    return custom(t, tLiteral, legal, quality, openModal);
   }
 }
 
@@ -123,7 +123,7 @@ function QualityOfCustomDatabaseAuthorship({t, tLiteral, quality, openModal}) {
       <span style={{"verticalAlign": "top", "marginRight": "0.3rem"}}>
         <Spinner size="sm" color="secondary"/>
       </span>
-    )
+    );
   }
   if (quality.databaseAuthorship) {
     // TODO Why?
@@ -141,7 +141,7 @@ function QualityOfCustomDatabaseAuthorship({t, tLiteral, quality, openModal}) {
     >
       link_off
     </i>
-  )
+  );
 }
 
 QualityOfCustomDatabaseAuthorship.propTypes = {

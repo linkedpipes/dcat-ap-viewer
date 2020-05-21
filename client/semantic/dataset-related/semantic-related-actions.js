@@ -11,13 +11,13 @@ export const FETCH_RELATED_FAILED = "FETCH_RELATED_FAILED";
 export function onMount() {
   return {
     "type": MOUNT,
-  }
+  };
 }
 
 export function onUnMount() {
   return {
     "type": UNMOUNT,
-  }
+  };
 }
 
 export function fetch(iri) {
@@ -34,14 +34,14 @@ export function fetch(iri) {
 function fetchStart() {
   return {
     "type": FETCH_RELATED,
-  }
+  };
 }
 
 function fetchSuccess(dataset, response) {
   const related = [];
 
   graph.forEachResource(response["jsonld"], (resource) => {
-    related.push({"@id": triples.id(resource)})
+    related.push({"@id": triples.id(resource)});
   });
 
   return {
@@ -49,7 +49,7 @@ function fetchSuccess(dataset, response) {
     "dataset": dataset,
     "jsonld": response["jsonld"],
     "related": related,
-  }
+  };
 }
 
 function fetchFailed(dataset, error) {
@@ -57,5 +57,5 @@ function fetchFailed(dataset, error) {
     "type": FETCH_RELATED_FAILED,
     "dataset": dataset,
     "error": error,
-  }
+  };
 }

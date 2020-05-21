@@ -18,7 +18,7 @@ function KeywordContainer(props) {
       allFetched={props.keywordsAllFetched}
       toggleFacet={toggleFacet}
       fetchMore={fetchMore}/>
-  )
+  );
 }
 
 KeywordContainer.propTypes = {

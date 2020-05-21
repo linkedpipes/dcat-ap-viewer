@@ -26,7 +26,7 @@ import "./dataset/list-view/facet-filters";
 import "./dataset/list-view/keyword-view";
 import "./dataset/list-view/theme-view";
 import "./publisher/list/publisher-list";
-import "./keyword/list/keyword-list"
+import "./keyword/list/keyword-list";
 import "./distribution/list/distribution-list";
 import "./distribution/detail/distribution-detail";
 import "./distribution/detail/data-service-detail";

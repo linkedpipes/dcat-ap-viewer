@@ -42,7 +42,7 @@ export default function DatasetListItem(
       />
       <hr/>
     </div>
-  )
+  );
 }
 
 DatasetListItem.propTypes = {

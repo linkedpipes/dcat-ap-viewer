@@ -4,7 +4,7 @@ import {PropTypes} from "prop-types";
 import {onUnMount, onMount, fetch} from "./semantic-terms-actions";
 import {statusSelector, termsSelector} from "./semantic-terms-reducer";
 import {isDataReady, isFetching} from "../../app-services/http-request";
-import {selectLabel, labelsSelector} from "../../app-services/labels/"
+import {selectLabel, labelsSelector} from "../../app-services/labels/";
 import {getString} from "../../app-services/strings";
 
 class _SemanticDatasetTerms extends React.Component {
@@ -25,7 +25,7 @@ class _SemanticDatasetTerms extends React.Component {
       return (
         <div className="container">
         </div>
-      )
+      );
     } else if (isDataReady(this.props.status)) {
       return (
         <div>
@@ -41,7 +41,7 @@ class _SemanticDatasetTerms extends React.Component {
           </ul>
           <hr/>
         </div>
-      )
+      );
     } else {
       return null;
     }
@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const SemanticDatasetTerms = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(_SemanticDatasetTerms);
 
 SemanticDatasetTerms.propTypes = {

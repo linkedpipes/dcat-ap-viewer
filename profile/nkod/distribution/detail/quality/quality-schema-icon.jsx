@@ -9,7 +9,7 @@ export default function QualitySchemaIcon(t, tLiteral, quality, openModal) {
   if (!quality.ready) {
     return (
       <Spinner size="sm" color="secondary" className="float-right"/>
-    )
+    );
   }
   if (quality.schema === null) {
     return null;
@@ -27,7 +27,7 @@ export default function QualitySchemaIcon(t, tLiteral, quality, openModal) {
       >
         verified_user
       </i>
-    )
+    );
   } else {
     return (
       <i
@@ -37,7 +37,7 @@ export default function QualitySchemaIcon(t, tLiteral, quality, openModal) {
       >
         link_off
       </i>
-    )
+    );
   }
 }
 

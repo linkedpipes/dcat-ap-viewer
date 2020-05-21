@@ -33,7 +33,7 @@ function Keywords({t, tUrl, keywords, language}) {
       ))}
       <hr/>
     </div>
-  )
+  );
 }
 
 Keywords.propTypes = {

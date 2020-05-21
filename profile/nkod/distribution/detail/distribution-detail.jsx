@@ -61,7 +61,7 @@ class DistributionDetail extends React.PureComponent {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
 }
@@ -87,7 +87,7 @@ function dataFormatItem(tLabel, format) {
     <h6 className="card-subtitle mb-2 text-muted">
       {label}
     </h6>
-  )
+  );
 }
 
 function licenseColumn(t, tLiteral, legal, quality, openModal) {
@@ -125,7 +125,7 @@ function licenseColumn(t, tLiteral, legal, quality, openModal) {
         />
       </ul>
     </div>
-  )
+  );
 }
 
 function accessColumn(t, tLabel, tLiteral, distribution, quality, openModal) {

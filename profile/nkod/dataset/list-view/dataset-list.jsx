@@ -97,7 +97,7 @@ class DatasetList extends React.PureComponent {
           error={this.props.error}
           ready={this.props.ready}
         />
-      )
+      );
     }
     //
     const query = paramsToViewQuery(this.props.query, this.state);
@@ -157,7 +157,7 @@ class DatasetList extends React.PureComponent {
     const query = paramsToViewQuery(this.props.query, this.state);
     const index = query[facetName].indexOf(value);
     if (index > -1) {
-      query[facetName].splice(index, 1)
+      query[facetName].splice(index, 1);
     } else {
       query[facetName].push(value);
     }
@@ -175,13 +175,13 @@ class DatasetList extends React.PureComponent {
 
   selectViewElement(view) {
     switch (view) {
-      case 1:
-        return this.KeywordView;
-      case 2:
-        return this.ThemeView;
-      case 0:
-      default:
-        return this.DatasetView;
+    case 1:
+      return this.KeywordView;
+    case 2:
+      return this.ThemeView;
+    case 0:
+    default:
+      return this.DatasetView;
     }
   }
 

@@ -37,7 +37,7 @@ export default function DownloadListItem(
         openModal={openModal}
       />
     </li>
-  )
+  );
 }
 
 DownloadListItem.propTypes = {

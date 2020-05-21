@@ -6,11 +6,11 @@ export function showModal(label, body) {
     "type": SHOW_MODAL,
     "label": label,
     "body": body,
-  }
+  };
 }
 
 export function closeModal() {
   return {
     "type": HIDE_MODAL,
-  }
+  };
 }

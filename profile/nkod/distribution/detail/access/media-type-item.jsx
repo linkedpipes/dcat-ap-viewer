@@ -31,7 +31,7 @@ export default function MediaTypeItem(
         quality={quality}
       />
     </li>
-  )
+  );
 }
 
 MediaTypeItem.propTypes = {

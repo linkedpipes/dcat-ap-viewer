@@ -72,7 +72,7 @@ function SortSelector({t, value, onChange}) {
         }
       </DropdownMenu>
     </UncontrolledDropdown>
-  )
+  );
 }
 
 SortSelector.propTypes = {

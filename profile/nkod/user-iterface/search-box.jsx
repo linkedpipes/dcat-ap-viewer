@@ -68,7 +68,7 @@ export default class SearchBox extends React.Component {
           renderMenuItemChildren={(text) => { // text, props, idx
             return (
               <span>{text}</span>
-            )
+            );
           }}
         />
         <InputGroupAddon addonType="append">
@@ -80,7 +80,7 @@ export default class SearchBox extends React.Component {
           </Button>
         </InputGroupAddon>
       </InputGroup>
-    )
+    );
   }
 
   fetchOptions(textQuery) {
@@ -128,7 +128,7 @@ export default class SearchBox extends React.Component {
     if (this.props.defaultValue === value) {
       // Same value as given by props, ie. no change to the actually
       // visible results.
-      return
+      return;
     }
     if (this.lastSubmittedValue === value) {
       // This can happen when user use enter to select form suggestion,

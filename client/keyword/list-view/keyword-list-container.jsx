@@ -23,7 +23,7 @@ class KeywordListContainer extends React.Component {
     const {ready, error, keywords} = this.props;
     return (
       <KeywordList ready={ready} error={error} keywords={keywords}/>
-    )
+    );
   }
 
   componentWillUnmount() {
@@ -58,5 +58,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(KeywordListContainer);

@@ -109,39 +109,39 @@ class Facets extends React.PureComponent {
           />
         </div>
       </React.Fragment>
-    )
+    );
   }
 
   publisherFetchMore(count) {
-    this.props.fetchMoreFacet(QUERY_DATASET_LIST_PUBLISHER, count)
+    this.props.fetchMoreFacet(QUERY_DATASET_LIST_PUBLISHER, count);
   }
 
   togglePublisherFacet(item) {
-    this.props.toggleFacet(QUERY_DATASET_LIST_PUBLISHER, item)
+    this.props.toggleFacet(QUERY_DATASET_LIST_PUBLISHER, item);
   }
 
   themeFetchMore(count) {
-    this.props.fetchMoreFacet(QUERY_DATASET_LIST_THEME, count)
+    this.props.fetchMoreFacet(QUERY_DATASET_LIST_THEME, count);
   }
 
   toggleThemeFacet(item) {
-    this.props.toggleFacet(QUERY_DATASET_LIST_THEME, item)
+    this.props.toggleFacet(QUERY_DATASET_LIST_THEME, item);
   }
 
   keywordFetchMore(count) {
-    this.props.fetchMoreFacet(QUERY_DATASET_LIST_KEYWORD, count)
+    this.props.fetchMoreFacet(QUERY_DATASET_LIST_KEYWORD, count);
   }
 
   toggleKeywordFacet(item) {
-    this.props.toggleFacet(QUERY_DATASET_LIST_KEYWORD, item)
+    this.props.toggleFacet(QUERY_DATASET_LIST_KEYWORD, item);
   }
 
   formatFetchMore(count) {
-    this.props.fetchMoreFacet(QUERY_DATASET_LIST_FORMAT, count)
+    this.props.fetchMoreFacet(QUERY_DATASET_LIST_FORMAT, count);
   }
 
   toggleFormatFacet(item) {
-    this.props.toggleFacet(QUERY_DATASET_LIST_FORMAT, item)
+    this.props.toggleFacet(QUERY_DATASET_LIST_FORMAT, item);
   }
 
 }

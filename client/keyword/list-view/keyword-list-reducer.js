@@ -20,16 +20,16 @@ const initialState = {
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case MOUNT_KEYWORDS_LIST:
-      return onMount(state);
-    case UNMOUNT_KEYWORDS_LIST:
-      return onUnMount();
-    case FETCH_KEYWORD_LIST_SUCCESS:
-      return onKeywordsRequestSuccess(state, action);
-    case FETCH_KEYWORD_LIST_FAILED:
-      return onKeywordsRequestFailed(state, action);
-    default:
-      return state
+  case MOUNT_KEYWORDS_LIST:
+    return onMount(state);
+  case UNMOUNT_KEYWORDS_LIST:
+    return onUnMount();
+  case FETCH_KEYWORD_LIST_SUCCESS:
+    return onKeywordsRequestSuccess(state, action);
+  case FETCH_KEYWORD_LIST_FAILED:
+    return onKeywordsRequestFailed(state, action);
+  default:
+    return state;
   }
 }
 
@@ -37,7 +37,7 @@ function onMount(state) {
   return {
     ...state,
     "mounted": true,
-  }
+  };
 }
 
 function onUnMount() {

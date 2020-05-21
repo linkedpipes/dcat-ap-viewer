@@ -114,7 +114,7 @@ class DatasetView extends React.PureComponent {
         <hr/>
         <DistributionList/>
       </div>
-    )
+    );
   }
 
   getPublisherSearchLink() {

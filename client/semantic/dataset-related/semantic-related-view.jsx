@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
 import {onUnMount, onMount, fetch} from "./semantic-related-actions";
 import {isDataReady, isFetching} from "../../app-services/http-request";
-import {selectLabel, labelsSelector} from "../../app-services/labels/"
+import {selectLabel, labelsSelector} from "../../app-services/labels/";
 import {getString} from "../../app-services/strings";
 import {statusSelector, relatedSelector} from "./semantic-related-reducer";
 import {
@@ -31,7 +31,7 @@ class _SemanticDatasetRelated extends React.Component {
       return (
         <div className="container">
         </div>
-      )
+      );
     } else if (isDataReady(this.props.status)) {
       return (
         <div>
@@ -47,7 +47,7 @@ class _SemanticDatasetRelated extends React.Component {
           </ul>
           <hr/>
         </div>
-      )
+      );
     } else {
       return null;
     }
@@ -87,7 +87,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const SemanticDatasetRelated = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(_SemanticDatasetRelated);
 
 SemanticDatasetRelated.propTypes = {

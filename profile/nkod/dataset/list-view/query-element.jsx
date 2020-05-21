@@ -71,7 +71,7 @@ function QueryElement(props) {
         </Col>
       </Row>
     </div>
-  )
+  );
 }
 
 QueryElement.propTypes = {

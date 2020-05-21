@@ -48,7 +48,7 @@ class LanguageSelector extends React.PureComponent {
           </DropdownMenu>
         </Dropdown>
       </NavItem>
-    )
+    );
   }
 
   toggleLanguage() {

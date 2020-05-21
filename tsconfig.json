@@ -4,16 +4,24 @@
     "lib": [
       "es2019",
       "dom",
+      "dom.iterable",
       "esnext"
     ],
-    "esModuleInterop": true,
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "jsx": "react",
+    "skipLibCheck": true,
     "strict": true,
+    "sourceMap": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "allowJs": true,
-    "sourceMap": true,
-    "declaration": true,
-    "jsx": "react"
-  }
+    "noErrorTruncation": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "client"
+  ]
 }

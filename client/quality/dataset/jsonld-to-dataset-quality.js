@@ -1,4 +1,4 @@
-import {SDMX, DQV, QUALITY, SKOS} from "../../vocabulary/vocabulary"
+import {SDMX, DQV, QUALITY, SKOS} from "../../vocabulary/vocabulary";
 import {
   getEntitiesByType,
   getResource,
@@ -17,13 +17,13 @@ export default function loadDatasetQuality(jsonld) {
     const measureOf = getResource(measure, DQV.isMeasurementOf);
     const value = getValue(measure, DQV.value);
     switch (measureOf) {
-      case QUALITY.documentationAvailability:
-        quality["documentation"] = value;
-        quality["documentationLastCheck"] = sdmxRefToDate(period);
-        quality["documentationNote"] = getStrings(measure, SKOS.note);
-        break;
-      default:
-        break;
+    case QUALITY.documentationAvailability:
+      quality["documentation"] = value;
+      quality["documentationLastCheck"] = sdmxRefToDate(period);
+      quality["documentationNote"] = getStrings(measure, SKOS.note);
+      break;
+    default:
+      break;
     }
   });
   return quality;

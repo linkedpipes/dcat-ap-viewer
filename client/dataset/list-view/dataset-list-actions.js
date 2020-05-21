@@ -22,7 +22,7 @@ export function datasetListMount() {
 export function datasetListUnMount() {
   return {
     "type": DATASET_LIST_UNMOUNT,
-  }
+  };
 }
 
 export function replaceNavigation(query) {

@@ -17,16 +17,16 @@ const NAME = "quality-dataset-detail";
 
 function reducer(state = initialState, action) {
   switch (action["type"]) {
-    case FETCH_QUALITY_DATASET:
-      return onDatasetQualityFetch(state);
-    case FETCH_QUALITY_DATASET_SUCCESS:
-      return onDatasetQualityFetchSuccess(state, action);
-    case DATASET_DETAIL_MOUNT:
-      return onDatasetListMount(state);
-    case DATASET_DETAIL_UNMOUNT:
-      return onDatasetListUnMount(state);
-    default:
-      return state;
+  case FETCH_QUALITY_DATASET:
+    return onDatasetQualityFetch(state);
+  case FETCH_QUALITY_DATASET_SUCCESS:
+    return onDatasetQualityFetchSuccess(state, action);
+  case DATASET_DETAIL_MOUNT:
+    return onDatasetListMount(state);
+  case DATASET_DETAIL_UNMOUNT:
+    return onDatasetListUnMount(state);
+  default:
+    return state;
   }
 }
 
@@ -36,7 +36,7 @@ function onDatasetQualityFetch(state) {
     "quality": {
       "ready": false,
     },
-  }
+  };
 }
 
 function onDatasetQualityFetchSuccess(state, action) {
@@ -46,7 +46,7 @@ function onDatasetQualityFetchSuccess(state, action) {
       "ready": true,
       ...jsonLdToDatasetQuality(action.jsonld),
     },
-  }
+  };
 }
 
 function onDatasetListMount(state) {

@@ -20,18 +20,18 @@ const initialStatus = {
 
 function reducer(state = initialStatus, action) {
   switch (action.type) {
-    case DATASET_DETAIL_MOUNT:
-      return onDatasetDetailMount(action);
-    case DATASET_DETAIL_UNMOUNT:
-      return onDatasetDetailUnMount();
-    case DATASET_DETAIL_SET:
-      return onDatasetDetailSet(state, action);
-    case FETCH_DATASET_SUCCESS:
-      return onDatasetRequestSuccess(state, action);
-    case FETCH_DATASET_FAILED:
-      return onDatasetRequestFailed(state, action);
-    default:
-      return state
+  case DATASET_DETAIL_MOUNT:
+    return onDatasetDetailMount(action);
+  case DATASET_DETAIL_UNMOUNT:
+    return onDatasetDetailUnMount();
+  case DATASET_DETAIL_SET:
+    return onDatasetDetailSet(state, action);
+  case FETCH_DATASET_SUCCESS:
+    return onDatasetRequestSuccess(state, action);
+  case FETCH_DATASET_FAILED:
+    return onDatasetRequestFailed(state, action);
+  default:
+    return state;
   }
 }
 
@@ -50,7 +50,7 @@ function onDatasetDetailSet(state, action) {
   return {
     ...initialStatus,
     "dataset": action.dataset,
-  }
+  };
 }
 
 function onDatasetRequestSuccess(state, action) {

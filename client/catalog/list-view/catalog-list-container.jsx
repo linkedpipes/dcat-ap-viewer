@@ -22,7 +22,7 @@ class CatalogListContainer extends React.PureComponent {
     const {ready, error, catalogs} = this.props;
     return (
       <CatalogList ready={ready} error={error} catalogs={catalogs}/>
-    )
+    );
   }
 
   componentWillUnmount() {
@@ -57,5 +57,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(CatalogListContainer);

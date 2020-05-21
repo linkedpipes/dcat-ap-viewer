@@ -16,14 +16,14 @@ const NAME = "form-dataset-detail";
 
 function reducer(state = initialState, action) {
   switch (action["type"]) {
-    case DATASET_DETAIL_MOUNT:
-      return onDatasetDetailMount(action);
-    case DATASET_DETAIL_UNMOUNT:
-      return onDatasetDetailUnMount();
-    case DATASET_DETAIL_SET:
-      return onDatasetDetailSet(state, action);
-    case FETCH_DATASET_SUCCESS:
-      return onDatasetDetailFetchSuccess(state, action);
+  case DATASET_DETAIL_MOUNT:
+    return onDatasetDetailMount(action);
+  case DATASET_DETAIL_UNMOUNT:
+    return onDatasetDetailUnMount();
+  case DATASET_DETAIL_SET:
+    return onDatasetDetailSet(state, action);
+  case FETCH_DATASET_SUCCESS:
+    return onDatasetDetailFetchSuccess(state, action);
   }
   return state;
 }
@@ -44,7 +44,7 @@ function onDatasetDetailSet(state, action) {
     ...state,
     "dataset": action.dataset,
     "data": undefined,
-  }
+  };
 }
 
 function onDatasetDetailFetchSuccess(state, action) {
@@ -55,7 +55,7 @@ function onDatasetDetailFetchSuccess(state, action) {
     ...state,
     "ready": true,
     "data": jsonldToForm(action.jsonld),
-  }
+  };
 }
 
 export default {

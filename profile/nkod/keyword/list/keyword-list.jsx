@@ -17,7 +17,7 @@ import withStatus from "../../user-iterface/status";
 class KeywordList extends React.PureComponent {
 
   componentDidMount() {
-    this.props.fetchLabels(this.props.keywords.map(item => item.iri))
+    this.props.fetchLabels(this.props.keywords.map(item => item.iri));
   }
 
   render() {
@@ -29,7 +29,7 @@ class KeywordList extends React.PureComponent {
         "label": label,
         "count": item.usedByPublisherCount,
         "url": tUrl(URL_DATASET_LIST, {"keyword": label}),
-      }
+      };
     });
     return (
       <div className="container p-3">
@@ -39,7 +39,7 @@ class KeywordList extends React.PureComponent {
         <hr/>
         <TagCloud tags={tags} renderFunction={renderTag}/>
       </div>
-    )
+    );
   }
 }
 
@@ -66,7 +66,7 @@ function renderTag(tag, size, color) {
         </span>
       </Link>
     </span>
-  )
+  );
 }
 
 register({

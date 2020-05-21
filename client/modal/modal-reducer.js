@@ -10,12 +10,12 @@ const initialState = {
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case SHOW_MODAL:
-      return onShowModal(state, action);
-    case HIDE_MODAL:
-      return onHideModal();
-    default:
-      return state
+  case SHOW_MODAL:
+    return onShowModal(state, action);
+  case HIDE_MODAL:
+    return onHideModal();
+  default:
+    return state;
   }
 }
 
@@ -24,13 +24,13 @@ function onShowModal(state, action) {
     "isOpen": true,
     "label": action.label,
     "body": action.body,
-  }
+  };
 }
 
 function onHideModal() {
   return {
     "isOpen": false,
-  }
+  };
 }
 
 

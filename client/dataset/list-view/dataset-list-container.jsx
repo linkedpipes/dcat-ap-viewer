@@ -39,7 +39,7 @@ class DatasetListContainer extends React.Component {
         // Functions.
         fetchLabels={this.props.fetchLabels}
       />
-    )
+    );
   }
 
   componentWillUnmount() {

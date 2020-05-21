@@ -149,5 +149,5 @@ export const App = hot(module)(withRouter(connect(
     "t": selectT(state),
     "tUrl": selectTUrl(state),
     "url": selectUrl(state),
-  }),
+  })
 )(AppComponent)));

@@ -12,7 +12,7 @@ function LoaderIndicator({active}) {
     <div className="indeterminate-loader fixed-top">
       <div className="progress"/>
     </div>
-  )
+  );
 }
 
 LoaderIndicator.propTypes = {
@@ -21,4 +21,4 @@ LoaderIndicator.propTypes = {
 
 export default connect((state) => ({
   "active": selectShowLoadingIndicator(state),
-}))(LoaderIndicator)
+}))(LoaderIndicator);

@@ -51,7 +51,7 @@ export function createDefaultQuery() {
     "temporalStart": undefined,
     "temporalEnd": undefined,
     "view": 0,
-  }
+  };
 }
 
 function addFirstFromParams(params, name, query, transform = (item => item)) {

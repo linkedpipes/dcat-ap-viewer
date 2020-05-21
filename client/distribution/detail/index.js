@@ -1,1 +1,3 @@
-export {default as DistributionContainer} from "./distribution-detail-container";
+export {
+  default as DistributionContainer,
+} from "./distribution-detail-container";

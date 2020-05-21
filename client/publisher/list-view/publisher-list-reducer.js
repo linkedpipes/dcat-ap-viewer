@@ -18,16 +18,16 @@ const initialState = {
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case PUBLISHER_LIST_MOUNT:
-      return onPublisherListMount();
-    case PUBLISHER_LIST_UNMOUNT:
-      return onPublisherListUnMount();
-    case FETCH_PUBLISHER_LIST_SUCCESS:
-      return onPublisherListRequestSuccess(state, action);
-    case FETCH_PUBLISHER_LIST_FAILED:
-      return onPublisherListRequestFailed(state, action);
-    default:
-      return state;
+  case PUBLISHER_LIST_MOUNT:
+    return onPublisherListMount();
+  case PUBLISHER_LIST_UNMOUNT:
+    return onPublisherListUnMount();
+  case FETCH_PUBLISHER_LIST_SUCCESS:
+    return onPublisherListRequestSuccess(state, action);
+  case FETCH_PUBLISHER_LIST_FAILED:
+    return onPublisherListRequestFailed(state, action);
+  default:
+    return state;
   }
 }
 

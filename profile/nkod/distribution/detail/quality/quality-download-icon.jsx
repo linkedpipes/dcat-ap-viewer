@@ -9,7 +9,7 @@ export default function QualityDownloadIcon({t, tLiteral, openModal, quality}) {
   if (!quality.ready) {
     return (
       <Spinner size="sm" color="secondary" className="float-right"/>
-    )
+    );
   }
   const strArgs = {
     "date": quality.downloadLastCheck,
@@ -27,7 +27,7 @@ export default function QualityDownloadIcon({t, tLiteral, openModal, quality}) {
       >
         verified_user
       </i>
-    )
+    );
   } else {
     return (
       <i
@@ -37,7 +37,7 @@ export default function QualityDownloadIcon({t, tLiteral, openModal, quality}) {
       >
         link_off
       </i>
-    )
+    );
   }
 }
 

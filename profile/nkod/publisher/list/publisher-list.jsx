@@ -46,7 +46,7 @@ class PublisherList extends React.PureComponent {
           ))}
         </div>
       </div>
-    )
+    );
   }
 }
 

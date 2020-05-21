@@ -60,7 +60,7 @@ function DatasetsView(props) {
         onSizeChange={props.onDatasetsPageSize}
         sizes={PAGE_SIZES}/>
     </React.Fragment>
-  )
+  );
 }
 
 DatasetsView.propTypes = {

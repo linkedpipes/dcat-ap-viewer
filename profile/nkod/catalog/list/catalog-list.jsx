@@ -34,7 +34,7 @@ function CatalogList({catalogs, t, tLabel, fetchLabels, language}) {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 CatalogList.propTypes = {

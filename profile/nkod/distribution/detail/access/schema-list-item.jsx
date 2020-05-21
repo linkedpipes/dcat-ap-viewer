@@ -25,7 +25,7 @@ export default function SchemaListItem(
         quality={quality}
       />
     </li>
-  )
+  );
 }
 
 SchemaListItem.propTypes = {

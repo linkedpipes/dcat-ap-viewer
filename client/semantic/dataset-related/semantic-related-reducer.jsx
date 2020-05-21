@@ -17,16 +17,16 @@ const reducerName = "semantic-related";
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case MOUNT:
-      return onMount();
-    case UNMOUNT:
-      return onUnMount();
-    case FETCH_RELATED:
-      return onRequest(state);
-    case FETCH_RELATED_SUCCESS:
-      return onRequestSuccess(state, action);
-    case FETCH_RELATED_FAILED:
-      return onRequestFailed(state, action);
+  case MOUNT:
+    return onMount();
+  case UNMOUNT:
+    return onUnMount();
+  case FETCH_RELATED:
+    return onRequest(state);
+  case FETCH_RELATED_SUCCESS:
+    return onRequestSuccess(state, action);
+  case FETCH_RELATED_FAILED:
+    return onRequestFailed(state, action);
   }
   return state;
 }
@@ -35,7 +35,7 @@ function onMount() {
   return {
     "status": STATUS_INITIAL,
     "terms": [],
-  }
+  };
 }
 
 function onUnMount() {

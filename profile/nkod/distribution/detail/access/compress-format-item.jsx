@@ -1,5 +1,5 @@
 import React from "react";
-import {PropTypes} from "prop-types"
+import {PropTypes} from "prop-types";
 
 export default function CompressFormat({t, tLabel, distribution}) {
   if (distribution.compressFormat === undefined) {
@@ -23,7 +23,7 @@ export default function CompressFormat({t, tLabel, distribution}) {
         </i>
       </a>
     </li>
-  )
+  );
 }
 
 CompressFormat.propTypes = {

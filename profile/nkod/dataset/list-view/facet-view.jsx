@@ -49,7 +49,7 @@ export default class FacetView extends React.PureComponent {
           </div>
         )}
       </div>
-    )
+    );
   }
 
 }
@@ -88,5 +88,5 @@ function tagRenderer(itemToLabel, tag, size) {
         {itemToLabel(tag)} ({tag.count})
       </span>
     </span>
-  )
+  );
 }

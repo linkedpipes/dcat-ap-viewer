@@ -7,62 +7,62 @@ export default function ProtectedDatabaseAuthorship(
   {t, tLiteral, legal, quality, openModal}) {
   const mapped = PU_VALUES_MAPPING[legal.protectedDatabase];
   switch (mapped) {
-    case "no":
-      return (
-        <li className="list-group-item px-2">
-          <div>
-            {t("license_specialdb_no")}
-            <i
-              className="material-icons text-success float-right"
-              title={t("license_specialdb_no_comment")}
-              onClick={() => openModal(t("license_specialdb_no_comment"))}
-            >
+  case "no":
+    return (
+      <li className="list-group-item px-2">
+        <div>
+          {t("license_specialdb_no")}
+          <i
+            className="material-icons text-success float-right"
+            title={t("license_specialdb_no_comment")}
+            onClick={() => openModal(t("license_specialdb_no_comment"))}
+          >
               check
-            </i>
-          </div>
-          <div className="label">
-            {t("license_specialdb_type")}
-          </div>
-        </li>
-      );
-    case "cc0":
-      return (
-        <li className="list-group-item px-2">
-          <div>
-            {t("license_specialdb_cc0")}
-            <i
-              className="material-icons text-success float-right"
-              title={t("license_specialdb_cc0_comment")}
-              onClick={() => openModal(t("license_specialdb_cc0_comment"))}
-            >
+          </i>
+        </div>
+        <div className="label">
+          {t("license_specialdb_type")}
+        </div>
+      </li>
+    );
+  case "cc0":
+    return (
+      <li className="list-group-item px-2">
+        <div>
+          {t("license_specialdb_cc0")}
+          <i
+            className="material-icons text-success float-right"
+            title={t("license_specialdb_cc0_comment")}
+            onClick={() => openModal(t("license_specialdb_cc0_comment"))}
+          >
               check
-            </i>
-          </div>
-          <div className="label">
-            {t("license_specialdb_type")}
-          </div>
-        </li>
-      );
-    case "missing":
-      return (
-        <li className="list-group-item px-2">
-          <div>
-            {t("license_missing")}
-            <i
-              className="material-icons text-danger float-right"
-              title={t("license_missing_comment")}
-              onClick={() => openModal(t("license_missing_comment"))}
-            >
+          </i>
+        </div>
+        <div className="label">
+          {t("license_specialdb_type")}
+        </div>
+      </li>
+    );
+  case "missing":
+    return (
+      <li className="list-group-item px-2">
+        <div>
+          {t("license_missing")}
+          <i
+            className="material-icons text-danger float-right"
+            title={t("license_missing_comment")}
+            onClick={() => openModal(t("license_missing_comment"))}
+          >
               warning
-            </i>
-          </div>
-          <div className="label">
-            {t("license_specialdb_type")}
-          </div>
-        </li>
-      );
-    default:
-      return custom(t, tLiteral, legal, quality, openModal);
+          </i>
+        </div>
+        <div className="label">
+          {t("license_specialdb_type")}
+        </div>
+      </li>
+    );
+  default:
+    return custom(t, tLiteral, legal, quality, openModal);
   }
 }
 
@@ -118,7 +118,7 @@ function QualityProtectedDatabaseAuthorship({t, tLiteral, quality, openModal}) {
       <span style={{"verticalAlign": "top", "marginRight": "0.3rem"}}>
         <Spinner size="sm" color="secondary"/>
       </span>
-    )
+    );
   }
   if (quality.protectedDatabaseAuthorship) {
     // TODO Why?
@@ -128,11 +128,13 @@ function QualityProtectedDatabaseAuthorship({t, tLiteral, quality, openModal}) {
     "date": quality.protectedDatabaseAuthorshipLastCheck,
     "note": tLiteral(quality.protectedDatabaseAuthorshipNote),
   };
+  const opeModal = () => openModal(
+    t("license_specialdb_custom_unavailable", strArgs));
   return (
     <i
       className="material-icons text-danger"
       title={t("license_specialdb_custom_unavailable", strArgs)}
-      onClick={() => openModal(t("license_specialdb_custom_unavailable", strArgs))}
+      onClick={opeModal}
     >
       link_off
     </i>

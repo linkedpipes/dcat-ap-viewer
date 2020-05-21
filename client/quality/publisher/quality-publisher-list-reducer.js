@@ -17,14 +17,14 @@ const NAME = "quality-publisher-list";
 
 function reducer(state = initialState, action) {
   switch (action["type"]) {
-    case FETCH_QUALITY_PUBLISHER_LIST_SUCCESS:
-      return onPublisherQualityFetchSuccess(state, action);
-    case PUBLISHER_LIST_MOUNT:
-      return onPublisherListMount(state);
-    case PUBLISHER_LIST_UNMOUNT:
-      return onPublisherListUnMount(state);
-    default:
-      return state;
+  case FETCH_QUALITY_PUBLISHER_LIST_SUCCESS:
+    return onPublisherQualityFetchSuccess(state, action);
+  case PUBLISHER_LIST_MOUNT:
+    return onPublisherListMount(state);
+  case PUBLISHER_LIST_UNMOUNT:
+    return onPublisherListUnMount(state);
+  default:
+    return state;
   }
 }
 
@@ -33,7 +33,7 @@ function onPublisherQualityFetchSuccess(state, action){
     ...state,
     "ready": true,
     "exceptionalPublishers": jsonLdToPublisherList(action.jsonld),
-  }
+  };
 }
 
 function onPublisherListMount(state) {

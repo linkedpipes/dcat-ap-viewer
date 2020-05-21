@@ -38,7 +38,7 @@ function CanonicalLink({url}) {
         ))
       }
     </Helmet>
-  )
+  );
 }
 
 CanonicalLink.propTypes = {
@@ -62,7 +62,7 @@ function prepareQuery(url, mainLanguage, language) {
     return {
       ...url.query,
       [QUERY_DATASET_LIST_KEYWORD]: undefined,
-    }
+    };
   }
 }
 

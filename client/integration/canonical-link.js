@@ -31,7 +31,7 @@ export default class HeadLinks extends React.PureComponent {
           ))
         }
       </Helmet>
-    )
+    );
   }
 
 }

@@ -5,7 +5,9 @@ import {hot} from "react-hot-loader";
 import {PropTypes} from "prop-types";
 import {getRegisteredElement} from "../../app/register";
 import {ELEMENT_DISTRIBUTION_LIST} from "../../app/component-list";
-import {selectDatasetDetail} from "../../dataset/detail-view/dataset-detail-reducer";
+import {
+  selectDatasetDetail,
+} from "../../dataset/detail-view/dataset-detail-reducer";
 import {DistributionContainer} from "../detail";
 
 class DistributionListContainer extends React.Component {
@@ -21,7 +23,7 @@ class DistributionListContainer extends React.Component {
         iris={this.props.dataset.distributions}
         DistributionContainer={DistributionContainer}
       />
-    )
+    );
   }
 
   componentWillUnmount() {
@@ -47,5 +49,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default hot(module)(connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(DistributionListContainer));

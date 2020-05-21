@@ -23,12 +23,12 @@ class DistributionContainer extends React.Component {
       const DataService = getRegisteredElement(ELEMENT_DATA_SERVICE_DETAIL);
       return (
         <DataService dataService={this.props.data}/>
-      )
+      );
     } else {
       const Distribution = getRegisteredElement(ELEMENT_DISTRIBUTION_DETAIL);
       return (
         <Distribution distribution={this.props.data}/>
-      )
+      );
     }
   }
 
@@ -50,5 +50,5 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(DistributionContainer);

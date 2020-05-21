@@ -15,13 +15,13 @@ const BASE_TERMS_URL = "https://kbss.felk.cvut.cz/termit-server-dev/rest/resourc
 export function onMount() {
   return {
     "type": MOUNT,
-  }
+  };
 }
 
 export function onUnMount() {
   return {
     "type": UNMOUNT,
-  }
+  };
 }
 
 export function fetch(iri) {
@@ -38,7 +38,7 @@ export function fetch(iri) {
 function fetchStart() {
   return {
     "type": FETCH_TERMS,
-  }
+  };
 }
 
 function fetchSuccess(dataset, response) {
@@ -49,7 +49,7 @@ function fetchSuccess(dataset, response) {
       "@id": triples.id(resource),
       "source": triples.value(resource, DCELEMENTS.source),
       "vocabulary": triples.resource(resource, FEL.jePojmemZeSlovniku),
-    })
+    });
   });
 
   return {
@@ -57,7 +57,7 @@ function fetchSuccess(dataset, response) {
     "dataset": dataset,
     "jsonld": response["jsonld"],
     "terms": terms,
-  }
+  };
 }
 
 function fetchFailed(dataset, error) {
@@ -65,5 +65,5 @@ function fetchFailed(dataset, error) {
     "type": FETCH_TERMS_FAILED,
     "dataset": dataset,
     "error": error,
-  }
+  };
 }

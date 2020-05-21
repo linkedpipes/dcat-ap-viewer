@@ -16,7 +16,7 @@ export default function EndpointUrl({t, dataSource}) {
         {t("endpoint")}
       </a>
     </li>
-  )
+  );
 }
 
 EndpointUrl.propTypes = {

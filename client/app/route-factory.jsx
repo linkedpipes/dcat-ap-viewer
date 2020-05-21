@@ -30,7 +30,7 @@ export function createRoutes(history) {
         </Switch>
       </App>
     </Router>
-  )
+  );
 }
 
 function getRouteObjects() {

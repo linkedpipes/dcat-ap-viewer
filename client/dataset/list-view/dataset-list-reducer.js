@@ -50,20 +50,20 @@ const initialStatus = {
 
 function reducer(state = initialStatus, action) {
   switch (action.type) {
-    case DATASET_LIST_MOUNT:
-      return onMount(state);
-    case DATASET_LIST_UNMOUNT:
-      return onUnMount(state);
+  case DATASET_LIST_MOUNT:
+    return onMount(state);
+  case DATASET_LIST_UNMOUNT:
+    return onUnMount(state);
     // case DATASET_LIST_SET_VISIBLE_FACETS:
     //   return onSetFacetVisibleSize(state, action);
-    case FETCH_DATASET_LIST:
-      return onFetchDatasetList(state, action);
-    case FETCH_DATASET_LIST_SUCCESS:
-      return onFetchDatasetListSuccess(state, action);
-    case FETCH_DATASET_LIST_FAILED:
-      return onFetchDatasetListFailed(state, action);
-    default:
-      return state;
+  case FETCH_DATASET_LIST:
+    return onFetchDatasetList(state, action);
+  case FETCH_DATASET_LIST_SUCCESS:
+    return onFetchDatasetListSuccess(state, action);
+  case FETCH_DATASET_LIST_FAILED:
+    return onFetchDatasetListFailed(state, action);
+  default:
+    return state;
   }
 }
 
@@ -71,7 +71,7 @@ function onMount(state) {
   return {
     ...state,
     "mounted": true,
-  }
+  };
 }
 
 function onUnMount(state) {
@@ -90,7 +90,7 @@ function onFetchDatasetList(state) {
   return {
     ...state,
     "locked": true,
-  }
+  };
 }
 
 function onFetchDatasetListSuccess(state, action) {
@@ -116,7 +116,7 @@ function onFetchDatasetListSuccess(state, action) {
     "formats": data.formats,
     "formatsCount": data.formatsCount,
     "colors": colors,
-  }
+  };
 }
 
 /**
@@ -152,13 +152,13 @@ function onFetchDatasetListFailed(state, action) {
     ...state,
     "locked": false,
     "error": action.error.code,
-  }
+  };
 }
 
 export default {
   "name": NAME,
   "reducer": reducer,
-}
+};
 
 const reducerSelector = (state) => state[NAME];
 
@@ -184,50 +184,50 @@ export function selectDatasetListLocked(state) {
 
 export function selectFacet(state, type) {
   switch (type) {
-    case PUBLISHERS:
-      return reducerSelector(state).publishers;
-    case THEMES:
-      return reducerSelector(state).themes;
-    case KEYWORDS:
-      return reducerSelector(state).keywords;
-    case FORMATS:
-      return reducerSelector(state).formats;
-    default:
-      console.error("Unknown facet type:", type);
-      return [];
+  case PUBLISHERS:
+    return reducerSelector(state).publishers;
+  case THEMES:
+    return reducerSelector(state).themes;
+  case KEYWORDS:
+    return reducerSelector(state).keywords;
+  case FORMATS:
+    return reducerSelector(state).formats;
+  default:
+    console.error("Unknown facet type:", type);
+    return [];
   }
 }
 
 export function selectFacetCount(state, type) {
   state = reducerSelector(state);
   switch (type) {
-    case PUBLISHERS:
-      return state.publishersCount;
-    case THEMES:
-      return state.themesCount;
-    case KEYWORDS:
-      return state.keywordsCount;
-    case FORMATS:
-      return state.formatsCount;
-    default:
-      console.error("Unknown facet type:", type);
-      return true;
+  case PUBLISHERS:
+    return state.publishersCount;
+  case THEMES:
+    return state.themesCount;
+  case KEYWORDS:
+    return state.keywordsCount;
+  case FORMATS:
+    return state.formatsCount;
+  default:
+    console.error("Unknown facet type:", type);
+    return true;
   }
 }
 
 export function selectFacetAllFetched(state, type) {
   state = reducerSelector(state);
   switch (type) {
-    case PUBLISHERS:
-      return state.publishers.length === state.publishersCount;
-    case THEMES:
-      return state.themes.length === state.themesCount;
-    case KEYWORDS:
-      return state.keywords.length === state.keywordsCount;
-    case FORMATS:
-      return state.formats.length === state.formatsCount;
-    default:
-      console.error("Unknown facet type:", type);
-      return true;
+  case PUBLISHERS:
+    return state.publishers.length === state.publishersCount;
+  case THEMES:
+    return state.themes.length === state.themesCount;
+  case KEYWORDS:
+    return state.keywords.length === state.keywordsCount;
+  case FORMATS:
+    return state.formats.length === state.formatsCount;
+  default:
+    console.error("Unknown facet type:", type);
+    return true;
   }
 }

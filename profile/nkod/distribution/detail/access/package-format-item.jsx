@@ -21,7 +21,7 @@ export default function PackageFormat({t, tLabel, distribution}) {
         <i className="material-icons" style={iconStyle}> open_in_new </i>
       </a>
     </li>
-  )
+  );
 }
 
 PackageFormat.propTypes = {

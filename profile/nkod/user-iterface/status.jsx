@@ -15,7 +15,7 @@ export default function withStatus(WrappedComponent) {
         <WrappedComponent {...props}/>
       );
     }
-  }
+  };
 }
 
 export function Status(props) {
@@ -42,7 +42,7 @@ export function Status(props) {
       <div style={statusStyle}>
         {props.t("http.fetching")}
       </div>
-    )
+    );
   } else {
     return null;
   }

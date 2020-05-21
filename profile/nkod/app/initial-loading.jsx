@@ -33,7 +33,7 @@ function InitialLoading({lang, failed}) {
       )}
       <br/>
     </Container>
-  )
+  );
 }
 
 InitialLoading.propTypes = {

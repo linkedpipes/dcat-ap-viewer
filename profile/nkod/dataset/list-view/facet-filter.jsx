@@ -44,7 +44,7 @@ function FacetFilter(props) {
     ...selectRemainingFacetsToShow(
       props.facetData,
       visible - props.facetActive.length,
-      props.facetActive,
+      props.facetActive
     ),
   ];
 

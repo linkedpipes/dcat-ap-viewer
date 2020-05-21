@@ -64,7 +64,7 @@ function firstColumn(t, tLabel, tUrl, dataset) {
       </dl>
       }
     </div>
-  )
+  );
 
 }
 
@@ -88,7 +88,7 @@ function searchableLabeledLinkEntitiesAsDd(t, tLabel, tUrl, iri, queryName) {
       </a>
       <br/>
     </dd>
-  )
+  );
 }
 
 function linkIcon() {
@@ -121,7 +121,7 @@ function secondColumn(t, tLabel, tUrl, dataset) {
         {temporalResolution}
       </dl>
     </div>
-  )
+  );
 }
 
 function spatialCoverage(t, tLabel, dataset) {
@@ -133,7 +133,7 @@ function spatialCoverage(t, tLabel, dataset) {
       <dt>{t("spatial")}</dt>
       {dataset.spatial.map(iri => labeledLinkEntitiesAsDd(t, tLabel, iri))}
     </React.Fragment>
-  )
+  );
 }
 
 function labeledLinkEntitiesAsDd(t, tLabel, iri) {
@@ -162,7 +162,7 @@ function spatialCoverageResolution(t, dataset) {
       <dt>{t("spatial_resolution")}</dt>
       {dataset.spatialResolutionInMeters} m
     </React.Fragment>
-  )
+  );
 }
 
 function temporalCoverage(t, dataset) {
@@ -174,7 +174,7 @@ function temporalCoverage(t, dataset) {
       <dt>{t("temporal")}</dt>
       <dd>{temporalAsString(dataset.temporal)}</dd>
     </React.Fragment>
-  )
+  );
 }
 
 function temporalAsString(temporal) {
@@ -215,7 +215,7 @@ function temporalCoverageResolution(t, dataset) {
       <dt>{t("temporal_resolution")}</dt>
       <dd>{xsdDurationToString(t, dataset.temporalResolution)}</dd>
     </React.Fragment>
-  )
+  );
 }
 
 function xsdDurationToString(t, durationAsStr) {
@@ -308,7 +308,7 @@ function thirdColumn(t, tLabel, dataset, quality, openModal) {
         {hasContacts && contactPoints(tLabel, dataset.contactPoints)}
       </dl>
     </div>
-  )
+  );
 }
 
 function documentationLabel(t, dataset, quality, openModal) {
@@ -318,20 +318,20 @@ function documentationLabel(t, dataset, quality, openModal) {
       <dt>
         {t("documentation")}
       </dt>
-    )
+    );
   } else if (!quality.ready) {
     return (
       <dt>
         {t("documentation")}
         <Spinner size="sm" color="secondary" className="float-right"/>
       </dt>
-    )
+    );
   } else if (quality.documentation === undefined) {
     return (
       <dt>
         {t("documentation")}
       </dt>
-    )
+    );
   } else if (quality.documentation) {
     const args = {
       "date": quality.documentationLastCheck,
@@ -347,7 +347,7 @@ function documentationLabel(t, dataset, quality, openModal) {
           verified_user
         </i>
       </dt>
-    )
+    );
   } else {
     const args = {
       "date": quality.documentationLastCheck,
@@ -363,7 +363,7 @@ function documentationLabel(t, dataset, quality, openModal) {
           link_off
         </i>
       </dt>
-    )
+    );
   }
 }
 
@@ -403,7 +403,7 @@ function contactPoint(tLabel, contactPoint) {
     "mailto:" + contactPoint.email : contactPoint.iri;
   return (
     <a href={iri} rel="nofollow noopener noreferrer">{label}</a>
-  )
+  );
 }
 
 function fourthColumn(t, tLabel, dataset) {
@@ -418,5 +418,5 @@ function fourthColumn(t, tLabel, dataset) {
         {labeledLinkEntitiesAsDd(t, tLabel, dataset.frequency)}
       </dl>
     </div>
-  )
+  );
 }

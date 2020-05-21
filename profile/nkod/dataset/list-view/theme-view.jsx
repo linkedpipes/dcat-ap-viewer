@@ -22,7 +22,7 @@ function ThemeContainer(props) {
       toggleFacet={toggleFacet}
       fetchMore={fetchMore}
     />
-  )
+  );
 }
 
 ThemeContainer.propTypes = {

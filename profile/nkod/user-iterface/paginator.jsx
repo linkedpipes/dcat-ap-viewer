@@ -44,7 +44,7 @@ export default class Paginator extends React.PureComponent {
             onChange={onSizeChange}/>
         </div>
       </div>
-    )
+    );
   }
 }
 
@@ -129,7 +129,7 @@ function createItemForIndexGap(index) {
     <li className="page-item px-3 pt-2" key={"stub_" + index}>
             ...
     </li>
-  )
+  );
 }
 
 class ComboBox extends React.Component {

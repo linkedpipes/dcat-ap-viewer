@@ -16,7 +16,7 @@ export default function EndpointDescription({t, dataSource}) {
         {t("endpoint_description")}
       </a>
     </li>
-  )
+  );
 }
 
 EndpointDescription.propTypes = {

@@ -167,8 +167,11 @@ export const QUALITY = {
   "mediaType": QUALITY_PREFIX + "metrikaSprávnostiMediaTypu",
   "schemaAvailability": QUALITY_PREFIX + "metrikaDostupnostiSchématu",
   "authorship": QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíAutorskéDílo",
-  "databaseAuthorship": QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíAutorskáDatabáze",
-  "specialDatabaseAuthorship": QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíZvláštníPrávoPořizovateleDatabáze",
+  "databaseAuthorship":
+    QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíAutorskáDatabáze",
+  "specialDatabaseAuthorship":
+    QUALITY_PREFIX + "metrikaDostupnostiPodmínekUžitíZvláštní" +
+    "PrávoPořizovateleDatabáze",
 };
 
 export const SDMX = {
@@ -193,7 +196,8 @@ export const LP = {
   "order": LP_PREFIX + "order",
 };
 
-const FEL_PREFIX = "http://onto.fel.cvut.cz/ontologies/slovnik/agendovy/popis-dat/pojem/";
+const FEL_PREFIX =
+  "http://onto.fel.cvut.cz/ontologies/slovnik/agendovy/popis-dat/pojem/";
 export const FEL = {
   "jePojmemZeSlovniku": FEL_PREFIX + "je-pojmem-ze-slovniku",
 };

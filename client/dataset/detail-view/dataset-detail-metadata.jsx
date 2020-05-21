@@ -7,7 +7,7 @@ export default function DatasetWebPageMetadata(props) {
     <script type="application/ld+json">
       {createJsonLdDescription(props)}
     </script>
-  )
+  );
 }
 
 DatasetWebPageMetadata.propTypes = {
@@ -49,7 +49,7 @@ function createJsonLdDescription({tLabel, tLiteral, dataset, distributions}) {
       "@type": "Organization",
       "url": dataset["publisher"]["@id"],
       "name": tLabel(dataset["publisher"]),
-    }
+    };
   }
 
   context["distribution"] = distributions

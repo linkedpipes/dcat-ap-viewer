@@ -18,16 +18,16 @@ const initialState = {
 
 function reducer(state = initialState, action) {
   switch (action.type) {
-    case CATALOG_LIST_MOUNT:
-      return onCatalogListMount(state);
-    case CATALOG_LIST_UNMOUNT:
-      return onCatalogListUnMount();
-    case FETCH_CATALOG_LIST_SUCCESS:
-      return onCatalogListRequestSuccess(state, action);
-    case FETCH_CATALOG_LIST_FAILED:
-      return onCatalogListRequestFailed(state, action);
-    default:
-      return state
+  case CATALOG_LIST_MOUNT:
+    return onCatalogListMount(state);
+  case CATALOG_LIST_UNMOUNT:
+    return onCatalogListUnMount();
+  case FETCH_CATALOG_LIST_SUCCESS:
+    return onCatalogListRequestSuccess(state, action);
+  case FETCH_CATALOG_LIST_FAILED:
+    return onCatalogListRequestFailed(state, action);
+  default:
+    return state;
   }
 }
 

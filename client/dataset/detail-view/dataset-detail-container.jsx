@@ -49,7 +49,7 @@ class DatasetDetailContainer extends React.Component {
           dataset={this.props.dataset}
         />
       </React.Fragment>
-    )
+    );
   }
 
   componentWillUnmount() {
@@ -96,7 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(DatasetDetailContainer);
 
 function selectDistributions(state) {

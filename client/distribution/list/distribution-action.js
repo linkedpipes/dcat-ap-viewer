@@ -10,5 +10,5 @@ export function onMount() {
 export function onUnMount() {
   return {
     "type": UNMOUNT_DISTRIBUTION,
-  }
+  };
 }

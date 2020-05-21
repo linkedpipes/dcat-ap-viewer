@@ -9,7 +9,7 @@ export default function QualityMediaTypeIcon(t, tLiteral, quality, openModal) {
   if (!quality.ready) {
     return (
       <Spinner size="sm" color="secondary" className="float-right"/>
-    )
+    );
   }
   if (quality.mediaType === undefined) {
     return null;
@@ -23,7 +23,7 @@ export default function QualityMediaTypeIcon(t, tLiteral, quality, openModal) {
       >
         verified_user
       </i>
-    )
+    );
   } else {
     const strArgs = {
       "date": quality.mediaTypeLastCheck,
@@ -37,7 +37,7 @@ export default function QualityMediaTypeIcon(t, tLiteral, quality, openModal) {
       >
         warning
       </i>
-    )
+    );
   }
 }
 

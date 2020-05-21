@@ -6,64 +6,64 @@ import {PropTypes} from "prop-types";
 export default function Authorship({t, tLiteral, legal, quality, openModal}) {
   const mapped = PU_VALUES_MAPPING[legal.authorship];
   switch (mapped) {
-    case "multi":
-      return (
-        <li className="list-group-item  px-2">
-          <div>
-            {t("license_author_multi")}
-            <i
-              className="material-icons text-warning float-right"
-              title={t("license_author_multi_comment")}
-              onClick={() => openModal(t("license_author_multi_comment"))}
-            >
+  case "multi":
+    return (
+      <li className="list-group-item  px-2">
+        <div>
+          {t("license_author_multi")}
+          <i
+            className="material-icons text-warning float-right"
+            title={t("license_author_multi_comment")}
+            onClick={() => openModal(t("license_author_multi_comment"))}
+          >
               list
-            </i>
-          </div>
-          <div className="label">
-            {t("license_author_type")}
-          </div>
-        </li>
-      );
-    case "no":
-      return (
-        <li className="list-group-item px-2">
-          <div>
-            {t("license_author_no")}
-            <i
-              className="material-icons text-success float-right"
-              title={t("license_author_no_comment")}
-              onClick={() => openModal(t("license_author_no_comment"))}
-            >
+          </i>
+        </div>
+        <div className="label">
+          {t("license_author_type")}
+        </div>
+      </li>
+    );
+  case "no":
+    return (
+      <li className="list-group-item px-2">
+        <div>
+          {t("license_author_no")}
+          <i
+            className="material-icons text-success float-right"
+            title={t("license_author_no_comment")}
+            onClick={() => openModal(t("license_author_no_comment"))}
+          >
               check
-            </i>
-          </div>
-          <div className="label">
-            {t("license_author_type")}
-          </div>
-        </li>
-      );
-    case "ccBy":
-      return (
-        <li className="list-group-item px-2">
-          <div>
-            {t("license_author_ccBy")}
-            <i
-              className="material-icons text-warning float-right"
-              title={t("license_author_ccBy_comment")}
-              onClick={() => openModal(t("license_author_ccBy_comment"))}
-            >
+          </i>
+        </div>
+        <div className="label">
+          {t("license_author_type")}
+        </div>
+      </li>
+    );
+  case "ccBy":
+    return (
+      <li className="list-group-item px-2">
+        <div>
+          {t("license_author_ccBy")}
+          <i
+            className="material-icons text-warning float-right"
+            title={t("license_author_ccBy_comment")}
+            onClick={() => openModal(t("license_author_ccBy_comment"))}
+          >
               turned_in
-            </i>
-          </div>
-          <div className="label">
-            {tLiteral(legal.author)}
-          </div>
-        </li>
-      );
-    case "missing":
-      return missing(t, openModal);
-    default:
-      return custom(t, tLiteral, legal, quality, openModal);
+          </i>
+        </div>
+        <div className="label">
+          {tLiteral(legal.author)}
+        </div>
+      </li>
+    );
+  case "missing":
+    return missing(t, openModal);
+  default:
+    return custom(t, tLiteral, legal, quality, openModal);
 
   }
 }
@@ -140,7 +140,7 @@ function QualityOfCustomLicense({t, tLiteral, quality, openModal}) {
       <span style={{"verticalAlign": "top", "marginRight": "0.3rem"}}>
         <Spinner size="sm" color="secondary"/>
       </span>
-    )
+    );
   }
   if (quality.authorshipCustom) {
     // TODO Why?
@@ -158,7 +158,7 @@ function QualityOfCustomLicense({t, tLiteral, quality, openModal}) {
     >
       link_off
     </i>
-  )
+  );
 }
 
 QualityOfCustomLicense.propTypes = {
