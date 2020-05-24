@@ -78,14 +78,17 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({
       "filename": path.join("assets", "main.[chunkhash].css"),
     }),
-    new CopyWebpackPlugin([{
-      "from": path.join(__dirname, "..", "public", "assets"),
-      "to": path.join(__dirname, "..", "dist", "assets"),
-    }, {
-      "from": path.join(
-        __dirname, "..", "profile", config.client.profile, "assets"),
-      "to": path.join(__dirname, "..", "dist", "assets"),
-    }]),
+    new CopyWebpackPlugin({
+      "patterns": [
+        {
+          "from": path.join(__dirname, "..", "public", "assets"),
+          "to": path.join(__dirname, "..", "dist", "assets"),
+        }, {
+          "from": path.join(
+            __dirname, "..", "profile", config.client.profile, "assets"),
+          "to": path.join(__dirname, "..", "dist", "assets"),
+        }]
+    }),
     new BuildI18Files(),
   ],
 });
