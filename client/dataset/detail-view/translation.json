@@ -56,7 +56,9 @@
       "second": "vteřina",
       "seconds-2": "vteřiny",
       "seconds-5": "vteřin",
-      "/dataset": "Datová-sada"
+      "/dataset": "Datová-sada",
+      "specification": "Specifikace",
+      "specification_open": "Zobrazit specifikaci"
     }
   },
   "en": {
@@ -116,7 +118,9 @@
       "second": "second",
       "second-2": "seconds",
       "second-5": "seconds",
-      "/dataset": "Dataset"
+      "/dataset": "Dataset",
+      "specification": "Specification",
+      "specification_open": "Show specification"
     }
   }
 }

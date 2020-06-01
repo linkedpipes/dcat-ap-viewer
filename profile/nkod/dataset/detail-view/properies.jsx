@@ -296,7 +296,8 @@ function appendValue(value, t, labelName) {
 function thirdColumn(t, tLabel, dataset, quality, openModal) {
   const hasDocumentation = isNotEmpty(dataset.documentation);
   const hasContacts = isNotEmpty(dataset.contactPoints);
-  if (!hasDocumentation && !hasContacts) {
+  const hasSpecification = isNotEmpty(dataset.conformsTo);
+  if (!hasDocumentation && !hasContacts && !hasSpecification) {
     return null;
   }
   return (
@@ -306,6 +307,8 @@ function thirdColumn(t, tLabel, dataset, quality, openModal) {
         {hasDocumentation && documentation(t, dataset)}
         {hasContacts && <dt>{t("contact_point")}</dt>}
         {hasContacts && contactPoints(tLabel, dataset.contactPoints)}
+        {hasSpecification && <dt>{t("specification")}</dt>}
+        {hasDocumentation && specification(t, dataset)}
       </dl>
     </div>
   );
@@ -372,6 +375,17 @@ function documentation(t, dataset) {
     <dd key={iri}>
       <a href={iri} rel="nofollow noopener noreferrer">
         {t("documentation_download")}
+      </a>
+      <br/>
+    </dd>
+  ));
+}
+
+function specification(t, dataset) {
+  return dataset.conformsTo.map((iri) => (
+    <dd key={iri}>
+      <a href={iri} rel="nofollow noopener noreferrer">
+        {t("specification_open")}
       </a>
       <br/>
     </dd>
