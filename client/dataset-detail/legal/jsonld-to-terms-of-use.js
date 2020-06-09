@@ -1,5 +1,9 @@
-import {getEntityByIri, getResource, getStrings} from "../../jsonld";
-import {getEntityByType} from "../../jsonld";
+import {
+  getEntityByType,
+  getEntityByIri,
+  getResource,
+  getStrings,
+} from "../../jsonld";
 import {PU, DCAT} from "../../vocabulary/vocabulary";
 
 export function jsonLdToTermsOfUse(jsonld) {

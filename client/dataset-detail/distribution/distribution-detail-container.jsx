@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
 import {fetchDistribution} from "../../api/api-action";
-import {selectDistribution} from "../list/distribution-reducer";
+import {selectDistribution} from "./distribution-reducer";
 import {getRegisteredElement} from "../../app/register";
 import {
   ELEMENT_DATA_SERVICE_DETAIL,

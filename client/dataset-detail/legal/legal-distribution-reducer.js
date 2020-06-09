@@ -2,7 +2,7 @@ import {FETCH_DISTRIBUTION_SUCCESS} from "../../api/api-action";
 import {
   MOUNT_DISTRIBUTION,
   UNMOUNT_DISTRIBUTION,
-} from "../../distribution/list/distribution-action";
+} from "../distribution/distribution-action";
 import {jsonLdToTermsOfUse} from "./jsonld-to-terms-of-use";
 
 const NAME = "legal-distribution";

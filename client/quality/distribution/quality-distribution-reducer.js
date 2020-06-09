@@ -2,7 +2,7 @@ import {FETCH_QUALITY_DISTRIBUTION_SUCCESS} from "../../api/api-action";
 import {
   MOUNT_DISTRIBUTION,
   UNMOUNT_DISTRIBUTION,
-} from "../../distribution/list/distribution-action";
+} from "../../dataset-detail/distribution/distribution-action";
 import {jsonLdToQualityDistribution} from "./jsonld-to-distribution-quality";
 
 const NAME = "quality-distribution";

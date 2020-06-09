@@ -10,7 +10,7 @@ import {
   showModal,
   fetchLabels,
 } from "../../../client-api";
-import {selectLegalDistribution} from "../../../../client/legal/distribution";
+import {selectLegalDistribution} from "../../../../client/dataset-detail/legal";
 import SchemaListItem from "./access/schema-list-item";
 import MediaTypeItem from "./access/media-type-item";
 import CompressFormat from "./access/compress-format-item";

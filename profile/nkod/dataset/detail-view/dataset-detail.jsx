@@ -30,7 +30,7 @@ import {
   DATASET_DETAIL_PROPERTIES,
 } from "../../nkod-component-names";
 // TODO Find out how to make this accessible.
-import {DistributionList} from "../../../../client/distribution/list";
+import {DistributionList} from "../../../../client/dataset-detail/distribution";
 
 class DatasetView extends React.PureComponent {
 

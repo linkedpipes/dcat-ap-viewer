@@ -2,7 +2,7 @@ import {
   DATASET_DETAIL_MOUNT,
   DATASET_DETAIL_UNMOUNT,
   DATASET_DETAIL_SET,
-} from "./../../dataset/detail-view/dataset-detail-actions";
+} from "../../dataset-detail/dataset-detail-actions";
 import {FETCH_DATASET_SUCCESS} from "../../api/api-action";
 import {jsonldToForm} from "./jsonld-to-form";
 

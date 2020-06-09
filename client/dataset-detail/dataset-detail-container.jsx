@@ -7,17 +7,17 @@ import {
 } from "./dataset-detail-actions";
 import DatasetWebPageMetadata from "./dataset-detail-metadata";
 import {PropTypes} from "prop-types";
-import {getRegisteredElement} from "../../app/register";
-import {ELEMENT_DATASET_DETAIL} from "../../app/component-list";
-import {selectTLabel, selectTLiteral} from "./../../app/component-api";
+import {getRegisteredElement} from "../app/register";
+import {ELEMENT_DATASET_DETAIL} from "../app/component-list";
+import {selectTLabel, selectTLiteral} from "../app/component-api";
 import {
   selectReady,
   selectError,
   selectDatasetDetail,
 } from "./dataset-detail-reducer";
-import {fetchDataset} from "../../api/api-action";
-import {selectIri} from "../../app/navigation";
-import {selectDistribution} from "../../distribution/list/distribution-reducer";
+import {fetchDataset} from "../api/api-action";
+import {selectIri} from "../app/navigation";
+import {selectDistribution} from "./distribution/distribution-reducer";
 
 class DatasetDetailContainer extends React.Component {
 

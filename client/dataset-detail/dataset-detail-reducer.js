@@ -6,7 +6,7 @@ import {
 import {
   FETCH_DATASET_SUCCESS,
   FETCH_DATASET_FAILED,
-} from "../../api/api-action";
+} from "../api/api-action";
 import {jsonLdToDataset} from "./jsonld-to-dataset";
 
 const NAME = "dataset-detail";

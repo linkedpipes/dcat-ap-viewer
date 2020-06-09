@@ -9,7 +9,7 @@ import {
   getStrings,
   getResource,
   getValues,
-} from "../../jsonld";
+} from "../jsonld";
 import {
   DCAT,
   DCTERMS,
@@ -20,7 +20,7 @@ import {
   SKOS,
   EUA,
   SCHEMA,
-} from "../../vocabulary/vocabulary"
+} from "../vocabulary/vocabulary"
 
 export interface ContactPoint {
   "iri": string;

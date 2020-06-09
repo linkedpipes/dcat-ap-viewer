@@ -5,7 +5,7 @@ import {
 import {
   DATASET_DETAIL_MOUNT,
   DATASET_DETAIL_UNMOUNT,
-} from "../../dataset/detail-view/dataset-detail-actions";
+} from "../../dataset-detail/dataset-detail-actions";
 import jsonLdToDatasetQuality from "./jsonld-to-dataset-quality";
 
 const initialState = {

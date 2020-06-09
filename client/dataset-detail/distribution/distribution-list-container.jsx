@@ -7,8 +7,8 @@ import {getRegisteredElement} from "../../app/register";
 import {ELEMENT_DISTRIBUTION_LIST} from "../../app/component-list";
 import {
   selectDatasetDetail,
-} from "../../dataset/detail-view/dataset-detail-reducer";
-import {DistributionContainer} from "../detail";
+} from "../dataset-detail-reducer";
+import DistributionContainer from "./distribution-detail-container";
 
 class DistributionListContainer extends React.Component {
 
