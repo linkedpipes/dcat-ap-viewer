@@ -1,5 +1,6 @@
 import {JsonLdEntity} from "../jsonld/model";
 import {createServerHttpApi} from "./api-server-http";
+export type {JsonLdArray} from "jsonld/jsonld-spec";
 
 export interface DatasetListQuery {
   offset: number; // Dataset
