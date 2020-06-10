@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {formatNumber} from "../../utils";
 
 export default function PublisherListItem(
-  {publisher, isExceptional, t, tUrl, tLabel, fetchLabels}) {
+  {publisher, t, tUrl, tLabel, fetchLabels}) {
   //
   fetchLabels([publisher.iri]);
   return (
@@ -21,16 +21,6 @@ export default function PublisherListItem(
           <li className="list-group-item">
             {getDatasetCountLabel(publisher.datasetCount, t)}
           </li>
-          {isExceptional &&
-          <li className="list-group-item">
-            <i
-              className="material-icons exceptional-publisher-icon"
-              style={{"verticalAlign": "bottom"}}
-            >
-              star
-            </i>&nbsp;<span>{t("exceptional_publisher")}</span>
-          </li>
-          }
         </ul>
       </div>
     </div>
@@ -51,7 +41,6 @@ function getDatasetCountLabel(count, t) {
 
 PublisherListItem.propTypes = {
   "publisher": PropTypes.object.isRequired,
-  "isExceptional": PropTypes.bool,
   "t": PropTypes.func.isRequired,
   "tUrl": PropTypes.func.isRequired,
   "tLabel": PropTypes.func.isRequired,
