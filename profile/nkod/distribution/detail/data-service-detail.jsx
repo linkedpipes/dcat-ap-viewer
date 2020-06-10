@@ -20,9 +20,9 @@ import DatabaseAuthorship from "./legal/database-authorship";
 import PersonalData from "./legal/personal-data";
 import ProtectedDatabaseAuthorship from "./legal/protected-database-authorship";
 import {
-  fetchQualityDistribution,
-  selectQualityDistribution,
-} from "../../../../client/quality/distribution";
+  selectQuality,
+  fetchDistributionQuality,
+} from "../../../../client/dataset-detail/quality";
 import EndpointDescription from "./access/endpoint-description-item";
 import EndpointUrl from "./access/endpoint-url-item";
 
@@ -190,14 +190,14 @@ register({
     "tLabel": selectTLabel(state),
     "tLiteral": selectTLiteral(state),
     "legal": selectLegalDistribution(state, ownProps.dataService.iri),
-    "quality": selectQualityDistribution(state, ownProps.dataService.iri),
+    "quality": selectQuality(state, ownProps.dataService.iri),
     "qualityDataService":
-      selectQualityDistribution(state, ownProps.dataService.dataService),
+      selectQuality(state, ownProps.dataService.dataService),
   }), (dispatch, ownProps) => ({
     "fetchLabels": (iris) => dispatch(fetchLabels(iris)),
     "fetchQuality": () => {
-      dispatch(fetchQualityDistribution(ownProps.dataService.iri));
-      dispatch(fetchQualityDistribution(ownProps.dataService.dataService));
+      dispatch(fetchDistributionQuality(ownProps.dataService.iri));
+      dispatch(fetchDistributionQuality(ownProps.dataService.dataService));
     },
     "openModal": (body) => dispatch(showModal(undefined, body)),
   }))(DataServiceDetail),

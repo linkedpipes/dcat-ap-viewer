@@ -1,21 +1,20 @@
 import {PropTypes} from "prop-types";
 import {Link} from "react-router-dom";
 import React from "react";
-import {Spinner} from "reactstrap";
 import {
   URL_DATASET_LIST,
   QUERY_DATASET_LIST_THEME,
 } from "../../../client-api";
-import {register} from "../../../client-api";
+import {register, QUALITY} from "../../../client-api";
 import {DATASET_DETAIL_PROPERTIES} from "../../nkod-component-names";
+import {labelWithQuality} from "../../quality/label-with-quality";
 
-
-function Properties({t, tLabel, tUrl, dataset, quality, openModal}) {
+function Properties({t, tLiteral, tLabel, tUrl, dataset, quality, openModal}) {
   return (
     <div className="row">
       {firstColumn(t, tLabel, tUrl, dataset)}
       {secondColumn(t, tLabel, tUrl, dataset)}
-      {thirdColumn(t, tLabel, dataset, quality, openModal)}
+      {thirdColumn(t, tLiteral, tLabel, dataset, quality, openModal)}
       {fourthColumn(t, tLabel, dataset)}
     </div>
   );
@@ -24,6 +23,7 @@ function Properties({t, tLabel, tUrl, dataset, quality, openModal}) {
 Properties.propTypes = {
   "t": PropTypes.func.isRequired,
   "tLabel": PropTypes.func.isRequired,
+  "tLiteral": PropTypes.func.isRequired,
   "tUrl": PropTypes.func.isRequired,
   "dataset": PropTypes.object.isRequired,
   "quality": PropTypes.object,
@@ -293,7 +293,7 @@ function appendValue(value, t, labelName) {
   }
 }
 
-function thirdColumn(t, tLabel, dataset, quality, openModal) {
+function thirdColumn(t, tLiteral, tLabel, dataset, quality, openModal) {
   const hasDocumentation = isNotEmpty(dataset.documentation);
   const hasContacts = isNotEmpty(dataset.contactPoints);
   const hasSpecification = isNotEmpty(dataset.conformsTo);
@@ -303,71 +303,32 @@ function thirdColumn(t, tLabel, dataset, quality, openModal) {
   return (
     <div className="col-12 col-sm-6 col-md-3">
       <dl>
-        {hasDocumentation && documentationLabel(t, dataset, quality, openModal)}
+        {hasDocumentation
+        && documentationLabel(t, tLiteral, quality, openModal)}
         {hasDocumentation && documentation(t, dataset)}
         {hasContacts && <dt>{t("contact_point")}</dt>}
         {hasContacts && contactPoints(tLabel, dataset.contactPoints)}
-        {hasSpecification && <dt>{t("specification")}</dt>}
+        {hasSpecification
+        && specificationLabel(t, tLiteral, quality, openModal)}
         {hasDocumentation && specification(t, dataset)}
       </dl>
     </div>
   );
 }
 
-function documentationLabel(t, dataset, quality, openModal) {
-  // TODO Move to another profile, as here it is not never used.
-  if (!quality) {
-    return (
-      <dt>
-        {t("documentation")}
-      </dt>
-    );
-  } else if (!quality.ready) {
-    return (
-      <dt>
-        {t("documentation")}
-        <Spinner size="sm" color="secondary" className="float-right"/>
-      </dt>
-    );
-  } else if (quality.documentation === undefined) {
-    return (
-      <dt>
-        {t("documentation")}
-      </dt>
-    );
-  } else if (quality.documentation) {
-    const args = {
-      "date": quality.documentationLastCheck,
-    };
-    return (
-      <dt>
-        {t("documentation")}
-        <i
-          className="material-icons text-success float-right"
-          title={t("documentation_available", args)}
-          onClick={() => openModal(t("documentation_available", args))}
-        >
-          verified_user
-        </i>
-      </dt>
-    );
-  } else {
-    const args = {
-      "date": quality.documentationLastCheck,
-    };
-    return (
-      <dt>
-        {t("documentation")}
-        <i
-          className="material-icons text-danger float-right"
-          title={t("documentation_unavailable", args)}
-          onClick={() => openModal(t("documentation_unavailable", args))}
-        >
-          link_off
-        </i>
-      </dt>
-    );
-  }
+function documentationLabel(t, tLiteral, quality, openModal) {
+  return labelWithQuality(
+    t, tLiteral, openModal, quality, "documentation",
+    [{
+      "measureOf": QUALITY.documentation,
+      "labelTrue": "documentation_quality_true",
+      "labelFalse": "documentation_quality_false",
+    }, {
+      "measureOf": QUALITY.documentationCors,
+      "labelTrue": "documentation_quality_cors_true",
+      "labelFalse": "documentation_quality_cors_false",
+    }]
+  );
 }
 
 function documentation(t, dataset) {
@@ -379,6 +340,21 @@ function documentation(t, dataset) {
       <br/>
     </dd>
   ));
+}
+
+function specificationLabel(t, tLiteral, quality, openModal) {
+  return labelWithQuality(
+    t, tLiteral, openModal, quality, "specification",
+    [{
+      "measureOf": QUALITY.specification,
+      "labelTrue": "specification_quality_true",
+      "labelFalse": "specification_quality_false",
+    }, {
+      "measureOf": QUALITY.specificationCors,
+      "labelTrue": "specification_quality_cors_true",
+      "labelFalse": "specification_quality_cors_false",
+    }]
+  );
 }
 
 function specification(t, dataset) {

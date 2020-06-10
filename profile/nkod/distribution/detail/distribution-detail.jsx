@@ -21,9 +21,9 @@ import DatabaseAuthorship from "./legal/database-authorship";
 import PersonalData from "./legal/personal-data";
 import ProtectedDatabaseAuthorship from "./legal/protected-database-authorship";
 import {
-  fetchQualityDistribution,
-  selectQualityDistribution,
-} from "../../../../client/quality/distribution";
+  selectQuality,
+  fetchDistributionQuality,
+} from "../../../../client/dataset-detail/quality";
 
 class DistributionDetail extends React.PureComponent {
 
@@ -177,11 +177,11 @@ register({
     "tLabel": selectTLabel(state),
     "tLiteral": selectTLiteral(state),
     "legal": selectLegalDistribution(state, ownProps.distribution.iri),
-    "quality": selectQualityDistribution(state, ownProps.distribution.iri),
+    "quality": selectQuality(state, ownProps.distribution.iri),
   }), (dispatch, ownProps) => ({
     "fetchLabels": (iris) => dispatch(fetchLabels(iris)),
     "fetchQuality": () => dispatch(
-      fetchQualityDistribution(ownProps.distribution.iri)),
+      fetchDistributionQuality(ownProps.distribution.iri)),
     "openModal": (body) => dispatch(showModal(undefined, body)),
   }))(DistributionDetail),
 });

@@ -19,9 +19,9 @@ import {
   DEREFERENCE_PREFIX,
 } from "../../../client-api";
 import {
-  fetchQualityDataset,
-  selectDatasetQuality,
-} from "../../../../client/quality/dataset";
+  fetchDatasetQuality,
+  selectQuality,
+} from "../../../../client/dataset-detail/quality";
 import withStatus from "../../user-iterface/status";
 import {selectFormData} from "../../../../client/form/dataset";
 import {
@@ -106,6 +106,7 @@ class DatasetView extends React.PureComponent {
         <Properties
           t={t}
           tLabel={tLabel}
+          tLiteral={tLiteral}
           tUrl={tUrl}
           dataset={dataset}
           quality={quality}
@@ -140,17 +141,17 @@ DatasetView.propTypes = {
 
 register({
   "name": ELEMENT_DATASET_DETAIL,
-  "element": connect((state) => ({
+  "element": connect((state, ownProps) => ({
     "t": selectT(state),
     "tUrl": selectTUrl(state),
     "tLabel": selectTLabel(state),
     "tLiteral": selectTLiteral(state),
     "language": selectLanguage(state),
-    "quality": selectDatasetQuality(state),
+    "quality": selectQuality(state, ownProps.dataset.iri),
     "form": selectFormData(state),
   }), (dispatch) => ({
     "fetchLabels": (iris) => dispatch(fetchLabels(iris)),
-    "fetchQuality": (iri) => dispatch(fetchQualityDataset(iri)),
+    "fetchQuality": (iri) => dispatch(fetchDatasetQuality(iri)),
     "openModal": (body) => dispatch(showModal(undefined, body)),
   }))(withStatus(DatasetView)),
 });

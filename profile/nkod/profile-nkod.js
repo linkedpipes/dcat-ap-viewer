@@ -4,7 +4,6 @@ import "../../client/catalog/list-view";
 import "../../client/keyword/list-view";
 import "../../client/dataset/list-view";
 import "../../client/dataset-detail";
-import "../../client/quality/dataset";
 import "../../client/form/dataset";
 
 // Profile specific modules.

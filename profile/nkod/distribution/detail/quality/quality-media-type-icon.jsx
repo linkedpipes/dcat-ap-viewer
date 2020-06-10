@@ -18,8 +18,8 @@ export default function QualityMediaTypeIcon(t, tLiteral, quality, openModal) {
     return (
       <i
         className="material-icons text-success float-right"
-        title={t("format_match")}
-        onClick={() => openModal(t("format_match"))}
+        title={t("format_quality_true")}
+        onClick={() => openModal(t("format_quality_true"))}
       >
         verified_user
       </i>
@@ -32,8 +32,8 @@ export default function QualityMediaTypeIcon(t, tLiteral, quality, openModal) {
     return (
       <i
         className="material-icons text-warning float-right"
-        title={t("format_mismatch", strArgs)}
-        onClick={() => openModal(t("format_mismatch", strArgs))}
+        title={t("format_quality_false", strArgs)}
+        onClick={() => openModal(t("format_quality_false", strArgs))}
       >
         warning
       </i>

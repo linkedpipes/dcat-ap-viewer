@@ -1,6 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import QualityIcon from "../quality/quality-download-icon";
+import {QUALITY} from "../../../../client-api";
+import {qualityIcons} from "../../../quality/quality-icon";
 
 export default function DownloadListItem(
   {t, tLiteral, distribution, quality, openModal}) {
@@ -30,12 +31,15 @@ export default function DownloadListItem(
       >
         {t("download")}
       </a>
-      <QualityIcon
-        t={t}
-        tLiteral={tLiteral}
-        quality={quality}
-        openModal={openModal}
-      />
+      {qualityIcons(t, tLiteral, openModal, quality, [{
+        "measureOf":QUALITY.download,
+        "labelTrue":"file_quality_true",
+        "labelFalse":"file_quality_false",
+      }, {
+        "measureOf":QUALITY.downloadCors,
+        "labelTrue":"file_quality_cors_true",
+        "labelFalse":"file_quality_cors_false",
+      }])}
     </li>
   );
 }

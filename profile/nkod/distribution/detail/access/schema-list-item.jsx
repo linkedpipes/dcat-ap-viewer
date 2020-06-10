@@ -1,6 +1,8 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import QualitySchemaIcon from "../quality/quality-schema-icon";
+import {qualityIcons} from "../../../quality/quality-icon";
+import {QUALITY} from "../../../../../client/vocabulary/vocabulary";
 
 export default function SchemaListItem(
   {t, tLabel, tLiteral, distribution, quality, openModal}) {
@@ -17,6 +19,16 @@ export default function SchemaListItem(
       >
         {t("schema")}
       </a>
+      {qualityIcons(t, tLiteral, openModal, quality, [{
+        "measureOf":QUALITY.schema,
+        "labelTrue":"schema_quality_true",
+        "labelFalse":"schema_quality_true",
+      }, {
+        "measureOf":QUALITY.schemaCors,
+        "labelTrue":"schema_quality_cors_true",
+        "labelFalse":"schema_quality_cors_false",
+      }])}
+
       <QualitySchemaIcon
         t={t}
         tLabel={tLabel}

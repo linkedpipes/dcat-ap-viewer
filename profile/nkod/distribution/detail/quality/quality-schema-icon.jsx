@@ -22,8 +22,8 @@ export default function QualitySchemaIcon({t, tLiteral, quality, openModal}) {
     return (
       <i
         className="material-icons text-success float-right"
-        title={t("schema_available", strArgs)}
-        onClick={() => openModal(t("schema_available", strArgs))}
+        title={t("schema_quality_true", strArgs)}
+        onClick={() => openModal(t("schema_quality_true", strArgs))}
       >
         verified_user
       </i>
@@ -32,8 +32,8 @@ export default function QualitySchemaIcon({t, tLiteral, quality, openModal}) {
     return (
       <i
         className="material-icons text-danger float-right"
-        title={t("schema_unavailable", strArgs)}
-        onClick={() => openModal(t("schema_unavailable", strArgs))}
+        title={t("schema_quality_false", strArgs)}
+        onClick={() => openModal(t("schema_quality_false", strArgs))}
       >
         link_off
       </i>

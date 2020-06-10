@@ -22,8 +22,8 @@ export default function QualityDownloadIcon({t, tLiteral, openModal, quality}) {
     return (
       <i
         className="material-icons text-success float-right"
-        title={t("file_available", strArgs)}
-        onClick={() => openModal(t("file_available", strArgs))}
+        title={t("file_quality_true", strArgs)}
+        onClick={() => openModal(t("file_quality_true", strArgs))}
       >
         verified_user
       </i>
@@ -32,8 +32,7 @@ export default function QualityDownloadIcon({t, tLiteral, openModal, quality}) {
     return (
       <i
         className="material-icons text-danger float-right"
-        title={t("file_unavailable", strArgs)}
-        onClick={() => openModal(t("file_unavailable", strArgs))}
+        title={t("file_quality_false", strArgs)}
       >
         link_off
       </i>

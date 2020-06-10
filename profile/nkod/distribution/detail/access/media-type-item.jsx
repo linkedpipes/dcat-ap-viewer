@@ -1,6 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import QualityMediaTypeIcon from "../quality/quality-media-type-icon";
+import {qualityIcons} from "../../../quality/quality-icon";
+import {QUALITY} from "../../../../../client/vocabulary/vocabulary";
 
 export default function MediaTypeItem(
   {t, tLabel, tLiteral, distribution, quality, openModal}) {
@@ -23,13 +24,11 @@ export default function MediaTypeItem(
       >
         <i className="material-icons" style={iconStyle}> open_in_new </i>
       </a>
-      <QualityMediaTypeIcon
-        t={t}
-        tLabel={tLabel}
-        tLiteral={tLiteral}
-        openModal={openModal}
-        quality={quality}
-      />
+      {qualityIcons(t, tLiteral, openModal, quality, [{
+        "measureOf":QUALITY.mediaType,
+        "labelTrue":"format_quality_true",
+        "labelFalse":"format_quality_false",
+      }])}
     </li>
   );
 }
