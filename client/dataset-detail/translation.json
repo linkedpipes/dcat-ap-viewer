@@ -69,14 +69,14 @@
       "/dataset": "Datová-sada",
       "specification": "Specifikace",
       "specification_open": "Zobrazit specifikaci",
-      "endpoint_url_quality_true": "TODO",
-      "endpoint_url_quality_false": "TODO",
-      "endpoint_url_quality_cors_true": "TODO",
-      "endpoint_url_quality_cors_false": "TODO",
-      "endpoint_description_quality_true": "TODO",
-      "endpoint_description_quality_false": "TODO",
-      "endpoint_description_quality_cors_true": "TODO",
-      "endpoint_description_quality_cors_false": "TODO"
+      "endpoint_url_quality_true": "Endpoint byl {date} dostupný.",
+      "endpoint_url_quality_false": "Endpoint byl {date} nedostupný.",
+      "endpoint_url_quality_cors_true": "Technika CORS byla pro endpoint dostupná {date}.",
+      "endpoint_url_quality_cors_false": "Technika CORS byla pro endpoint nedostupná {date}.",
+      "endpoint_description_quality_true": "Popis endpointu byl {date} dostupný.",
+      "endpoint_description_quality_false": "Popis endpointu byl {date} nedostupný.",
+      "endpoint_description_quality_cors_true": "Technika CORS byla pro popis endpointu dostupná {date}.",
+      "endpoint_description_quality_cors_false": "Technika CORS byla pro popis endpointu nedostupná {date}."
     }
   },
   "en": {
@@ -149,14 +149,14 @@
       "/dataset": "Dataset",
       "specification": "Specification",
       "specification_open": "Show specification",
-      "endpoint_url_quality_true": "TODO",
-      "endpoint_url_quality_false": "TODO",
-      "endpoint_url_quality_cors_true": "TODO",
-      "endpoint_url_quality_cors_false": "TODO",
-      "endpoint_description_quality_true": "TODO",
-      "endpoint_description_quality_false": "TODO",
-      "endpoint_description_quality_cors_true": "TODO",
-      "endpoint_description_quality_cors_false": "TODO"
+      "endpoint_url_quality_true": "The endpoint was available on {date}.",
+      "endpoint_url_quality_false": "The endpoint was not available on {date}.",
+      "endpoint_url_quality_cors_true": "CORS for the endpoint was available on {date}.",
+      "endpoint_url_quality_cors_false": "CORS for the endpoint was not available on {date}.",
+      "endpoint_description_quality_true": "The endpoint description was available on {date}.",
+      "endpoint_description_quality_false": "The endpoint description was not available on {date}.",
+      "endpoint_description_quality_cors_true": "CORS for the endpoint description was available on {date}.",
+      "endpoint_description_quality_cors_false": "CORS for the endpoint description was not available on {date}."
     }
   }
 }
