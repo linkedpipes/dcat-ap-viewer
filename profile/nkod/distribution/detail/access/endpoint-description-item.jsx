@@ -1,7 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import QualityEndpointDescriptionIcon
-  from "../quality/quality-endpoint-description-icon";
+import {qualityIcons} from "../../../quality/quality-icon";
+import {QUALITY} from "../../../../../client/vocabulary/vocabulary";
 
 export default function EndpointDescription(
   {t, tLiteral, dataSource, openModal, quality}) {
@@ -19,12 +19,19 @@ export default function EndpointDescription(
       >
         {t("endpoint_description")}
       </a>
-      <QualityEndpointDescriptionIcon
-        t={t}
-        tLiteral={tLiteral}
-        openModal={openModal}
-        quality={quality}
-      />
+      {qualityIcons(t, tLiteral, openModal, quality, [{
+        "measureOf": QUALITY.endpointDescription,
+        "labelTrue": "endpoint_description_quality_true",
+        "labelFalse": "endpoint_description_quality_false",
+        "iconTrue": "verified_user",
+        "iconFalse": "link_off",
+      }, {
+        "measureOf": QUALITY.endpointDescriptionCors,
+        "labelTrue": "endpoint_description_quality_cors_true",
+        "labelFalse": "endpoint_description_quality_cors_false",
+        "iconTrue": "http",
+        "iconFalse": "http",
+      }])}
     </li>
   );
 }

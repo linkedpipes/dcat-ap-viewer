@@ -25,9 +25,11 @@ export default function MediaTypeItem(
         <i className="material-icons" style={iconStyle}> open_in_new </i>
       </a>
       {qualityIcons(t, tLiteral, openModal, quality, [{
-        "measureOf":QUALITY.mediaType,
-        "labelTrue":"format_quality_true",
-        "labelFalse":"format_quality_false",
+        "measureOf": QUALITY.mediaType,
+        "labelTrue": "format_quality_true",
+        "labelFalse": "format_quality_false",
+        "iconTrue": "verified_user",
+        "iconFalse": "link_off",
       }])}
     </li>
   );

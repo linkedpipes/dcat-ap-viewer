@@ -11,14 +11,17 @@ export function qualityIcons(t, tLiteral, openModal, quality, measures) {
     <div className="float-right">
       {measures.map((item) => qualityIcon(
         t, tLiteral, openModal, quality,
-        item.measureOf, item.labelTrue, item.labelFalse
+        item.measureOf, item.labelTrue, item.labelFalse,
+        item.iconTrue, item.iconFalse
       ))}
     </div>
   );
 }
 
 function qualityIcon(
-  t, tLiteral, openModal, quality, measureOf, labelTrue, labelFalse) {
+  t, tLiteral, openModal, quality, measureOf, labelTrue, labelFalse,
+  iconTrue, iconFalse
+) {
   const measure = quality.data.getMeasure(measureOf);
   if (measure == null) {
     return null;
@@ -35,7 +38,7 @@ function qualityIcon(
         title={t(labelTrue, dialogArguments)}
         onClick={() => openModal(t(labelTrue, dialogArguments))}
       >
-        verified_user
+        { iconTrue }
       </i>
     );
   }
@@ -46,7 +49,7 @@ function qualityIcon(
       title={t(labelFalse, dialogArguments)}
       onClick={() => openModal(t(labelFalse, dialogArguments))}
     >
-      link_off
+      { iconFalse }
     </i>
   );
 }

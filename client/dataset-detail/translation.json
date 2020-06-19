@@ -68,7 +68,15 @@
       "seconds-5": "vteřin",
       "/dataset": "Datová-sada",
       "specification": "Specifikace",
-      "specification_open": "Zobrazit specifikaci"
+      "specification_open": "Zobrazit specifikaci",
+      "endpoint_url_quality_true": "TODO",
+      "endpoint_url_quality_false": "TODO",
+      "endpoint_url_quality_cors_true": "TODO",
+      "endpoint_url_quality_cors_false": "TODO",
+      "endpoint_description_quality_true": "TODO",
+      "endpoint_description_quality_false": "TODO",
+      "endpoint_description_quality_cors_true": "TODO",
+      "endpoint_description_quality_cors_false": "TODO"
     }
   },
   "en": {
@@ -140,7 +148,15 @@
       "second-5": "seconds",
       "/dataset": "Dataset",
       "specification": "Specification",
-      "specification_open": "Show specification"
+      "specification_open": "Show specification",
+      "endpoint_url_quality_true": "TODO",
+      "endpoint_url_quality_false": "TODO",
+      "endpoint_url_quality_cors_true": "TODO",
+      "endpoint_url_quality_cors_false": "TODO",
+      "endpoint_description_quality_true": "TODO",
+      "endpoint_description_quality_false": "TODO",
+      "endpoint_description_quality_cors_true": "TODO",
+      "endpoint_description_quality_cors_false": "TODO"
     }
   }
 }

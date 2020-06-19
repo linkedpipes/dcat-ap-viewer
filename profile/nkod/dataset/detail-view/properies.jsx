@@ -323,10 +323,14 @@ function documentationLabel(t, tLiteral, quality, openModal) {
       "measureOf": QUALITY.documentation,
       "labelTrue": "documentation_quality_true",
       "labelFalse": "documentation_quality_false",
+      "iconTrue": "verified_user",
+      "iconFalse": "link_off",
     }, {
       "measureOf": QUALITY.documentationCors,
       "labelTrue": "documentation_quality_cors_true",
       "labelFalse": "documentation_quality_cors_false",
+      "iconTrue": "http",
+      "iconFalse": "http",
     }]
   );
 }
@@ -349,10 +353,14 @@ function specificationLabel(t, tLiteral, quality, openModal) {
       "measureOf": QUALITY.specification,
       "labelTrue": "specification_quality_true",
       "labelFalse": "specification_quality_false",
+      "iconTrue": "verified_user",
+      "iconFalse": "link_off",
     }, {
       "measureOf": QUALITY.specificationCors,
       "labelTrue": "specification_quality_cors_true",
       "labelFalse": "specification_quality_cors_false",
+      "iconTrue": "http",
+      "iconFalse": "http",
     }]
   );
 }

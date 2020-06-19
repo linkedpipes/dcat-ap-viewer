@@ -1,6 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import QualityEndpointUrlIcon from "../quality/quality-endpoint-url-icon";
+import {qualityIcons} from "../../../quality/quality-icon";
+import {QUALITY} from "../../../../../client/vocabulary/vocabulary";
 
 export default function EndpointUrl(
   {t, tLiteral, dataSource, openModal, quality}) {
@@ -17,12 +18,19 @@ export default function EndpointUrl(
       >
         {t("endpoint")}
       </a>
-      <QualityEndpointUrlIcon
-        t={t}
-        tLiteral={tLiteral}
-        openModal={openModal}
-        quality={quality}
-      />
+      {qualityIcons(t, tLiteral, openModal, quality, [{
+        "measureOf": QUALITY.endpointUrl,
+        "labelTrue": "endpoint_url_quality_true",
+        "labelFalse": "endpoint_url_quality_false",
+        "iconTrue": "verified_user",
+        "iconFalse": "link_off",
+      }, {
+        "measureOf": QUALITY.endpointUrlCors,
+        "labelTrue": "endpoint_url_quality_cors_true",
+        "labelFalse": "endpoint_url_quality_cors_false",
+        "iconTrue": "http",
+        "iconFalse": "http",
+      }])}
     </li>
   );
 }

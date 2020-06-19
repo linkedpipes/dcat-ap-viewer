@@ -32,13 +32,17 @@ export default function DownloadListItem(
         {t("download")}
       </a>
       {qualityIcons(t, tLiteral, openModal, quality, [{
-        "measureOf":QUALITY.download,
-        "labelTrue":"file_quality_true",
-        "labelFalse":"file_quality_false",
+        "measureOf": QUALITY.download,
+        "labelTrue": "file_quality_true",
+        "labelFalse": "file_quality_false",
+        "iconTrue": "verified_user",
+        "iconFalse": "link_off",
       }, {
-        "measureOf":QUALITY.downloadCors,
-        "labelTrue":"file_quality_cors_true",
-        "labelFalse":"file_quality_cors_false",
+        "measureOf": QUALITY.downloadCors,
+        "labelTrue": "file_quality_cors_true",
+        "labelFalse": "file_quality_cors_false",
+        "iconTrue": "http",
+        "iconFalse": "http",
       }])}
     </li>
   );
