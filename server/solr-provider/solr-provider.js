@@ -69,6 +69,7 @@ function createV2DatasetListGet(configuration) {
     const [params, query] = buildDatasetSolrQuery(
       req.query, configuration["default-language"]);
     const url = configuration.url + "/query?" + params;
+    console.log("createV2DatasetListGet", url);
     executeSolrQuery(url,
       (content) => solrResponseToDatasets(
         content, query, configuration["languages"]))
@@ -88,7 +89,8 @@ function buildDatasetSolrQuery(query, defaultLanguage) {
     ...parseDatasetUserQuery(query),
   };
   if (query.text) {
-    userQuery["text"] = encodeURIComponent(escapeSolrQueryForText(query.text));
+    userQuery["text"] = encodeURIComponent(
+      textToSolrQuery(userQuery.language, query.text));
   }
   //
   let sort;
@@ -175,34 +177,23 @@ function addUserQueryValue(query, result, name) {
 }
 
 /**
- * TODO Describe and clarify difference to 'escapeSolrQueryValue'.
+ * Given text query create a SOLR query against _text_ property.
  */
-function escapeSolrQueryForText(text) {
+function textToSolrQuery(language, text) {
   text = escapeSolrQueryValue(text);
 
-  const tokens = text.trim().split(" ")
-    .filter(item => !isEmpty(item))
-    .filter(isSpecialCharacter);
+  const tokens = splitQueryToTokens(text);
   if (tokens.length === 0) {
     return "";
   }
-
-  let solrQuery = "_text_:*" + tokens[0] + "*";
-  for (let index = 1; index < tokens.length; ++index) {
-    solrQuery += " AND _text_:*" + tokens[index] + "*";
-  }
-
-  return solrQuery;
+  // We ask for title first to prioritize it before _text_.
+  // We want datasets that have the given value in label to be returned first.
+  return prepareFieldQueryForTokens("_text_", tokens);
 }
 
-function isEmpty(value) {
-  return value === undefined || value === null || value.length === 0;
-}
-
-function isSpecialCharacter(value) {
-  return value[0] !== "\\" || value.length !== 2;
-}
-
+/**
+ * Escape values that have controll value in SOLR query.
+ */
 function escapeSolrQueryValue(text) {
   text = text.toLocaleLowerCase();
 
@@ -213,9 +204,31 @@ function escapeSolrQueryValue(text) {
   text = text.replace("and", "\\and");
   text = text.replace("or", "\\or");
   text = text.replace("not", "\\not");
-
   return text;
 }
+
+function splitQueryToTokens(text) {
+  return text.trim().split(" ")
+    .filter(item => !isEmpty(item))
+    .filter(isSpecialCharacter);
+}
+
+function isEmpty(value) {
+  return value === undefined || value === null || value.length === 0;
+}
+
+function isSpecialCharacter(value) {
+  return value[0] !== "\\" || value.length !== 2;
+}
+
+function prepareFieldQueryForTokens(field, tokens) {
+  let result = field + ":*" + tokens[0] + "*";
+  for (let index = 1; index < tokens.length; ++index) {
+    result += " AND " + field + ":*" + tokens[index] + "*";
+  }
+  return result;
+}
+
 
 function paginationToSolrQuery(userQuery) {
   return "&start=" + userQuery["offset"] + "&rows=" + userQuery["limit"];
@@ -448,7 +461,8 @@ function buildFacetSolrQuery(query) {
     "limit": -1,
   };
   if (query.text) {
-    userQuery["text"] = encodeURIComponent(escapeSolrQueryForText(query.text));
+    userQuery["text"] = encodeURIComponent(
+      textToSolrQuery(userQuery.language, query.text));
   }
   addUserQueryFacet(query, userQuery, "facet");
   addUserQueryFacet(query, userQuery, "limit");
@@ -504,7 +518,8 @@ function buildTypeaheadSolrQuery(query, defaultLanguage) {
     ...parseDatasetUserQuery(query),
   };
   if (query.text) {
-    userQuery["text"] = encodeURIComponent(escapeSolrQueryValue(query.text));
+    userQuery["text"] = encodeURIComponent(
+      textToSolrQueryForTypeahead(userQuery.language, query.text));
   }
   //
   let url = "rows=8"
@@ -515,6 +530,19 @@ function buildTypeaheadSolrQuery(query, defaultLanguage) {
   url += facetsToSolrQuery(userQuery);
   url += temporalToSolrQuery(userQuery);
   return [url, query.language];
+}
+
+function textToSolrQueryForTypeahead(language, text) {
+  text = escapeSolrQueryValue(text);
+
+  const tokens = splitQueryToTokens(text);
+  if (tokens.length === 0) {
+    return "";
+  }
+  // We ask for title first to prioritize it before _text_.
+  // We want datasets that have the given value in label to be returned first.
+  return prepareFieldQueryForTokens("title_" + language, tokens)
+    + " OR " + prepareFieldQueryForTokens("_text_", tokens);
 }
 
 function solrResponseToTypeaheadDatasets(content, language, defaultLanguage) {
