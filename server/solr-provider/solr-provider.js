@@ -69,7 +69,6 @@ function createV2DatasetListGet(configuration) {
     const [params, query] = buildDatasetSolrQuery(
       req.query, configuration["default-language"]);
     const url = configuration.url + "/query?" + params;
-    console.log("createV2DatasetListGet", url);
     executeSolrQuery(url,
       (content) => solrResponseToDatasets(
         content, query, configuration["languages"]))
