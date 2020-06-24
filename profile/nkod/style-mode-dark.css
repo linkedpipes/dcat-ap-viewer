@@ -44,4 +44,20 @@
         color: var(--color-text);
     }    
 
+    .modal-content {
+        background-color: #303030;
+    }
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #444;
+        border-color: #444;
+    }
+
+    .btn-secondary:hover {
+        color: #fff;
+        background-color: #313131;
+        border-color: #2b2a2a;
+    }
+
 }
