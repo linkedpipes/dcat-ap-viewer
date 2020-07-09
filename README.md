@@ -1,12 +1,12 @@
 # LinkedPipes DCAT-AP Viewer
 
-This is a native DCAT-AP 2.0.0 catalog viewer. 
+This is a native DCAT-AP 2.0.1 catalog viewer. 
 It is originally developed for OpenData.cz projects, however, it is completely open-source and resuable. 
 It addresses the most painful disadvantages of CKAN when it comes to representing DCAT compatible data such as
-- native [DCAT-AP 2.0.0](https://joinup.ec.europa.eu/solution/dcat-application-profile-data-portals-europe/release/200) input
+- native [DCAT-AP 2.0.1] input
 - handles large numbers of distributions of a single dataset
 - handles licenses attached to distributions
-- supports [EU Vocabularies](https://publications.europa.eu/en/web/eu-vocabularies/controlled-vocabularies) codelists
+- supports [EU Vocabularies] codelists
 
 ## Requirements
 - [Node.js] & npm
@@ -21,7 +21,7 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 [Install Solr](https://lucene.apache.org/solr/guide/8_5/installing-solr.html) or run in it [Docker](https://hub.docker.com/_/solr/).
 It will contain the search index. 
 For installation, you may proceed like this:
-- [Download Apache Solr](http://lucene.apache.org/solr/) - e.g. ```solr-8.5.0.tgz```
+- Download [Apache Solr] - e.g. ```solr-8.5.0.tgz```
 - Extract the service installer ```tar xzf solr-8.5.0.tgz solr-8.5.0/bin/install_solr_service.sh --strip-components=2```
 - Run the service installer ```sudo bash ./install_solr_service.sh solr-8.5.0.tgz```
 
@@ -139,3 +139,5 @@ npm run start -- -env.configFileLocation=configuration.yaml
 [LinkedPipes ETL]: <https://etl.linkedpipes.com>
 [preparation pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/nkod/lp-etl/dcatap2lpdav.jsonld>
 [codelist pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/nkod/lp-etl/eumdrnals2couchdb.jsonld>
+[DCAT-AP 2.0.1]: <https://joinup.ec.europa.eu/collection/semantic-interoperability-community-semic/solution/dcat-application-profile-data-portals-europe/release/201-0>
+[EU Vocabularies]: <https://publications.europa.eu/en/web/eu-vocabularies/controlled-vocabularies>
