@@ -310,6 +310,7 @@ function solrResponseToDatasets(content, query, languagePreferences) {
         "publisher": asResource(item["publisher"]),
         "spatial": asResource(item["spatial"]),
         "order": index,
+        "isPartOf": asResource(item["isPartOf"]),
       })),
       ...convertKeywords(
         facets["keyword_" + query.language], "urn:keyword", query.keywordLimit),
@@ -346,6 +347,7 @@ function datasetListContext() {
     "code": "urn:code",
     "datasetsCount": "urn:datasetsCount",
     "order": "urn:order",
+    "isPartOf": "urn:isPartOf",
   };
 }
 
