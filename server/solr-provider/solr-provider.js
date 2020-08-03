@@ -128,11 +128,12 @@ function defaultUserQuery(language) {
     "formatLimit": DEFAULT_FACET_RETURN_COUNT,
     "theme": [],
     "themeLimit": DEFAULT_FACET_RETURN_COUNT,
-    "temporalStart": undefined,
-    "temporalEnd": undefined,
+    "temporal-start": undefined,
+    "temporal-end": undefined,
     "offset": 0,
     "limit": 10,
     "language": language,
+    "isPartOf": undefined,
   }
 }
 
@@ -151,6 +152,7 @@ function parseDatasetUserQuery(query) {
   addUserQueryFacet(query, result, "formatLimit");
   addUserQueryFacet(query, result, "theme");
   addUserQueryFacet(query, result, "themeLimit");
+  addUserQueryFacet(query, result, "isPartOf");
   addUserQueryValue(query, result, "temporal-start");
   addUserQueryValue(query, result, "temporal-end");
   addUserQueryValue(query, result, "offset");
@@ -251,6 +253,10 @@ function facetsToSolrQuery(userQuery) {
 
   userQuery.theme.forEach((item) => {
     url += "&fq=theme:\"" + encodeURIComponent(item) + "\""
+  });
+
+  userQuery.isPartOf.forEach((item) => {
+    url += "&fq=isPartOf:\"" + encodeURIComponent(item) + "\""
   });
 
   return url;
