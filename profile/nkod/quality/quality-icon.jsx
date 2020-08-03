@@ -1,28 +1,32 @@
 import React from "react";
 import {Spinner} from "reactstrap";
+import {Status} from "../../../client/dataset-detail";
 
 export function qualityIcons(t, tLiteral, openModal, quality, measures) {
-  if (!quality.ready) {
+  if (quality.status === Status.Ready) {
+    return (
+      <div className="float-right">
+        {measures.map((item) => qualityIcon(
+          t, tLiteral, openModal, quality,
+          item.measureOf, item.labelTrue, item.labelFalse,
+          item.iconTrue, item.iconFalse
+        ))}
+      </div>
+    );
+  }
+  if (quality.status === Status.Loading) {
     return (
       <Spinner size="sm" color="secondary" className="float-right"/>
     );
   }
-  return (
-    <div className="float-right">
-      {measures.map((item) => qualityIcon(
-        t, tLiteral, openModal, quality,
-        item.measureOf, item.labelTrue, item.labelFalse,
-        item.iconTrue, item.iconFalse
-      ))}
-    </div>
-  );
+  return null;
 }
 
 function qualityIcon(
   t, tLiteral, openModal, quality, measureOf, labelTrue, labelFalse,
   iconTrue, iconFalse
 ) {
-  const measure = quality.data.getMeasure(measureOf);
+  const measure = selectMeasure(quality, measureOf);
   if (measure == null) {
     return null;
   }
@@ -52,4 +56,13 @@ function qualityIcon(
       { iconFalse }
     </i>
   );
+}
+
+function selectMeasure(quality, measureOf) {
+  for (const measure of quality.measures) {
+    if (measure.measureOf === measureOf) {
+      return measure;
+    }
+  }
+  return null;
 }

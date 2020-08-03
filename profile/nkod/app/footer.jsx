@@ -7,7 +7,7 @@ import {PropTypes} from "prop-types";
 import {
   getCreateDatasetFormLink,
   getCreateCatalogFormLink,
-} from "../../../client/form";
+} from "../dcat-ap-forms";
 
 function Footer({language, t}) {
   return (

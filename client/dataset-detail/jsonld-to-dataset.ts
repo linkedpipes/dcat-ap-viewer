@@ -1,87 +1,85 @@
 import {
-  JsonLdEntity,
-  getId,
-  getTypes,
-  getResources,
-  getValue,
-  getEntityByIri,
   getEntitiesByType,
-  getStrings,
+  getEntityByIri, getEntityByType,
+  getId,
+  getPlainString,
+  getPlainStrings,
   getResource,
-  getValues,
+  getResources,
+  getStrings,
+  getTypes,
+  getValue,
+  JsonLdEntity, Literal,
 } from "../jsonld";
 import {
+  ADMS,
   DCAT,
   DCTERMS,
-  FOAF,
-  OWL,
-  ADMS,
-  VCARD,
-  SKOS,
   EUA,
-  SCHEMA,
+  FOAF, NKOD,
+  OWL,
+  SKOS,
+  VCARD,
 } from "../vocabulary/vocabulary"
+import {
+  ContactPoint,
+  Dataset,
+  PartType,
+  DatasetCustom,
+  DatasetMetadata,
+} from "./dataset-detail-model";
 
-export interface ContactPoint {
-  "iri": string;
-  "email": string;
-}
-
-export function jsonLdToDataset(jsonld: JsonLdEntity[]): {} {
-  const datasets = getEntitiesByType(jsonld, DCAT.Dataset);
-  const dataset = datasets[0];
-
-  const mandatory = {
-    "iri": getId(dataset),
-    "description": getStrings(dataset, DCTERMS.description),
-  };
-
-  const recommended = {
-    "contactPoints": loadContactPoints(jsonld, dataset),
-    "distributions": getResources(dataset, DCAT.distribution),
-    "keywords": getStrings(dataset, DCAT.keyword),
-    "publisher": getResource(dataset, DCTERMS.publisher),
-    ...loadThemes(jsonld, dataset),
-  };
-
-  const optional = {
-    "accessRights": getResources(dataset, DCTERMS.accessRights),
-    "conformsTo": getResources(dataset, DCTERMS.conformsTo),
-    "documentation": getResources(dataset, FOAF.page),
-    "frequency": getResource(dataset, DCTERMS.accrualPeriodicity), //
-    "hasVersion": getResources(dataset, DCTERMS.hasVersion),
-    "identifier": getValues(dataset, DCTERMS.identifier),
-    "isVersionOf": getResources(dataset, DCTERMS.isVersionOf),
-    "landingPage": getResources(dataset, DCAT.landingPage),
-    "language": getResources(dataset, DCTERMS.language), //
-    "otherIdentifier": getResources(dataset, ADMS.identifier), //
-    "provenance": getResources(dataset, DCTERMS.provenance),
-    "relation": getResources(dataset, DCTERMS.relation),
-    "issued": getValues(dataset, DCTERMS.issued),
-    "sample": getResources(dataset, ADMS.sample),
-    "source": getResources(dataset, DCTERMS.source),
-    "spatial": getResources(dataset, DCTERMS.spatial), //
-    "temporal": loadTemporal(jsonld, dataset),
-    "type": getValues(dataset, DCTERMS.type),
-    "modified": getValues(dataset, DCTERMS.modified),
-    "version": getValues(dataset, OWL.versionInfo),
-    "versionNotes": getValues(dataset, ADMS.versionNotes),
-  };
-
-  const dcat = {
-    "services": loadServices(jsonld, dataset),
-    "temporalResolution": getValue(dataset, DCAT.temporalResolution),
-    "spatialResolutionInMeters":
-      getValue(dataset, DCAT.spatialResolutionInMeters),
-  };
-
+export function jsonLdToDataset(jsonld: JsonLdEntity[]): Dataset {
+  const entity = getEntitiesByType(jsonld, DCAT.Dataset)[0];
+  const iri = getId(entity);
+  const distributions = getResources(entity, DCAT.distribution);
+  const datasets = getResources(entity, DCTERMS.hasPart);
   return {
-    "@type": getTypes(dataset),
-    //
-    ...mandatory,
-    ...recommended,
-    ...optional,
-    ...dcat,
+    // Mandatory.
+    "iri": iri,
+    "description": getStrings(entity, DCTERMS.description),
+    // Recommended.
+    "contactPoints": loadContactPoints(jsonld, entity),
+    "distributions": distributions.map((iri) => ({
+        "type": PartType.PartDistribution,
+        "iri": iri,
+        "owner": iri,
+    })),
+    "keywords": getStrings(entity, DCAT.keyword),
+    "publisher": getResource(entity, DCTERMS.publisher),
+    ...loadThemes(jsonld, entity),
+    // Optional.
+    "accessRights": getResources(entity, DCTERMS.accessRights),
+    "conformsTo": getResources(entity, DCTERMS.conformsTo),
+    "documentation": getResources(entity, FOAF.page),
+    "frequency": getResource(entity, DCTERMS.accrualPeriodicity),
+    "hasVersion": getResources(entity, DCTERMS.hasVersion),
+    "identifier": getPlainStrings(entity, DCTERMS.identifier),
+    "isVersionOf": getResources(entity, DCTERMS.isVersionOf),
+    "landingPage": getResources(entity, DCAT.landingPage),
+    "language": getResources(entity, DCTERMS.language),
+    "otherIdentifier": getResources(entity, ADMS.identifier),
+    "provenance": getResources(entity, DCTERMS.provenance),
+    "relation": getResources(entity, DCTERMS.relation),
+    "issued": getPlainStrings(entity, DCTERMS.issued),
+    "sample": getResources(entity, ADMS.sample),
+    "source": getResources(entity, DCTERMS.source),
+    "spatial": getResources(entity, DCTERMS.spatial),
+    "temporal": loadTemporal(jsonld, entity),
+    "type": getPlainStrings(entity, DCTERMS.type),
+    "modified": getPlainStrings(entity, DCTERMS.modified),
+    "version": getPlainStrings(entity, OWL.versionInfo),
+    "versionNotes": getPlainStrings(entity, ADMS.versionNotes),
+    // dcap-ap 2
+    "services": loadServices(jsonld, entity),
+    "temporalResolution": getPlainString(entity, DCAT.temporalResolution),
+    "spatialResolutionInMeters":
+      getPlainString(entity, DCAT.spatialResolutionInMeters),
+    // Hierarchy.
+    "datasets": datasets,
+    "parentDataset": getResource(entity, DCTERMS.isPartOf),
+    // Custom.
+    ...loadForm(jsonld, entity),
   };
 }
 
@@ -91,12 +89,17 @@ function loadContactPoints(jsonld: JsonLdEntity[], dataset: JsonLdEntity)
     .map(iri => getEntityByIri(jsonld, iri))
     .filter(notUndefined)
     .map(entity => {
+        let email = getResource(entity, VCARD.hasEmail);
+        if (email && email.startsWith("mailto:")) {
+          email = email.substr("mailto:".length);
+        }
         return {
           "iri": getId(entity),
-          "email": String(getValue(entity, VCARD.hasEmail)),
+          "email": email,
         }
       }
-    );
+    )
+    .filter(notUndefined);
 }
 
 function notUndefined<T>(x: T | undefined): x is T {
@@ -157,4 +160,31 @@ function loadServices(jsonld: JsonLdEntity[], dataset: JsonLdEntity) {
     .filter(service => getResources(service, DCAT.servesDataset)
       .includes(getId(dataset)))
     .map(service => getId(service))
+}
+
+function loadForm(jsonld: JsonLdEntity[], dataset: JsonLdEntity) : DatasetCustom {
+  const result : DatasetCustom= {
+    "rdfType": getTypes(dataset),
+    "lkod": getResource(dataset, NKOD.lkod),
+  };
+  const catalog = getEntityByType(jsonld, DCAT.Catalog);
+  if (catalog) {
+    result["catalog"] = getId(catalog);
+  }
+  const catalogRecord = getEntityByType(jsonld, DCAT.CatalogRecord);
+  if (catalogRecord) {
+    result["catalogSource"] = getResource(catalogRecord, DCTERMS.source);
+  }
+  return result;
+}
+
+export function jsonLdToDatasetMetadata(
+  jsonld: JsonLdEntity[]): DatasetMetadata {
+  const entity = getEntitiesByType(jsonld, DCAT.Dataset)[0];
+  return {
+    "iri": getId(entity),
+    "description": getStrings(entity, DCTERMS.description),
+    "keywords": getStrings(entity, DCAT.keyword),
+    "formats": getResources(entity, DCTERMS.format),
+  };
 }

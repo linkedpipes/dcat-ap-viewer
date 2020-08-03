@@ -1,6 +1,6 @@
 import {PropTypes} from "prop-types";
 import React from "react";
-import {getDeleteCatalogFormLink} from "../../../../client/form";
+import {getDeleteCatalogFormLink} from "../../dcat-ap-forms";
 import {getGlobal, register} from "../../../client-api";
 import {CATALOG_LIST_ITEM} from "../../nkod-component-names";
 

@@ -6,7 +6,7 @@
 
 export const ELEMENT_DATASET_LIST = "element-datasets";
 
-export const ELEMENT_DATASET_DETAIL = "element-dataset";
+
 
 export const ELEMENT_PUBLISHER_LIST = "element-organisations";
 

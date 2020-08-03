@@ -4,7 +4,6 @@ import "../../client/catalog/list-view";
 import "../../client/keyword/list-view";
 import "../../client/dataset/list-view";
 import "../../client/dataset-detail";
-import "../../client/form/dataset";
 
 // Profile specific modules.
 import "./app/footer";
@@ -14,10 +13,10 @@ import "./app/language-selector";
 import "./app/page-not-found";
 import "./catalog/list/catalog-list";
 import "./catalog/list/catalog-list-item";
-import "./dataset/detail-view/dataset-detail";
-import "./dataset/detail-view/form-links";
-import "./dataset/detail-view/keywords";
-import "./dataset/detail-view/properies";
+import "./dataset-detail/dataset-detail";
+import "./dataset-detail/properties";
+import "./dataset-detail/keywords";
+//
 import "./dataset/list-view/dataset-list";
 import "./dataset/list-view/datasets-view";
 import "./dataset/list-view/facet-filter";
@@ -26,9 +25,6 @@ import "./dataset/list-view/keyword-view";
 import "./dataset/list-view/theme-view";
 import "./publisher/list/publisher-list";
 import "./keyword/list/keyword-list";
-import "./distribution/list/distribution-list";
-import "./distribution/detail/distribution-detail";
-import "./distribution/detail/data-service-detail";
 
 import "./style.css";
 import "./style-mode-default.css";

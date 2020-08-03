@@ -120,9 +120,8 @@ function fetchJsonLd(url: string): FlatJsonLdPromise {
     fetchJson(url).then(response => {
       if (response.data) {
         flatten(response.data)
-          .then(flatJsonLd => {
-            accept(flatJsonLd);
-          })
+          // @ts-ignore
+          .then(accept)
           .catch(error => {
             reject({
               ...error,

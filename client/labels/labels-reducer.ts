@@ -30,7 +30,11 @@ const NAME = "labels";
 
 function reducer(state = initialState, action: any): LabelsState {
   if (action["jsonld"]) {
-    state = onJsonLdData(state, action);
+    state = onJsonLdData(state, action["jsonld"]);
+  }
+  // For typesafe-actions
+  if (action["payload"] && action["payload"]["jsonld"]) {
+    state = onJsonLdData(state, action["payload"]["jsonld"]);
   }
   switch (action["type"]) {
     case SET_LANGUAGE:
@@ -47,9 +51,9 @@ export default {
   "reducer": reducer,
 };
 
-function onJsonLdData(state: LabelsState, action: any): LabelsState {
+function onJsonLdData(state: LabelsState, jsonld: any): LabelsState {
   const labels = {...state["labels"]};
-  iterateEntities(action["jsonld"], (entity) => {
+  iterateEntities(jsonld, (entity) => {
     // We merge all labels, so basically we randomly pick one of
     // the available.
     const extractedLabels: Literal[] = [

@@ -3,6 +3,7 @@
 //
 
 import {
+  Api,
   FlatJsonLdPromise,
   createApiImplementation,
   DatasetListQuery,
@@ -16,20 +17,6 @@ export const FETCH_DATASET_LIST_SUCCESS =
   "FETCH_DATASET_LIST_SUCCESS";
 export const FETCH_DATASET_LIST_FAILED =
   "FETCH_DATASET_LIST_FAILED";
-
-export const FETCH_DATASET =
-  "FETCH_DATASET";
-export const FETCH_DATASET_SUCCESS =
-  "FETCH_DATASET_SUCCESS";
-export const FETCH_DATASET_FAILED =
-  "FETCH_DATASET_FAILED";
-
-export const FETCH_DISTRIBUTION =
-  "FETCH_DISTRIBUTION";
-export const FETCH_DISTRIBUTION_SUCCESS =
-  "FETCH_DISTRIBUTION_SUCCESS";
-export const FETCH_DISTRIBUTION_FAILED =
-  "FETCH_DISTRIBUTION_FAILED";
 
 export const FETCH_PUBLISHER_LIST =
   "FETCH_PUBLISHER_LIST";
@@ -59,21 +46,6 @@ export const FETCH_INITIAL_DATA_SUCCESS =
 export const FETCH_INITIAL_DATA_FAILED =
   "FETCH_INITIAL_DATA_FAILED ";
 
-export const FETCH_QUALITY_DATASET =
-  "FETCH_QUALITY_DATASET";
-export const FETCH_QUALITY_DATASET_SUCCESS =
-  "FETCH_QUALITY_DATASET_SUCCESS";
-export const FETCH_QUALITY_DATASET_FAILED =
-  "FETCH_QUALITY_DISTRIBUTION_FAILED";
-
-
-export const FETCH_QUALITY_DISTRIBUTION =
-  "FETCH_QUALITY_DISTRIBUTION";
-export const FETCH_QUALITY_DISTRIBUTION_SUCCESS =
-  "FETCH_QUALITY_DISTRIBUTION_SUCCESS";
-export const FETCH_QUALITY_DISTRIBUTION_FAILED =
-  "FETCH_QUALITY_DISTRIBUTION_FAILED";
-
 export const FETCH_QUALITY_PUBLISHER_LIST =
   "FETCH_QUALITY_PUBLISHER_LIST";
 export const FETCH_QUALITY_PUBLISHER_LIST_SUCCESS =
@@ -102,6 +74,10 @@ export const FETCH_SUCCESS = "FETCH_SUCCESS";
 export const FETCH_FAILED = "FETCH_FAILED";
 
 let apiAdapter = createApiImplementation();
+
+export function getApiInstance() : Api {
+  return apiAdapter;
+}
 
 export function fetchDatasetList(query: DatasetListQuery) {
   //
@@ -149,30 +125,12 @@ function callApi(
   }
 }
 
-export function fetchDataset(iri: string) {
-  return callApi(
-    (lang) => apiAdapter.fetchDataset(lang, iri),
-    FETCH_DATASET,
-    FETCH_DATASET_SUCCESS,
-    FETCH_DATASET_FAILED,
-    {"iri": iri});
-}
-
 /**
  * This does not behave as a redux action.
  */
 export function fetchDatasetTypeahead(
   query: DatasetListQuery, language: string, text: string) {
   return apiAdapter.fetchDatasetTypeahead(language, query, text);
-}
-
-export function fetchDistribution(iri: string) {
-  return callApi(
-    (lang) => apiAdapter.fetchDistribution(lang, iri),
-    FETCH_DISTRIBUTION,
-    FETCH_DISTRIBUTION_SUCCESS,
-    FETCH_DISTRIBUTION_FAILED,
-    {"iri": iri});
 }
 
 export function fetchPublisherList() {
@@ -207,24 +165,6 @@ export function fetchInitialData() {
     FETCH_INITIAL_DATA,
     FETCH_INITIAL_DATA_SUCCESS,
     FETCH_INITIAL_DATA_FAILED);
-}
-
-export function fetchQualityDataset(iri: string) {
-  return callApi(
-    (lang) => apiAdapter.fetchQualityDataset(lang, iri),
-    FETCH_QUALITY_DATASET,
-    FETCH_QUALITY_DATASET_SUCCESS,
-    FETCH_QUALITY_DATASET_FAILED,
-    {"iri": iri});
-}
-
-export function fetchQualityDistribution(iri: string) {
-  return callApi(
-    (lang) => apiAdapter.fetchQualityDistribution(lang, iri),
-    FETCH_QUALITY_DISTRIBUTION,
-    FETCH_QUALITY_DISTRIBUTION_SUCCESS,
-    FETCH_QUALITY_DISTRIBUTION_FAILED,
-    {"iri": iri});
 }
 
 export function fetchQualityPublisherList() {

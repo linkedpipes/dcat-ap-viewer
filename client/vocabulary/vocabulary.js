@@ -21,6 +21,8 @@ export const DCTERMS = {
   "source": DCTERMS_PREFIX + "source",
   "type": DCTERMS_PREFIX + "type",
   "rights": DCTERMS_PREFIX + "rights",
+  "hasPart": DCTERMS_PREFIX + "hasPart",
+  "isPartOf": DCTERMS_PREFIX + "isPartOf",
 };
 
 const DCELEMENTS_PREFIX = "http://purl.org/dc/elements/1.1/";
@@ -55,6 +57,7 @@ export const DCAT = {
   "spatialResolutionInMeters": DCAT_PREFIX + "spatialResolutionInMeters",
   "startDate": DCAT_PREFIX + "startDate",
   "endDate": DCAT_PREFIX + "endDate",
+  "accessService": DCAT_PREFIX + "accessService",
 };
 
 const FOAF_PREFIX = "http://xmlns.com/foaf/0.1/";

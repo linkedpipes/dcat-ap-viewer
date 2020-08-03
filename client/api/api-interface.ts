@@ -19,7 +19,7 @@ export interface DatasetListQuery {
   temporalEnd?: string;
 }
 
-export type FlatJsonLdPromise = Promise<{ jsonld?: JsonLdEntity[] }>;
+export type FlatJsonLdPromise = Promise<JsonLdEntity[]>;
 
 export interface Api {
 
