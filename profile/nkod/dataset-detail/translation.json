@@ -76,7 +76,8 @@
       "endpoint_description_quality_true": "Popis endpointu byl {date} dostupný.",
       "endpoint_description_quality_false": "Popis endpointu byl {date} nedostupný.",
       "endpoint_description_quality_cors_true": "Technika CORS byla pro popis endpointu dostupná {date}.",
-      "endpoint_description_quality_cors_false": "Technika CORS byla pro popis endpointu nedostupná {date}."
+      "endpoint_description_quality_cors_false": "Technika CORS byla pro popis endpointu nedostupná {date}.",
+      "dataset_is_part_of": "Tato datová sada je součástí datové sady"
     }
   },
   "en": {
@@ -156,7 +157,8 @@
       "endpoint_description_quality_true": "The endpoint description was available on {date}.",
       "endpoint_description_quality_false": "The endpoint description was not available on {date}.",
       "endpoint_description_quality_cors_true": "CORS for the endpoint description was available on {date}.",
-      "endpoint_description_quality_cors_false": "CORS for the endpoint description was not available on {date}."
+      "endpoint_description_quality_cors_false": "CORS for the endpoint description was not available on {date}.",
+      "dataset_is_part_of": "This dataset is part of "
     }
   }
 }

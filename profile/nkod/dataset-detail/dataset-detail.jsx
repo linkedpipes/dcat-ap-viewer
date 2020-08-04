@@ -14,7 +14,7 @@ import {
   showModal,
   DEREFERENCE_PREFIX,
   URL_DATASET_LIST,
-  QUERY_DATASET_LIST_PUBLISHER,
+  QUERY_DATASET_LIST_PUBLISHER, URL_DATASET_DETAIL, QUERY_DATASET_DETAIL_IRI,
 } from "../../client-api";
 import {
   Status,
@@ -123,6 +123,14 @@ function datasetReadyView(
           {tLabel(dataset.publisher)}
         </Link>
       </h2>
+      {dataset.parentDataset && (
+        <p>
+          {t("dataset_is_part_of")}&nbsp;
+          <a href={datasetLinkUrl(tUrl, dataset.parentDataset)}>
+            {tLabel(dataset.parentDataset)}
+          </a>
+        </p>
+      )}
       <p>{tLiteral(dataset.description)}</p>
       <hr/>
       <Keywords
@@ -166,6 +174,7 @@ function collectLabels(dataset) {
 
   return [
     dataset.publisher,
+    dataset.parentDataset,
     ...asArray(dataset.frequency),
     ...asArray(dataset.spatial),
     ...asArray(dataset.themes),
@@ -179,3 +188,9 @@ function getPublisherSearchLink(dataset, tUrl) {
     {[QUERY_DATASET_LIST_PUBLISHER]: dataset.publisher}
   );
 }
+
+
+function datasetLinkUrl(tUrl, iri) {
+  return tUrl(URL_DATASET_DETAIL,{[QUERY_DATASET_DETAIL_IRI]: iri});
+}
+
