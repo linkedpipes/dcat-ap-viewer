@@ -1,7 +1,7 @@
 import {Literal} from "../jsonld";
 
 export class DatasetList {
-  datasets: Dataset[] = [];
+  datasets: DatasetListItem[] = [];
   datasetsCount?: number;
   themes: Facet[] = [];
   themesCount?: number;
@@ -13,7 +13,7 @@ export class DatasetList {
   formatsCount?: number;
 }
 
-export class Dataset {
+export class DatasetListItem {
   iri: string;
   accrualPeriodicity?: string;
   description?: Literal[];

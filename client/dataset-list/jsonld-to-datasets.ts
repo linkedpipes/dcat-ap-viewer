@@ -10,7 +10,7 @@ import {
   JsonLdEntity
 } from "../jsonld";
 import {DCAT, DCTERMS, LP} from "../vocabulary/vocabulary";
-import {Dataset, DatasetList, Facet} from "./dataset-list-model";
+import {DatasetListItem, DatasetList, Facet} from "./dataset-list-model";
 
 
 export function jsonLdToDatasetList(jsonld: JsonLdEntity[]): DatasetList {
@@ -70,7 +70,7 @@ export function jsonLdToDatasetList(jsonld: JsonLdEntity[]): DatasetList {
   const datasetEntries = getEntitiesByType(jsonld, DCAT.Dataset);
   for (let entry of datasetEntries) {
     const order = Number(getValue(entry, LP.order));
-    const dataset = new Dataset(getId(entry), order);
+    const dataset = new DatasetListItem(getId(entry), order);
     dataset.accrualPeriodicity = getResource(entry, DCTERMS.accrualPeriodicity);
     dataset.description = getStrings(entry, DCTERMS.description);
     dataset.formats = getResources(entry, DCTERMS.format);

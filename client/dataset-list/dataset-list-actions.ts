@@ -1,32 +1,31 @@
-import {
-  Dataset,
-} from "./dataset-list-model";
-import {JsonLdEntity} from "../jsonld";
 import {createAsyncAction, ActionType} from "typesafe-actions";
+import {DatasetList} from "./dataset-list-model";
+import {JsonLdEntity} from "../jsonld";
+import {DatasetListQuery} from "../api/api-interface";
 
-export interface DatasetFetchPayload {
-  dataset: string;
+export interface DatasetsFetchPayload {
+  query: DatasetListQuery;
 }
 
-export interface DatasetFetchPayloadSuccess {
-  dataset: string;
-  payload: Dataset;
+export interface DatasetsFetchPayloadSuccess {
+  query: DatasetListQuery;
+  payload: DatasetList;
   jsonld: JsonLdEntity[];
 }
 
-export interface DatasetFetchPayloadFailed {
-  dataset: string;
+export interface DatasetsFetchPayloadFailed {
+  query: DatasetListQuery;
   error: Error;
 }
 
-export const DatasetDetailActions = {
+export const DatasetListActions = {
   "fetchDatasets": createAsyncAction(
     "app.fetchDatasets.request",
     "app.fetchDatasets.success",
     "app.fetchDatasets.failure",
-  )<DatasetFetchPayload,
-    DatasetFetchPayloadSuccess,
-    DatasetFetchPayloadFailed>(),
+  )<DatasetsFetchPayload,
+    DatasetsFetchPayloadSuccess,
+    DatasetsFetchPayloadFailed>(),
 };
 
-export type DatasetDetailActionsType = ActionType<typeof DatasetDetailActions>;
+export type DatasetListActionsType = ActionType<typeof DatasetListActions>;

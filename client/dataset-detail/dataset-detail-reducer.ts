@@ -12,19 +12,29 @@ import {
   PartFetchPayloadSuccess,
   QualityFetchPayload,
   QualityFetchPayloadFailed,
-  QualityFetchPayloadSuccess
+  QualityFetchPayloadSuccess,
+  FetchDescendantsPayload,
 } from "./dataset-detail-actions";
+import {
+  DatasetListActions,
+  DatasetListActionsType,
+  DatasetsFetchPayloadSuccess,
+  DatasetsFetchPayloadFailed,
+} from "../dataset-list/dataset-list-actions";
 import {
   DataService,
   Dataset,
   PartDistribution,
   DistributionType,
-  DatasetMetadata,
   PartType,
   QualityMeasures,
   Part,
 } from "./dataset-detail-model";
+import {
+  DatasetListItem,
+} from "../dataset-list/dataset-list-model";
 import {getType} from "typesafe-actions";
+import {DatasetListQuery} from "../api/api-interface";
 
 // TODO Move App level.
 export enum Status {
@@ -32,7 +42,17 @@ export enum Status {
   Loading,
   Ready,
   Failed,
+  /**
+   * Used when data are not available, for example there are
+   * no data on quality.
+   */
   NotAvailable,
+  /**
+   * Used if we have data and we do re-load, so we can show
+   * the old data until the new one are ready to prevent
+   * changes.
+   */
+  Updating,
 }
 
 export interface ResourceStatus {
@@ -41,7 +61,14 @@ export interface ResourceStatus {
   error?: Error;
 }
 
+export interface Descendants {
+  count?:number;
+  datasets: DatasetListItem[];
+  status: Status;
+}
+
 interface State {
+  active: boolean;
   /**
    * Current main dataset.
    */
@@ -49,7 +76,11 @@ interface State {
   /**
    * Other datasets in the hierarchy.
    */
-  descendants: Record<string, (DatasetMetadata & ResourceStatus) | ResourceStatus>;
+  descendants: Descendants;
+  /**
+   * Query used for descendants, so we react only on data we need.
+   */
+  descendantsQuery?: DatasetListQuery;
   /**
    * Distributions or data services.
    */
@@ -64,18 +95,32 @@ interface State {
 }
 
 const initialStatus: State = {
+  "active": false,
   "dataset": {
     "status": Status.Undefined,
   },
-  "descendants": {},
+  "descendants": {
+    "datasets": [],
+    "status": Status.Undefined,
+  },
+  "descendantsQuery": undefined,
   "parts": {},
   "quality": {},
 };
 
-function reducer(state = initialStatus, action: DatasetDetailActionsType) {
+type Actions = DatasetDetailActionsType | DatasetListActionsType;
+
+function reducer(state = initialStatus, action: Actions) {
   switch (action.type) {
     case getType(DatasetDetailActions.mount):
       return onDatasetMount(state, action.payload);
+    default:
+      break;
+  }
+  if (!state.active) {
+    return state;
+  }
+  switch (action.type) {
     case getType(DatasetDetailActions.unMount):
       return onDatasetUnMount();
     case getType(DatasetDetailActions.change):
@@ -100,6 +145,12 @@ function reducer(state = initialStatus, action: DatasetDetailActionsType) {
       return onFetchQualitySuccess(state, action.payload);
     case getType(DatasetDetailActions.fetchQuality.failure):
       return onFetchQualityFailed(state, action.payload);
+    case getType(DatasetDetailActions.setDescendantsQuery):
+      return onSetDescendantsQuery(state, action.payload);
+    case getType(DatasetListActions.fetchDatasets.success):
+      return onFetchDescendantsSuccess(state, action.payload);
+    case getType(DatasetListActions.fetchDatasets.failure):
+      return onFetchDescendantsFailed(state, action.payload);
     default:
       return state;
   }
@@ -109,11 +160,12 @@ function onDatasetMount(
   state: State, action: DatasetDetailMountPayload): State {
   return {
     ...state,
+    "active": true,
     "dataset": createEmptyResourceStatus(action.dataset),
   };
 }
 
-function createEmptyResourceStatus(iri:string): ResourceStatus {
+function createEmptyResourceStatus(iri: string): ResourceStatus {
   return {
     "iri": iri,
     "status": Status.Undefined,
@@ -129,6 +181,11 @@ function onDatasetChange(
   return {
     ...state,
     "dataset": createEmptyResourceStatus(action.dataset),
+    "descendantsQuery": undefined,
+    "descendants": {
+      "datasets": [],
+      "status": Status.Undefined,
+    },
   };
 }
 
@@ -157,7 +214,7 @@ function onFetchDataset(state: State, action: DatasetFetchPayload): State {
   };
 }
 
-function createLoadingResourceStatus(iri:string): ResourceStatus {
+function createLoadingResourceStatus(iri: string): ResourceStatus {
   return {
     "iri": iri,
     "status": Status.Loading,
@@ -189,11 +246,11 @@ function onFetchDatasetFailed(
   }
   return {
     ...state,
-    "dataset":  createFailedResourceStatus(state.dataset.iri, action.error),
+    "dataset": createFailedResourceStatus(state.dataset.iri, action.error),
   };
 }
 
-function createFailedResourceStatus(iri:string, error: Error): ResourceStatus {
+function createFailedResourceStatus(iri: string, error: Error): ResourceStatus {
   return {
     "iri": iri,
     "status": Status.Failed,
@@ -256,7 +313,7 @@ function onFetchPartFailed(
     "parts": {
       ...state.parts,
       [action.part.iri]:
-        createFailedResourceStatus(action.part.iri,action.error),
+        createFailedResourceStatus(action.part.iri, action.error),
     },
   };
 }
@@ -293,6 +350,57 @@ function onFetchQualityFailed(
   };
 }
 
+function onSetDescendantsQuery(
+  state: State, action: FetchDescendantsPayload): State {
+  if (state.descendants.status === Status.Ready) {
+    return {
+      ...state,
+      "descendantsQuery": action.query,
+      "descendants": {
+        ...state.descendants,
+        "status": Status.Updating,
+      },
+    };
+  }
+  return {
+    ...state,
+    "descendantsQuery": action.query,
+    "descendants": {
+      "datasets": [],
+      "status": Status.Loading,
+    },
+  };
+}
+
+function onFetchDescendantsSuccess(
+  state: State, action: DatasetsFetchPayloadSuccess): State {
+  if (action.query !== state.descendantsQuery) {
+    return state;
+  }
+  return {
+    ...state,
+    "descendants": {
+      "count": action.payload.datasetsCount,
+      "datasets": action.payload.datasets,
+      "status": Status.Ready,
+    },
+  };
+}
+
+function onFetchDescendantsFailed(
+  state: State, action: DatasetsFetchPayloadFailed): State {
+  if (action.query !== state.descendantsQuery) {
+    return state;
+  }
+  return {
+    ...state,
+    "descendants": {
+      "datasets": [],
+      "status": Status.Failed,
+    },
+  };
+}
+
 const reducerName = "dataset-detail";
 
 export default {
@@ -318,3 +426,6 @@ export const partSelector =
 export const qualitySelector =
   (state: any, iri: string): QualityMeasures | ResourceStatus =>
     stateSelector(state).quality[iri] || undefinedResource;
+
+export const descendantsSelector =
+  (state: any): Descendants => stateSelector(state).descendants;

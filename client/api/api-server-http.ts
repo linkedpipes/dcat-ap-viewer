@@ -149,6 +149,7 @@ function datasetQueryFiltersToUrlParams(
     ("&temporal-start=" + query.temporalStart) : "";
   params += query.temporalEnd ?
     ("&temporal-end=" + query.temporalEnd) : "";
+  params += query.isPartOf ? facetToParams(query.isPartOf, 0, "isPartOf") : "";
   return params;
 }
 

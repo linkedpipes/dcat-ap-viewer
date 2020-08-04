@@ -14,12 +14,13 @@ export default class Paginator extends React.PureComponent {
       recordsCount,
       pageIndex,
       pageSize,
+      defaultPageSize,
       onIndexChange,
       onSizeChange,
       sizes,
     } = this.props;
 
-    if (recordsCount < pageSize) {
+    if (recordsCount < pageSize && pageSize === defaultPageSize) {
       return null;
     }
 
@@ -52,6 +53,7 @@ Paginator.propTypes = {
   "recordsCount": PropTypes.number.isRequired,
   "pageIndex": PropTypes.number.isRequired,
   "pageSize": PropTypes.number.isRequired,
+  "defaultPageSize": PropTypes.number,
   "onIndexChange": PropTypes.func.isRequired,
   "onSizeChange": PropTypes.func.isRequired,
   "paginatorLabel": PropTypes.string,

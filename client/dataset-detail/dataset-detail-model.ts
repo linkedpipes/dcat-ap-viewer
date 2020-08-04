@@ -164,13 +164,6 @@ export type DataService = PartDistribution & {
   dataService: string;
 }
 
-export interface DatasetMetadata {
-  iri: string;
-  description: Literal[];
-  formats: string[];
-  keywords: Literal[];
-}
-
 export interface QualityMeasure {
   value: boolean;
   lastCheck?: string;

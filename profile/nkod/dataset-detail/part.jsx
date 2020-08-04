@@ -20,7 +20,6 @@ import {
   PartType,
 } from "../../../client/dataset-detail";
 import DataService from "./part-data-service";
-import Dataset from "./part-dataset";
 import Distribution from "./part-distribution";
 
 /**
@@ -56,9 +55,6 @@ export default function Part({part}) {
   }
   if (part.type === PartType.PartDistribution) {
     return partDataService(partData, quality, args);
-  }
-  if (part.type === PartType.PartDataset) {
-    return partDataset(partData, quality, args);
   }
   console.error("Unknown part type:", part, partData);
   return null;
@@ -116,16 +112,6 @@ function partDataService(
     <DataService
       dataService={dataService}
       quality={distributionQuality}
-      {...args}
-    />
-  );
-}
-
-function partDataset(dataset, quality, args) {
-  return (
-    <Dataset
-      dataset={dataset}
-      quality={quality}
       {...args}
     />
   );

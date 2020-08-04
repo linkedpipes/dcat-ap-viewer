@@ -9,7 +9,7 @@ import {
   getStrings,
   getTypes,
   getValue,
-  JsonLdEntity, Literal,
+  JsonLdEntity,
 } from "../jsonld";
 import {
   ADMS,
@@ -26,7 +26,6 @@ import {
   Dataset,
   PartType,
   DatasetCustom,
-  DatasetMetadata,
 } from "./dataset-detail-model";
 
 export function jsonLdToDataset(jsonld: JsonLdEntity[]): Dataset {
@@ -176,15 +175,4 @@ function loadForm(jsonld: JsonLdEntity[], dataset: JsonLdEntity) : DatasetCustom
     result["catalogSource"] = getResource(catalogRecord, DCTERMS.source);
   }
   return result;
-}
-
-export function jsonLdToDatasetMetadata(
-  jsonld: JsonLdEntity[]): DatasetMetadata {
-  const entity = getEntitiesByType(jsonld, DCAT.Dataset)[0];
-  return {
-    "iri": getId(entity),
-    "description": getStrings(entity, DCTERMS.description),
-    "keywords": getStrings(entity, DCAT.keyword),
-    "formats": getResources(entity, DCTERMS.format),
-  };
 }

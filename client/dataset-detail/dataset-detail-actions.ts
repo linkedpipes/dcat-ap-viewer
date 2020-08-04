@@ -1,3 +1,4 @@
+import {createAction, createAsyncAction, ActionType} from "typesafe-actions";
 import {
   Dataset,
   PartDistribution,
@@ -6,7 +7,7 @@ import {
   Part,
 } from "./dataset-detail-model";
 import {JsonLdEntity} from "../jsonld";
-import {createAction, createAsyncAction, ActionType} from "typesafe-actions";
+import {DatasetListQuery} from "../api/api-interface";
 
 export interface DatasetFetchPayload {
   dataset: string;
@@ -77,6 +78,10 @@ export interface DatasetPartChangePayload {
   next: string;
 }
 
+export interface FetchDescendantsPayload {
+  query: DatasetListQuery
+}
+
 export const DatasetDetailActions = {
   "fetchDataset": createAsyncAction(
     "app.fetchDatasetDetail.request",
@@ -104,6 +109,8 @@ export const DatasetDetailActions = {
   "unMount": createAction("app.datasetDetail.unMount")(),
   "changePart": createAction(
     "app.datasetDetail.setPart")<DatasetPartChangePayload>(),
+  "setDescendantsQuery": createAction(
+    "app.datasetDetail.descendants")<FetchDescendantsPayload>(),
 };
 
 export type DatasetDetailActionsType = ActionType<typeof DatasetDetailActions>;

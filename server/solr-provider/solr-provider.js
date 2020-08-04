@@ -133,7 +133,7 @@ function defaultUserQuery(language) {
     "offset": 0,
     "limit": 10,
     "language": language,
-    "isPartOf": undefined,
+    "isPartOf": [],
   }
 }
 

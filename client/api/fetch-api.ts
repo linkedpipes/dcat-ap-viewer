@@ -30,7 +30,8 @@ function failureToResponse(error: any): Promise<any> {
 }
 
 function json(response: any): Promise<Response> {
-  return response.json().catch(() => {
+  return response.json().catch((error:any) => {
+    console.error("Can't parse data.", error);
     return Promise.reject(new Response(ErrorType.PARSE));
   }).then((data: {}) => {
     if (response.ok) {

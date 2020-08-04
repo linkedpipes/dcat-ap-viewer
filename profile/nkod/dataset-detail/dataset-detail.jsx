@@ -31,6 +31,7 @@ import {
 } from "../nkod-component-names";
 import Parts from "./parts.jsx";
 import DcatApForms from "../dcat-ap-forms";
+import Descendants from "./descendants";
 
 const DatasetView = ({iri}) => {
   const dispatch = useDispatch();
@@ -43,24 +44,22 @@ const DatasetView = ({iri}) => {
   const dataset = useSelector(datasetSelector);
   const quality = useSelector(
     (state) => qualitySelector(state, iri));
-  switch (dataset.status) {
-  case Status.Undefined:
+  if (dataset.status === Status.Undefined) {
     dispatch(fetchDataset(iri));
     return datasetIsLoadingView();
-  case Status.Loading:
+  }
+  if (dataset.status === Status.Loading) {
     return datasetIsLoadingView();
-  case Status.Ready:
-    fetchQuality(dispatch, dataset, quality);
-    dispatch(fetchLabels(collectLabels(dataset)));
-    return datasetReadyView(
-      t, tLabel, tLiteral, tUrl,
-      language, openModal, dataset, quality);
-  case Status.Failed:
-    return datasetLoadingFailedView();
-  default:
+  }
+  if (dataset.status !== Status.Ready) {
     console.error("Invalid state:", dataset.status);
     return datasetLoadingFailedView();
   }
+  fetchQuality(dispatch, dataset, quality);
+  dispatch(fetchLabels(collectLabels(dataset)));
+  return datasetReadyView(
+    t, tLabel, tLiteral, tUrl, fetchLabels,
+    language, openModal, dataset, quality);
 };
 
 DatasetView.propTypes = {
@@ -95,7 +94,7 @@ function fetchQuality(dispatch, dataset, quality) {
 }
 
 function datasetReadyView(
-  t, tLabel, tLiteral, tUrl,
+  t, tLabel, tLiteral, tUrl, fetchLabels,
   language, openModal, dataset, quality) {
   const link = getGlobal(DEREFERENCE_PREFIX) + dataset.iri;
   const Keywords = getRegisteredElement(DATASET_DETAIL_KEYWORDS);
@@ -142,6 +141,13 @@ function datasetReadyView(
       />
       <hr/>
       <Parts parts={dataset.distributions}/>
+      <Descendants
+        iri={dataset.iri}
+        tLabel={tLabel}
+        tLiteral={tLiteral}
+        tUrl={tUrl}
+        fetchLabels={fetchLabels}
+      />
     </div>
   );
 }

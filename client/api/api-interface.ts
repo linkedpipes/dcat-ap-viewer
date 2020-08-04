@@ -17,6 +17,7 @@ export interface DatasetListQuery {
   formatLimit: number;
   temporalStart?: string;
   temporalEnd?: string;
+  isPartOf:string[];
 }
 
 export type FlatJsonLdPromise = Promise<JsonLdEntity[]>;
@@ -74,7 +75,8 @@ export function areDatasetListQueryEqual(
     && arraysAreEqual(left.format, right.format)
     && left.formatLimit === right.formatLimit
     && left.temporalStart === right.temporalStart
-    && left.temporalEnd === right.temporalEnd;
+    && left.temporalEnd === right.temporalEnd
+    && arraysAreEqual(left.isPartOf, right.isPartOf);
 }
 
 function arraysAreEqual(left: string[], right?: string[]): boolean {

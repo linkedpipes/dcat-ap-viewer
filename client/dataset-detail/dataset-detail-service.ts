@@ -1,15 +1,18 @@
+import {AnyAction} from "redux";
+import {ThunkAction} from "redux-thunk";
 import {jsonLdToDataset} from "./jsonld-to-dataset";
 import {jsonLdToDistributionOrDataService} from "./jsonld-to-distribution";
 import {jsonLdToQualityMeasures} from "./jsonld-to-quality";
-import {ThunkResult} from "../../.stash/2020-05/client/app/types";
 import {selectLanguage} from "../app/component-api";
 import {getApiInstance} from "../api/api-action";
 import {DatasetDetailActions} from "./dataset-detail-actions";
 import {FlatJsonLdPromise} from "../api/api-interface";
 import {datasetSelector, Status} from "./dataset-detail-reducer";
 import {Part} from "./dataset-detail-model";
+import {DatasetListQuery} from "../api/api-interface";
+import {fetchDatasets} from "../dataset-list/dataset-list-service";
 
-export type ThunkVoidResult = ThunkResult<void>;
+export type ThunkVoidResult = ThunkAction<void, any, any, AnyAction>;
 
 export function fetchDataset(datasetIri: string): ThunkVoidResult {
   return async (dispatch, getState) => {
@@ -124,9 +127,31 @@ export function fetchDatasetPartQuality(part: Part): ThunkVoidResult {
   return fetchQuality(part.iri, getApiInstance().fetchQualityDistribution);
 }
 
-export function fetchDescendants(iri: string) : ThunkVoidResult {
+export function fetchDescendants(
+  iri: string, offset:number, limit:number): ThunkVoidResult {
+  const query : DatasetListQuery = {
+    "offset": offset,
+    "limit": limit,
+    "publisher": [],
+    "publisherLimit": 0,
+    "theme": [],
+    "themeLimit": 0,
+    "keyword": [],
+    "keywordLimit": 0,
+    "format": [],
+    "formatLimit": 0,
+    "isPartOf": [iri],
+  };
   return async (dispatch, getState) => {
     const state = getState();
 
+    // We set query and then use the same method as for fetching the list.
+    dispatch(DatasetDetailActions.setDescendantsQuery({
+      "query": query,
+    }));
+    dispatch(fetchDatasets(query));
   };
 }
+
+
+
