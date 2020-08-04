@@ -62,7 +62,7 @@ export function areDatasetListQueryEqual(
   if (right === undefined) {
     return false;
   }
-  return left.offset === right.offset
+  const result = left.offset === right.offset
     && left.limit === right.limit
     && left.sort === right.sort
     && left.search === right.search
@@ -77,11 +77,12 @@ export function areDatasetListQueryEqual(
     && left.temporalStart === right.temporalStart
     && left.temporalEnd === right.temporalEnd
     && arraysAreEqual(left.isPartOf, right.isPartOf);
+  return result;
 }
 
 function arraysAreEqual(left: string[], right?: string[]): boolean {
   if (right === undefined) {
-    return false;
+    return left === undefined;
   }
   if (left.length !== right.length) {
     return false;
