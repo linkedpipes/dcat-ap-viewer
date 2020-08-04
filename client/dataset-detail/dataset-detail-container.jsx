@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch) => ({
   "onMount": (iri) => dispatch(DatasetDetailActions.mount({"dataset": iri})),
   "onUnMount": () => dispatch(DatasetDetailActions.unMount()),
   "onDatasetChange":
-    (iri) => dispatch(DatasetDetailActions.set({"dataset": iri})),
+    (iri) => dispatch(DatasetDetailActions.change({"dataset": iri})),
 });
 
 export default connect(
