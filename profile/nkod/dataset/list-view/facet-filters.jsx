@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  QUERY_DATASET_IS_PART_OF,
   QUERY_DATASET_LIST_FORMAT,
   QUERY_DATASET_LIST_KEYWORD,
   QUERY_DATASET_LIST_PUBLISHER,
@@ -13,6 +14,7 @@ import {
 } from "../../nkod-component-names";
 import {Button} from "reactstrap";
 import {PropTypes} from "prop-types";
+import FacetIsPartOf from "./facet-is-part-of";
 
 class Facets extends React.PureComponent {
 
@@ -26,6 +28,7 @@ class Facets extends React.PureComponent {
     this.toggleKeywordFacet = this.toggleKeywordFacet.bind(this);
     this.formatFetchMore = this.formatFetchMore.bind(this);
     this.toggleFormatFacet = this.toggleFormatFacet.bind(this);
+    this.toggleIsPartOfFacet = this.toggleIsPartOfFacet.bind(this);
     //
     this.state = {
       "facetsOpen": true,
@@ -39,15 +42,15 @@ class Facets extends React.PureComponent {
   componentDidMount() {
     const {withFacetProps} = this.props;
     // Create functions - so they do not change between renders.
-    const facetFilter = getRegisteredElement(DATASET_LIST_FACET_FILTER);
+    this.FacetFilter = getRegisteredElement(DATASET_LIST_FACET_FILTER);
     this.PublisherFacet = withFacetProps(
-      facetFilter, QUERY_DATASET_LIST_PUBLISHER);
+      this.FacetFilter, QUERY_DATASET_LIST_PUBLISHER);
     this.ThemeFacet = withFacetProps(
-      facetFilter, QUERY_DATASET_LIST_THEME);
+      this.FacetFilter, QUERY_DATASET_LIST_THEME);
     this.KeywordFacet = withFacetProps(
-      facetFilter, QUERY_DATASET_LIST_KEYWORD);
+      this.FacetFilter, QUERY_DATASET_LIST_KEYWORD);
     this.FormatFacet = withFacetProps(
-      facetFilter, QUERY_DATASET_LIST_FORMAT);
+      this.FacetFilter, QUERY_DATASET_LIST_FORMAT);
     this.setState({"initialised": true});
   }
 
@@ -72,6 +75,12 @@ class Facets extends React.PureComponent {
           </Button>
         </div>
         <div className={facetClassName}>
+          <FacetIsPartOf
+            t={t}
+            tLabel={tLabel}
+            values={activeFacet.isPartOf}
+            deselect={this.toggleIsPartOfFacet}
+          />
           <PublisherFacet
             t={t}
             label="publishers"
@@ -144,6 +153,10 @@ class Facets extends React.PureComponent {
     this.props.toggleFacet(QUERY_DATASET_LIST_FORMAT, item);
   }
 
+  toggleIsPartOfFacet(item) {
+    this.props.toggleFacet(QUERY_DATASET_IS_PART_OF, item);
+  }
+
 }
 
 
@@ -154,6 +167,8 @@ Facets.propTypes = {
   "fetchMoreFacet": PropTypes.func.isRequired,
   "toggleFacet": PropTypes.func.isRequired,
   "activeFacet": PropTypes.shape({
+    "isPartOf" : PropTypes.array.isRequired,
+    [QUERY_DATASET_IS_PART_OF]: PropTypes.array.isRequired,
     [QUERY_DATASET_LIST_PUBLISHER]: PropTypes.array.isRequired,
     [QUERY_DATASET_LIST_THEME]: PropTypes.array.isRequired,
     [QUERY_DATASET_LIST_KEYWORD]: PropTypes.array.isRequired,

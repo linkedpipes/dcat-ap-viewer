@@ -14,7 +14,8 @@
       "temporalStart": "časové období konec",
       "view": "vizualizace",
       "sort": "pořadí",
-      "publisher": "poskytovatel"
+      "publisher": "poskytovatel",
+      "isPartOf": "nadřazený dataset"
     },
     "string": {
       "facet.show_popular": "Zobrazit pouze populární",
@@ -46,7 +47,8 @@
       "formats": "Formáty",
       "query.last_year": "Minulý rok",
       "query.this_year": "Tento rok",
-      "/datasets": "Datové sady"
+      "/datasets": "Datové sady",
+      "isPartOfFacet": "Nadřazený dataset"
     }
   },
   "en": {
@@ -65,7 +67,8 @@
       "view": "visualization",
       "sort": "sort",
       "publisher": "publisher",
-      "language": "language"
+      "language": "language",
+      "isPartOf": "is part of"
     },
     "string": {
       "facet.show_popular": "Show popular only",
@@ -97,7 +100,8 @@
       "formats": "Formats",
       "query.last_year": "Last year",
       "query.this_year": "This year",
-      "/datasets": "Datasets"
+      "/datasets": "Datasets",
+      "isPartOfFacet": "Is part of dataset"
     }
   }
 }

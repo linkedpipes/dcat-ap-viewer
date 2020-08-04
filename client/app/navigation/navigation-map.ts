@@ -83,6 +83,7 @@ export function getQueryArg(query: string, language: string): string {
   if (process.env.NODE_ENV !== "production") {
     if (!result) {
       console.log("Missing query for  '" + query + "' for " + language);
+      console.log(navigationQuery);
       return query;
     }
   }

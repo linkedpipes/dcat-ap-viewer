@@ -48,6 +48,8 @@ export const QUERY_DATASET_LIST_SEARCH = "search";
 
 export const QUERY_DATASET_LIST_TEMPORAL_END = "temporalEnd";
 
+export const QUERY_DATASET_IS_PART_OF = "isPartOf";
+
 export const QUERY_DATASET_LIST_TEMPORAL_START = "temporalStart";
 
 export const QUERY_DATASET_LIST_VIEW = "view";

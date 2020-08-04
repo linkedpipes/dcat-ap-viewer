@@ -5,6 +5,9 @@ import {
   DEFAULT_FACET_SIZE,
 } from "../../../client-api";
 
+/**
+ * Creates query used to get data.
+ */
 export function paramsToViewQuery(params, state, keepDefault = []) { // params
   const defaultQuery = createDefaultQuery();
   const result = {
@@ -31,6 +34,7 @@ export function paramsToViewQuery(params, state, keepDefault = []) { // params
   addFirstFromParams(params, "temporalStart", result);
   addFirstFromParams(params, "temporalEnd", result);
   addFirstFromParams(params, "view", result, parseInt);
+  addArrayFromParams(params, "isPartOf", result);
   return result;
 }
 
@@ -51,6 +55,7 @@ export function createDefaultQuery() {
     "temporalStart": undefined,
     "temporalEnd": undefined,
     "view": 0,
+    "isPartOf": [],
   };
 }
 

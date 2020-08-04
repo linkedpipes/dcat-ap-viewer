@@ -8,12 +8,18 @@ import {
 } from "../../../client/dataset-detail";
 import Paginator from "../user-iterface/paginator";
 import DescendantsItem from "./descendants-item";
+import {
+  selectT,
+  URL_DATASET_LIST,
+  QUERY_DATASET_IS_PART_OF,
+} from "../../client-api";
 
 const DEFAULT_PAGE_SIZE = 4;
 
 export default function Descendants(props) {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
+  const t = useSelector(selectT);
   const descendants = useSelector(descendantsSelector);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -46,6 +52,11 @@ export default function Descendants(props) {
         onSizeChange={setPageSize}
         sizes={[1, 4, 16, 32]}
       />
+      <div>
+        <a href={datasetLinkUrl(props.tUrl, props.iri) }>
+          {t("showAllDescendantsLink")}
+        </a>
+      </div>
     </div>
   );
 }
@@ -58,3 +69,7 @@ Descendants.propTypes = {
   "fetchLabels": PropTypes.func.isRequired,
 };
 
+
+function datasetLinkUrl(tUrl, iri) {
+  return tUrl(URL_DATASET_LIST,{[QUERY_DATASET_IS_PART_OF]: iri});
+}

@@ -22,6 +22,7 @@ module.exports = {
       "publisher": "poskytovatel",
       "language": "jazyk",
       "iri": "iri",
+      "isPartOf": "nadřazený dataset",
     },
   },
   "en": {
@@ -46,6 +47,7 @@ module.exports = {
       "publisher": "publisher",
       "language": "language",
       "iri": "iri",
+      "isPartOf": "is part of",
     },
   },
 };
