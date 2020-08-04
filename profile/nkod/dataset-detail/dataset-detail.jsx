@@ -58,7 +58,8 @@ const DatasetView = ({iri}) => {
   fetchQuality(dispatch, dataset, quality);
   dispatch(fetchLabels(collectLabels(dataset)));
   return datasetReadyView(
-    t, tLabel, tLiteral, tUrl, fetchLabels,
+    t, tLabel, tLiteral, tUrl,
+    (labels) => dispatch(fetchLabels(labels)),
     language, openModal, dataset, quality);
 };
 
