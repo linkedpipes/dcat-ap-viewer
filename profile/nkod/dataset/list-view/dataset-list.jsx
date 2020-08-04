@@ -55,20 +55,7 @@ class DatasetList extends React.PureComponent {
       "initialised": true,
       "showMore": 0,
     };
-  }
-
-  // TODO We may compute query only once and add it to props.
-  // static getDerivedStateFromProps(props, state) {
-  //   return {
-  //     "viewQuery": paramsToViewQuery(props.query, state),
-  //   };
-  // }
-
-  componentDidMount() {
-    const viewQuery = paramsToViewQuery(this.props.query, this.state);
-    const datasetQuery = viewQueryToDatasetListQuery(viewQuery);
-    this.props.onFetchDatasets(datasetQuery);
-    //
+    // We can't ask in componentDidUpdate
     this.FacetFilters = getRegisteredElement(DATASET_LIST_FACET_FILTERS);
     this.QueryElement = this.props.withTypeaheadProps(QueryElement);
     this.DatasetView = this.props.withViewProps(
@@ -77,6 +64,12 @@ class DatasetList extends React.PureComponent {
       getRegisteredElement(DATASET_LIST_KEYWORD_VIEW));
     this.ThemeView = this.props.withViewProps(
       getRegisteredElement(DATASET_LIST_THEME_VIEW));
+  }
+
+  componentDidMount() {
+    const viewQuery = paramsToViewQuery(this.props.query, this.state);
+    const datasetQuery = viewQueryToDatasetListQuery(viewQuery);
+    this.props.onFetchDatasets(datasetQuery);
     //
     this.setState({"initialised": true});
   }
