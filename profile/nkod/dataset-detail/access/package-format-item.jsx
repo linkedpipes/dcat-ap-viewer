@@ -11,15 +11,20 @@ export default function PackageFormat({t, tLabel, distribution}) {
   };
   return (
     <li className="list-group-item px-2">
-      {tLabel(distribution.packageFormat, "")}
-      <a
-        href={distribution.packageFormat}
-        title={t("follow_link")}
-        rel="nofollow noopener noreferrer"
-        target="_blank"
-      >
-        <i className="material-icons" style={iconStyle}> open_in_new </i>
-      </a>
+      <div>
+        {tLabel(distribution.packageFormat, "")}
+        <a
+          href={distribution.packageFormat}
+          title={t("follow_link")}
+          rel="nofollow noopener noreferrer"
+          target="_blank"
+        >
+          <i className="material-icons" style={iconStyle}> open_in_new </i>
+        </a>
+      </div>
+      <div className="label">
+        {t("access_packageFormat")}
+      </div>
     </li>
   );
 }

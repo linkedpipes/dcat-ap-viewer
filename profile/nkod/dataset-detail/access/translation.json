@@ -1,0 +1,22 @@
+{
+  "cs": {
+    "url": {
+    },
+    "query": {},
+    "string": {
+      "access_mediaType": "Typ média",
+      "access_compressFormat": "Formát komprese",
+      "access_packageFormat": "Formát balíčku"
+    }
+  },
+  "en": {
+    "url": {
+    },
+    "query": {},
+    "string": {
+      "access_mediaType": "Media type",
+      "access_compressFormat": "Compress format",
+      "access_packageFormat": "Package format"
+    }
+  }
+}

@@ -15,22 +15,27 @@ export default function MediaTypeItem(
   };
   return (
     <li className="list-group-item px-2">
-      {tLabel(distribution.mediaType, "")}
-      <a
-        href={distribution.mediaType}
-        title={t("follow_link")}
-        rel="nofollow noopener noreferrer"
-        target="_blank"
-      >
-        <i className="material-icons" style={iconStyle}> open_in_new </i>
-      </a>
-      {qualityIcons(t, tLiteral, openModal, quality, [{
-        "measureOf": QUALITY.mediaType,
-        "labelTrue": "format_quality_true",
-        "labelFalse": "format_quality_false",
-        "iconTrue": "verified_user",
-        "iconFalse": "link_off",
-      }])}
+      <div>
+        {tLabel(distribution.mediaType, "")}
+        <a
+          href={distribution.mediaType}
+          title={t("follow_link")}
+          rel="nofollow noopener noreferrer"
+          target="_blank"
+        >
+          <i className="material-icons" style={iconStyle}> open_in_new </i>
+        </a>
+        {qualityIcons(t, tLiteral, openModal, quality, [{
+          "measureOf": QUALITY.mediaType,
+          "labelTrue": "format_quality_true",
+          "labelFalse": "format_quality_false",
+          "iconTrue": "verified_user",
+          "iconFalse": "link_off",
+        }])}
+      </div>
+      <div className="label">
+        {t("access_mediaType")}
+      </div>
     </li>
   );
 }

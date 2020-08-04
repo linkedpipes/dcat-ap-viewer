@@ -11,17 +11,22 @@ export default function CompressFormat({t, tLabel, distribution}) {
   };
   return (
     <li className="list-group-item px-2">
-      {tLabel(distribution.compressFormat, true)}
-      <a
-        href={distribution.compressFormat}
-        title={t("follow_link")}
-        rel="nofollow noopener noreferrer"
-        target="_blank"
-      >
-        <i className="material-icons" style={iconStyle}>
-          open_in_new
-        </i>
-      </a>
+      <div>
+        {tLabel(distribution.compressFormat, true)}
+        <a
+          href={distribution.compressFormat}
+          title={t("follow_link")}
+          rel="nofollow noopener noreferrer"
+          target="_blank"
+        >
+          <i className="material-icons" style={iconStyle}>
+            open_in_new
+          </i>
+        </a>
+      </div>
+      <div className="label">
+        {t("access_compressFormat")}
+      </div>
     </li>
   );
 }
