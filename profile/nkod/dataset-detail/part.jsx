@@ -47,14 +47,14 @@ export default function Part({part}) {
     return partFailed();
   }
   if (quality.status === Status.Undefined) {
-    dispatch(fetchDatasetPartQuality(part));
+    dispatch(fetchDatasetPartQuality(part.iri));
   }
   dispatch(fetchLabels(collectLabels(part, partData)));
   if (part.type === PartType.PartDistribution) {
     return partDistribution(partData, quality, args);
   }
-  if (part.type === PartType.PartDistribution) {
-    return partDataService(partData, quality, args);
+  if (part.type === PartType.PartDataService) {
+    return partDataService(partData, quality, undefined, args);
   }
   console.error("Unknown part type:", part, partData);
   return null;

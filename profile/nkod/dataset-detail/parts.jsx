@@ -22,6 +22,7 @@ export default function Parts({parts}) {
         recordsCount={parts.length}
         pageIndex={page}
         pageSize={pageSize}
+        defaultPageSize={4}
         onIndexChange={setPage}
         onSizeChange={setPageSize}
         sizes={[1, 4, 16, 32]}

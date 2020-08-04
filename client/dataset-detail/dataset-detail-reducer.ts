@@ -35,6 +35,7 @@ import {
 } from "../dataset-list/dataset-list-model";
 import {getType} from "typesafe-actions";
 import {DatasetListQuery} from "../api/api-interface";
+import {act} from "react-dom/test-utils";
 
 // TODO Move App level.
 export enum Status {
@@ -295,13 +296,19 @@ function setPartType(state: State, action: PartFetchPayloadSuccess) {
     part.type = PartType.PartDistribution;
   }
   const dataset = state.dataset as (Dataset & ResourceStatus);
-  const index = dataset.distributions.indexOf(action.part);
+  let partIndex = -1;
+  for (let index = 0; index < dataset.distributions.length; ++index) {
+    if (dataset.distributions[index].iri == part.iri) {
+      partIndex = index;
+      break;
+    }
+  }
   state.dataset = {
     ...dataset,
     "distributions": [
-      ...dataset.distributions.slice(0, index),
+      ...dataset.distributions.slice(0, partIndex),
       part,
-      ...dataset.distributions.slice(index + 1)
+      ...dataset.distributions.slice(partIndex + 1)
     ],
   } as (Dataset & ResourceStatus);
 }

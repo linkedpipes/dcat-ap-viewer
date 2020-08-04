@@ -1,5 +1,6 @@
 import React from "react";
 import {PropTypes} from "prop-types";
+import {useSelector, useDispatch} from "react-redux";
 import SchemaListItem from "./access/schema-list-item";
 import MediaTypeItem from "./access/media-type-item";
 import CompressFormat from "./access/compress-format-item";
@@ -10,15 +11,23 @@ import PersonalData from "./legal/personal-data";
 import ProtectedDatabaseAuthorship from "./legal/protected-database-authorship";
 import EndpointDescription from "./access/endpoint-description-item";
 import EndpointUrl from "./access/endpoint-url-item";
+import {
+  Status,
+  qualitySelector,
+} from "../../../client/dataset-detail/dataset-detail-reducer";
+import {
+  fetchDatasetPartQuality,
+} from "../../../client/dataset-detail/dataset-detail-service";
 
 const DataService = (props) => {
-  // TODO Fetch DataServiceQuality ...
-  const {
-    dataService, quality,
-    t, tLabel, tLiteral, openModal,
-  } = props;
+  const dispatch = useDispatch();
+  const {dataService, quality, t, tLabel, tLiteral, openModal} = props;
+  const dataServiceQuality = useSelector(
+    (state) => qualitySelector(state, dataService.dataService));
+  if (dataServiceQuality.status === Status.Undefined) {
+    dispatch(fetchDatasetPartQuality(dataService.dataService));
+  }
   const title = tLabel(dataService.iri, null);
-  const dataServiceQuality = [];
   return (
     <div className="col-12 col-sm-12 col-md-6 col-lg-6 mb-3">
       <div className="card p-2">
@@ -117,7 +126,7 @@ function accessColumn(
   return (
     <div className="card">
       <h6 className="card-title text-muted pl-2 pt-2">
-        {t("distribution_access")}
+        {t("data_service_access")}
       </h6>
       <ul className="list-group list-group-flush">
         <EndpointDescription

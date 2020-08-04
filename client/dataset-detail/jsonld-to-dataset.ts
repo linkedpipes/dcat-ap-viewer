@@ -40,7 +40,7 @@ export function jsonLdToDataset(jsonld: JsonLdEntity[]): Dataset {
     // Recommended.
     "contactPoints": loadContactPoints(jsonld, entity),
     "distributions": distributions.map((iri) => ({
-        "type": PartType.PartDistribution,
+        "type": PartType.Unknown,
         "iri": iri,
         "owner": iri,
     })),

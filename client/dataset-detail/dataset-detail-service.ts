@@ -123,13 +123,13 @@ function fetchQuality(
   };
 }
 
-export function fetchDatasetPartQuality(part: Part): ThunkVoidResult {
-  return fetchQuality(part.iri, getApiInstance().fetchQualityDistribution);
+export function fetchDatasetPartQuality(iri: string): ThunkVoidResult {
+  return fetchQuality(iri, getApiInstance().fetchQualityDistribution);
 }
 
 export function fetchDescendants(
-  iri: string, offset:number, limit:number): ThunkVoidResult {
-  const query : DatasetListQuery = {
+  iri: string, offset: number, limit: number): ThunkVoidResult {
+  const query: DatasetListQuery = {
     "offset": offset,
     "limit": limit,
     "publisher": [],
@@ -142,13 +142,9 @@ export function fetchDescendants(
     "formatLimit": 0,
     "isPartOf": [iri],
   };
-  return async (dispatch, getState) => {
-    const state = getState();
-
+  return async (dispatch) => {
     // We set query and then use the same method as for fetching the list.
-    dispatch(DatasetDetailActions.setDescendantsQuery({
-      "query": query,
-    }));
+    dispatch(DatasetDetailActions.setDescendantsQuery({"query": query}));
     dispatch(fetchDatasets(query));
   };
 }
