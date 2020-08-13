@@ -88,16 +88,6 @@ a.dropdown-item:hover {
     background-color: var(--color-text-accent);
 }
 
-.list-group-item.active {
-    background-color: var(--color-background);
-    border-color: var(--color-base);
-}
-
-.list-group-item:hover {
-    background-color: var(--color-background);
-    color: var(--color-text-accent);
-}
-
 @media (max-width: 576px) {
 
     .collapse-sm-down {
@@ -178,13 +168,12 @@ a.dropdown-item:hover {
 /* Paginator. */
 
 .paginator .page-link {
-    border-color: var(--color-text-default);
+    border-color: var(--color-base);
     cursor: pointer;
 }
 
 .paginator .page-item a.page-link {
     background-color: var(--color-text-inverted);
-    color: var(--color-text-accent);
 }
 
 .paginator .page-item a.page-link:hover {
@@ -193,9 +182,8 @@ a.dropdown-item:hover {
 }
 
 .paginator .page-item.active a.page-link {
-    color: var(--color-text-accent);
-    background-color: var(--color-background);
-    border-color: var(--color-text-default);
+    color: var(--color-text-inverted);
+    background-color: var(--color-base);
 }
 
 .paginator button.dropdown-item {

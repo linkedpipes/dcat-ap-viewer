@@ -41,7 +41,7 @@
 
     .badge-info {
         background-color: var(--color-base);
-        color: var(--color-text);
+        color: var(--color-text-default);
     }    
 
     .modal-content {
@@ -58,6 +58,14 @@
         color: #fff;
         background-color: #313131;
         border-color: #2b2a2a;
+    }
+
+    .dropdown-item {
+        color: var(--color-text-default);
+    }
+
+    .paginator .page-item.active a.page-link {
+        background-color: var(--color-text-default);
     }
 
 }
