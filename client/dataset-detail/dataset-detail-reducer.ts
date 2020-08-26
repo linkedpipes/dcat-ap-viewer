@@ -6,10 +6,6 @@ import {
   DatasetFetchPayload,
   DatasetFetchPayloadFailed,
   DatasetFetchPayloadSuccess,
-  DatasetPartChangePayload,
-  PartFetchPayload,
-  PartFetchPayloadFailed,
-  PartFetchPayloadSuccess,
   QualityFetchPayload,
   QualityFetchPayloadFailed,
   QualityFetchPayloadSuccess,
@@ -24,18 +20,14 @@ import {
 import {
   DataService,
   Dataset,
-  PartDistribution,
-  DistributionType,
-  PartType,
+  Distribution,
   QualityMeasures,
-  Part,
 } from "./dataset-detail-model";
 import {
   DatasetListItem,
 } from "../dataset-list/dataset-list-model";
 import {getType} from "typesafe-actions";
 import {DatasetListQuery} from "../api/api-interface";
-import {act} from "react-dom/test-utils";
 
 // TODO Move App level.
 export enum Status {
@@ -86,7 +78,7 @@ interface State {
    * Distributions or data services.
    */
   parts: Record<string,
-    (PartDistribution & ResourceStatus) |
+    (Distribution & ResourceStatus) |
     (DataService & ResourceStatus) |
     ResourceStatus>;
   /**
@@ -113,7 +105,7 @@ type Actions = DatasetDetailActionsType | DatasetListActionsType;
 
 function reducer(state = initialStatus, action: Actions) {
   switch (action.type) {
-    case getType(DatasetDetailActions.mount):
+    case getType(DatasetDetailActions.mountDatasetDetail):
       return onDatasetMount(state, action.payload);
     default:
       break;
@@ -122,24 +114,16 @@ function reducer(state = initialStatus, action: Actions) {
     return state;
   }
   switch (action.type) {
-    case getType(DatasetDetailActions.unMount):
+    case getType(DatasetDetailActions.unMountDatasetDetail):
       return onDatasetUnMount();
-    case getType(DatasetDetailActions.change):
+    case getType(DatasetDetailActions.changeDatasetDetail):
       return onDatasetChange(state, action.payload);
-    case getType(DatasetDetailActions.changePart):
-      return onChangePart(state, action.payload);
     case getType(DatasetDetailActions.fetchDataset.request):
       return onFetchDataset(state, action.payload);
     case getType(DatasetDetailActions.fetchDataset.success):
       return onFetchDatasetSuccess(state, action.payload);
     case getType(DatasetDetailActions.fetchDataset.failure):
       return onFetchDatasetFailed(state, action.payload);
-    case getType(DatasetDetailActions.fetchPart.request):
-      return onFetchPart(state, action.payload);
-    case getType(DatasetDetailActions.fetchPart.success):
-      return onFetchPartSuccess(state, action.payload);
-    case getType(DatasetDetailActions.fetchPart.failure):
-      return onFetchPartFailed(state, action.payload);
     case getType(DatasetDetailActions.fetchQuality.request):
       return onFetchQuality(state, action.payload);
     case getType(DatasetDetailActions.fetchQuality.success):
@@ -188,21 +172,6 @@ function onDatasetChange(
       "status": Status.Undefined,
     },
   };
-}
-
-/**
- * Remove the old part as it is no longer visible.
- */
-function onChangePart(state: State, action: DatasetPartChangePayload): State {
-  const parts = {
-    [action.next]: createEmptyResourceStatus(action.next),
-    ...state.parts,
-  };
-  delete parts[action.prev];
-  return {
-    ...state,
-    "parts": parts,
-  }
 }
 
 function onFetchDataset(state: State, action: DatasetFetchPayload): State {
@@ -256,72 +225,6 @@ function createFailedResourceStatus(iri: string, error: Error): ResourceStatus {
     "iri": iri,
     "status": Status.Failed,
     "error": error,
-  };
-}
-
-function onFetchPart(state: State, action: PartFetchPayload): State {
-  return {
-    ...state,
-    "parts": {
-      ...state.parts,
-      [action.part.iri]: createLoadingResourceStatus(action.part.iri),
-    },
-  };
-}
-
-function onFetchPartSuccess(
-  state: State, action: PartFetchPayloadSuccess): State {
-  const result = {
-    ...state,
-    "parts": {
-      ...state.parts,
-      [action.part.iri]: wrapReadyResourceStatus(action.payload),
-    },
-  };
-  /**
-   * Set part data type.
-   */
-  if (action.part.type === PartType.Unknown) {
-    setPartType(result, action);
-  }
-  return result;
-}
-
-function setPartType(state: State, action: PartFetchPayloadSuccess) {
-  const part = {...action.part};
-  if (action.payload.type === DistributionType.DataService) {
-    part.type = PartType.PartDataService;
-  }
-  if (action.payload.type === DistributionType.Distribution) {
-    part.type = PartType.PartDistribution;
-  }
-  const dataset = state.dataset as (Dataset & ResourceStatus);
-  let partIndex = -1;
-  for (let index = 0; index < dataset.distributions.length; ++index) {
-    if (dataset.distributions[index].iri == part.iri) {
-      partIndex = index;
-      break;
-    }
-  }
-  state.dataset = {
-    ...dataset,
-    "distributions": [
-      ...dataset.distributions.slice(0, partIndex),
-      part,
-      ...dataset.distributions.slice(partIndex + 1)
-    ],
-  } as (Dataset & ResourceStatus);
-}
-
-function onFetchPartFailed(
-  state: State, action: PartFetchPayloadFailed): State {
-  return {
-    ...state,
-    "parts": {
-      ...state.parts,
-      [action.part.iri]:
-        createFailedResourceStatus(action.part.iri, action.error),
-    },
   };
 }
 
@@ -424,11 +327,6 @@ const undefinedResource: ResourceStatus = {
 export const datasetSelector =
   (state: any): (Dataset & ResourceStatus) | ResourceStatus =>
     stateSelector(state).dataset;
-
-export const partSelector =
-  (state: any, part: Part): PartDistribution | DataService | ResourceStatus => {
-    return stateSelector(state).parts[part.iri] || undefinedResource;
-  };
 
 export const qualitySelector =
   (state: any, iri: string): QualityMeasures | ResourceStatus =>

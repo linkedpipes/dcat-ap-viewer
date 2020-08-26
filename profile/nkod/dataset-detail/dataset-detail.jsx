@@ -14,7 +14,9 @@ import {
   showModal,
   DEREFERENCE_PREFIX,
   URL_DATASET_LIST,
-  QUERY_DATASET_LIST_PUBLISHER, URL_DATASET_DETAIL, QUERY_DATASET_DETAIL_IRI,
+  QUERY_DATASET_LIST_PUBLISHER,
+  URL_DATASET_DETAIL,
+  QUERY_DATASET_DETAIL_IRI,
 } from "../../client-api";
 import {
   Status,
@@ -32,6 +34,7 @@ import {
 import Parts from "./parts.jsx";
 import DcatApForms from "../dcat-ap-forms";
 import Descendants from "./descendants";
+import WebPageMetadata from "./webpage-metadata";
 
 const DatasetView = ({iri}) => {
   const dispatch = useDispatch();
@@ -102,6 +105,11 @@ function datasetReadyView(
   const Properties = getRegisteredElement(DATASET_DETAIL_PROPERTIES);
   return (
     <div className="container">
+      <WebPageMetadata
+        tLabel={tLabel}
+        tLiteral={tLiteral}
+        dataset={dataset}
+      />
       <h1>
         {tLabel(dataset.iri)}
         <a
@@ -149,7 +157,7 @@ function datasetReadyView(
         openModal={openModal}
       />
       <hr/>
-      <Parts parts={dataset.distributions}/>
+      <Parts distributions={dataset.distributions}/>
       <Descendants
         iri={dataset.iri}
         tLabel={tLabel}

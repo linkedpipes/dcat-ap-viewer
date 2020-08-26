@@ -1,11 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
 import {PropTypes} from "prop-types";
+
 import {getRegisteredElement} from "../app/register";
 import {DatasetDetailActions} from "./dataset-detail-actions";
 import {selectIri} from "../app/navigation";
 
-export const ELEMENT_DATASET_DETAIL = "element-dataset";
+export const ELEMENT_DATASET_DETAIL = "element-dataset-detail";
 
 class DatasetDetailContainer extends React.Component {
 
@@ -44,10 +45,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  "onMount": (iri) => dispatch(DatasetDetailActions.mount({"dataset": iri})),
-  "onUnMount": () => dispatch(DatasetDetailActions.unMount()),
-  "onDatasetChange":
-    (iri) => dispatch(DatasetDetailActions.change({"dataset": iri})),
+  "onMount": (iri) => dispatch(DatasetDetailActions.mountDatasetDetail(
+    {"dataset": iri})),
+  "onUnMount": () => dispatch(DatasetDetailActions.unMountDatasetDetail()),
+  "onDatasetChange": (iri) => dispatch(DatasetDetailActions.changeDatasetDetail(
+    {"dataset": iri})),
 });
 
 export default connect(

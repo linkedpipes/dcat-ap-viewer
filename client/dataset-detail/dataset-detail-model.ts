@@ -7,7 +7,7 @@ interface DatasetMandatory {
 
 interface DatasetRecommended {
   contactPoints: ContactPoint[];
-  distributions: Part[];
+  distributions: (Distribution | DataService)[];
   keywords: Literal[];
   publisher?: string;
   themes: string[];
@@ -17,24 +17,6 @@ interface DatasetRecommended {
 export interface ContactPoint {
   iri: string;
   email?: string;
-}
-
-export interface Part {
-  iri: string;
-  type: PartType;
-  /**
-   * Owner dataset.
-   */
-  owner: string;
-}
-
-export enum PartType {
-  /**
-   * Can be resolved to distribution or data service.
-   */
-  Unknown,
-  PartDistribution,
-  PartDataService
 }
 
 interface DatasetOptional {
@@ -151,17 +133,25 @@ export interface DistributionLegal {
   personalData?: string;
 }
 
-export type PartDistribution =
+export type Distribution =
   DistributionMandatory
   & DistributionRecommended
   & DistributionOptional
   & DistributionDcat2
   & DistributionCustom;
 
-export type DataService = PartDistribution & {
+export function isDistribution(content : any): content is Distribution {
+  return content.type === DistributionType.Distribution;
+}
+
+export type DataService = Distribution & {
   endpointDescription?: string;
   endpointURL?: string;
   dataService: string;
+}
+
+export function isDataService(content : any): content is DataService {
+  return content.type === DistributionType.DataService;
 }
 
 export interface QualityMeasure {

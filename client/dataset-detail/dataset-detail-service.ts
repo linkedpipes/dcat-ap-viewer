@@ -1,14 +1,12 @@
 import {AnyAction} from "redux";
 import {ThunkAction} from "redux-thunk";
 import {jsonLdToDataset} from "./jsonld-to-dataset";
-import {jsonLdToDistributionOrDataService} from "./jsonld-to-distribution";
 import {jsonLdToQualityMeasures} from "./jsonld-to-quality";
 import {selectLanguage} from "../app/component-api";
 import {getApiInstance} from "../api/api-action";
 import {DatasetDetailActions} from "./dataset-detail-actions";
 import {FlatJsonLdPromise} from "../api/api-interface";
 import {datasetSelector, Status} from "./dataset-detail-reducer";
-import {Part} from "./dataset-detail-model";
 import {DatasetListQuery} from "../api/api-interface";
 import {fetchDatasets} from "../dataset-list/dataset-list-service";
 
@@ -44,45 +42,6 @@ export function fetchDataset(datasetIri: string): ThunkVoidResult {
     } catch (ex) {
       dispatch(DatasetDetailActions.fetchDataset.failure({
         "dataset": datasetIri,
-        "error": ex,
-      }));
-    }
-  }
-}
-
-export function fetchDistribution(part: Part): ThunkVoidResult {
-  return async (dispatch, getState) => {
-    const state = getState();
-    const language = selectLanguage(state);
-    dispatch(DatasetDetailActions.fetchPart.request({
-      "part": part,
-    }));
-    try {
-      const jsonld = await getApiInstance().fetchDistribution(
-        language, part.iri);
-      if (jsonld === undefined) {
-        dispatch(DatasetDetailActions.fetchPart.failure({
-          "part": part,
-          "error": new Error("Missing JSON-LD data."),
-        }));
-        return;
-      }
-      const payload = jsonLdToDistributionOrDataService(jsonld);
-      if (payload === undefined) {
-        dispatch(DatasetDetailActions.fetchPart.failure({
-          "part": part,
-          "error": new Error("Missing distribution or data service data."),
-        }));
-        return;
-      }
-      dispatch(DatasetDetailActions.fetchPart.success({
-        "part": part,
-        'payload': payload,
-        "jsonld": jsonld,
-      }));
-    } catch (ex) {
-      dispatch(DatasetDetailActions.fetchPart.failure({
-        "part": part,
         "error": ex,
       }));
     }

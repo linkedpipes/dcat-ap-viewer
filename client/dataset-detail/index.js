@@ -1,16 +1,11 @@
-import {register} from "../app/component-api";
+import {register} from "../app/register";
 import DatasetViewContainer from "./dataset-detail-container";
 import reducer from "./dataset-detail-reducer";
 
 export {
-  Part,
-  PartType,
-} from "./dataset-detail-model";
-export {
   Status,
   ResourceStatus,
   datasetSelector,
-  partSelector,
   qualitySelector,
   descendantsSelector,
 } from "./dataset-detail-reducer";
@@ -20,10 +15,12 @@ export {
 export {
   fetchDataset,
   fetchDatasetQuality,
-  fetchDistribution,
   fetchDatasetPartQuality,
   fetchDescendants,
 } from "./dataset-detail-service";
+export {
+  DistributionType,
+} from "./dataset-detail-model";
 
 register({
   "name": reducer.name,

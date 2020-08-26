@@ -1,10 +1,7 @@
 import {createAction, createAsyncAction, ActionType} from "typesafe-actions";
 import {
   Dataset,
-  PartDistribution,
-  DataService,
   QualityMeasures,
-  Part,
 } from "./dataset-detail-model";
 import {JsonLdEntity} from "../jsonld";
 import {DatasetListQuery} from "../api/api-interface";
@@ -21,21 +18,6 @@ export interface DatasetFetchPayloadSuccess {
 
 export interface DatasetFetchPayloadFailed {
   dataset: string;
-  error: Error;
-}
-
-export interface PartFetchPayload {
-  part: Part;
-}
-
-export interface PartFetchPayloadSuccess {
-  part: Part;
-  payload: PartDistribution | DataService;
-  jsonld: JsonLdEntity[];
-}
-
-export interface PartFetchPayloadFailed {
-  part: Part;
   error: Error;
 }
 
@@ -68,16 +50,6 @@ export interface DatasetDetailChangePayload {
   dataset: string;
 }
 
-/**
- * Part can be distribution, data service or dataset. This is used
- * to report change in visibility of the parts, so parts that are not
- * visible may be removed.
- */
-export interface DatasetPartChangePayload {
-  prev: string;
-  next: string;
-}
-
 export interface FetchDescendantsPayload {
   query: DatasetListQuery
 }
@@ -90,13 +62,6 @@ export const DatasetDetailActions = {
   )<DatasetFetchPayload,
     DatasetFetchPayloadSuccess,
     DatasetFetchPayloadFailed>(),
-  "fetchPart": createAsyncAction(
-    "app.fetchPart.request",
-    "app.fetchPart.success",
-    "app.fetchPart.failure",
-  )<PartFetchPayload,
-    PartFetchPayloadSuccess,
-    PartFetchPayloadFailed>(),
   "fetchQuality": createAsyncAction(
     "app.fetchQuality.request",
     "app.fetchQuality.success",
@@ -104,13 +69,18 @@ export const DatasetDetailActions = {
   )<QualityFetchPayload,
     QualityFetchPayloadSuccess,
     QualityFetchPayloadFailed>(),
-  "mount": createAction("app.datasetDetail.mount")<DatasetDetailMountPayload>(),
-  "change": createAction("app.datasetDetail.set")<DatasetDetailChangePayload>(),
-  "unMount": createAction("app.datasetDetail.unMount")(),
-  "changePart": createAction(
-    "app.datasetDetail.setPart")<DatasetPartChangePayload>(),
+  "mountDatasetDetail": createAction(
+    "app.datasetDetail.mount"
+  )<DatasetDetailMountPayload>(),
+  "changeDatasetDetail": createAction(
+    "app.datasetDetail.set"
+  )<DatasetDetailChangePayload>(),
+  "unMountDatasetDetail": createAction(
+    "app.datasetDetail.unMount"
+  )(),
   "setDescendantsQuery": createAction(
-    "app.datasetDetail.descendants")<FetchDescendantsPayload>(),
+    "app.datasetDetail.descendants"
+  )<FetchDescendantsPayload>(),
 };
 
 export type DatasetDetailActionsType = ActionType<typeof DatasetDetailActions>;

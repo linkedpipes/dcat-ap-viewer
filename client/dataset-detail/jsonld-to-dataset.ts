@@ -22,11 +22,13 @@ import {
   VCARD,
 } from "../vocabulary/vocabulary"
 import {
-  ContactPoint,
+  ContactPoint, DataService,
   Dataset,
-  PartType,
-  DatasetCustom,
+  DatasetCustom, Distribution,
 } from "./dataset-detail-model";
+import {
+  jsonLdToDistributionOrDataService
+} from "./jsonld-to-distribution";
 
 export function jsonLdToDataset(jsonld: JsonLdEntity[]): Dataset {
   const entity = getEntitiesByType(jsonld, DCAT.Dataset)[0];
@@ -39,11 +41,7 @@ export function jsonLdToDataset(jsonld: JsonLdEntity[]): Dataset {
     "description": getStrings(entity, DCTERMS.description),
     // Recommended.
     "contactPoints": loadContactPoints(jsonld, entity),
-    "distributions": distributions.map((iri) => ({
-        "type": PartType.Unknown,
-        "iri": iri,
-        "owner": iri,
-    })),
+    "distributions": loadDistributions(jsonld, distributions),
     "keywords": getStrings(entity, DCAT.keyword),
     "publisher": getResource(entity, DCTERMS.publisher),
     ...loadThemes(jsonld, entity),
@@ -80,6 +78,20 @@ export function jsonLdToDataset(jsonld: JsonLdEntity[]): Dataset {
     // Custom.
     ...loadForm(jsonld, entity),
   };
+}
+
+function loadDistributions(
+  jsonld: JsonLdEntity[], iris: string[]
+): (Distribution | DataService)[] {
+  const result: (Distribution | DataService)[] = [];
+  for (const iri of iris) {
+    const distribution = jsonLdToDistributionOrDataService(jsonld, iri);
+    if (distribution === undefined) {
+      continue;
+    }
+    result.push(distribution);
+  }
+  return result;
 }
 
 function loadContactPoints(jsonld: JsonLdEntity[], dataset: JsonLdEntity)
@@ -161,8 +173,8 @@ function loadServices(jsonld: JsonLdEntity[], dataset: JsonLdEntity) {
     .map(service => getId(service))
 }
 
-function loadForm(jsonld: JsonLdEntity[], dataset: JsonLdEntity) : DatasetCustom {
-  const result : DatasetCustom= {
+function loadForm(jsonld: JsonLdEntity[], dataset: JsonLdEntity): DatasetCustom {
+  const result: DatasetCustom = {
     "rdfType": getTypes(dataset),
     "lkod": getResource(dataset, NKOD.lkod),
   };

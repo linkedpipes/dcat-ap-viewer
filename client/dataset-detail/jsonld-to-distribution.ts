@@ -3,7 +3,6 @@ import {
   getId,
   getResources,
   getEntityByIri,
-  getEntitiesByType,
   getStrings,
   getResource,
   getPlainStrings,
@@ -18,22 +17,20 @@ import {
   PU,
 } from "../vocabulary/vocabulary"
 import {
-  PartDistribution,
+  Distribution,
   DataService,
   DistributionLegal,
   DistributionType,
 } from "./dataset-detail-model";
 
-export function jsonLdToDistributionOrDataService(jsonld: JsonLdEntity[])
-  : PartDistribution | DataService | undefined {
-  const distributions = getEntitiesByType(jsonld, DCAT.Distribution);
-  if (distributions.length === 0) {
+export function jsonLdToDistributionOrDataService(
+  jsonld: JsonLdEntity[], iri: string
+): Distribution | DataService | undefined {
+  const distribution = getEntityByIri(jsonld, iri);
+  if (distribution === undefined) {
     return undefined;
   }
-  const distribution = distributions[0];
-
   const accessServiceIri = getResource(distribution, DCAT.accessService);
-
   return {
     // Mandatory.
     "iri": getId(distribution),

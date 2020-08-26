@@ -14,10 +14,9 @@ WebPageMetadata.propTypes = {
   "tLabel": PropTypes.func.isRequired,
   "tLiteral": PropTypes.func.isRequired,
   "dataset": PropTypes.object.isRequired,
-  "distributions": PropTypes.array.isRequired,
 };
 
-function createJsonLdDescription({tLabel, tLiteral, dataset, distributions}) {
+function createJsonLdDescription({tLabel, tLiteral, dataset}) {
   const context = {
     "@context": "http://schema.org/",
     "@type": "Dataset",
@@ -52,7 +51,7 @@ function createJsonLdDescription({tLabel, tLiteral, dataset, distributions}) {
     };
   }
 
-  context["distribution"] = distributions
+  context["distribution"] = dataset["distributions"]
     .filter(distribution => distribution !== undefined)
     .map(distribution => convertDistribution(distribution, tLabel))
     .filter(distribution => distribution !== undefined);
