@@ -1,30 +1,20 @@
 {
   "cs": {
-    "url": {
-      "/publishers": "/poskytovatelé"
-    },
-    "query": {},
     "string": {
       "publishers_found": "poskytovatelů nalezeno",
       "one_dataset": "1 datová sada",
       "two_three_datasets": " datové sady",
       "many_datasets": " datových sad",
-      "exceptional_publisher": "Vzorný poskytovatel",
-      "/publishers": "Poskytovatelé"
+      "exceptional_publisher": "Vzorný poskytovatel"
     }
   },
   "en": {
-    "url": {
-      "/publishers": "/publishers"
-    },
-    "query": {},
     "string": {
       "publishers_found": "publishers found",
       "one_dataset": "1 dataset",
       "two_three_datasets": " datasets",
       "many_datasets": " datasets",
-      "exceptional_publisher": "Exemplary provider",
-      "/publishers": "Publishers"
+      "exceptional_publisher": "Exemplary provider"
     }
   }
 }
