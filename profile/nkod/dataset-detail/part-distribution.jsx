@@ -1,5 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
+import {register} from "../../client-api";
+import {DATASET_DETAIL_DISTRIBUTION} from "../nkod-component-names";
 import SchemaListItem from "./access/schema-list-item";
 import MediaTypeItem from "./access/media-type-item";
 import CompressFormat from "./access/compress-format-item";
@@ -48,7 +50,10 @@ Distribution.propTypes = {
   "openModal": PropTypes.func.isRequired,
 };
 
-export default Distribution;
+register({
+  "name": DATASET_DETAIL_DISTRIBUTION,
+  "element": Distribution,
+});
 
 function dataFormatItem(tLabel, format) {
   const label = tLabel(format);

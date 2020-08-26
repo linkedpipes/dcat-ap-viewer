@@ -1,5 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
+import {register} from "../../client-api";
+import {DATASET_DETAIL_DATA_SERVICE} from "../nkod-component-names";
 import {useSelector, useDispatch} from "react-redux";
 import SchemaListItem from "./access/schema-list-item";
 import MediaTypeItem from "./access/media-type-item";
@@ -68,8 +70,11 @@ DataService.propTypes = {
   "openModal": PropTypes.func.isRequired,
 };
 
-export default DataService;
 
+register({
+  "name": DATASET_DETAIL_DATA_SERVICE,
+  "element": DataService,
+});
 
 function dataFormatItem(tLabel, format) {
   const label = tLabel(format);

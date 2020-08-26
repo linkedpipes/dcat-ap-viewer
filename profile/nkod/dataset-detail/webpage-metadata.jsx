@@ -1,8 +1,9 @@
 import React from "react";
 import {PropTypes} from "prop-types";
+import {register} from "../../../client/app/register";
+import {DATASET_DETAIL_METADATA} from "../nkod-component-names";
 
-// TODO Use connect to remove dependencies from dataset-detail-container
-export default function WebPageMetadata(props) {
+function WebPageMetadata(props) {
   return (
     <script type="application/ld+json">
       {createJsonLdDescription(props)}
@@ -15,6 +16,11 @@ WebPageMetadata.propTypes = {
   "tLiteral": PropTypes.func.isRequired,
   "dataset": PropTypes.object.isRequired,
 };
+
+register({
+  "name": DATASET_DETAIL_METADATA,
+  "element": WebPageMetadata,
+});
 
 function createJsonLdDescription({tLabel, tLiteral, dataset}) {
   const context = {

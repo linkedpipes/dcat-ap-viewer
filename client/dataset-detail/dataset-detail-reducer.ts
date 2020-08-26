@@ -329,7 +329,8 @@ export const datasetSelector =
     stateSelector(state).dataset;
 
 export const qualitySelector =
-  (state: any, iri: string): QualityMeasures | ResourceStatus =>
+  (state: any, iri: string):
+    (QualityMeasures & ResourceStatus) | ResourceStatus =>
     stateSelector(state).quality[iri] || undefinedResource;
 
 export const descendantsSelector =

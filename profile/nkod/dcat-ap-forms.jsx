@@ -1,7 +1,8 @@
 import React from "react";
 import {PropTypes} from "prop-types";
+import {register, NKOD} from "../client-api";
+import {DATASET_DETAIL_FORMS} from "./nkod-component-names";
 import {getGlobal, FORM_URL} from "../../client/app/globals";
-import {NKOD} from "../../client/vocabulary/vocabulary";
 
 const DATASET_CREATE = "DATASET_CREATE";
 const DATASET_EDIT = "DATASET_EDIT";
@@ -30,7 +31,7 @@ const LINKS = {
   },
 };
 
-export default function DcatApForms({t, language, dataset}) {
+function DcatApForms({t, language, dataset}) {
   const isFromForm = dataset.rdfType.includes(NKOD.SourceForm);
   const isFromLkod =
     dataset.rdfType.includes(NKOD.SourceCkan) ||
@@ -106,6 +107,11 @@ DcatApForms.propTypes = {
   "language": PropTypes.string.isRequired,
   "dataset": PropTypes.object.isRequired,
 };
+
+register({
+  "name": DATASET_DETAIL_FORMS,
+  "element": DcatApForms,
+});
 
 export function getCreateDatasetFormLink(language) {
   return getGlobal(FORM_URL) + LINKS[language][DATASET_CREATE];

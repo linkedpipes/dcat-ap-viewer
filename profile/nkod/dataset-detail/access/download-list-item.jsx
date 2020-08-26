@@ -1,6 +1,6 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import {QUALITY} from "../../../../client/vocabulary/vocabulary";
+import {QUALITY} from "../../../client-api";
 import {qualityIcons} from "../../quality/quality-icon";
 
 export default function DownloadListItem(
@@ -59,4 +59,3 @@ DownloadListItem.propTypes = {
 function isEmpty(value) {
   return value === undefined || value.length === 0;
 }
-

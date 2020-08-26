@@ -28,13 +28,15 @@ import {
 } from "../../../client/dataset-detail";
 import {Link} from "react-router-dom";
 import {
+  DATASET_DETAIL_LOADING,
+  DATASET_DETAIL_FAILED,
   DATASET_DETAIL_KEYWORDS,
   DATASET_DETAIL_PROPERTIES,
+  DATASET_DETAIL_DESCENDANTS,
+  DATASET_DETAIL_METADATA,
+  DATASET_DETAIL_FORMS,
+  DATASET_DETAIL_DISTRIBUTION_LIST,
 } from "../nkod-component-names";
-import Parts from "./parts.jsx";
-import DcatApForms from "../dcat-ap-forms";
-import Descendants from "./descendants";
-import WebPageMetadata from "./webpage-metadata";
 
 const DatasetView = ({iri}) => {
   const dispatch = useDispatch();
@@ -47,23 +49,23 @@ const DatasetView = ({iri}) => {
   const dataset = useSelector(datasetSelector);
   const quality = useSelector(
     (state) => qualitySelector(state, iri));
+  //
+  const LoadingView = getRegisteredElement(DATASET_DETAIL_LOADING);
+  const FailedView = getRegisteredElement(DATASET_DETAIL_FAILED);
   if (dataset.status === Status.Undefined) {
     dispatch(fetchDataset(iri));
-    return datasetIsLoadingView();
+    return (<LoadingView/>);
+  } else  if (dataset.status === Status.Loading) {
+    return (<LoadingView/>);
+  } else if (dataset.status === Status.Ready) {
+    fetchAdditionalData(dispatch, dataset);
+    return datasetReadyView(
+      t, tLabel, tLiteral, tUrl,
+      (labels) => dispatch(fetchLabels(labels)),
+      language, openModal, dataset, quality);
+
   }
-  if (dataset.status === Status.Loading) {
-    return datasetIsLoadingView();
-  }
-  if (dataset.status !== Status.Ready) {
-    console.error("Invalid state:", dataset.status);
-    return datasetLoadingFailedView();
-  }
-  fetchQuality(dispatch, dataset, quality);
-  dispatch(fetchLabels(collectLabels(dataset)));
-  return datasetReadyView(
-    t, tLabel, tLiteral, tUrl,
-    (labels) => dispatch(fetchLabels(labels)),
-    language, openModal, dataset, quality);
+  return (<FailedView/>);
 };
 
 DatasetView.propTypes = {
@@ -75,34 +77,20 @@ register({
   "element": DatasetView,
 });
 
-function datasetIsLoadingView() {
-  return (
-    <div className="container">
-      DATASET DETAIL VIEW - LOADING
-    </div>
-  );
-}
-
-function datasetLoadingFailedView() {
-  return (
-    <div className="container">
-      DATASET DETAIL VIEW - FAILED
-    </div>
-  );
-}
-
-function fetchQuality(dispatch, dataset, quality) {
-  if (quality.status === Status.Undefined) {
-    dispatch(fetchDatasetQuality(dataset.iri));
-  }
+function fetchAdditionalData(dispatch, dataset) {
+  dispatch(fetchDatasetQuality(dataset.iri));
+  dispatch(fetchLabels(collectLabels(dataset)));
 }
 
 function datasetReadyView(
   t, tLabel, tLiteral, tUrl, fetchLabels,
   language, openModal, dataset, quality) {
-  const link = getGlobal(DEREFERENCE_PREFIX) + dataset.iri;
   const Keywords = getRegisteredElement(DATASET_DETAIL_KEYWORDS);
   const Properties = getRegisteredElement(DATASET_DETAIL_PROPERTIES);
+  const Descendants = getRegisteredElement(DATASET_DETAIL_DESCENDANTS);
+  const WebPageMetadata = getRegisteredElement(DATASET_DETAIL_METADATA);
+  const DcatApForms = getRegisteredElement(DATASET_DETAIL_FORMS);
+  const Distributions = getRegisteredElement(DATASET_DETAIL_DISTRIBUTION_LIST);
   return (
     <div className="container">
       <WebPageMetadata
@@ -113,7 +101,7 @@ function datasetReadyView(
       <h1>
         {tLabel(dataset.iri)}
         <a
-          href={link}
+          href={getGlobal(DEREFERENCE_PREFIX) + dataset.iri}
           title={t("follow_link")}
           target="_blank"
           rel="noopener noreferrer"
@@ -157,7 +145,7 @@ function datasetReadyView(
         openModal={openModal}
       />
       <hr/>
-      <Parts distributions={dataset.distributions}/>
+      <Distributions distributions={dataset.distributions}/>
       <Descendants
         iri={dataset.iri}
         tLabel={tLabel}
@@ -199,6 +187,6 @@ function getPublisherSearchLink(dataset, tUrl) {
 
 
 function datasetLinkUrl(tUrl, iri) {
-  return tUrl(URL_DATASET_DETAIL,{[QUERY_DATASET_DETAIL_IRI]: iri});
+  return tUrl(URL_DATASET_DETAIL, {[QUERY_DATASET_DETAIL_IRI]: iri});
 }
 
