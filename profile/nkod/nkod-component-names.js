@@ -26,9 +26,9 @@ export const DATASET_LIST_THEME_VIEW = "NKOD_DATASET_LIST_THEME_VIEW";
 
 //
 
-export const DATASET_DETAIL_LOADING = "nkod.dataset-detail.loading";
+export const STATUS_LOADING = "nkod.status.loading";
 
-export const DATASET_DETAIL_FAILED = "nkod.dataset-detail.failed";
+export const STATUS_FAILED = "nkod.status.failed";
 
 export const DATASET_DETAIL_DISTRIBUTION_LIST =
   "nkod.dataset-detail.distributions";

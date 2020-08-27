@@ -70,7 +70,7 @@ function reportMissingTranslation(key: string, language: string) {
   if (process.env.NODE_ENV !== "production") {
     if (!DEVELOP_REPORTED.has(key)) {
       DEVELOP_REPORTED.add(key);
-      console.log("Missing translation of  '" + key + "' for " + language);
+      console.trace("Missing translation of  '" + key + "' for " + language);
     }
   }
 }

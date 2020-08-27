@@ -28,8 +28,8 @@ import {
 } from "../../../client/dataset-detail";
 import {Link} from "react-router-dom";
 import {
-  DATASET_DETAIL_LOADING,
-  DATASET_DETAIL_FAILED,
+  STATUS_LOADING,
+  STATUS_FAILED,
   DATASET_DETAIL_KEYWORDS,
   DATASET_DETAIL_PROPERTIES,
   DATASET_DETAIL_DESCENDANTS,
@@ -50,8 +50,8 @@ const DatasetView = ({iri}) => {
   const quality = useSelector(
     (state) => qualitySelector(state, iri));
   //
-  const LoadingView = getRegisteredElement(DATASET_DETAIL_LOADING);
-  const FailedView = getRegisteredElement(DATASET_DETAIL_FAILED);
+  const LoadingView = getRegisteredElement(STATUS_LOADING);
+  const FailedView = getRegisteredElement(STATUS_FAILED);
   if (dataset.status === Status.Undefined) {
     dispatch(fetchDataset(iri));
     return (<LoadingView/>);

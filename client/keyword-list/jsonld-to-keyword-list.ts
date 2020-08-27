@@ -3,13 +3,9 @@ import {
   iterateEntitiesByType,
   getId,
   getValue,
-} from "../../jsonld";
-import {LP} from "../../vocabulary/vocabulary"
-
-interface Keyword {
-  iri: string;
-  usedByPublisherCount?: number;
-}
+} from "../jsonld";
+import {Keyword} from "./keyword-list-model";
+import {LP} from "../vocabulary/vocabulary"
 
 export function jsonLdToKeywordList(jsonld: JsonLdEntity[]): Keyword[] {
   const result: Keyword[] = [];

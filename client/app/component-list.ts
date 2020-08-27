@@ -10,7 +10,7 @@ export const ELEMENT_DATASET_LIST = "element-datasets";
 
 export const ELEMENT_PUBLISHER_LIST = "element-organisations";
 
-export const ELEMENT_KEYWORD_LIST = "element-keywords";
+
 
 export const ELEMENT_CATALOG_LIST = "element-catalogs";
 

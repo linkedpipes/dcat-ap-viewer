@@ -25,13 +25,6 @@ export const FETCH_PUBLISHER_LIST_SUCCESS =
 export const FETCH_PUBLISHER_LIST_FAILED =
   "FETCH_PUBLISHER_LIST_FAILED";
 
-export const FETCH_KEYWORD_LIST =
-  "FETCH_KEYWORD_LIST";
-export const FETCH_KEYWORD_LIST_SUCCESS =
-  "FETCH_KEYWORD_LIST_SUCCESS";
-export const FETCH_KEYWORD_LIST_FAILED =
-  "FETCH_KEYWORD_LIST_FAILED";
-
 export const FETCH_LABEL =
   "FETCH_LABEL";
 export const FETCH_LABEL_SUCCESS =
@@ -139,14 +132,6 @@ export function fetchPublisherList() {
     FETCH_PUBLISHER_LIST,
     FETCH_PUBLISHER_LIST_SUCCESS,
     FETCH_PUBLISHER_LIST_FAILED);
-}
-
-export function fetchKeywordList() {
-  return callApi(
-    (lang) => apiAdapter.fetchKeywordList(lang),
-    FETCH_KEYWORD_LIST,
-    FETCH_KEYWORD_LIST_SUCCESS,
-    FETCH_KEYWORD_LIST_FAILED);
 }
 
 export function fetchLabel(iri: string) {
