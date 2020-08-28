@@ -18,7 +18,6 @@ function initializeHttpApi(app) {
 
   const v2 = express.Router();
   v2.get("/dataset", provider["v2-dataset-list"]);
-  v2.get("/dataset/facet", provider["v2-dataset-facet"]);
   v2.get("/dataset/item", provider["v2-dataset-item"]);
   v2.get("/dataset/typeahead", provider["v2-dataset-typeahead"]);
   v2.get("/distribution/item", provider["v2-distribution-item"]);
@@ -26,10 +25,10 @@ function initializeHttpApi(app) {
   v2.get("/keyword", provider["v2-keyword-list"]);
   v2.get("/label/item", provider["v2-label-item"]);
   v2.get("/init-data", provider["v2-init-data"]);
+  v2.get("/catalog", provider["v2-catalog-list"]);
   v2.get("/quality/dataset", provider["v2-quality-dataset"]);
   v2.get("/quality/distribution", provider["v2-quality-distribution"]);
   v2.get("/quality/publishers", provider["v2-quality-publishers"]);
-  v2.get("/catalog", provider["v2-catalog-list"]);
   app.use("/api/v2", v2);
 }
 
@@ -54,7 +53,6 @@ function defaultProvider() {
   return {
     "v1-info": notImplemented,
     "v2-dataset-list": notImplemented,
-    "v2-dataset-facet": notImplemented,
     "v2-dataset-item": notImplemented,
     "v2-dataset-typeahead": notImplemented,
     "v2-distribution-item": notImplemented,

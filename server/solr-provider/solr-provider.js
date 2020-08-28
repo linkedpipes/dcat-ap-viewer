@@ -1,8 +1,9 @@
 const {handleApiError} = require("./../http-utils");
 const {executeSolrQuery} = require("./solr-api");
-const {measureTime} = require("../logging-utils");
-
-const DEFAULT_FACET_RETURN_COUNT = 32;
+const {
+  defaultUserQuery,
+  parseDatasetUserQuery,
+} = require("../dataset-list-query");
 
 (function initialize() {
   module.exports = {
@@ -13,9 +14,7 @@ const DEFAULT_FACET_RETURN_COUNT = 32;
 function createProvider(configuration) {
   return {
     "v1-info": createV1InfoGet(configuration),
-    "v2-dataset-list": measureTime("dataset-list",
-      createV2DatasetListGet(configuration)),
-    "v2-dataset-facet": createV2DatasetFacetGet(configuration),
+    "v2-dataset-list": createV2DatasetListGet(configuration),
     "v2-dataset-typeahead": createV2DatasetTypeaheadGet(configuration),
     "v2-publisher-list": createV2PublisherListGet(configuration),
   }
@@ -113,68 +112,6 @@ function buildDatasetSolrQuery(query, defaultLanguage) {
   url += facetsToSolrQuery(userQuery);
   url += temporalToSolrQuery(userQuery);
   return [url, userQuery];
-}
-
-function defaultUserQuery(language) {
-  return {
-    "text": "*",
-    "sortBy": "title",
-    "sortOrder": "asc",
-    "keyword": [],
-    "keywordLimit": DEFAULT_FACET_RETURN_COUNT,
-    "publisher": [],
-    "publisherLimit": DEFAULT_FACET_RETURN_COUNT,
-    "format": [],
-    "formatLimit": DEFAULT_FACET_RETURN_COUNT,
-    "theme": [],
-    "themeLimit": DEFAULT_FACET_RETURN_COUNT,
-    "temporal-start": undefined,
-    "temporal-end": undefined,
-    "offset": 0,
-    "limit": 10,
-    "language": language,
-    "isPartOf": [],
-  }
-}
-
-function parseDatasetUserQuery(query) {
-  const result = {};
-  if (query.sort) {
-    const [by, order] = query.sort.split(" ", 2);
-    result["sortBy"] = by;
-    result["sortOrder"] = order;
-  }
-  addUserQueryFacet(query, result, "keyword");
-  addUserQueryFacet(query, result, "keywordLimit");
-  addUserQueryFacet(query, result, "publisher");
-  addUserQueryFacet(query, result, "publisherLimit");
-  addUserQueryFacet(query, result, "format");
-  addUserQueryFacet(query, result, "formatLimit");
-  addUserQueryFacet(query, result, "theme");
-  addUserQueryFacet(query, result, "themeLimit");
-  addUserQueryFacet(query, result, "isPartOf");
-  addUserQueryValue(query, result, "temporal-start");
-  addUserQueryValue(query, result, "temporal-end");
-  addUserQueryValue(query, result, "offset");
-  addUserQueryValue(query, result, "limit");
-  addUserQueryValue(query, result, "language");
-  return result;
-}
-
-function addUserQueryFacet(query, result, name) {
-  if (query[name]) {
-    if (Array.isArray(query[name])) {
-      result[name] = query[name];
-    } else {
-      result[name] = [query[name]];
-    }
-  }
-}
-
-function addUserQueryValue(query, result, name) {
-  if (query[name]) {
-    result[name] = query[name];
-  }
 }
 
 /**
@@ -446,61 +383,6 @@ function asLiteral(item, propertyName, language, languagePreferences) {
   }
 }
 
-/**
- * This function allows to retrieve all facets for given filters,
- * but no datasets.
- */
-function createV2DatasetFacetGet(configuration) {
-  return (req, res) => {
-    const [params, query] = buildFacetSolrQuery(req.query);
-    const url = configuration.url + "/query?" + params;
-    executeSolrQuery(url, (content) => solrResponseToFacets(content, query))
-      .then(data => responseJsonLd(res, data))
-      .catch(error => handleApiError(res, error));
-  };
-}
-
-function buildFacetSolrQuery(query) {
-  let userQuery = {
-    ...defaultUserQuery(),
-    ...parseDatasetUserQuery(query),
-    "facet": "",
-    "limit": -1,
-  };
-  if (query.text) {
-    userQuery["text"] = encodeURIComponent(
-      textToSolrQuery(userQuery.language, query.text));
-  }
-  addUserQueryFacet(query, userQuery, "facet");
-  addUserQueryFacet(query, userQuery, "limit");
-  //
-  let params = "facet.field=" + encodeURIComponent(userQuery.facet) + "&"
-    + "facet=true&"
-    + "facet.limit=-1&"
-    + "facet.mincount=1&"
-    + "rows=0&"
-    + "q=" + userQuery.text + "";
-  params += facetsToSolrQuery(userQuery);
-  params += temporalToSolrQuery(userQuery);
-  return [params, userQuery];
-}
-
-function solrResponseToFacets(content, query) {
-  const facets = content["facet_counts"]["facet_fields"];
-  return {
-    "@context": datasetListContext(),
-    "@graph": [
-      ...convertFacet(
-        facets["keyword"], "urn:keyword", query.keywordLimit),
-      ...convertFacet(
-        facets["format"], "urn:format", query.formatLimit),
-      ...convertFacet(
-        facets["publisher"], "urn:publisher", query.publisherLimit),
-      ...convertFacet(
-        facets["theme"], "urn:theme", query.themeLimit),
-    ],
-  }
-}
 
 function createV2DatasetTypeaheadGet(configuration) {
   // default-language

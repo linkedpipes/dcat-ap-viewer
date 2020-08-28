@@ -14,7 +14,6 @@ const data = require("./test-data");
 function createProvider() {
   return {
     "v2-dataset-list": createDatasetList(),
-    "v2-dataset-facet": createDatasetFacet(),
     "v2-dataset-item": createDatasetItem(),
     "v2-dataset-typeahead": createDatasetTypeahead(),
     "v2-distribution-item": createDistributionItem(),
@@ -32,12 +31,6 @@ function createProvider() {
 function createDatasetList() {
   return (req, res) => {
     res.status(200).json(data["dataset-list"]);
-  };
-}
-
-function createDatasetFacet() {
-  return (req, res) => {
-    res.status(500).json({});
   };
 }
 
