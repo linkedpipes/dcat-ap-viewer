@@ -87,7 +87,7 @@ module.exports = merge(common, {
           "from": path.join(
             __dirname, "..", "profile", config.client.profile, "assets"),
           "to": path.join(__dirname, "..", "dist", "assets"),
-        }]
+        }],
     }),
     new BuildI18Files(),
   ],
