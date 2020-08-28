@@ -41,7 +41,7 @@ function handleApiError(res, error) {
       });
       return;
     default:
-      logger.error("Unknown API error.", {"error": error});
+      logger.error("Unknown API error.", {"error": error.stack || error});
       res.status(500).json({
         "error": "service request failed",
       });
