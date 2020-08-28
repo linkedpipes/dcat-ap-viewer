@@ -1,7 +1,24 @@
 const {handleApiError} = require("./../http-utils");
-const {executeSparqlConstruct} = require("./sparql-api");
+const {
+  executeSparqlConstruct,
+  executeSparqlSelect,
+} = require("./sparql-api");
 const quality = require("./sparql-quality");
-const logger = require("../logging");
+const {
+  defaultUserQuery,
+  parseDatasetUserQuery,
+} = require("../dataset-list-query");
+const {
+  createDatasetListSelectQuery,
+  createDatasetListQuery,
+  createPublisherFacetQuery,
+  createThemeFacetQuery,
+  createFormatFacetQuery,
+  createKeywordFacetQuery,
+  createDatasetListTypeaheadQuery,
+  createDatasetSparql,
+  createLabelSparql,
+} = require("./sparql-query");
 
 (function initialize() {
   module.exports = {
@@ -11,162 +28,259 @@ const logger = require("../logging");
 
 function createProvider(configuration) {
   return {
+    // "v1-info"                  NOT SUPPORTED
+    "v2-dataset-list": createDatasetListGet(configuration),
+    "v2-dataset-item": createDatasetItemGet(configuration),
+    "v2-dataset-typeahead": createDatasetListTypeaheadGet(configuration),
+    // "v2-distribution-item"     NOT SUPPORTED
+    "v2-publisher-list": createPublisherListGet(configuration),
+    "v2-keyword-list": createKeywordListGet(configuration),
+    "v2-label-item": createLabelItemGet(configuration),
+    "v2-init-data": createInitialDataListGet(),
+    // "v2-catalog-list"          NOT SUPPORTED
     ...quality.createProvider(configuration),
-    "v2-dataset-item": createDatasetsItemGet(configuration),
-    "v2-distribution-item": createDistributionItemGet(configuration),
-    "v2-quality-publishers": createPublishersGet(configuration),
   }
 }
 
-function createDatasetsItemGet(configuration) {
+function createDatasetListGet(configuration) {
+  return (req, res) => {
+    const query = {
+      ...defaultUserQuery(configuration["default-language"]),
+      ...parseDatasetUserQuery(req.query),
+    };
+    datasetListGet(configuration, query)
+      .then(data => res.json(data))
+      .catch(error => handleApiError(res, error));
+  };
+}
+
+async function datasetListGet(configuration, query) {
+  const endpoint = configuration.url;
+  const selectQuery = createDatasetListSelectQuery(query);
+  const selectQueryResponse = await executeSparqlSelect(endpoint, selectQuery);
+  const allDatasets = selectQueryResponse.map(item => item.dataset.value);
+  const datasets = selectSubArray(allDatasets, query.offset, query.limit);
+  const datasetDataQuery = createDatasetListQuery(datasets);
+  const datasetsData = await executeSparqlConstruct(endpoint, datasetDataQuery);
+
+  const publisherFacets = await executeSparqlConstruct(
+    endpoint, createPublisherFacetQuery(query));
+  const themeFacets = await executeSparqlConstruct(
+    endpoint, createThemeFacetQuery(query));
+  const formatFacets = await executeSparqlConstruct(
+    endpoint, createFormatFacetQuery(query));
+  const keywordFacets = await executeSparqlConstruct(
+    endpoint, createKeywordFacetQuery(query));
+
+  return [
+    {
+      "@type": "urn:DatasetListMetadata",
+      "urn:datasetsCount": allDatasets.length,
+    },
+    ...transformDatasetForResponse(datasetsData, query.language),
+    ...transformFacetsForType(
+      publisherFacets["@graph"], "urn:publisher", query.publisherLimit),
+    ...transformFacetsForType(
+      themeFacets["@graph"], "urn:theme", query.formatLimit),
+    ...transformFacetsForType(
+      formatFacets["@graph"], "urn:format", query.themeLimit),
+    ...transformFacetsForType(
+      keywordFacets["@graph"], "urn:keyword", query.keywordLimit)
+      .map((entity) => addMissingLanguageTags(
+        entity, ["urn:code"], query.language)),
+  ];
+}
+
+function selectSubArray(array, offset, limit) {
+  if (array.length < offset) {
+    return [];
+  }
+  array = array.slice(offset);
+  if (array.length < limit) {
+    return array;
+  }
+  return array.slice(0, limit);
+}
+
+function transformDatasetForResponse(datasetsJsonLd, language) {
+  return datasetsJsonLd["@graph"].map((entity) => addMissingLanguageTags(
+    entity,
+    [
+      "http://purl.org/dc/terms/title",
+      "http://purl.org/dc/terms/description",
+      "http://www.w3.org/ns/dcat#keyword",
+    ],
+    language,
+  ));
+}
+
+/**
+ * Virtuoso does not return language tags sometimes.
+ */
+function addMissingLanguageTags(entity, predicates, language) {
+  // TODO Made optional by configuration.
+  for (const predicate of predicates) {
+    let values = entity[predicate];
+    if (values === undefined) {
+      continue;
+    }
+    if (!Array.isArray(values)) {
+      values = [values];
+    }
+    entity[predicate] = values.map((item) => {
+      if (typeof (item) === "object") {
+        return item;
+      }
+      return {
+        "@value": item,
+        "language": language,
+      }
+    });
+  }
+  return entity;
+}
+
+function transformFacetsForType(allFacets, facetType, limit) {
+  const facets = allFacets.filter(
+    (item) => item["urn:facet"]["@id"] === facetType);
+  facets.sort((left, right) => right["urn:count"] - left["urn:count"])
+  return [
+    {
+      "@type": "urn:FacetMetadata",
+      "urn:facet": {"@id": facetType},
+      "urn:count": facets.length,
+    },
+    ...selectSubArray(facets, 0, limit),
+  ]
+}
+
+function createDatasetItemGet(configuration) {
   const datasetPerGraph = configuration["dataset-per-graph"] === true;
   return (req, res) => {
     const iri = req.query.iri;
-    const query = datasetSparql(datasetPerGraph, iri);
+    const query = createDatasetSparql(datasetPerGraph, iri);
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
-      .catch(error => {
-        logger.error("Can't get dataset from SPARQL.", {
-          "error": error,
-          "iri": iri,
-        });
-        handleApiError(res);
-      });
+      .catch(error => handleApiError(res, error));
   };
 }
 
-function datasetSparql(datasetPerGraph, iri) {
+
+function createDatasetListTypeaheadGet(configuration) {
+  return (req, res) => {
+    const query = {
+      ...defaultUserQuery(configuration["default-language"]),
+      ...parseDatasetUserQuery(req.query),
+    };
+    datasetListTypeaheadGet(configuration, query)
+      .then(data => res.json(data))
+      .catch(error => handleApiError(res, error));
+  };
+}
+
+async function datasetListTypeaheadGet(configuration, query) {
+  const endpoint = configuration.url;
+  const selectQuery = createDatasetListSelectQuery(query);
+  const selectQueryResponse = await executeSparqlSelect(endpoint, selectQuery);
+  const allDatasets = selectQueryResponse.map(item => item.dataset.value);
+  const datasets = selectSubArray(allDatasets, query.offset, query.limit);
+  const datasetDataQuery = createDatasetListTypeaheadQuery(datasets);
+  const datasetsData = await executeSparqlConstruct(endpoint, datasetDataQuery);
+
+  return [
+    {
+      "@type": "urn:DatasetListMetadata",
+      "urn:datasetsCount": allDatasets.length,
+    },
+    ...transformDatasetForResponse(datasetsData, query.language),
+  ];
+}
+
+function createLabelItemGet(configuration) {
+  return (req, res) => {
+    const language = req.query.language;
+    const [query, predicates] = createLabelSparql(req.query.iri, language);
+    executeSparqlConstruct(configuration.url, query)
+      .then(data => data["@graph"].map((entity) => addMissingLanguageTags(
+        entity, predicates, query.language)))
+      .then(data => res.json(data))
+      .catch(error => handleApiError(res, error));
+  }
+}
+
+function createInitialDataListGet() {
+  return (req, res) => {
+    res.json({});
+  };
+}
+
+function createPublisherListGet(configuration) {
+  return (req, res) => {
+    const language = req.query.language;
+    const query = publisherListSparql();
+    executeSparqlConstruct(configuration.url, query)
+      .then(data => data["@graph"].map(item => addMissingLanguageTags(
+        item, ["http://xmlns.com/foaf/0.1/name"], language)))
+      .then(data => res.json(data))
+      .catch(error => handleApiError(res, error));
+  }
+}
+
+function publisherListSparql() {
   return `
-PREFIX dcat: <http://www.w3.org/ns/dcat#> 
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX schema: <http://schema.org/>
-PREFIX vcard: <http://www.w3.org/2006/vcard/ns#>
-PREFIX void: <http://rdfs.org/ns/void#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX adms: <http://www.w3.org/ns/adms#>
-PREFIX spdx: <http://spdx.org/rdf/terms#>
-PREFIX org: <http://www.w3.org/ns/org#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
 CONSTRUCT {
-    ?dataset ?p ?o .
-
-    ?cp vcard:fn ?cpfn ;
-        vcard:hasEmail ?cpemail .
-    
-    ?publisher a foaf:Agent;
-        foaf:name ?name .
-
-    ?temporal schema:startDate ?temporalStart ;      
-        schema:endDate ?temporalEnd .
-
-    ?primaryTopic a dcat:CatalogRecord ;
-        foaf:primaryTopic ?dataset ;
-        dcterms:source ?source .
+ ?publisher a schema:Organization ;
+    <urn:datasetsCount> ?datasetCount ;
+    foaf:name ?name .
 } WHERE {
-    ` + (datasetPerGraph ? "GRAPH ?g {" : "") + `
-    
-    ?dataset ?p ?o .
-    
-    OPTIONAL { ?dataset dcterms:modified ?modified . }
-    OPTIONAL { ?dataset dcterms:accrualPeriodicity ?accrualPeriodicity . }
-    OPTIONAL { ?dataset dcterms:issued ?issued . }
-    OPTIONAL { ?dataset dcterms:language ?language . }
-    OPTIONAL { ?dataset dcterms:identifier ?identifier . }
-    OPTIONAL { ?dataset dcterms:type ?type . }
-    OPTIONAL { ?dataset foaf:page ?page . }
-    OPTIONAL { ?dataset dcat:theme ?theme . }
-    OPTIONAL { ?dataset dcat:landingPage ?landingPage . }
-    OPTIONAL { ?dataset dcat:keyword ?keyword . }
-    OPTIONAL {
-        ?dataset dcat:contactPoint ?cp .         
-        ?cp vcard:fn ?cpfn ;
-            vcard:hasEmail ?cpemail .
+  ?publisher foaf:name ?name .
+  {
+    SELECT ?publisher, COUNT(?dataset) AS ?datasetCount WHERE {
+     ?dataset a dcat:Dataset ;
+       dcterms:publisher ?publisher .
     }
-    OPTIONAL {
-        ?dataset dcterms:publisher ?publisher .
-        ?publisher a foaf:Agent ;
-            foaf:name ?name .
-    }
-    OPTIONAL {
-        ?dataset dcterms:temporal ?temporal .
-        ?temporal schema:startDate ?temporalStart ;
-            schema:endDate ?temporalEnd .
-    }
-    OPTIONAL {
-        ?primaryTopic a dcat:CatalogRecord ;
-            foaf:primaryTopic ?dataset ;
-            dcterms:source ?source .
-    }
-    
-    ` + (datasetPerGraph ? "}" : "") + `
-        
-    VALUES (?dataset) { (<` + iri + `>) }
-}`;
+  }
 }
 
+  `;
+}
 
-function createDistributionItemGet(configuration) {
+function createKeywordListGet(configuration) {
   return (req, res) => {
-    const iri = req.query.iri;
-    const query = distributionSparql(iri);
+    const language = req.query.language;
+    const query = keywordListSparql(language);
     executeSparqlConstruct(configuration.url, query)
+      .then(data => data["@graph"].map(item => addMissingLanguageTags(
+        item, ["http://www.w3.org/2004/02/skos/core#prefLabel"], language)))
       .then(data => res.json(data))
-      .catch(error => {
-        logger.error("Can't get distribution from SPARQL.", {
-          "error": error,
-          "iri": iri,
-        });
-        handleApiError(res);
-      });
-  };
+      .catch(error => handleApiError(res, error));
+    // .catch(() => console.exception());
+  }
 }
 
-function distributionSparql(iri) {
+function keywordListSparql(language) {
   return `
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 
 CONSTRUCT {
-    ?distribution ?p ?o ;
-        dcterms:format ?format .
-    ?format skos:prefLabel ?formatLabel .
+ [] a <urn:Keyword> ;
+    skos:prefLabel ?keyword ;
+    <urn:usedByPublishersCount> ?publisherCount .
 } WHERE {
-    ?distribution ?p ?o ;
-    OPTIONAL {
-        ?distribution dcterms:format ?format .   
-        ?format skos:prefLabel ?formatLabel . 
-    }
-    
-     VALUES (?distribution) { (<` + iri + `>) }
-}`;
-}
-
-function createPublishersGet(configuration) {
-  return (req, res) => {
-    const query = publishersSparql();
-    executeSparqlConstruct(configuration.url, query)
-      .then(data => res.json(data))
-      .catch(error => {
-        logger.error("Can't get publisher list from SPARQL.", {
-          "error": error,
-        });
-        handleApiError(res);
-      });
-  };
-}
-
-function publishersSparql() {
-  return `
-prefix foaf: <http://xmlns.com/foaf/0.1/>
-CONSTRUCT {
-  ?publisher a <https://data.gov.cz/slovník/nkod/VzornýPoskytovatel> ;
-    foaf:name ?name .
-}
-WHERE {
-  ?publisher a <https://data.gov.cz/slovník/nkod/VzornýPoskytovatel> ;
-    foaf:name ?name .
+  {
+    SELECT ?keyword, (COUNT(?publisher) AS ?publisherCount) WHERE {
+     ?keywordDataset a dcat:Dataset ;
+       dcat:keyword ?keyword ;
+       dcterms:publisher ?publisher .
+    } GROUP BY ?keyword
+  }
+  FILTER (lang(?keyword ) = "${language}")
 }`;
 }
