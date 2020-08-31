@@ -2,14 +2,15 @@
   "cs": {
     "string": {
       "catalogs_found": "katalogů nalezeno",
-      "catalogs": "Katalogy"
+      "catalogs": "Katalogy",
+      "/catalogs": "Katalogy"
     }
   },
   "en": {
-    "query": {},
     "string": {
       "catalogs_found": "catalogs found",
-      "catalogs": "Catalogs"
+      "catalogs": "Catalogs",
+      "/catalogs": "Catalogs"
     }
   }
 }

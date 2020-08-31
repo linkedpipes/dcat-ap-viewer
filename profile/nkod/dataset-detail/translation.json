@@ -1,11 +1,5 @@
 {
   "cs": {
-    "url": {
-      "/dataset": "/datová-sada"
-    },
-    "query": {
-      "iri": "iri"
-    },
     "string": {
       "documentation": "Dokumentace",
       "contact_point": "Kontaktní bod",
@@ -83,12 +77,6 @@
     }
   },
   "en": {
-    "url": {
-      "/dataset": "/dataset"
-    },
-    "query": {
-      "iri": "iri"
-    },
     "string": {
       "documentation": "Documentation",
       "contact_point": "Contact point",
