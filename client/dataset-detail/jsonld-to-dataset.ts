@@ -84,6 +84,7 @@ function loadDistributions(
   jsonld: JsonLdEntity[], iris: string[]
 ): (Distribution | DataService)[] {
   const result: (Distribution | DataService)[] = [];
+  iris.sort();
   for (const iri of iris) {
     const distribution = jsonLdToDistributionOrDataService(jsonld, iri);
     if (distribution === undefined) {
