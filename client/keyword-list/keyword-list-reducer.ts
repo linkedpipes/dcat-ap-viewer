@@ -5,15 +5,11 @@ import {
   KeywordListFetchPayloadFailed,
 } from "./keyword-list-action";
 import {Keyword} from "./keyword-list-model";
+import {Status} from "../app/resource-status";
 
 import {getType} from "typesafe-actions";
 
-export enum Status {
-  Undefined,
-  Loading,
-  Ready,
-  Failed,
-}
+export {Status} from "../app/resource-status";
 
 interface State {
   active: boolean;
