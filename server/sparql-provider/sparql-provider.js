@@ -108,8 +108,9 @@ function transformDatasetForResponse(datasetsJsonLd, language) {
 
 function transformFacetsForType(allFacets, facetType, limit) {
   const facets = allFacets.filter(
-    (item) => item["urn:facet"]["@id"] === facetType);
-  facets.sort((left, right) => right["urn:count"] - left["urn:count"])
+    (item) => item["urn:facet"][0]["@id"] === facetType);
+  facets.sort((left, right) =>
+    right["urn:count"][0]["@value"] - left["urn:count"][0]["@value"])
   return [
     {
       "@type": "urn:FacetMetadata",

@@ -203,7 +203,7 @@ CONSTRUCT {
     ; foaf:name ?name 
   .
 } WHERE {
-  ?publisher foaf:name ?name .
+  OPTIONAL { ?publisher foaf:name ?name . }
   {
     SELECT ?publisher (COUNT(?dataset) as ?datasetCount) WHERE {
       ${datasetFilterSelector(query)}
@@ -227,7 +227,7 @@ CONSTRUCT {
     ; skos:prefLabel ?label 
   .
 } WHERE {
-  ?theme skos:prefLabel ?label .
+  OPTIONAL { ?theme skos:prefLabel ?label . }
   {
     SELECT ?theme (COUNT(?dataset) as ?datasetCount) WHERE {
       ${datasetFilterSelector(query)}
@@ -252,7 +252,7 @@ CONSTRUCT {
     ; skos:prefLabel ?label
   .
 } WHERE {
-  ?format skos:prefLabel ?label .
+  OPTIONAL { ?format skos:prefLabel ?label . }
   {
     SELECT ?format (COUNT(?dataset) as ?formatDatasetCount) WHERE {
       ${datasetFilterSelector(query)}
