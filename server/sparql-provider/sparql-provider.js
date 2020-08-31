@@ -18,6 +18,8 @@ const {
   createDatasetListTypeaheadQuery,
   createDatasetSparql,
   createLabelSparql,
+  createPublisherListSparql,
+  createKeywordListSparql,
 } = require("./sparql-query");
 
 (function initialize() {
@@ -79,15 +81,13 @@ async function datasetListGet(configuration, query) {
     },
     ...transformDatasetForResponse(datasetsData, query.language),
     ...transformFacetsForType(
-      publisherFacets["@graph"], "urn:publisher", query.publisherLimit),
+      publisherFacets, "urn:publisher", query.publisherLimit),
     ...transformFacetsForType(
-      themeFacets["@graph"], "urn:theme", query.formatLimit),
+      themeFacets, "urn:theme", query.formatLimit),
     ...transformFacetsForType(
-      formatFacets["@graph"], "urn:format", query.themeLimit),
+      formatFacets, "urn:format", query.themeLimit),
     ...transformFacetsForType(
-      keywordFacets["@graph"], "urn:keyword", query.keywordLimit)
-      .map((entity) => addMissingLanguageTags(
-        entity, ["urn:code"], query.language)),
+      keywordFacets, "urn:keyword", query.keywordLimit),
   ];
 }
 
@@ -103,41 +103,7 @@ function selectSubArray(array, offset, limit) {
 }
 
 function transformDatasetForResponse(datasetsJsonLd, language) {
-  return datasetsJsonLd["@graph"].map((entity) => addMissingLanguageTags(
-    entity,
-    [
-      "http://purl.org/dc/terms/title",
-      "http://purl.org/dc/terms/description",
-      "http://www.w3.org/ns/dcat#keyword",
-    ],
-    language,
-  ));
-}
-
-/**
- * Virtuoso does not return language tags sometimes.
- */
-function addMissingLanguageTags(entity, predicates, language) {
-  // TODO Made optional by configuration.
-  for (const predicate of predicates) {
-    let values = entity[predicate];
-    if (values === undefined) {
-      continue;
-    }
-    if (!Array.isArray(values)) {
-      values = [values];
-    }
-    entity[predicate] = values.map((item) => {
-      if (typeof (item) === "object") {
-        return item;
-      }
-      return {
-        "@value": item,
-        "language": language,
-      }
-    });
-  }
-  return entity;
+  return datasetsJsonLd;
 }
 
 function transformFacetsForType(allFacets, facetType, limit) {
@@ -201,8 +167,6 @@ function createLabelItemGet(configuration) {
     const language = req.query.language;
     const [query, predicates] = createLabelSparql(req.query.iri, language);
     executeSparqlConstruct(configuration.url, query)
-      .then(data => data["@graph"].map((entity) => addMissingLanguageTags(
-        entity, predicates, query.language)))
       .then(data => res.json(data))
       .catch(error => handleApiError(res, error));
   }
@@ -216,71 +180,19 @@ function createInitialDataListGet() {
 
 function createPublisherListGet(configuration) {
   return (req, res) => {
-    const language = req.query.language;
-    const query = publisherListSparql();
+    const query = createPublisherListSparql();
     executeSparqlConstruct(configuration.url, query)
-      .then(data => data["@graph"].map(item => addMissingLanguageTags(
-        item, ["http://xmlns.com/foaf/0.1/name"], language)))
       .then(data => res.json(data))
       .catch(error => handleApiError(res, error));
   }
-}
-
-function publisherListSparql() {
-  return `
-PREFIX dcat: <http://www.w3.org/ns/dcat#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX schema: <http://schema.org/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-
-CONSTRUCT {
- ?publisher a schema:Organization ;
-    <urn:datasetsCount> ?datasetCount ;
-    foaf:name ?name .
-} WHERE {
-  ?publisher foaf:name ?name .
-  {
-    SELECT ?publisher, COUNT(?dataset) AS ?datasetCount WHERE {
-     ?dataset a dcat:Dataset ;
-       dcterms:publisher ?publisher .
-    }
-  }
-}
-
-  `;
 }
 
 function createKeywordListGet(configuration) {
   return (req, res) => {
     const language = req.query.language;
-    const query = keywordListSparql(language);
+    const query = createKeywordListSparql(language);
     executeSparqlConstruct(configuration.url, query)
-      .then(data => data["@graph"].map(item => addMissingLanguageTags(
-        item, ["http://www.w3.org/2004/02/skos/core#prefLabel"], language)))
       .then(data => res.json(data))
       .catch(error => handleApiError(res, error));
-    // .catch(() => console.exception());
   }
-}
-
-function keywordListSparql(language) {
-  return `
-PREFIX dcat: <http://www.w3.org/ns/dcat#>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-PREFIX dcterms: <http://purl.org/dc/terms/>
-
-CONSTRUCT {
- [] a <urn:Keyword> ;
-    skos:prefLabel ?keyword ;
-    <urn:usedByPublishersCount> ?publisherCount .
-} WHERE {
-  {
-    SELECT ?keyword, (COUNT(?publisher) AS ?publisherCount) WHERE {
-     ?keywordDataset a dcat:Dataset ;
-       dcat:keyword ?keyword ;
-       dcterms:publisher ?publisher .
-    } GROUP BY ?keyword
-  }
-  FILTER (lang(?keyword ) = "${language}")
-}`;
 }

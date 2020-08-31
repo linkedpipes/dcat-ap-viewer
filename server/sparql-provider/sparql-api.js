@@ -1,4 +1,5 @@
 const request = require("request");
+const jsonld = require("jsonld");
 const {
   isResponseOk, RequestFailed, ErrorResponse, InvalidData,
 } = require("./../http-utils");
@@ -11,34 +12,43 @@ const {
 })();
 
 function executeSparqlConstruct(endpoint, query) {
-  const url = endpoint + "/?" +
-    "format=application%2Fx-json%2Bld&" +
-    "timeout=0&" +
-    "query=" + encodeURIComponent(query);
+  const format = "application/ld+json";
+  const url = endpoint + "/?timeout=0&query=" + encodeURIComponent(query);
   return new Promise((resolve, reject) => {
-    request({"url": url}, (error, response, body) => {
+    request(requestParams(url, format), (error, response, body) => {
       if (error) {
         reject(new RequestFailed(url, error));
       }
       if (!isResponseOk(response)) {
         reject(new ErrorResponse(url, response));
       }
+      let content;
       try {
-        resolve(JSON.parse(body));
+        content = JSON.parse(body);
       } catch (ex) {
         reject(new InvalidData(url, ex));
       }
+      jsonld.flatten(content)
+        .then(resolve)
+        .catch(error => reject(new InvalidData(url, error)));
     });
   });
 }
 
+function requestParams(url, format) {
+  return {
+    "url": url,
+    "headers": {
+      "accept": format
+    }
+  }
+}
+
 function executeSparqlSelect(endpoint, query) {
-  const url = endpoint + "/?" +
-    "format=application%2Fsparql-results%2Bjson" +
-    "timeout=0&" +
-    "query=" + encodeURIComponent(query);
+  const format = "application/json";
+  const url = endpoint + "/?timeout=0&query=" + encodeURIComponent(query);
   return new Promise((resolve, reject) => {
-    request({"url": url}, (error, response, body) => {
+    request(requestParams(url, format), (error, response, body) => {
       if (error) {
         reject(new RequestFailed(url, error));
       }

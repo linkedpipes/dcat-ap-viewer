@@ -9,6 +9,8 @@
     "createDatasetListTypeaheadQuery": createDatasetListTypeaheadQuery,
     "createDatasetSparql": createDatasetSparql,
     "createLabelSparql": createLabelSparql,
+    "createPublisherListSparql": createPublisherListSparql,
+    "createKeywordListSparql": createKeywordListSparql,
   };
 })();
 
@@ -19,6 +21,7 @@ PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX schema: <http://schema.org/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 SELECT ?dataset WHERE {
     ${datasetFilterSelector(query)}
@@ -191,6 +194,7 @@ PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX schema: <http://schema.org/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 CONSTRUCT {
   ?publisher a <urn:Facet>
@@ -239,6 +243,7 @@ PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX schema: <http://schema.org/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 CONSTRUCT {
   ?format a <urn:Facet>
@@ -264,6 +269,7 @@ PREFIX dcat: <http://www.w3.org/ns/dcat#>
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX schema: <http://schema.org/>
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 CONSTRUCT {
   [] a <urn:Facet>
@@ -424,4 +430,49 @@ CONSTRUCT { <${iri}> ?predicate ?object } WHERE {
     "http://xmlns.com/foaf/0.1/name",
     "http://www.w3.org/2004/02/skos/core#prefLabel",
   ]];
+}
+
+function createPublisherListSparql() {
+  return `
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX schema: <http://schema.org/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
+CONSTRUCT {
+ ?publisher a schema:Organization ;
+    <urn:datasetsCount> ?datasetCount ;
+    foaf:name ?name .
+} WHERE {
+  ?publisher foaf:name ?name .
+  {
+    SELECT ?publisher (COUNT(?dataset) AS ?datasetCount) WHERE {
+     ?dataset a dcat:Dataset ;
+       dcterms:publisher ?publisher .
+    } GROUP BY ?publisher
+  }
+}
+  `;
+}
+
+function createKeywordListSparql(language) {
+  return `
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+CONSTRUCT {
+ [] a <urn:Keyword> ;
+    skos:prefLabel ?keyword ;
+    <urn:usedByPublishersCount> ?publisherCount .
+} WHERE {
+  {
+    SELECT ?keyword (COUNT(?publisher) AS ?publisherCount) WHERE {
+     ?keywordDataset a dcat:Dataset ;
+       dcat:keyword ?keyword ;
+       dcterms:publisher ?publisher .
+    } GROUP BY ?keyword
+  }
+  FILTER (lang(?keyword ) = "${language}")
+}`;
 }

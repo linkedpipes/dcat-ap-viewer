@@ -22,12 +22,10 @@ function handleApiError(res, error) {
       });
       return;
     case ERROR_RESPONSE:
-      if (isErrorCode(error.response.statusCode)) {
-        logger.error("Error response.", {
-          "url": error.url,
-          "status": error.response.statusCode,
-        });
-      }
+      logger.error("Error response.", {
+        "url": error.url,
+        "status": error.response.statusCode,
+      });
       res.status(error.response.statusCode).json({});
       return;
     case INVALID_DATA:
