@@ -444,7 +444,7 @@ CONSTRUCT {
     <urn:datasetsCount> ?datasetCount ;
     foaf:name ?name .
 } WHERE {
-  ?publisher foaf:name ?name .
+  OPTIONAL { ?publisher foaf:name ?name . }
   {
     SELECT ?publisher (COUNT(?dataset) AS ?datasetCount) WHERE {
      ?dataset a dcat:Dataset ;
