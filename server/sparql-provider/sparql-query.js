@@ -337,6 +337,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX adms: <http://www.w3.org/ns/adms#>
 PREFIX spdx: <http://spdx.org/rdf/terms#>
 PREFIX org: <http://www.w3.org/ns/org#>
+PREFIX pou: <https://data.gov.cz/slovník/podmínky-užití/>
 
 CONSTRUCT {
 
@@ -360,6 +361,8 @@ CONSTRUCT {
   ?license ?licensePredicate ?licenseObject .
   
   ?service ?servicePredicate ?serviceObject .
+  
+  ?pou ?pouPredicate ?pouObject .
   
 } WHERE {
     ` + (datasetPerGraph ? "GRAPH ?g {" : "") + `
@@ -405,6 +408,12 @@ CONSTRUCT {
       ?distribution dcat:accessService ?service .
       ?service ?servicePredicate ?serviceObject .
     }
+    
+    OPTIONAL {
+     ?distribution pou:specifikace ?pou .
+     ?pou ?pouPredicate ?pouObject .
+    }
+    
   }
   
   ` + (datasetPerGraph ? "}" : "") + `
@@ -414,22 +423,34 @@ CONSTRUCT {
 }
 
 function createLabelSparql(iri, language) {
-  return [`
+  return `
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX dcterms: <http://purl.org/dc/terms/>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 CONSTRUCT { <${iri}> ?predicate ?object } WHERE {
   <${iri}> ?predicate ?object .
-  FILTER ( LANG( ?object ) = "${language}" )
+  
+  OPTIONAL { 
+    <${iri}> ?predicate ?label_primary . 
+    FILTER(LANG(?label_primary) = "${language}") 
+  }
+  OPTIONAL { 
+    <${iri}> ?predicate ?label_secondary . 
+    FILTER(LANG(?label_secondary) = "en")
+  }
+  
+  BIND( COALESCE(?label_primary, ?label_secondary) as ?label )
+  
   VALUES ( ?predicate ) {
    ( foaf:name )
    ( skos:prefLabel )
+   ( dcterms:title )
+   ( rdfs:label )
   }
 }
-`, [
-    "http://xmlns.com/foaf/0.1/name",
-    "http://www.w3.org/2004/02/skos/core#prefLabel",
-  ]];
+`;
 }
 
 function createPublisherListSparql() {

@@ -165,7 +165,7 @@ async function datasetListTypeaheadGet(configuration, query) {
 function createLabelItemGet(configuration) {
   return (req, res) => {
     const language = req.query.language;
-    const [query, predicates] = createLabelSparql(req.query.iri, language);
+    const query = createLabelSparql(req.query.iri, language);
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
       .catch(error => handleApiError(res, error));
