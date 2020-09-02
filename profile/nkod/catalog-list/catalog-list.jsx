@@ -1,11 +1,75 @@
+import React, {useEffect} from "react";
 import {PropTypes} from "prop-types";
-import React from "react";
-import {getDeleteCatalogFormLink} from "../../dcat-ap-forms";
-import {getGlobal, register} from "../../../client-api";
-import {CATALOG_LIST_ITEM} from "../../nkod-component-names";
+import {useSelector, useDispatch} from "react-redux";
 
-function CatalogListItem({catalog, tLabel, fetchLabels, language}) {
-  fetchLabels([catalog.publisher, catalog.contact]);
+import {
+  register,
+  getRegisteredElement,
+  selectT,
+  selectTLabel,
+  selectLanguage,
+} from "../../client-api";
+import {
+  Status,
+  fetchCatalogList,
+  catalogsListSelector,
+  ELEMENT_CATALOG_LIST,
+} from "../../../client/catalog-list";
+import {formatNumber} from "../utils";
+import {STATUS_FAILED, STATUS_LOADING} from "../nkod-component-names";
+import {getGlobal} from "../../../client/app/globals";
+import {getDeleteCatalogFormLink} from "../dcat-ap-forms";
+//
+
+const CatalogList = () => {
+  const dispatch = useDispatch();
+  const t = useSelector(selectT);
+  const tLabel = useSelector(selectTLabel);
+  const language = useSelector(selectLanguage);
+  const data = useSelector(catalogsListSelector);
+  useEffect(() => {
+    if (data.status === Status.Undefined) {
+      dispatch(fetchCatalogList());
+    }
+  }, []);
+  //
+  const LoadingView = getRegisteredElement(STATUS_LOADING);
+  const FailedView = getRegisteredElement(STATUS_FAILED);
+  switch (data.status) {
+  case Status.Undefined:
+  case Status.Loading:
+    return (<LoadingView/>);
+  case Status.Failed:
+    return (<FailedView/>);
+  case Status.Ready:
+    return catalogListView(t, tLabel, language, data.catalogs);
+  default:
+    return null;
+  }
+};
+
+function catalogListView(t, tLabel, language, catalogs) {
+  return (
+    <div className="container p-3">
+      <h4>
+        {formatNumber(catalogs.length)}&nbsp;{t("catalogs_found")}
+      </h4>
+      <hr/>
+      <div className="row">
+        {catalogs.map((catalog) => (
+          <CatalogListItem
+            key={catalog.iri}
+            tLabel={tLabel}
+            catalog={catalog}
+            language={language}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CatalogListItem({tLabel, catalog, language}) {
   return (
     <div className="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 mb-3">
       <div className="card p-2">
@@ -92,13 +156,12 @@ function CatalogListItem({catalog, tLabel, fetchLabels, language}) {
 }
 
 CatalogListItem.propTypes = {
-  "catalog": PropTypes.object.isRequired,
   "tLabel": PropTypes.func.isRequired,
-  "fetchLabels": PropTypes.func.isRequired,
+  "catalog": PropTypes.object.isRequired,
   "language": PropTypes.string.isRequired,
 };
 
 register({
-  "name": CATALOG_LIST_ITEM,
-  "element": CatalogListItem,
+  "name": ELEMENT_CATALOG_LIST,
+  "element": CatalogList,
 });

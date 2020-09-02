@@ -6,18 +6,9 @@ import {
   getResource,
   getValue,
   getEntityByIri,
-} from "../../jsonld";
-import {NKOD, FOAF, DCTERMS, DCAT} from "../../vocabulary/vocabulary"
-
-interface Catalog {
-  iri: string;
-  type: string[];
-  endpoint?: string;
-  publisher?: string;
-  contact?: string;
-  contactEmail?: string;
-  homepage?: string;
-}
+} from "../jsonld";
+import {NKOD, FOAF, DCTERMS, DCAT} from "../vocabulary/vocabulary"
+import {Catalog} from "./catalog-list-model";
 
 export function jsonLdToCatalogList(jsonld: JsonLdEntity[]): Catalog[] {
   const result: Catalog[] = [];
@@ -40,4 +31,3 @@ export function jsonLdToCatalogList(jsonld: JsonLdEntity[]): Catalog[] {
   });
   return result;
 }
-

@@ -16,7 +16,6 @@ import {
   keywordListSelector,
   ELEMENT_KEYWORD_LIST,
 } from "../../../client/keyword-list";
-
 import TagCloud from "../user-iterface/tag-cloud";
 import {STATUS_FAILED, STATUS_LOADING} from "../nkod-component-names";
 

@@ -1,7 +1,4 @@
 // DCAT-AP-VIEWER modules.
-import "../../client/publisher/list-view";
-import "../../client/catalog/list-view";
-import "../../client/keyword-list";
 import "../../client/dataset/list-view";
 import "../../client/dataset-detail";
 
@@ -12,8 +9,7 @@ import "./app/initial-loading";
 import "./app/language-selector";
 import "./app/page-not-found";
 
-import "./catalog/list/catalog-list";
-import "./catalog/list/catalog-list-item";
+import "./catalog-list/catalog-list";
 
 import "./dataset-detail/dataset-detail";
 import "./dataset-detail/properties";
@@ -32,7 +28,7 @@ import "./dataset/list-view/facet-filters";
 import "./dataset/list-view/keyword-view";
 import "./dataset/list-view/theme-view";
 
-import "./publisher/list/publisher-list";
+import "./publisher-list/publisher-list";
 
 import "./keyword-list/keyword-list";
 

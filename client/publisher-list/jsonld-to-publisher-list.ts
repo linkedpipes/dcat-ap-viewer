@@ -2,14 +2,10 @@ import {
   JsonLdEntity,
   iterateEntitiesByType,
   getId,
-  getValue, getValues,
-} from "../../jsonld";
-import {SCHEMA, LP} from "../../vocabulary/vocabulary"
-
-interface Publisher {
-  iri: string;
-  datasetCount?: number;
-}
+  getValue,
+} from "../jsonld";
+import {Publisher} from "./publisher-list-model";
+import {SCHEMA, LP} from "../vocabulary/vocabulary"
 
 export function jsonLdToPublisherList(jsonld: JsonLdEntity[]): Publisher[] {
   const result: Publisher[] = [];
@@ -17,7 +13,7 @@ export function jsonLdToPublisherList(jsonld: JsonLdEntity[]): Publisher[] {
     const publisher: Publisher = {
       "iri": getId(entry),
       "datasetCount": Number(getValue(entry, LP.datasetsCount)),
-    }; // urn:datasetsCount
+    };
     result.push(publisher);
   });
   return result;

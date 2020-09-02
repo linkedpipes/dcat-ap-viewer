@@ -11,7 +11,7 @@ function createProvider(configuration) {
   return {
     "v2-quality-dataset": createV2QualityDataset(configuration),
     "v2-quality-distribution": createV2QualityDistribution(configuration),
-    "v2-quality-publisher": createV2QualityPublisher(configuration),
+    "v2-quality-publishers": createV2QualityPublisher(configuration),
   }
 }
 

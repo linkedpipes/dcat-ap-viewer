@@ -1,11 +1,11 @@
 //
-// As of now we support only one label per language.
+// Only one label per-language is supported.
 //
-
+import {LabelActions, LabelFetchPayload} from "./labels-action";
 import {SKOS, DCTERMS, RDF, VCARD, FOAF, RDFS} from "../vocabulary/vocabulary";
 import {iterateEntities, getStrings, getId, Literal} from "../jsonld";
 import {getDefaultLanguage, SET_LANGUAGE} from "../app/navigation";
-import {FETCH_LABEL} from "../api/api-action";
+import {getType} from "typesafe-actions";
 
 type TranslationMap = { [iri: string]: Literal };
 
@@ -26,8 +26,6 @@ const initialState: LabelsState = {
   "getter": () => ""
 };
 
-const NAME = "labels";
-
 function reducer(state = initialState, action: any): LabelsState {
   if (action["jsonld"]) {
     state = onJsonLdData(state, action["jsonld"]);
@@ -39,15 +37,17 @@ function reducer(state = initialState, action: any): LabelsState {
   switch (action["type"]) {
     case SET_LANGUAGE:
       return onSetLanguage(state, action);
-    case FETCH_LABEL:
-      return onFetchLabel(state, action);
+    case getType(LabelActions.fetchLabel.request):
+      return onFetchLabel(state, action.payload);
     default:
       return state;
   }
 }
 
+const reducerName = "label";
+
 export default {
-  "name": NAME,
+  "name": reducerName,
   "reducer": reducer,
 };
 
@@ -91,8 +91,8 @@ function mergeLiterals(literals: Literal[]): Literal {
 }
 
 function createLabelFunction(
-  labels: TranslationMap, language: string): LabelFunction {
-  //
+  labels: TranslationMap, language: string
+): LabelFunction {
   return (iri, defaultValue) => {
     if (defaultValue === undefined) {
       defaultValue = iri;
@@ -114,8 +114,8 @@ function createLabelFunction(
  * Select label for given language or any other language available.
  */
 function selectLabelString(
-  value: Literal, language: string): string | undefined {
-  //
+  value: Literal, language: string
+): string | undefined {
   if (value[language]) {
     return value[language];
   }
@@ -146,20 +146,24 @@ function onSetLanguage(state: LabelsState, action: any): LabelsState {
   };
 }
 
-function onFetchLabel(state: LabelsState, action: any): LabelsState {
+function onFetchLabel(
+  state: LabelsState, action: LabelFetchPayload
+): LabelsState {
   return {
     ...state,
     "requested": [...state.requested, action.iri]
   }
 }
 
-const reducerSelector = (state: any): LabelsState => state[NAME];
+const reducerSelector = (state: any): LabelsState => state[reducerName];
 
 export function selectTLabel(state: any): LabelFunction {
   return reducerSelector(state).getter;
 }
 
-export function shouldFetch(state: any, iri: string, language: string): boolean {
+export function shouldFetch(
+  state: any, iri: string, language: string
+): boolean {
   const labelsState = reducerSelector(state);
   // We require the label in given language.
   const labelIsAvailable =
