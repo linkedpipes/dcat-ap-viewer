@@ -84,6 +84,7 @@ function responseJsonLd(res, data) {
 function buildDatasetSolrQuery(query, defaultLanguage) {
   let userQuery = {
     ...defaultUserQuery(defaultLanguage),
+    "text": "*",
     ...parseDatasetUserQuery(query),
   };
   if (query.text) {
