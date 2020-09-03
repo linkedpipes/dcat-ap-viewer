@@ -122,7 +122,7 @@ function transformFacetsForType(allFacets, facetType, limit) {
 }
 
 function createDatasetItemGet(configuration) {
-  const datasetPerGraph = configuration["dataset-per-graph"] === true;
+  const datasetPerGraph = configuration["dataset-per-graph"];
   return (req, res) => {
     const iri = req.query.iri;
     const query = createDatasetSparql(datasetPerGraph, iri);
@@ -131,7 +131,6 @@ function createDatasetItemGet(configuration) {
       .catch(error => handleApiError(res, error));
   };
 }
-
 
 function createDatasetListTypeaheadGet(configuration) {
   return (req, res) => {
@@ -164,9 +163,11 @@ async function datasetListTypeaheadGet(configuration, query) {
 }
 
 function createLabelItemGet(configuration) {
+  const datasetPerGraph = configuration["dataset-per-graph"];
   return (req, res) => {
     const language = req.query.language;
-    const query = createLabelSparql(req.query.iri, language);
+    const query = createLabelSparql(
+      datasetPerGraph, req.query.iri, language);
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
       .catch(error => handleApiError(res, error));

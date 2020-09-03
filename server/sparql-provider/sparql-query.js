@@ -364,8 +364,7 @@ CONSTRUCT {
   
   ?pou ?pouPredicate ?pouObject .
   
-} WHERE {
-    ` + (datasetPerGraph ? "GRAPH ?g {" : "") + `
+} WHERE { ${datasetPerGraph ? "GRAPH ?g {" : ""}
   
   ?dataset ?datasetPredicate ?datasetObject .
   
@@ -415,14 +414,12 @@ CONSTRUCT {
     }
     
   }
-  
-  ` + (datasetPerGraph ? "}" : "") + `
-        
-    VALUES (?dataset) { (<${iri}>) }
+${datasetPerGraph ? "}" : ""}
+  VALUES (?dataset) { (<${iri}>) }
 }`;
 }
 
-function createLabelSparql(iri, language) {
+function createLabelSparql(datasetPerGraph, iri, language) {
   return `
 PREFIX foaf: <http://xmlns.com/foaf/0.1/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -430,6 +427,8 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 CONSTRUCT { <${iri}> ?predicate ?object } WHERE {
+  ${datasetPerGraph ? "GRAPH ?g {" : ""}
+  
   <${iri}> ?predicate ?object .
   
   OPTIONAL { 
@@ -440,6 +439,8 @@ CONSTRUCT { <${iri}> ?predicate ?object } WHERE {
     <${iri}> ?predicate ?label_secondary . 
     FILTER(LANG(?label_secondary) = "en")
   }
+  
+  ${datasetPerGraph ? "}" : ""}
   
   BIND( COALESCE(?label_primary, ?label_secondary) as ?label )
   
