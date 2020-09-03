@@ -10,17 +10,17 @@ export default function Authorship({t, tLiteral, legal, quality, openModal}) {
     return (
       <li className="list-group-item  px-2">
         <div>
-          {t("license_author_multi")}
+          {t("license.authorMulti")}
           <i
             className="material-icons text-warning float-right"
-            title={t("license_author_multi_comment")}
-            onClick={() => openModal(t("license_author_multi_comment"))}
+            title={t("license.author_multi_comment")}
+            onClick={() => openModal(t("license.authorMultiComment"))}
           >
               list
           </i>
         </div>
         <div className="label">
-          {t("license_author_type")}
+          {t("license.authorType")}
         </div>
       </li>
     );
@@ -28,17 +28,17 @@ export default function Authorship({t, tLiteral, legal, quality, openModal}) {
     return (
       <li className="list-group-item px-2">
         <div>
-          {t("license_author_no")}
+          {t("license.authorNo")}
           <i
             className="material-icons text-success float-right"
-            title={t("license_author_no_comment")}
-            onClick={() => openModal(t("license_author_no_comment"))}
+            title={t("license.authorNoComment")}
+            onClick={() => openModal(t("license.authorNoComment"))}
           >
               check
           </i>
         </div>
         <div className="label">
-          {t("license_author_type")}
+          {t("license.authorType")}
         </div>
       </li>
     );
@@ -46,11 +46,11 @@ export default function Authorship({t, tLiteral, legal, quality, openModal}) {
     return (
       <li className="list-group-item px-2">
         <div>
-          {t("license_author_ccBy")}
+          {t("license.authorCcBy")}
           <i
             className="material-icons text-warning float-right"
-            title={t("license_author_ccBy_comment")}
-            onClick={() => openModal(t("license_author_ccBy_comment"))}
+            title={t("license.authorCcByComment")}
+            onClick={() => openModal(t("license.authorCcByComment"))}
           >
               turned_in
           </i>
@@ -80,17 +80,17 @@ function missing(t, openModal) {
   return (
     <li className="list-group-item px-2">
       <div>
-        {t("license_missing")}
+        {t("license.missing")}
         <i
           className="material-icons text-danger float-right"
-          title={t("license_missing_comment")}
-          onClick={() => openModal(t("license_missing_comment"))}
+          title={t("license.missingComment")}
+          onClick={() => openModal(t("license.missingComment"))}
         >
           warning
         </i>
       </div>
       <div className="label">
-        {t("license_author_type")}
+        {t("license.authorType")}
       </div>
     </li>
   );
@@ -105,13 +105,13 @@ function custom(t, tLiteral, legal, quality, openModal) {
           rel="nofollow noopener noreferrer"
           target="_blank"
         >
-          {t("license_author_custom")}
+          {t("license.authorCustom")}
         </a>
         <div className="float-right">
           <i
             className="material-icons text-warning"
-            title={t("license_author_custom_comment")}
-            onClick={() => openModal(t("license_author_custom_comment"))}
+            title={t("license.authorCustomComment")}
+            onClick={() => openModal(t("license.authorCustomComment"))}
           >
             help
           </i>
@@ -124,7 +124,7 @@ function custom(t, tLiteral, legal, quality, openModal) {
         </div>
       </div>
       <div className="label">
-        {t("license_author_type")}
+        {t("license.authorType")}
       </div>
     </li>
   );
@@ -153,8 +153,8 @@ function QualityOfCustomLicense({t, tLiteral, quality, openModal}) {
   return (
     <i
       className="material-icons text-danger float-right"
-      title={t("license_author_custom_unavailable", strArgs)}
-      onClick={() => openModal(t("license_author_custom_unavailable", strArgs))}
+      title={t("license.authorCustomUnavailable", strArgs)}
+      onClick={() => openModal(t("license.authorCustomUnavailable", strArgs))}
     >
       link_off
     </i>

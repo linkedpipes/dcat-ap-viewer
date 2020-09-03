@@ -83,7 +83,7 @@ class Facets extends React.PureComponent {
           />
           <PublisherFacet
             t={t}
-            label="publishers"
+            label="facet.publishers"
             getFacetLabel={(item) => tLabel(item.iri)}
             fetchMore={this.publisherFetchMore}
             toggleFacet={this.togglePublisherFacet}
@@ -92,7 +92,7 @@ class Facets extends React.PureComponent {
           />
           <ThemeFacet
             t={t}
-            label="themes"
+            label="facet.themes"
             getFacetLabel={(item) => tLabel(item.iri)}
             fetchMore={this.themeFetchMore}
             toggleFacet={this.toggleThemeFacet}
@@ -101,7 +101,7 @@ class Facets extends React.PureComponent {
           />
           <KeywordFacet
             t={t}
-            label="keywords"
+            label="facet.keywords"
             getFacetLabel={(item) => item.code}
             fetchMore={this.keywordFetchMore}
             toggleFacet={this.toggleKeywordFacet}
@@ -109,7 +109,7 @@ class Facets extends React.PureComponent {
           />
           <FormatFacet
             t={t}
-            label="formats"
+            label="facet.formats"
             getFacetLabel={(item) => tLabel(item.iri)}
             fetchMore={this.formatFetchMore}
             toggleFacet={this.toggleFormatFacet}

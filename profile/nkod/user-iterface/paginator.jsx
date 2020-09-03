@@ -129,7 +129,7 @@ function createPageItem(index, isActive, onChange) {
 function createItemForIndexGap(index) {
   return (
     <li className="page-item px-3 pt-2" key={"stub_" + index}>
-            ...
+        ...
     </li>
   );
 }

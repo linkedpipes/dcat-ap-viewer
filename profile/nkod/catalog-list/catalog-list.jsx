@@ -15,7 +15,6 @@ import {
   catalogsListSelector,
   ELEMENT_CATALOG_LIST,
 } from "../../../client/catalog-list";
-import {formatNumber} from "../utils";
 import {STATUS_FAILED, STATUS_LOADING} from "../nkod-component-names";
 import {getGlobal} from "../../../client/app/globals";
 import {getDeleteCatalogFormLink} from "../dcat-ap-forms";
@@ -52,7 +51,7 @@ function catalogListView(t, tLabel, language, catalogs) {
   return (
     <div className="container p-3">
       <h4>
-        {formatNumber(catalogs.length)}&nbsp;{t("catalogs_found")}
+        {t("catalogsFound", {"count": catalogs.length})}
       </h4>
       <hr/>
       <div className="row">

@@ -8,9 +8,9 @@ import {
 import {PropTypes} from "prop-types";
 
 const VISUALISATION_CODELIST = [
-  "dataset-list",
-  "keyword-cloud",
-  "theme-cloud",
+  "datasetList",
+  "keywordCloud",
+  "themeCloud",
 ];
 
 export default function ViewSelector({t, value, onChange}) {

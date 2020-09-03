@@ -15,62 +15,62 @@ function Footer({language, t}) {
       <div className="container">
         <div className="row">
           <div className="col-md-4">
-            <strong>{t("f_nkod_registration")}</strong>
+            <strong>{t("footer.nkodRegistration")}</strong>
             <ul>
               <li>
                 <a href={getCreateDatasetFormLink(language)}>
-                  {t("f_register_dataset")}
+                  {t("footer.registerDataset")}
                 </a>
               </li>
               <li>
                 <a href={getCreateCatalogFormLink(language)}>
-                  {t("f_register_local_catalog")}
+                  {t("footer.registerLocalCatalog")}
                 </a>
               </li>
             </ul>
-            <strong>{t("f_contacts")}</strong>
+            <strong>{t("footer.contacts")}</strong>
             <ul>
-              <li>{t("f_contact_person")}: <a
+              <li>{t("footer.contactPerson")}: <a
                 href="mailto:michal.kuban@mvcr.cz">Michal Kubáň</a>
               </li>
-              <li>{t("f_email")}: <a
+              <li>{t("footer.email")}: <a
                 href="mailto:michal.kuban@mvcr.cz">michal.kuban@mvcr.cz</a>
               </li>
-              <li>{t("f_telephone")}: +420 974 816 395
+              <li>{t("footer.telephone")}: +420 974 816 395
               </li>
-              <li><a href="http://www.mvcr.cz/">{t("f_mvcr")}</a></li>
+              <li><a href="http://www.mvcr.cz/">{t("footer.mvcr")}</a></li>
             </ul>
           </div>
           <div className="col-md-4">
-            <strong>{t("f_links")}</strong>
+            <strong>{t("footer.links")}</strong>
             <ul>
-              <li>{t("f_catalog_for_download")}: <a
+              <li>{t("footer.catalogForDownload")}: <a
                 href="https://data.gov.cz/soubor/nkod.trig">
-                {t("f_download_catalog")}
+                {t("footer.downloadCatalog")}
               </a>, <a href="https://data.gov.cz/soubor/datové-sady.csv">
-                {t("f_download_datasets")}
+                {t("footer.downloadDatasets")}
               </a>, <a href="https://data.gov.cz/soubor/distribuce.csv">
-                {t("f_download_distributions")}
+                {t("footer.downloadDistributions")}
               </a></li>
               <li><a href="https://data.gov.cz/sparql">
-                {t("f_sparql_endpoint")}
+                {t("footer.sparqlEndpoint")}
               </a></li>
               <li><a href="https://data.gov.cz">
-                {t("f_opendata")}
+                {t("footer.opendata")}
               </a></li>
-              <li>{t("f_catalog_runs_at")}{" "}
+              <li>{t("footer.catalogRunsAt")}{" "}
                 <a href="https://github.com/linkedpipes/dcat-ap-viewer">
                   LinkedPipes DCAT-AP Viewer
                 </a>
               </li>
-              <li>{t("f_data_prepared_with")}{" "}
+              <li>{t("footer.dataPreparedWith")}{" "}
                 <a href="https://etl.linkedpipes.com">
                   LinkedPipes ETL
                 </a>
               </li>
               <li>
                 <a href="https://github.com/opendata-mvcr/nkod">
-                  {t("f_nkod_documentation")}
+                  {t("footer.nkodDocumentation")}
                 </a>
               </li>
             </ul>
@@ -78,10 +78,10 @@ function Footer({language, t}) {
           <div className="col-md-4">
             <div className="bg-white shadow">
               <img
-                alt={t("f_eu_ozp")}
+                alt={t("footer.euOzp")}
                 className="d-inline-block align-top"
                 id="eulogo"
-                src={t("f_opz_logo_link")}
+                src={t("footer.opzLogoLink")}
                 width="300"
               />
             </div>
@@ -90,14 +90,14 @@ function Footer({language, t}) {
         <hr/>
         <div className="row">
           <div className="col-md-12 font-italic">
-            {t("f_legal_0")}
+            {t("footer.legalStart")}
             <a
               href="https://www.zakonyprolidi.cz/cs/2008-64"
-              title="Vyhláška o přístupnosti"
+              title={t("footer.legalLink")}
             >
-              {t("f_legal_1")}
+              {t("footer.legalLink")}
             </a>
-            {t("f_legal_2")}
+            {t("footer.legalTail")}
           </div>
         </div>
       </div>

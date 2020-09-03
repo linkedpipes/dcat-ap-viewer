@@ -1,12 +1,12 @@
 {
   "cs": {
     "string": {
-      "keywords": "Klíčová slova"
+      "close": "Zavřít"
     }
   },
   "en": {
     "string": {
-      "keywords": "Keywords"
+      "close": "Close"
     }
   }
 }

@@ -12,17 +12,17 @@ export default function DatabaseAuthorship(
     return (
       <li className="list-group-item px-2">
         <div>
-          {t("license_author_no")}
+          {t("license.authorNo")}
           <i
             className="material-icons text-success float-right"
-            title={t("license_db_no_comment")}
-            onClick={() => openModal(t("license_db_no_comment"))}
+            title={t("license.dbNoComment")}
+            onClick={() => openModal(t("license.dbNoComment"))}
           >
               check
           </i>
         </div>
         <div className="label">
-          {t("license_db_type")}
+          {t("license.dbType")}
         </div>
       </li>
     );
@@ -30,11 +30,11 @@ export default function DatabaseAuthorship(
     return (
       <li className="list-group-item px-2">
         <div>
-          {t("license_author_ccBy")}
+          {t("licenseAuthorCcBy")}
           <i
             className="material-icons text-warning float-right"
-            title={t("license_db_ccBy_comment")}
-            onClick={() => openModal(t("license_db_ccBy_comment"))}
+            title={t("license.dbCcByComment")}
+            onClick={() => openModal(t("license.dbCcByComment"))}
           >
               turned_in
           </i>
@@ -48,17 +48,17 @@ export default function DatabaseAuthorship(
     return (
       <li className="list-group-item px-2">
         <div>
-          {t("license_missing")}
+          {t("license.missing")}
           <i
             className="material-icons text-danger float-right"
-            title={t("license_missing_comment")}
-            onClick={() => openModal(t("license_missing_comment"))}
+            title={t("license.missingComment")}
+            onClick={() => openModal(t("license.missingComment"))}
           >
               warning
           </i>
         </div>
         <div className="label">
-          {t("license_db_type")}
+          {t("license.dbType")}
         </div>
       </li>
     );
@@ -88,13 +88,13 @@ function custom(t, tLiteral, legal, quality, openModal) {
           rel="nofollow noopener noreferrer"
           target="_blank"
         >
-          {t("license_db_custom")}
+          {t("license.dbCustom")}
         </a>
         <div className="float-right">
           <i
             className="material-icons text-warning"
-            title={t("license_db_custom_comment")}
-            onClick={() => openModal(t("license_db_custom_comment", strArgs))}
+            title={t("license.dbCustomComment")}
+            onClick={() => openModal(t("license.dbCustomComment", strArgs))}
           >
             help
           </i>
@@ -107,7 +107,7 @@ function custom(t, tLiteral, legal, quality, openModal) {
         </div>
       </div>
       <div className="label">
-        {t("license_db_type")}
+        {t("license.dbType")}
       </div>
     </li>
   );
@@ -136,8 +136,8 @@ function QualityOfCustomDatabaseAuthorship({t, tLiteral, quality, openModal}) {
   return (
     <i
       className="material-icons text-danger"
-      title={t("license_db_custom_unavailable", strArgs)}
-      onClick={() => openModal(t("license_db_custom_unavailable", strArgs))}
+      title={t("license.dbCustomUnavailable", strArgs)}
+      onClick={() => openModal(t("license.dbCustomUnavailable", strArgs))}
     >
       link_off
     </i>

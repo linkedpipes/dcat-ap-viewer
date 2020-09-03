@@ -18,7 +18,7 @@ RequestStatus.propTypes = {
 
 function getMessage(t, failed) {
   if (failed) {
-    return t("http.error_response");
+    return t("http.errorResponse");
   } else {
     return t("http.fetching");
   }

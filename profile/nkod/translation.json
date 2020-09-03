@@ -1,0 +1,18 @@
+{
+  "cs": {
+    "string": {
+      "form.editDataset": "Uprav datovou sadu",
+      "form.deleteDataset": "Smaž datovou sadu",
+      "form.deleteCatalog": "Smaž katalog",      
+      "form.copyAsNewDataset": "Zkopírovat jako novou datovou sadu"
+    }
+  },
+  "en": {
+    "string": {
+      "form.editDataset": "Edit dataset",
+      "form.deleteDataset": "Delete dataset",
+      "form.deleteCatalog": "Delete catalog",
+      "form.copyAsNewDataset": "Copy as new dataset"
+    }
+  }
+}

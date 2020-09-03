@@ -1,7 +1,6 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import TagLine from "../../user-iterface/tag-line";
-import {formatNumber} from "../../utils";
 import {getGlobal} from "../../../client-api";
 import {
   DropdownItem,
@@ -19,7 +18,7 @@ export default function DatasetsViewHeader(
     <Row>
       <Col xs={12} md={9}>
         <h4>
-          {formatNumber(datasetCount)} {t("query.datasets_found")}
+          {t("query.datasetsFound", {"count": datasetCount})}
           {
             query["search"] !== "" &&
             t("query.with") + ": \"" + query["search"] + "\""

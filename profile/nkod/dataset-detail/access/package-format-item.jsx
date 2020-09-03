@@ -15,7 +15,7 @@ export default function PackageFormat({t, tLabel, distribution}) {
         {tLabel(distribution.packageFormat, "")}
         <a
           href={distribution.packageFormat}
-          title={t("follow_link")}
+          title={t("followLink")}
           rel="nofollow noopener noreferrer"
           target="_blank"
         >
@@ -23,7 +23,7 @@ export default function PackageFormat({t, tLabel, distribution}) {
         </a>
       </div>
       <div className="label">
-        {t("access_packageFormat")}
+        {t("access.packageFormat")}
       </div>
     </li>
   );

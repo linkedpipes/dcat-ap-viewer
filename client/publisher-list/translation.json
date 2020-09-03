@@ -1,12 +1,12 @@
 {
   "cs": {
     "string": {
-      "keywords": "Klíčová slova"
+      "/publishers": "Poskytovatelé"
     }
   },
   "en": {
     "string": {
-      "keywords": "Keywords"
+      "/publishers": "Publishers"
     }
   }
 }

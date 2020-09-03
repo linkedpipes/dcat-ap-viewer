@@ -17,7 +17,6 @@ import {
   publishersListSelector,
   ELEMENT_PUBLISHER_LIST,
 } from "../../../client/publisher-list";
-import {formatNumber} from "../utils";
 import {STATUS_FAILED, STATUS_LOADING} from "../nkod-component-names";
 
 const PublisherList = () => {
@@ -51,7 +50,7 @@ function publisherListView(t, tLabel, tUrl, publishers) {
   return (
     <div className="container p-3">
       <h4>
-        {formatNumber(publishers.length)}&nbsp;{t("publishers_found")}
+        {t("publishersFound", {"count": publishers.length})}
       </h4>
       <hr/>
       <div className="row">
@@ -82,7 +81,7 @@ function PublisherListItem({t, tUrl, tLabel, publisher}) {
         </div>
         <ul className="list-group list-group-flush">
           <li className="list-group-item">
-            {getDatasetCountLabel(publisher.datasetCount, t)}
+            {t("publishersDatasets", {"count": publisher.datasetCount})}
           </li>
         </ul>
       </div>
@@ -96,18 +95,6 @@ PublisherListItem.propTypes = {
   "tLabel": PropTypes.func.isRequired,
   "publisher": PropTypes.object.isRequired,
 };
-
-function getDatasetCountLabel(count, t) {
-  if (count === undefined || count === null) {
-    return "";
-  } else if (count === 1) {
-    return t("one_dataset");
-  } else if (count <= 4) {
-    return count + t("two_three_datasets");
-  } else {
-    return formatNumber(count) + t("many_datasets");
-  }
-}
 
 register({
   "name": ELEMENT_PUBLISHER_LIST,

@@ -47,7 +47,7 @@ function DatasetsView(props) {
       {getShowMoreVisible(props.datasetsCount, props.query, props.datasets) && (
         <React.Fragment>
           <Button onClick={props.onShowMoreDatasets}>
-            {props.t("facet.show_more")}
+            {props.t("facet.showMore")}
           </Button>
           <br/>
         </React.Fragment>

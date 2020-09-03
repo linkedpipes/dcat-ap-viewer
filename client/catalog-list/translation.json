@@ -1,12 +1,12 @@
 {
   "cs": {
     "string": {
-      "keywords": "Klíčová slova"
+      "/catalogs": "Katalogy"
     }
   },
   "en": {
     "string": {
-      "keywords": "Keywords"
+      "/catalogs": "Catalogs"
     }
   }
 }

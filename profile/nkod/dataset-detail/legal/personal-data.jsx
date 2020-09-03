@@ -9,20 +9,20 @@ export default function PersonalData({t, legal, openModal}) {
   const mapped = PU_VALUES_MAPPING[legal.personalData];
   if (mapped === "no") {
     iconClass = " text-success";
-    label = t("license_personal_no");
-    title = t("license_personal_no_comment");
+    label = t("license.personalNo");
+    title = t("license.personalNoComment");
   } else if (mapped === "contains") {
     iconClass = " text-success";
-    label = t("license_personal_yes");
-    title = t("license_personal_yes_comment");
+    label = t("license.personalYes");
+    title = t("license.personalYesComment");
   } else if (mapped === "unspecified") {
     iconClass = " text-warning";
-    label = t("license_personal_unspecified");
-    title = t("license_personal_unspecified_comment");
+    label = t("license.personalUnspecified");
+    title = t("license.personalUnspecifiedComment");
   } else if (mapped === "missing") {
     iconClass = " text-danger";
-    label = t("license_personal_unspecified");
-    title = t("license_personal_missing_comment");
+    label = t("license.personalMissing");
+    title = t("license.personalMissingComment");
   } else {
     console.error("Unexpected value for personal data: ", legal.personalData);
     return null;
@@ -40,7 +40,7 @@ export default function PersonalData({t, legal, openModal}) {
         </i>
       </div>
       <div className="label">
-        {t("license_personal_type")}
+        {t("license.personalType")}
       </div>
     </li>
   );

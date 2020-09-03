@@ -15,7 +15,7 @@ export default function CompressFormat({t, tLabel, distribution}) {
         {tLabel(distribution.compressFormat, true)}
         <a
           href={distribution.compressFormat}
-          title={t("follow_link")}
+          title={t("followLink")}
           rel="nofollow noopener noreferrer"
           target="_blank"
         >
@@ -25,7 +25,7 @@ export default function CompressFormat({t, tLabel, distribution}) {
         </a>
       </div>
       <div className="label">
-        {t("access_compressFormat")}
+        {t("access.compressFormat")}
       </div>
     </li>
   );

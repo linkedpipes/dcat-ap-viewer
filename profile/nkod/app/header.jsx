@@ -56,7 +56,7 @@ class Header extends React.Component {
           <NavbarBrand href="https://data.gov.cz/">
             <img
               width="174" height="30"
-              alt={t("header.logo_alt")}
+              alt={t("header.logoAlt")}
               className="d-inline-block align-top"
               src="./assets/images/opendata-logo.png"
             />
@@ -66,7 +66,7 @@ class Header extends React.Component {
             <Nav className="ml-auto" navbar>
               <NavItem>
                 <NavLink href="https://data.gov.cz/novinky/">
-                  {t("news")}
+                  {t("header.news")}
                 </NavLink>
               </NavItem>
               <NavItem>
@@ -75,7 +75,7 @@ class Header extends React.Component {
                   className="nav-link"
                   activeClassName="active"
                 >
-                  {t("datasets")}
+                  {t("header.datasets")}
                 </RouterLink>
               </NavItem>
               <NavItem>
@@ -84,7 +84,7 @@ class Header extends React.Component {
                   className="nav-link"
                   activeClassName="active"
                 >
-                  {t("publishers")}
+                  {t("header.publishers")}
                 </RouterLink>
               </NavItem>
               <NavItem>
@@ -93,7 +93,7 @@ class Header extends React.Component {
                   className="nav-link"
                   activeClassName="active"
                 >
-                  {t("keywords")}
+                  {t("header.keywords")}
                 </RouterLink>
               </NavItem>
               <NavItem>
@@ -102,28 +102,28 @@ class Header extends React.Component {
                   toggle={this.toggleMore}
                 >
                   <DropdownToggle caret nav>
-                    {t("more")}
+                    {t("header.more")}
                   </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem
                       href="https://opendata.gov.cz/informace:základy-otevřených-dat-pro-zájemce"
                     >
-                      {t("for_interested_in_open_data")}
+                      {t("header.forInterestedInOpenData")}
                     </DropdownItem>
                     <DropdownItem
                       href="https://opendata.gov.cz/informace:základy-otevřených-dat-pro-programátory"
                     >
-                      {t("for_programmes")}
+                      {t("header.forProgrammes")}
                     </DropdownItem>
                     <DropdownItem href="https://opendata.gov.cz">
-                      {t("for_publishers")}
+                      {t("header.forPublishers")}
                     </DropdownItem>
                     <DropdownItem
                       tag={RouterLink}
                       to={tUrl("/catalogs")}
                       activeClassName="active"
                     >
-                      {t("catalogs")}
+                      {t("header.catalogs")}
                     </DropdownItem>
                   </DropdownMenu>
                 </Dropdown>

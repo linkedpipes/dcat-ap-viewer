@@ -35,9 +35,9 @@ export default function withStatus(WrappedComponent) {
 export function Status(props) {
   const errorMessages = [
     "",
-    "http.fetch_failed",
-    "http.error_response",
-    "http.server_failure",
+    "http.fetchFailed",
+    "http.errorResponse",
+    "http.serverFailure",
   ];
 
   if (props.error > 0) {
@@ -67,7 +67,7 @@ export function statusFailed() {
   const t = useSelector(selectT);
   return (
     <div style={STATUS_STYLE}>
-      {t("http.fetch_failed")}
+      {t("http.fetchFailed")}
     </div>
   );
 }

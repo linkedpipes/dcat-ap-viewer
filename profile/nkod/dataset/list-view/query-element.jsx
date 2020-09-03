@@ -50,14 +50,14 @@ function QueryElement(props) {
             onClick={() => setShowAdvanced(!showAdvanced)}
           >
             {showAdvanced ?
-              props.t("query.hide_filters")
-              : props.t("query.show_filters")}
+              props.t("query.hideFilters")
+              : props.t("query.showFilters")}
           </Button>
           <Button
             className="mt-2"
             onClick={onClearAllFilters}
           >
-            {props.t("query.clear_filters")}
+            {props.t("query.clearFilters")}
           </Button>
         </Col>
         <Col className="mt-2">
@@ -126,10 +126,10 @@ function TemporalFilters({t, start, setStart, end, setEnd, setTemporal}) {
             "marginRight": "0.5rem",
           }}/>
         <Button style={styleMarginR} onClick={onThisYear}>
-          {t("query.this_year")}
+          {t("query.thisYear")}
         </Button>
         <Button onClick={onLastYear}>
-          {t("query.last_year")}
+          {t("query.lastYear")}
         </Button>
       </Row>
     </div>

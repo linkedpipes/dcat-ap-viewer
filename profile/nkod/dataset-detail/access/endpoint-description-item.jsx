@@ -17,18 +17,18 @@ export default function EndpointDescription(
         rel="nofollow noopener noreferrer"
         target="_blank"
       >
-        {t("endpoint_description")}
+        {t("access.endpointDescription")}
       </a>
       {qualityIcons(t, tLiteral, openModal, quality, [{
         "measureOf": QUALITY.endpointDescription,
-        "labelTrue": "endpoint_description_quality_true",
-        "labelFalse": "endpoint_description_quality_false",
+        "labelTrue": "access.endpointDescriptionQualityTrue",
+        "labelFalse": "access.endpointDescriptionQualityFalse",
         "iconTrue": "verified_user",
         "iconFalse": "link_off",
       }, {
         "measureOf": QUALITY.endpointDescriptionCors,
-        "labelTrue": "endpoint_description_quality_cors_true",
-        "labelFalse": "endpoint_description_quality_cors_false",
+        "labelTrue": "access.endpointDescriptionQualityCorsTrue",
+        "labelFalse": "access.endpointDescriptionQualityCorsFalse",
         "iconTrue": "http",
         "iconFalse": "http",
       }])}

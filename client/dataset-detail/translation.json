@@ -1,12 +1,12 @@
 {
   "cs": {
     "string": {
-      "keywords": "Klíčová slova"
+      "/dataset": "Datová sada"
     }
   },
   "en": {
     "string": {
-      "keywords": "Keywords"
+      "/dataset": "Dataset"
     }
   }
 }

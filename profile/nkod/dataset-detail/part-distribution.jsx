@@ -71,7 +71,7 @@ function licenseColumn(t, tLiteral, legal, quality, openModal) {
   return (
     <div className="card">
       <h6 className="card-title text-muted pl-2 pt-2">
-        {t("distribution_license")}
+        {t("distributionLicense")}
       </h6>
       <ul className="list-group list-group-flush">
         <Authorship
@@ -109,7 +109,7 @@ function accessColumn(t, tLabel, tLiteral, distribution, quality, openModal) {
   return (
     <div className="card">
       <h6 className="card-title text-muted pl-2 pt-2">
-        {t("distribution_access")}
+        {t("distributionAccess")}
       </h6>
       <ul className="list-group list-group-flush">
         <DownloadListItem

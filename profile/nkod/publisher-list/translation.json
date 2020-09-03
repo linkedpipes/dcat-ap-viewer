@@ -1,22 +1,24 @@
 {
   "cs": {
     "string": {
-      "publishers_found": "poskytovatelů nalezeno",
-      "one_dataset": "1 datová sada",
-      "two_three_datasets": " datové sady",
-      "many_datasets": " datových sad",
-      "exceptional_publisher": "Vzorný poskytovatel",
-      "/publishers": "Poskytovatelé"
+      "publishersFound_0": "Nenalezen žádný poskytovatel",
+      "publishersFound_1": "Nalezen 1 poskytovatel",
+      "publishersFound_2": "Nalezeni {count} poskytovatelé",
+      "publishersFound_5": "Nalezeno {count} poskytovatelů",
+      "publishersDatasets_0": "Žádná datové sada",
+      "publishersDatasets_1": "1 datová sada",
+      "publishersDatasets_2": "{count} datové sady",
+      "publishersDatasets_5": "{count} datových sad"
     }
   },
   "en": {
     "string": {
-      "publishers_found": "publishers found",
-      "one_dataset": "1 dataset",
-      "two_three_datasets": " datasets",
-      "many_datasets": " datasets",
-      "exceptional_publisher": "Exemplary provider",
-      "/publishers": "Publishers"
+      "publishersFound_0": "No publisher found",
+      "publishersFound_1": "{count} publisher found",
+      "publishersFound_2": "{count} publishers found",
+      "publishersDatasets_0": "No dataset",
+      "publishersDatasets_1": "1 dataset",
+      "publishersDatasets_2": "{count} datasets"
     }
   }
 }

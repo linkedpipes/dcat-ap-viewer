@@ -37,14 +37,14 @@ export default class FacetView extends React.PureComponent {
               onClick={showMore}
               style={{"float": "left"}}
             >
-              {this.props.t("facet.show_more")}
+              {this.props.t("facet.showMore")}
             </Button>
             <Button
               onClick={showAll}
               color="warning"
               style={{"float": "right"}}
             >
-              {this.props.t("facet.show_all")}
+              {this.props.t("facet.showAll")}
             </Button>
           </div>
         )}

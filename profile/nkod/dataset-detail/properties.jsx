@@ -45,7 +45,7 @@ function firstColumn(t, tLabel, tUrl, dataset) {
     <div className="col-12 col-sm-6 col-md-3">
       {hasDataThemes &&
       <dl>
-        <dt>{t("dataset_topic")}</dt>
+        <dt>{t("datasetTopic")}</dt>
         {
           dataset.datasetThemes.map(iri =>
             searchableLabeledLinkEntitiesAsDd(
@@ -80,7 +80,7 @@ function searchableLabeledLinkEntitiesAsDd(t, tLabel, tUrl, iri, queryName) {
       </Link>
       <a
         href={iri}
-        title={t("follow_link")}
+        title={t("followLink")}
         rel="nofollow noopener noreferrer"
         target="_blank"
       >
@@ -142,7 +142,7 @@ function labeledLinkEntitiesAsDd(t, tLabel, iri) {
       {tLabel(iri)}
       <a
         href={iri}
-        title={t("follow_link")}
+        title={t("followLink")}
         rel="nofollow noopener noreferrer"
         target="_blank"
       >
@@ -159,7 +159,7 @@ function spatialCoverageResolution(t, dataset) {
   }
   return (
     <React.Fragment>
-      <dt>{t("spatial_resolution")}</dt>
+      <dt>{t("spatialResolution")}</dt>
       {dataset.spatialResolutionInMeters} m
     </React.Fragment>
   );
@@ -212,7 +212,7 @@ function temporalCoverageResolution(t, dataset) {
   }
   return (
     <React.Fragment>
-      <dt>{t("temporal_resolution")}</dt>
+      <dt>{t("temporalResolution")}</dt>
       <dd>{xsdDurationToString(t, dataset.temporalResolution)}</dd>
     </React.Fragment>
   );
@@ -282,15 +282,8 @@ function parseXsdDuration(value) {
 function appendValue(value, t, labelName) {
   if (value === null) {
     return "";
-  } else if (value === 1) {
-    return "1 " + t(labelName) + " ";
-  } else if (Math.abs(value) < 5) {
-    return value + " " + t(labelName + "s-2") + " ";
-  } else if (Math.abs(value) >= 5) {
-    return value + " " + t(labelName + "s-5") + " ";
-  } else {
-    return "";
   }
+  return value + " " + t(labelName, {"count": value});
 }
 
 function thirdColumn(t, tLiteral, tLabel, dataset, quality, openModal) {
@@ -306,7 +299,7 @@ function thirdColumn(t, tLiteral, tLabel, dataset, quality, openModal) {
         {hasDocumentation
         && documentationLabel(t, tLiteral, quality, openModal)}
         {hasDocumentation && documentation(t, dataset)}
-        {hasContacts && <dt>{t("contact_point")}</dt>}
+        {hasContacts && <dt>{t("contactPoint")}</dt>}
         {hasContacts && contactPoints(tLabel, dataset.contactPoints)}
         {hasSpecification
         && specificationLabel(t, tLiteral, quality, openModal)}
@@ -321,14 +314,14 @@ function documentationLabel(t, tLiteral, quality, openModal) {
     t, tLiteral, openModal, quality, "documentation",
     [{
       "measureOf": QUALITY.documentation,
-      "labelTrue": "documentation_quality_true",
-      "labelFalse": "documentation_quality_false",
+      "labelTrue": "documentationQualityTrue",
+      "labelFalse": "documentationQualityFalse",
       "iconTrue": "verified_user",
       "iconFalse": "link_off",
     }, {
       "measureOf": QUALITY.documentationCors,
-      "labelTrue": "documentation_quality_cors_true",
-      "labelFalse": "documentation_quality_cors_false",
+      "labelTrue": "documentationQualityCorsTrue",
+      "labelFalse": "documentationQualityCorsFalse",
       "iconTrue": "http",
       "iconFalse": "http",
     }]
@@ -339,7 +332,7 @@ function documentation(t, dataset) {
   return dataset.documentation.map((iri) => (
     <dd key={iri}>
       <a href={iri} rel="nofollow noopener noreferrer">
-        {t("documentation_download")}
+        {t("documentationDownload")}
       </a>
       <br/>
     </dd>
@@ -351,14 +344,14 @@ function specificationLabel(t, tLiteral, quality, openModal) {
     t, tLiteral, openModal, quality, "specification",
     [{
       "measureOf": QUALITY.specification,
-      "labelTrue": "specification_quality_true",
-      "labelFalse": "specification_quality_false",
+      "labelTrue": "specificationQualityTrue",
+      "labelFalse": "specificationQualityFalse",
       "iconTrue": "verified_user",
       "iconFalse": "link_off",
     }, {
       "measureOf": QUALITY.specificationCors,
-      "labelTrue": "specification_quality_cors_true",
-      "labelFalse": "specification_quality_cors_false",
+      "labelTrue": "specificationQualityCorsTrue",
+      "labelFalse": "specificationQualityCorsFalse",
       "iconTrue": "http",
       "iconFalse": "http",
     }]
@@ -369,7 +362,7 @@ function specification(t, dataset) {
   return dataset.conformsTo.map((iri) => (
     <dd key={iri}>
       <a href={iri} rel="nofollow noopener noreferrer">
-        {t("specification_open")}
+        {t("specificationOpen")}
       </a>
       <br/>
     </dd>

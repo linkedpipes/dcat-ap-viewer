@@ -29,18 +29,18 @@ export default function DownloadListItem(
         rel="nofollow noopener noreferrer"
         target="_blank"
       >
-        {t("download")}
+        {t("access.download")}
       </a>
       {qualityIcons(t, tLiteral, openModal, quality, [{
         "measureOf": QUALITY.download,
-        "labelTrue": "file_quality_true",
-        "labelFalse": "file_quality_false",
+        "labelTrue": "access.fileQualityTrue",
+        "labelFalse": "access.fileQualityFalse",
         "iconTrue": "verified_user",
         "iconFalse": "link_off",
       }, {
         "measureOf": QUALITY.downloadCors,
-        "labelTrue": "file_quality_cors_true",
-        "labelFalse": "file_quality_cors_false",
+        "labelTrue": "access.fileQualityCorsTrue",
+        "labelFalse": "access.fileQualityCorsFalse",
         "iconTrue": "http",
         "iconFalse": "http",
       }])}

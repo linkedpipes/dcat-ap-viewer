@@ -43,7 +43,7 @@ function DcatApForms({t, language, dataset}) {
       <span>
         <a
           href={getEditDatasetFormLink(language, dataset.iri)}
-          title={t("edit_dataset")}
+          title={t("form.editDataset")}
           target="_blank"
           rel="nofollow noopener noreferrer"
         >
@@ -53,7 +53,7 @@ function DcatApForms({t, language, dataset}) {
         </a>
         <a
           href={getCopyDatasetFormLink(language, dataset.iri)}
-          title={t("copy_as_new_dataset")}
+          title={t("form.copyAsNewDataset")}
           target="_blank"
           rel="nofollow noopener noreferrer"
         >
@@ -63,7 +63,7 @@ function DcatApForms({t, language, dataset}) {
         </a>
         <a
           href={getDeleteDatasetFormLink(language, dataset.iri)}
-          title={t("delete_dataset")}
+          title={t("form.deleteDataset")}
           target="_blank"
           rel="nofollow noopener noreferrer"
         >
@@ -78,7 +78,7 @@ function DcatApForms({t, language, dataset}) {
       <span>
         <a
           href={getCopyDatasetFormLink(language, dataset.iri)}
-          title={t("copy_as_new_dataset")}
+          title={t("form.copyAsNewDataset")}
           target="_blank"
           rel="nofollow noopener noreferrer"
         >
@@ -88,7 +88,7 @@ function DcatApForms({t, language, dataset}) {
         </a>
         <a
           href={getDeleteCatalogFormLink(language, dataset.lkod)}
-          title={t("delete_catalog")}
+          title={t("form.deleteCatalog")}
           target="_blank"
           rel="nofollow noopener noreferrer"
         >

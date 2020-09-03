@@ -5,6 +5,7 @@
 const path = require("path");
 const fs = require("fs");
 const configuration = require("./server-configuration");
+const logger = require("./logging");
 
 module.exports = {
   "loadTranslationFiles": loadTranslationFiles,
@@ -13,8 +14,6 @@ module.exports = {
 function loadTranslationFiles() {
 
   const translations = {
-    "url": {},
-    "query": {},
     "string": {},
     "languages": new Set(),
   };
@@ -27,20 +26,10 @@ function loadTranslationFiles() {
     Object.keys(fileContent).forEach(language => {
       translations["languages"].add(language);
       const content = fileContent[language];
-      translations["string"][language] = {
-        ...(translations["string"][language] || {}),
-        ...content["string"],
-      };
-      if (content["url"]) {
-        Object.entries(content["url"]).forEach(([key, value]) => {
-          addToMap(translations["url"], language, key, value);
-        });
-      }
-      if (content["query"]) {
-        Object.entries(content["query"]).forEach(([key, value]) => {
-          addToMap(translations["query"], language, key, value);
-        });
-      }
+      translations["string"][language] = merge(
+        transformForPlurals(translations["string"][language] || {}),
+        transformForPlurals(content["string"]),
+      );
     });
   };
 
@@ -54,8 +43,6 @@ function loadTranslationFiles() {
 
   return {
     "navigation": {
-      "url": translations["url"],
-      "query": translations["query"],
       "languages": [...translations["languages"]],
     },
     ...translations["string"],
@@ -80,9 +67,48 @@ function loadTranslationFile(filePath) {
   return JSON.parse(content);
 }
 
-function addToMap(map, language, key, value) {
-  if (!map[key]) {
-    map[key] = {};
+function merge(left, right) {
+  const result = {...left};
+  for (const [key, rightValue] of Object.entries(right)) {
+    const leftValue = result[key];
+    if (leftValue === undefined) {
+      result[key] = rightValue;
+      continue;
+    }
+    if (typeof (leftValue) === "object" && typeof (rightValue) === "object") {
+      result[key] = {
+        ...leftValue,
+        ...rightValue,
+      };
+    }
+    // Just use next value.
+    logger.error(
+      "Translation collision for.",
+      {"key": key, "left": leftValue, "right": rightValue}
+    );
+    result[key] = rightValue;
   }
-  map[key][language] = value;
+  return result;
+}
+
+function transformForPlurals(values) {
+  const result = {};
+  for (const [key, value] of Object.entries(values)) {
+    const index = key.lastIndexOf("_");
+    if (index === -1) {
+      result[key] = value;
+      continue;
+    }
+    const count = key.substr(index + 1);
+    if (isNaN(count)) {
+      result[key] = value;
+      continue;
+    }
+    const prefix = key.substr(0, index);
+    if (result[prefix] === undefined) {
+      result[prefix] = {};
+    }
+    result[prefix][count] = value;
+  }
+  return result;
 }

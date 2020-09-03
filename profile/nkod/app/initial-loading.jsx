@@ -10,12 +10,12 @@ import {PropTypes} from "prop-types";
 // to take all strings with us.
 const TRANSLATIONS = {
   "cs": {
-    "initial_loading": "Načítám základní data ...",
-    "initial_loading_failed": "Nepodařilo se načíst základní data.",
+    "initialLoading": "Načítám základní data ...",
+    "initialLoadingFailed": "Nepodařilo se načíst základní data.",
   },
   "en": {
-    "initial_loading": "Loading initial data ...",
-    "initial_loading_failed": "Initial loading failed.",
+    "initialLoading": "Loading initial data ...",
+    "initialLoadingFailed": "Initial loading failed.",
   },
 };
 
@@ -24,11 +24,11 @@ function InitialLoading({lang, failed}) {
   return (
     <Container style={{"textAlign": "center"}}>
       <br/>
-      <h1>{t["initial_loading"]}</h1>
+      <h1>{t["initialLoading"]}</h1>
       <br/>
       {failed && (
         <div>
-          {t["initial_loading_failed"]}
+          {t["initialLoadingFailed"]}
         </div>
       )}
       <br/>

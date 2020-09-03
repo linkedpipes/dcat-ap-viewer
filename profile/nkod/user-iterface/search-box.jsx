@@ -59,7 +59,7 @@ export default class SearchBox extends React.Component {
           onInputChange={this.onInputChange}
           defaultSelected={defaultSelected}
           searchText={t("search.searching")}
-          emptyLabel={t("search.no_data_found")}
+          emptyLabel={t("search.noDataFound")}
           ref={(ref) => this.typeahead = ref}
           filterBy={() => { // option, props
             // Just show all that we get -> apply no filter.

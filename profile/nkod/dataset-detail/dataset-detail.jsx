@@ -102,7 +102,7 @@ function datasetReadyView(
         {tLabel(dataset.iri)}
         <a
           href={getGlobal(DEREFERENCE_PREFIX) + dataset.iri}
-          title={t("follow_link")}
+          title={t("followLink")}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -121,7 +121,7 @@ function datasetReadyView(
       </h2>
       {dataset.parentDataset && (
         <p>
-          {t("dataset_is_part_of")}&nbsp;
+          {t("datasetIsPartOf")}&nbsp;
           <a href={datasetLinkUrl(tUrl, dataset.parentDataset)}>
             {tLabel(dataset.parentDataset)}
           </a>

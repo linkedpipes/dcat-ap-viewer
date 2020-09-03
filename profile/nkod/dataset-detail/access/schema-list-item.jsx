@@ -16,18 +16,18 @@ export default function SchemaListItem(
         rel="nofollow noopener noreferrer"
         target="_blank"
       >
-        {t("schema")}
+        {t("access.schema")}
       </a>
       {qualityIcons(t, tLiteral, openModal, quality, [{
         "measureOf": QUALITY.schema,
-        "labelTrue": "schema_quality_true",
-        "labelFalse": "schema_quality_true",
+        "labelTrue": "access.schemaQualityTrue",
+        "labelFalse": "access.schemaQualityFalse",
         "iconTrue": "verified_user",
         "iconFalse": "link_off",
       }, {
         "measureOf": QUALITY.schemaCors,
-        "labelTrue": "schema_quality_cors_true",
-        "labelFalse": "schema_quality_cors_false",
+        "labelTrue": "access.schemaQualityCorsTrue",
+        "labelFalse": "access.schemaQualityCorsFalse",
         "iconTrue": "http",
         "iconFalse": "http",
       }])}

@@ -11,17 +11,17 @@ export default function ProtectedDatabaseAuthorship(
     return (
       <li className="list-group-item px-2">
         <div>
-          {t("license_specialdb_no")}
+          {t("license.specialdbNo")}
           <i
             className="material-icons text-success float-right"
-            title={t("license_specialdb_no_comment")}
-            onClick={() => openModal(t("license_specialdb_no_comment"))}
+            title={t("license.specialdbNoComment")}
+            onClick={() => openModal(t("license.specialdbNoComment"))}
           >
               check
           </i>
         </div>
         <div className="label">
-          {t("license_specialdb_type")}
+          {t("license.specialdbType")}
         </div>
       </li>
     );
@@ -29,17 +29,17 @@ export default function ProtectedDatabaseAuthorship(
     return (
       <li className="list-group-item px-2">
         <div>
-          {t("license_specialdb_cc0")}
+          {t("license.specialdbCc0")}
           <i
             className="material-icons text-success float-right"
-            title={t("license_specialdb_cc0_comment")}
-            onClick={() => openModal(t("license_specialdb_cc0_comment"))}
+            title={t("license.specialdbCc0Comment")}
+            onClick={() => openModal(t("license.specialdbCc0Comment"))}
           >
               check
           </i>
         </div>
         <div className="label">
-          {t("license_specialdb_type")}
+          {t("license.specialdbTtype")}
         </div>
       </li>
     );
@@ -47,17 +47,17 @@ export default function ProtectedDatabaseAuthorship(
     return (
       <li className="list-group-item px-2">
         <div>
-          {t("license_missing")}
+          {t("license.missing")}
           <i
             className="material-icons text-danger float-right"
-            title={t("license_missing_comment")}
-            onClick={() => openModal(t("license_missing_comment"))}
+            title={t("license.missingComment")}
+            onClick={() => openModal(t("license.missingComment"))}
           >
               warning
           </i>
         </div>
         <div className="label">
-          {t("license_specialdb_type")}
+          {t("license.specialdbType")}
         </div>
       </li>
     );
@@ -83,13 +83,13 @@ function custom(t, tLiteral, legal, quality, openModal) {
           rel="nofollow noopener noreferrer"
           target="_blank"
         >
-          {t("license_specialdb_custom")}
+          {t("license.specialdbCustom")}
         </a>
         <div className="float-right">
           <i
             className="material-icons text-warning"
-            title={t("license_specialdb_custom_comment")}
-            onClick={() => openModal(t("license_specialdb_custom_comment"))}
+            title={t("license.specialdbCustomComment")}
+            onClick={() => openModal(t("license.specialdbCustomComment"))}
           >
             help
           </i>
@@ -102,7 +102,7 @@ function custom(t, tLiteral, legal, quality, openModal) {
         </div>
       </div>
       <div className="label">
-        {t("license_specialdb_type")}
+        {t("license.specialdbType")}
       </div>
     </li>
   );
@@ -129,11 +129,11 @@ function QualityProtectedDatabaseAuthorship({t, tLiteral, quality, openModal}) {
     "note": tLiteral(quality.protectedDatabaseAuthorshipNote),
   };
   const opeModal = () => openModal(
-    t("license_specialdb_custom_unavailable", strArgs));
+    t("license.specialdbCustomUnavailable", strArgs));
   return (
     <i
       className="material-icons text-danger"
-      title={t("license_specialdb_custom_unavailable", strArgs)}
+      title={t("license.specialdbCustomUnavailable", strArgs)}
       onClick={opeModal}
     >
       link_off

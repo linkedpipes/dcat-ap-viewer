@@ -16,18 +16,18 @@ export default function EndpointUrl(
         rel="nofollow noopener noreferrer"
         target="_blank"
       >
-        {t("endpoint")}
+        {t("access.endpoint")}
       </a>
       {qualityIcons(t, tLiteral, openModal, quality, [{
         "measureOf": QUALITY.endpointUrl,
-        "labelTrue": "endpoint_url_quality_true",
-        "labelFalse": "endpoint_url_quality_false",
+        "labelTrue": "access.endpointUrlQualityTrue",
+        "labelFalse": "access.endpointUrlQualityFalse",
         "iconTrue": "verified_user",
         "iconFalse": "link_off",
       }, {
         "measureOf": QUALITY.endpointUrlCors,
-        "labelTrue": "endpoint_url_quality_cors_true",
-        "labelFalse": "endpoint_url_quality_cors_false",
+        "labelTrue": "access.endpointUrlQualityCorsTrue",
+        "labelFalse": "access.endpointUrlQualityCorsFalse",
         "iconTrue": "http",
         "iconFalse": "http",
       }])}

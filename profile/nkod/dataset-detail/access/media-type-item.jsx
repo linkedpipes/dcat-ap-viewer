@@ -19,7 +19,7 @@ export default function MediaTypeItem(
         {tLabel(distribution.mediaType, "")}
         <a
           href={distribution.mediaType}
-          title={t("follow_link")}
+          title={t("followLink")}
           rel="nofollow noopener noreferrer"
           target="_blank"
         >
@@ -27,14 +27,14 @@ export default function MediaTypeItem(
         </a>
         {qualityIcons(t, tLiteral, openModal, quality, [{
           "measureOf": QUALITY.mediaType,
-          "labelTrue": "format_quality_true",
-          "labelFalse": "format_quality_false",
+          "labelTrue": "access.formatQualityTrue",
+          "labelFalse": "access.formatQualityFalse",
           "iconTrue": "verified_user",
           "iconFalse": "link_off",
         }])}
       </div>
       <div className="label">
-        {t("access_mediaType")}
+        {t("access.mediaType")}
       </div>
     </li>
   );

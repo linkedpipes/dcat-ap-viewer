@@ -1,16 +1,17 @@
 {
   "cs": {
     "string": {
-      "catalogs_found": "katalogů nalezeno",
-      "catalogs": "Katalogy",
-      "/catalogs": "Katalogy"
+      "catalogsFound_0": "Nenalezen žádný katalog",
+      "catalogsFound_1": "Nalezen 1 katalog",
+      "catalogsFound_2": "Nalezeny {count} katalogy",
+      "catalogsFound_5": "Nalezeno {count} katalogů"
     }
   },
   "en": {
     "string": {
-      "catalogs_found": "catalogs found",
-      "catalogs": "Catalogs",
-      "/catalogs": "Catalogs"
+      "catalogsFound_0": "No catalog found",
+      "catalogsFound_1": "{count} catalog found",
+      "catalogsFound_2": "{count} catalogs found"
     }
   }
 }

@@ -87,7 +87,7 @@ function FacetFilter(props) {
           action
           className="filter-button"
         >
-          <strong>{props.t("facet.show_more")}</strong>
+          <strong>{props.t("facet.showMore")}</strong>
         </ListGroupItem>
         }
         {showPopularVisible && <ListGroupItem
@@ -96,7 +96,7 @@ function FacetFilter(props) {
           action
           className="filter-button"
         >
-          <strong>{props.t("facet.show_popular")}</strong>
+          <strong>{props.t("facet.showPopular")}</strong>
         </ListGroupItem>
         }
       </ListGroup>
