@@ -28,25 +28,8 @@ import {
 } from "../dataset-list/dataset-list-model";
 import {getType} from "typesafe-actions";
 import {DatasetListQuery} from "../api/api-interface";
-
-// TODO Move App level.
-export enum Status {
-  Undefined,
-  Loading,
-  Ready,
-  Failed,
-  /**
-   * Used when data are not available, for example there are
-   * no data on quality.
-   */
-  NotAvailable,
-  /**
-   * Used if we have data and we do re-load, so we can show
-   * the old data until the new one are ready to prevent
-   * changes.
-   */
-  Updating,
-}
+import {Status} from "../app/resource-status";
+export {Status} from "../app/resource-status";
 
 export interface ResourceStatus {
   iri?: string;

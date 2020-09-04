@@ -1,5 +1,5 @@
 import {AnyAction} from "redux";
-import {ThunkAction} from "redux-thunk";
+import {ThunkAction, ThunkDispatch} from "redux-thunk";
 import {jsonLdToDataset} from "./jsonld-to-dataset";
 import {jsonLdToQualityMeasures} from "./jsonld-to-quality";
 import {selectLanguage} from "../app/component-api";
@@ -9,10 +9,12 @@ import {FlatJsonLdPromise} from "../api/api-interface";
 import {
   datasetSelector,
   qualitySelector,
-  Status
+  Status,
 } from "./dataset-detail-reducer";
 import {DatasetListQuery} from "../api/api-interface";
 import {fetchDatasets} from "../dataset-list/dataset-list-service";
+import {Dataset} from "./dataset-detail-model";
+import {fetchLabels, fetchDatasetLabel} from "../labels/index";
 
 export type ThunkVoidResult = ThunkAction<void, any, any, AnyAction>;
 
@@ -43,6 +45,10 @@ export function fetchDataset(datasetIri: string): ThunkVoidResult {
         "payload": payload,
         "jsonld": jsonld,
       }));
+      fetchLabelsForDataset(dispatch, payload);
+      if (payload.parentDataset) {
+        dispatch(fetchDatasetLabel(payload.parentDataset));
+      }
     } catch (ex) {
       dispatch(DatasetDetailActions.fetchDataset.failure({
         "dataset": datasetIri,
@@ -88,6 +94,23 @@ function fetchQuality(
       }));
     }
   };
+}
+
+function fetchLabelsForDataset(
+  dispatch: ThunkDispatch<any, any, AnyAction>, dataset: Dataset
+) {
+  const iris: string [] = [
+    ...dataset.spatial,
+    ...dataset.themes,
+    ...dataset.datasetThemes,
+  ];
+  if (dataset.frequency !== undefined) {
+    iris.push(dataset.frequency);
+  }
+  if (dataset.publisher !== undefined) {
+    iris.push(dataset.publisher);
+  }
+  dispatch(fetchLabels(iris));
 }
 
 export function fetchDatasetPartQuality(iri: string): ThunkVoidResult {

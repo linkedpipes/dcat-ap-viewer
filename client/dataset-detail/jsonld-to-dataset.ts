@@ -1,6 +1,7 @@
 import {
   getEntitiesByType,
-  getEntityByIri, getEntityByType,
+  getEntityByIri,
+  getEntityByType,
   getId,
   getPlainString,
   getPlainStrings,
@@ -16,15 +17,18 @@ import {
   DCAT,
   DCTERMS,
   EUA,
-  FOAF, NKOD,
+  FOAF,
+  NKOD,
   OWL,
   SKOS,
   VCARD,
 } from "../vocabulary/vocabulary"
 import {
-  ContactPoint, DataService,
+  ContactPoint,
+  DataService,
   Dataset,
-  DatasetCustom, Distribution,
+  DatasetCustom,
+  Distribution,
 } from "./dataset-detail-model";
 import {
   jsonLdToDistributionOrDataService

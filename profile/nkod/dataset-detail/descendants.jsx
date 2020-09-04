@@ -14,7 +14,7 @@ import {
 } from "../../../client/dataset-detail";
 import Paginator from "../user-iterface/paginator";
 import {
-  selectT,
+  fetchLabels,
   URL_DATASET_LIST,
   QUERY_DATASET_IS_PART_OF,
 } from "../../client-api";
@@ -24,14 +24,19 @@ import TagLine from "../user-iterface/tag-line";
 const DEFAULT_PAGE_SIZE = 4;
 
 function Descendants(props) {
+  const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
-  const t = useSelector(selectT);
   const descendants = useSelector(descendantsSelector);
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchDescendants(props.iri, page * pageSize, pageSize));
   }, [page, pageSize]);
+  useEffect(() => {
+    if (descendants.status === Status.Ready) {
+      dispatch(fetchLabels(collectLabels(descendants.datasets)));
+    }
+  }, [descendants]);
+  //
   if (descendants.status !== Status.Ready &&
     descendants.status !== Status.Updating) {
     return null;
@@ -49,7 +54,6 @@ function Descendants(props) {
             tLabel={props.tLabel}
             tLiteral={props.tLiteral}
             tUrl={props.tUrl}
-            fetchLabels={props.fetchLabels}
           />
         ))}
       </div>
@@ -63,8 +67,8 @@ function Descendants(props) {
         sizes={[1, 4, 16, 32]}
       />
       <div>
-        <a href={datasetListLinkUrl(props.tUrl, props.iri) }>
-          {t("showAllDescendantsLink")}
+        <a href={datasetListLinkUrl(props.tUrl, props.iri)}>
+          {props.t("showAllDescendantsLink")}
         </a>
       </div>
     </div>
@@ -73,10 +77,10 @@ function Descendants(props) {
 
 Descendants.propTypes = {
   "iri": PropTypes.string.isRequired,
+  "t": PropTypes.func.isRequired,
   "tLabel": PropTypes.func.isRequired,
   "tLiteral": PropTypes.func.isRequired,
   "tUrl": PropTypes.func.isRequired,
-  "fetchLabels": PropTypes.func.isRequired,
 };
 
 register({
@@ -84,16 +88,22 @@ register({
   "element": Descendants,
 });
 
-function datasetListLinkUrl(tUrl, iri) {
-  return tUrl(URL_DATASET_LIST,{[QUERY_DATASET_IS_PART_OF]: iri});
+function collectLabels(datasets) {
+  const result = [];
+  for (const dataset of datasets) {
+    result.push(...dataset.formats);
+  }
+  return result;
 }
 
-function DescendantsItem(props) {
-  const {tLabel, tLiteral, tUrl, dataset, fetchLabels} = props;
-  fetchLabels([...dataset.formats]);
+function datasetListLinkUrl(tUrl, iri) {
+  return tUrl(URL_DATASET_LIST, {[QUERY_DATASET_IS_PART_OF]: iri});
+}
+
+function DescendantsItem({tLabel, tLiteral, tUrl, dataset}) {
   return (
     <div>
-      <Link to={datasetLinkUrl(tUrl, dataset.iri)}>
+      <Link to={datasetLinkUrl(tUrl, dataset)}>
         <h4>{tLabel(dataset.iri)}</h4>
       </Link>
       <p style={{
@@ -119,9 +129,8 @@ DescendantsItem.propTypes = {
   "tLabel": PropTypes.func.isRequired,
   "tLiteral": PropTypes.func.isRequired,
   "tUrl": PropTypes.func.isRequired,
-  "fetchLabels": PropTypes.func.isRequired,
 };
 
 function datasetLinkUrl(tUrl, dataset) {
-  return tUrl(URL_DATASET_DETAIL,{[QUERY_DATASET_DETAIL_IRI]: dataset.iri});
+  return tUrl(URL_DATASET_DETAIL, {[QUERY_DATASET_DETAIL_IRI]: dataset.iri});
 }

@@ -70,7 +70,6 @@ DataService.propTypes = {
   "openModal": PropTypes.func.isRequired,
 };
 
-
 register({
   "name": DATASET_DETAIL_DATA_SERVICE,
   "element": DataService,

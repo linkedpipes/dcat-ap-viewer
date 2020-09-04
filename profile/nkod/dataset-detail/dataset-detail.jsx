@@ -1,9 +1,8 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {PropTypes} from "prop-types";
 import {
   register,
-  fetchLabels,
   selectT,
   selectTUrl,
   selectTLabel,
@@ -49,23 +48,30 @@ const DatasetView = ({iri}) => {
   const dataset = useSelector(datasetSelector);
   const quality = useSelector(
     (state) => qualitySelector(state, iri));
+  useEffect(() => {
+    if (dataset.status === Status.Undefined) {
+      dispatch(fetchDataset(iri));
+    }
+    if (dataset.status === Status.Ready) {
+      dispatch(fetchDatasetQuality(dataset.iri));
+    }
+  }, [dataset]);
   //
   const LoadingView = getRegisteredElement(STATUS_LOADING);
   const FailedView = getRegisteredElement(STATUS_FAILED);
-  if (dataset.status === Status.Undefined) {
-    dispatch(fetchDataset(iri));
+  switch(dataset.status) {
+  case Status.Undefined:
+  case Status.Loading:
     return (<LoadingView/>);
-  } else  if (dataset.status === Status.Loading) {
-    return (<LoadingView/>);
-  } else if (dataset.status === Status.Ready) {
-    fetchAdditionalData(dispatch, dataset);
+  case Status.Failed:
+    return (<FailedView/>);
+  case Status.Ready:
     return datasetReadyView(
       t, tLabel, tLiteral, tUrl,
-      (labels) => dispatch(fetchLabels(labels)),
       language, openModal, dataset, quality);
-
+  default:
+    return null;
   }
-  return (<FailedView/>);
 };
 
 DatasetView.propTypes = {
@@ -77,14 +83,8 @@ register({
   "element": DatasetView,
 });
 
-function fetchAdditionalData(dispatch, dataset) {
-  dispatch(fetchDatasetQuality(dataset.iri));
-  dispatch(fetchLabels(collectLabels(dataset)));
-}
-
 function datasetReadyView(
-  t, tLabel, tLiteral, tUrl, fetchLabels,
-  language, openModal, dataset, quality) {
+  t, tLabel, tLiteral, tUrl, language, openModal, dataset, quality) {
   const Keywords = getRegisteredElement(DATASET_DETAIL_KEYWORDS);
   const Properties = getRegisteredElement(DATASET_DETAIL_PROPERTIES);
   const Descendants = getRegisteredElement(DATASET_DETAIL_DESCENDANTS);
@@ -148,34 +148,13 @@ function datasetReadyView(
       <Distributions distributions={dataset.distributions}/>
       <Descendants
         iri={dataset.iri}
+        t={t}
         tLabel={tLabel}
         tLiteral={tLiteral}
         tUrl={tUrl}
-        fetchLabels={fetchLabels}
       />
     </div>
   );
-}
-
-function collectLabels(dataset) {
-  const asArray = (value) => {
-    if (value === undefined) {
-      return [];
-    }
-    if (Array.isArray(value)) {
-      return value;
-    }
-    return [value];
-  };
-
-  return [
-    dataset.publisher,
-    dataset.parentDataset,
-    ...asArray(dataset.frequency),
-    ...asArray(dataset.spatial),
-    ...asArray(dataset.themes),
-    ...asArray(dataset.datasetThemes),
-  ];
 }
 
 function getPublisherSearchLink(dataset, tUrl) {
@@ -185,8 +164,6 @@ function getPublisherSearchLink(dataset, tUrl) {
   );
 }
 
-
 function datasetLinkUrl(tUrl, iri) {
   return tUrl(URL_DATASET_DETAIL, {[QUERY_DATASET_DETAIL_IRI]: iri});
 }
-

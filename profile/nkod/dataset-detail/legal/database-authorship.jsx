@@ -30,7 +30,7 @@ export default function DatabaseAuthorship(
     return (
       <li className="list-group-item px-2">
         <div>
-          {t("licenseAuthorCcBy")}
+          {t("license.authorCcBy")}
           <i
             className="material-icons text-warning float-right"
             title={t("license.dbCcByComment")}

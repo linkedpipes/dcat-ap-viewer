@@ -39,7 +39,7 @@ export default function ProtectedDatabaseAuthorship(
           </i>
         </div>
         <div className="label">
-          {t("license.specialdbTtype")}
+          {t("license.specialdbType")}
         </div>
       </li>
     );
