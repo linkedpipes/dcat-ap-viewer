@@ -303,7 +303,7 @@ function thirdColumn(t, tLiteral, tLabel, dataset, quality, openModal) {
         {hasContacts && contactPoints(tLabel, dataset.contactPoints)}
         {hasSpecification
         && specificationLabel(t, tLiteral, quality, openModal)}
-        {hasDocumentation && specification(t, dataset)}
+        {hasSpecification && specification(t, dataset)}
       </dl>
     </div>
   );
