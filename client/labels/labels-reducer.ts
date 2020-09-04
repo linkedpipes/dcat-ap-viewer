@@ -167,6 +167,7 @@ export function shouldFetch(
   const labelsState = reducerSelector(state);
   // We require the label in given language.
   const labelIsAvailable =
-    labelsState.labels[iri] && labelsState.labels[iri][language];
+    labelsState.labels[iri] !== undefined
+    && labelsState.labels[iri][language] !== undefined;
   return !labelIsAvailable && !labelsState.requested.includes(iri);
 }

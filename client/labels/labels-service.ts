@@ -17,7 +17,7 @@ export function fetchLabels(iris: string[]): ThunkVoidResult {
         continue;
       }
       if (!shouldFetch(state, iri, language)) {
-        return;
+        continue;
       }
       await fetchLabel(dispatch, language, iri);
     }
