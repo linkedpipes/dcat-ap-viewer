@@ -1,13 +1,13 @@
 import React from "react";
+import {PropTypes} from "prop-types";
 import {
   DropdownItem,
   DropdownMenu,
   DropdownToggle,
   UncontrolledDropdown,
 } from "reactstrap";
-import {PropTypes} from "prop-types";
 
-const VISUALISATION_CODELIST = [
+const AVAILABLE_VISUALISATIONS = [
   "datasetList",
   "keywordCloud",
   "themeCloud",
@@ -17,16 +17,15 @@ export default function ViewSelector({t, value, onChange}) {
   return (
     <UncontrolledDropdown>
       <DropdownToggle caret>
-        {t(VISUALISATION_CODELIST[value])}
+        {t(AVAILABLE_VISUALISATIONS[value])}
       </DropdownToggle>
       <DropdownMenu>
-        {VISUALISATION_CODELIST
-          .map((item, index) =>
-            index === value ? null : (
-              <DropdownItem key={index} onClick={() => onChange(index)}>
-                {t(item)}
-              </DropdownItem>
-            ))}
+        {AVAILABLE_VISUALISATIONS.map((item, index) =>
+          index === value ? null : (
+            <DropdownItem key={index} onClick={() => onChange(index)}>
+              {t(item)}
+            </DropdownItem>
+          ))}
       </DropdownMenu>
     </UncontrolledDropdown>
   );

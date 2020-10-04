@@ -1,7 +1,10 @@
-import {JsonLdEntity} from "../jsonld/model";
+import {JsonLdEntity} from "../jsonld";
 import {createServerHttpApi} from "./api-server-http";
 export type {JsonLdArray} from "jsonld/jsonld-spec";
 
+/**
+ * Definition of query that can be used to retrieve data.
+ */
 export interface DatasetListQuery {
   offset: number; // Dataset
   limit: number; // Dataset
@@ -62,7 +65,7 @@ export function areDatasetListQueryEqual(
   if (right === undefined) {
     return false;
   }
-  const result = left.offset === right.offset
+  return left.offset === right.offset
     && left.limit === right.limit
     && left.sort === right.sort
     && left.search === right.search
@@ -77,7 +80,6 @@ export function areDatasetListQueryEqual(
     && left.temporalStart === right.temporalStart
     && left.temporalEnd === right.temporalEnd
     && arraysAreEqual(left.isPartOf, right.isPartOf);
-  return result;
 }
 
 function arraysAreEqual(left: string[], right?: string[]): boolean {

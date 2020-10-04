@@ -14,7 +14,7 @@ import {DatasetListItem, DatasetList, Facet} from "./dataset-list-model";
 
 
 export function jsonLdToDatasetList(jsonld: JsonLdEntity[]): DatasetList {
-  const result = new DatasetList();
+  const result: DatasetList = createEmptyDatasetList();
   const metadataEntry = getEntityByType(jsonld, LP.DatasetListMetadata);
   if (metadataEntry) {
     result.datasetsCount = Number(getValue(metadataEntry, LP.datasetsCount));
@@ -94,4 +94,19 @@ export function jsonLdToDatasetList(jsonld: JsonLdEntity[]): DatasetList {
   result.datasets.sort(
     (left, right) => left.order - right.order);
   return result;
+}
+
+function createEmptyDatasetList(): DatasetList {
+  return {
+    datasets: [],
+    datasetsCount: 0,
+    formats: [],
+    formatsCount: 0,
+    keywords: [],
+    keywordsCount: 0,
+    publishers: [],
+    publishersCount: 0,
+    themes: [],
+    themesCount: 0
+  };
 }

@@ -10,8 +10,7 @@ import {PropTypes} from "prop-types";
 import React from "react";
 
 export default function DatasetListItem(
-  {tLabel, tLiteral, tUrl, showPublisher, dataset, fetchLabels}) {
-  fetchLabels([dataset.iri, dataset.publisher, ...dataset.formats]);
+  {tLabel, tLiteral, tUrl, showPublisher, dataset}) {
   const datasetUrl = tUrl(
     URL_DATASET_DETAIL,
     {[QUERY_DATASET_DETAIL_IRI]: dataset.iri});
@@ -51,5 +50,4 @@ DatasetListItem.propTypes = {
   "tUrl": PropTypes.func.isRequired,
   "showPublisher": PropTypes.bool.isRequired,
   "dataset": PropTypes.object.isRequired,
-  "fetchLabels": PropTypes.func.isRequired,
 };

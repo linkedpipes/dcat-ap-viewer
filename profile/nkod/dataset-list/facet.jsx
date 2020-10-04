@@ -1,15 +1,18 @@
 import React, {useState} from "react";
 import {PropTypes} from "prop-types";
 import {ListGroup, ListGroupItem} from "reactstrap";
-import {formatNumber} from "../../utils";
-import {register, getGlobal, DEFAULT_FACET_SIZE} from "../../../client-api";
-import {DATASET_LIST_FACET_FILTER} from "../../nkod-component-names";
+import {
+  register,
+  getGlobal,
+  selectT,
+  DEFAULT_FACET_SIZE,
+} from "../../client-api";
+import {useSelector} from "react-redux";
 
 const SHOW_MORE_STEP = 7;
 
 /**
- * Facet list.
- * Show list of items that can be selected/de-selected.
+ * Facet list shows list of items that can be selected/de-selected.
  *
  * The facet list show only limited number of elements, and may require fetch
  * of addition elements if needed.
@@ -17,21 +20,14 @@ const SHOW_MORE_STEP = 7;
  * If more elements are required and the facet is later set to default size
  * and re-expanded again, the already available data are fetched.
  */
-function FacetFilter(props) {
+function Facet(props) {
+  const t = useSelector(selectT);
   const defaultFacetSize = getGlobal(DEFAULT_FACET_SIZE);
   const [visible, setVisible] = useState(defaultFacetSize);
 
-  const showMore = () => {
-    const limit = visible + SHOW_MORE_STEP;
-    setVisible(limit);
-    if (limit >= props.facetData.length) {
-
-      props.fetchMore(limit);
-    }
-  };
-
   const showMoreVisible =
-    !props.facetAllFetched || visible < props.facetData.length;
+    props.facetCount > props.facetData.length
+    || visible < props.facetData.length;
 
   const showPopularVisible =
     visible > defaultFacetSize
@@ -39,38 +35,47 @@ function FacetFilter(props) {
 
   const showPopular = () => setVisible(defaultFacetSize);
 
+  const showMore = () => {
+    const limit = visible + SHOW_MORE_STEP;
+    setVisible(limit);
+    if (limit >= props.facetData.length) {
+      props.onFetchMore(limit);
+    }
+  };
+
   const items = [
-    ...props.facetData.filter(item => props.facetActive.includes(item.code)),
+    ...props.facetData.filter(item => props.activeFacets.includes(item.code)),
     ...selectRemainingFacetsToShow(
       props.facetData,
-      visible - props.facetActive.length,
-      props.facetActive
+      visible - props.activeFacets.length,
+      props.activeFacets
     ),
   ];
-
-  if (props.fetchLabels) {
-    props.fetchLabels(items.map(item => item.iri));
-  }
 
   return (
     <div className="mt-2">
       <h3 className="p-lg-2">
-        {props.t(props.label)}
-        {props.facetCount !== undefined && " (" + props.facetCount + ")"}
+        {t(props.label)}
+        {
+          !props.hydeCount
+          && props.facetCount !== undefined
+          && " (" + props.facetCount + ")"
+        }
       </h3>
       <ListGroup>
         {
           items.map((item, index) => (
             <ListGroupItem
               key={item.code}
-              onClick={() => props.toggleFacet(item.code)}
+              onClick={() => props.onFacetClick(item.code)}
               action
               className="filter-button"
-              active={index < props.facetActive.length}
+              active={index < props.activeFacets.length}
               style={{"wordWrap": "break-word"}}
             >
-              {props.getFacetLabel(item)} ({formatNumber(item.count)})
-              {index < props.facetActive.length &&
+              {props.selectFacetLabel(item)}
+              {!props.hydeCount && " (" + item.count + ")"}
+              {index < props.activeFacets.length &&
               <i
                 className="material-icons center pl-2"
                 style={{"float": "right"}}
@@ -87,7 +92,7 @@ function FacetFilter(props) {
           action
           className="filter-button"
         >
-          <strong>{props.t("facet.showMore")}</strong>
+          <strong>{t("facet.showMore")}</strong>
         </ListGroupItem>
         }
         {showPopularVisible && <ListGroupItem
@@ -96,7 +101,7 @@ function FacetFilter(props) {
           action
           className="filter-button"
         >
-          <strong>{props.t("facet.showPopular")}</strong>
+          <strong>{t("facet.showPopular")}</strong>
         </ListGroupItem>
         }
       </ListGroup>
@@ -105,28 +110,48 @@ function FacetFilter(props) {
 
 }
 
-FacetFilter.propTypes = {
-  //
-  "t": PropTypes.func.isRequired,
+Facet.propTypes = {
+  /**
+   * Label, is translated before is used.
+   */
   "label": PropTypes.string.isRequired,
-  "getFacetLabel": PropTypes.func.isRequired,
-  "fetchMore": PropTypes.func.isRequired,
-  "toggleFacet": PropTypes.func.isRequired,
-  "facetActive": PropTypes.array.isRequired,
-  // withFaceProps
-  "facetName": PropTypes.string.isRequired,
+  /**
+   * If true number of facets is not shown.
+   */
+  "hydeCount": PropTypes.bool,
+  /**
+   * Facet data.
+   */
   "facetData": PropTypes.arrayOf(PropTypes.shape({
     "code": PropTypes.string.isRequired,
-    "count": PropTypes.number.isRequired,
+    "count": PropTypes.number,
   })).isRequired,
-  "facetAllFetched": PropTypes.bool.isRequired,
+  /**
+   * Codes of active/selected facets.
+   */
+  "activeFacets": PropTypes.array.isRequired,
+  /**
+   * Total number of facet that can be fetched.
+   */
   "facetCount": PropTypes.number,
-  "fetchLabels": PropTypes.func,
+  /**
+   * Called when user click on facet value, the value may be active or
+   * inactive.
+   */
+  "onFacetClick": PropTypes.func.isRequired,
+  /**
+   * Request fetch of additional labels.
+   */
+  "onFetchMore": PropTypes.func,
+  /**
+   * Function used to get label for entry from facetData.
+   */
+  "selectFacetLabel": PropTypes.func.isRequired,
 };
 
 register({
-  "name": DATASET_LIST_FACET_FILTER,
-  "element": FacetFilter,
+  "name": "app.dataset-list.facets.element",
+  "element": Facet,
 });
 
 function selectRemainingFacetsToShow(array, size, active) {
@@ -137,4 +162,3 @@ function selectRemainingFacetsToShow(array, size, active) {
     return filtered.splice(0, size);
   }
 }
-

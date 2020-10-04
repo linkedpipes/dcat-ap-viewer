@@ -1,7 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {QUALITY} from "../../../client-api";
-import {qualityIcons} from "../../quality/quality-icon";
+import {qualityIcons} from "../quality/quality-icon";
 
 export default function EndpointDescription(
   {t, tLiteral, dataSource, openModal, quality}) {

@@ -2,10 +2,9 @@ import {
   JsonLdEntity,
   getEntitiesByType,
   getId,
-  Literal,
-  getStrings, getValue,
-} from "../../jsonld";
-import {DCAT, DCTERMS} from "../../vocabulary/vocabulary"
+  getValue,
+} from "../jsonld";
+import {DCAT, DCTERMS} from "../vocabulary/vocabulary"
 
 type TypeaheadDatasetList = TypeaheadDataset[];
 
@@ -19,9 +18,9 @@ class TypeaheadDataset {
   }
 }
 
-export default function jsonLdToDatasetTypeahead(jsonld: JsonLdEntity[])
-  : TypeaheadDatasetList {
-  //
+export default function jsonLdToDatasetTypeahead(
+  jsonld: JsonLdEntity[]
+): TypeaheadDatasetList {
   const result: TypeaheadDatasetList = [];
   const datasetEntries = getEntitiesByType(jsonld, DCAT.Dataset);
   for (let entry of datasetEntries) {

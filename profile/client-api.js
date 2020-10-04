@@ -3,3 +3,4 @@
  */
 export * from "../client/app/component-api";
 export * from "../client/vocabulary/vocabulary";
+export {Status} from "../client/app/resource-status";

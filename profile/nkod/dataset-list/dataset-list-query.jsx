@@ -1,22 +1,29 @@
 import React, {useState} from "react";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 import {PropTypes} from "prop-types";
-import SearchBox from "../../user-iterface/search-box";
 import {Button, Col, Input, Row} from "reactstrap";
-import ViewSelector from "./view-selector";
-import {selectT} from "../../../client-api";
+import {
+  register,
+  selectT,
+  selectLanguage,
+} from "../../client-api";
+import ViewSelector from "./ui/view-selector";
+import SearchBox from "./ui/search-box";
+import {
+  createDefaultQuery,
+  toDatasetListQuery,
+} from "./dataset-list-query-service";
+import {fetchDatasetTypeahead} from "../../../client/dataset-list";
 
-function QueryElement(props) {
-  let searchBox = undefined;
+function datasetListQuery(props) {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [temporalStart, setTemporalStart] = useState(props.query.temporalStart);
   const [temporalEnd, setTemporalEnd] = useState(props.query.temporalEnd);
-
-  const onClearAllFilters = () => {
-    searchBox.clear();
-    props.onClearFilters();
-  };
-
+  const t = useSelector(selectT);
+  const service = useDatasetListQueryService(
+    props.onUpdateNavigation, props.query);
+  //
+  let searchBox = undefined;
   return (
     <div style={{
       "borderStyle": "solid",
@@ -26,21 +33,21 @@ function QueryElement(props) {
       "marginBottom": "1rem",
     }}>
       <SearchBox
-        t={props.t}
+        t={t}
         defaultValue={props.query.search}
         ref={(ref) => searchBox = ref}
-        onSetValue={props.onSetSearchText}
-        fetchTypeahead={props.fetchTypeahead}
+        onSetValue={service.onSetSearchText}
+        fetchTypeahead={service.onFetchTypeahead}
       />
       {
         showAdvanced &&
         <TemporalFilters
-          t={props.t}
+          t={t}
           start={temporalStart}
           setStart={setTemporalStart}
           end={temporalEnd}
           setEnd={setTemporalEnd}
-          setTemporal={props.onSetTemporal}
+          setTemporal={service.onSetTemporal}
         />
       }
       <Row>
@@ -50,22 +57,21 @@ function QueryElement(props) {
             onClick={() => setShowAdvanced(!showAdvanced)}
           >
             {showAdvanced ?
-              props.t("query.hideFilters")
-              : props.t("query.showFilters")}
+              t("query.hideFilters")
+              : t("query.showFilters")}
           </Button>
           <Button
             className="mt-2"
-            onClick={onClearAllFilters}
-          >
-            {props.t("query.clearFilters")}
+            onClick={() => service.onClearFilters(searchBox)}>
+            {t("query.clearFilters")}
           </Button>
         </Col>
         <Col className="mt-2">
           <div className="float-lg-right">
             <ViewSelector
-              t={props.t}
+              t={t}
               value={props.query.view}
-              onChange={props.onSetView}
+              onChange={service.onSetView}
             />
           </div>
         </Col>
@@ -74,20 +80,44 @@ function QueryElement(props) {
   );
 }
 
-QueryElement.propTypes = {
-  "t": PropTypes.func.isRequired,
+register({
+  "name": "app.dataset-list.query",
+  "element": datasetListQuery,
+});
+
+datasetListQuery.propTypes = {
   "query": PropTypes.object.isRequired,
-  "onSetView": PropTypes.func.isRequired,
-  "onSetSearchText": PropTypes.func.isRequired,
-  "onClearFilters": PropTypes.func.isRequired,
-  "onSetTemporal": PropTypes.func.isRequired,
-  // From with-typeahead-props.jsx
-  "fetchTypeahead": PropTypes.func.isRequired,
+  "onUpdateNavigation": PropTypes.func.isRequired,
 };
 
-export default connect((state) => ({
-  "t": selectT(state),
-}))(QueryElement);
+function useDatasetListQueryService(onUpdateNavigation, query) {
+  const language = useSelector(selectLanguage);
+  return {
+    "onSetView": (view) => {
+      onUpdateNavigation({...query, "view": view});
+    },
+    "onSetSearchText": (text) => {
+      onUpdateNavigation({...query, "search": text});
+    },
+    "onClearFilters": (searchBox) => {
+      searchBox.clear();
+      onUpdateNavigation(createDefaultQuery());
+    },
+    "onSetTemporal": (start, end) => {
+      onUpdateNavigation({
+        ...query,
+        "temporalStart": start,
+        "temporalEnd": end,
+        "showMore": 0,
+        "page": 0,
+      });
+    },
+    "onFetchTypeahead": (text) => {
+      const datasetQuery = toDatasetListQuery(query);
+      return fetchDatasetTypeahead(datasetQuery, language, text);
+    },
+  };
+}
 
 function TemporalFilters({t, start, setStart, end, setEnd, setTemporal}) {
 

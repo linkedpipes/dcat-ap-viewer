@@ -7,7 +7,7 @@ import {
 } from "../../client-api";
 import {register, QUALITY} from "../../client-api";
 import {DATASET_DETAIL_PROPERTIES} from "../nkod-component-names";
-import {labelWithQuality} from "../quality/label-with-quality";
+import {labelWithQuality} from "./quality/label-with-quality";
 
 function Properties({t, tLiteral, tLabel, tUrl, dataset, quality, openModal}) {
   return (

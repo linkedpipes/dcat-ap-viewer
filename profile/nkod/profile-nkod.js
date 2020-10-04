@@ -1,7 +1,3 @@
-// DCAT-AP-VIEWER modules.
-import "../../client/dataset/list-view";
-import "../../client/dataset-detail";
-
 // Profile specific modules.
 import "./app/footer";
 import "./app/header";
@@ -21,12 +17,13 @@ import "./dataset-detail/descendants";
 import "./dataset-detail/webpage-metadata";
 import "./dcat-ap-forms";
 
-import "./dataset/list-view/dataset-list";
-import "./dataset/list-view/datasets-view";
-import "./dataset/list-view/facet-filter";
-import "./dataset/list-view/facet-filters";
-import "./dataset/list-view/keyword-view";
-import "./dataset/list-view/theme-view";
+import "./dataset-list/view-dataset/view-dataset";
+import "./dataset-list/view-keyword/view-keyword";
+import "./dataset-list/view-theme/view-theme";
+import "./dataset-list/facet";
+import "./dataset-list/dataset-list-facet";
+import "./dataset-list/dataset-list-query";
+import "./dataset-list/dataset-list";
 
 import "./publisher-list/publisher-list";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import {Spinner} from "reactstrap";
-import {Status} from "../../../client/dataset-detail";
+import {Status} from "../../../client-api";
 
 export function qualityIcons(t, tLiteral, openModal, quality, measures) {
   if (quality.status === Status.Ready) {

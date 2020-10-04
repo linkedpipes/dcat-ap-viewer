@@ -1,7 +1,6 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import TagLine from "../../user-iterface/tag-line";
-import {getGlobal} from "../../../client-api";
 import {
   DropdownItem,
   DropdownMenu,
@@ -12,13 +11,13 @@ import {
 } from "reactstrap";
 
 export default function DatasetsViewHeader(
-  {t, tLabel, query, datasetCount, onSortSet}) {
+  {t, tLabel, query, datasetsCount, onSortSet}) {
   //
   return (
     <Row>
       <Col xs={12} md={9}>
         <h4>
-          {t("query.datasetsFound", {"count": datasetCount})}
+          {t("query.datasetsFound", {"count": datasetsCount})}
           {
             query["search"] !== "" &&
             t("query.with") + ": \"" + query["search"] + "\""
@@ -44,14 +43,11 @@ DatasetsViewHeader.propTypes = {
   "t": PropTypes.func.isRequired,
   "tLabel": PropTypes.func.isRequired,
   "query": PropTypes.object.isRequired,
-  "datasetCount": PropTypes.number.isRequired,
+  "datasetsCount": PropTypes.number.isRequired,
   "onSortSet": PropTypes.func.isRequired,
 };
 
-const SORT_OPTIONS = getGlobal("dataset-list-sort") || [
-  "title asc",
-  "title desc",
-];
+const SORT_OPTIONS = ["title asc", "title desc"];
 
 function SortSelector({t, value, onChange}) {
   return (
@@ -79,6 +75,3 @@ SortSelector.propTypes = {
   "onChange": PropTypes.func.isRequired,
   "value": PropTypes.string.isRequired,
 };
-
-
-

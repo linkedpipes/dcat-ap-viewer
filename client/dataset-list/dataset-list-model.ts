@@ -1,16 +1,16 @@
 import {Literal} from "../jsonld";
 
-export class DatasetList {
-  datasets: DatasetListItem[] = [];
-  datasetsCount?: number;
-  themes: Facet[] = [];
-  themesCount?: number;
-  keywords: Facet[] = [];
-  keywordsCount?: number;
-  publishers: Facet[] = [];
-  publishersCount?: number;
-  formats: Facet[] = [];
-  formatsCount?: number;
+export interface DatasetList {
+  datasets: DatasetListItem[];
+  datasetsCount: number;
+  themes: Facet[];
+  themesCount: number;
+  keywords: Facet[];
+  keywordsCount: number;
+  publishers: Facet[];
+  publishersCount: number;
+  formats: Facet[];
+  formatsCount: number;
 }
 
 export class DatasetListItem {
@@ -30,6 +30,7 @@ export class DatasetListItem {
     this.iri = iri;
     this.order = order;
   }
+
 }
 
 export interface Facet {
@@ -37,4 +38,5 @@ export interface Facet {
   count: number;
   // Used to identify the facet for purpose of query.
   code: string;
+  color?: string;
 }
