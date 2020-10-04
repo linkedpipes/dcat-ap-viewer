@@ -4,6 +4,7 @@ const solrProvider = require("./solr-provider/solr-provider");
 const couchdbProvider = require("./couchdb-provider/couchdb-provider");
 const sparqlProvider = require("./sparql-provider/sparql-provider");
 const testProvider = require("./test-provider/test-provider");
+const proxyProvider =require("./proxy-provider/proxy-provider");
 
 module.exports = {
   "initializeHttpApi": initializeHttpApi,
@@ -80,6 +81,9 @@ function createProvider(providerConfiguration) {
   }
   if (providerConfiguration["type"] === "test") {
     provider = testProvider.createProvider();
+  }
+  if (providerConfiguration["type"] === "proxy") {
+    provider = proxyProvider.createProvider(providerConfiguration);
   }
   return filterProvider(provider, providerConfiguration);
 }
