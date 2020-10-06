@@ -1,6 +1,6 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useCallback, useState} from "react";
 import {PropTypes} from "prop-types";
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 import {
   QUERY_DATASET_LIST_PUBLISHER,
   register,
@@ -10,13 +10,9 @@ import {
   selectTUrl,
 } from "../../../client-api";
 import {
-  updateDatasets,
   selectDatasetList,
   selectDatasetListCount,
 } from "../../../../client/dataset-list";
-import {
-  toDatasetListQuery,
-} from "../dataset-list-query-service";
 import {
   Button,
   DropdownItem,
@@ -35,49 +31,30 @@ function datasetListDatasetView(props) {
   const tLabel = useSelector(selectTLabel);
   const tLiteral = useSelector(selectTLiteral);
   const tUrl = useSelector(selectTUrl);
-  const dispatch = useDispatch();
   const datasets = useSelector(selectDatasetList);
   const datasetsCount = useSelector(selectDatasetListCount);
-  const lastQuery = useRef();
   const [showMore, setShowMore] = useState(0);
 
-  useEffect(() => {
-    dispatch(updateDatasets(
-      toDatasetListQuery(props.query, showMore),
-      lastQuery.current ?
-        toDatasetListQuery(lastQuery.current) :
-        undefined
-    ));
-    lastQuery.current = props.query;
-  }, [props.query, showMore]);
+  const onSort = useCallback((value) => {
+    const nextQuery = {...props.query, "sort": value};
+    props.onUpdateViewQuery(nextQuery);
+  }, [props.state]);
 
-  const onSort = (value) => {
-    props.onUpdateNavigation({
-      ...props.query,
-      "sort": value,
-    });
-  };
-
-  const onShowMore = () => {
+  const onShowMore = useCallback(() => {
     setShowMore(showMore + 6);
-  };
+    const nextState = {...props.state, "showMore": showMore + 6};
+    props.onUpdateViewState(nextState);
+  }, [props.state]);
 
-  const onPage= (page) => {
-    setShowMore(showMore);
-    props.onUpdateNavigation({
-      ...props.query,
-      "page": page,
-    });
-  };
+  const onPage = useCallback((value) => {
+    const nextQuery = {...props.query, "page": value};
+    props.onUpdateViewQuery(nextQuery);
+  }, [props.query]);
 
-  const onPageSize = (size) => {
-    setShowMore(showMore);
-    props.onUpdateNavigation({
-      ...props.query,
-      "page": 0,
-      "pageSize": size,
-    });
-  };
+  const onPageSize = useCallback((value) => {
+    const nextQuery = {...props.query, "page": 0, "pageSize": value};
+    props.onUpdateViewQuery(nextQuery);
+  }, [props.query]);
 
   return (
     <React.Fragment>
@@ -128,7 +105,9 @@ register({
 
 datasetListDatasetView.propTypes = {
   "query": PropTypes.object.isRequired,
-  "onUpdateNavigation": PropTypes.func.isRequired,
+  "state": PropTypes.object.isRequired,
+  "onUpdateViewQuery": PropTypes.func.isRequired,
+  "onUpdateViewState": PropTypes.func.isRequired,
 };
 
 function SortSelector({t, value, onChange}) {

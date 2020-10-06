@@ -1,35 +1,22 @@
 import {createAsyncAction, ActionType, createAction} from "typesafe-actions";
-import {DatasetList, Facet} from "./dataset-list-model";
+import {DatasetList, DatasetListViewState} from "./dataset-list-model";
 import {JsonLdEntity} from "../jsonld";
-import {DatasetListQuery} from "../api/api-interface";
-
-export interface DatasetsFetchPayload {
-  query: DatasetListQuery;
-}
 
 export interface DatasetsFetchPayloadSuccess {
-  query: DatasetListQuery;
   payload: DatasetList;
   jsonld: JsonLdEntity[];
 }
 
 export interface DatasetsFetchPayloadFailed {
-  query: DatasetListQuery;
   error: Error;
 }
 
-export interface FacetFetchPayload {
-  facetName: string;
-}
-
 export interface FacetFetchPayloadSuccess {
-  facetName: string;
   payload: DatasetList;
   jsonld: JsonLdEntity[];
 }
 
 export interface FacetFetchPayloadFailed {
-  facetName: string;
   error: Error;
 }
 
@@ -38,7 +25,7 @@ export const DatasetListActions = {
     "app.fetchDatasets.request",
     "app.fetchDatasets.success",
     "app.fetchDatasets.failure",
-  )<DatasetsFetchPayload,
+  )<void,
     DatasetsFetchPayloadSuccess,
     DatasetsFetchPayloadFailed>(),
   "mountDatasetList": createAction(
@@ -51,9 +38,12 @@ export const DatasetListActions = {
     "app.fetchFacets.request",
     "app.fetchFacets.success",
     "app.fetchFacets.failure",
-  )<FacetFetchPayload,
+  )<void,
     FacetFetchPayloadSuccess,
     FacetFetchPayloadFailed>(),
+  "updateViewState": createAction(
+    "app.datasetList.viewState"
+  )<DatasetListViewState>(),
 };
 
 export type DatasetListActionsType = ActionType<typeof DatasetListActions>;

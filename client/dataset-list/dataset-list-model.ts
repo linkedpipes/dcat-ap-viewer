@@ -40,3 +40,32 @@ export interface Facet {
   code: string;
   color?: string;
 }
+
+/**
+ * Holds status of the dataset view, that is not saved into URL.
+ */
+export interface DatasetListViewState {
+  publisherLimit: number;
+  themeLimit: number;
+  keywordLimit: number;
+  formatLimit: number;
+  showMore: number;
+}
+
+/**
+ * Holds status of dataset view, that is saved in the URL.
+ */
+export interface DatasetListViewQuery {
+  page: number;
+  pageSize: number;
+  view: number;
+  sort?: string;
+  search?: string;
+  publisher: string[];
+  theme: string[];
+  keyword: string[];
+  format: string[];
+  temporalStart?: string;
+  temporalEnd?: string;
+  isPartOf: string[];
+}

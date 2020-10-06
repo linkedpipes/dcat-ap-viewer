@@ -7,11 +7,12 @@ import {
 } from "./dataset-list-actions";
 import {
   Facet,
-  DatasetListItem
+  DatasetListItem,
+  DatasetListViewState,
 } from "./dataset-list-model";
 import {getType} from "typesafe-actions";
 import {Status} from "../app/resource-status";
-import {DatasetListQuery} from "../api/api-interface";
+import {createDefaultState} from "./dataset-list-query-service";
 
 export {Status} from "../app/resource-status";
 
@@ -28,6 +29,8 @@ interface State {
   formats: FacetData;
   // Colors for facet views.
   colors: Record<string, string>;
+  //
+  viewState: DatasetListViewState;
 }
 
 interface FacetData {
@@ -63,6 +66,7 @@ const initialState: State = {
     "count": 0,
   },
   "colors": {},
+  "viewState": createDefaultState(),
 };
 
 function reducer(state = initialState, action: DatasetListActionsType) {
@@ -83,6 +87,8 @@ function reducer(state = initialState, action: DatasetListActionsType) {
       return onDatasetListFacetFetchSuccess(state, action.payload);
     case getType(DatasetListActions.fetchFacets.failure):
       return onDatasetListFacetFetchFailed(state);
+    case getType(DatasetListActions.updateViewState):
+      return onDatasetListUpdateViewState(state, action.payload);
     default:
       return state;
   }
@@ -189,25 +195,45 @@ function onDatasetListFacetFetch(state: State) {
 }
 
 function onDatasetListFacetFetchSuccess(
-  state: State, action:FacetFetchPayloadSuccess
+  state: State, action: FacetFetchPayloadSuccess
 ) {
-  const facetName = action.facetName;
-  const colors = {
-    ...state.colors,
-    // @ts-ignore
-    ...addColors(action.payload[facetName], state.colors),
-  };
-  return {
+  let colors = state.colors;
+  const result = {
     ...state,
     "status": Status.Ready,
-    [facetName]: {
-      // @ts-ignore
-      "facets": action.payload[facetName],
-      // @ts-ignore
-      "count": action.payload[facetName + "Count"],
-    },
-    "colors": colors,
+  };
+  //
+  if (state.publishers.facets.length < action.payload.publishers.length) {
+    result.publishers = {
+      "count": action.payload.publishersCount,
+      "facets": action.payload.publishers,
+    };
+    colors = {...colors, ...addColors(action.payload.publishers, state.colors)};
   }
+  if (state.themes.facets.length < action.payload.themes.length) {
+    result.themes = {
+      "count": action.payload.themesCount,
+      "facets": action.payload.themes,
+    };
+    colors = {...colors, ...addColors(action.payload.themes, state.colors)};
+  }
+  if (state.keywords.facets.length < action.payload.keywords.length) {
+    result.keywords = {
+      "count": action.payload.keywordsCount,
+      "facets": action.payload.keywords,
+    };
+    colors = {...colors, ...addColors(action.payload.keywords, state.colors)};
+  }
+  if (state.formats.facets.length < action.payload.formats.length) {
+    result.formats = {
+      "count": action.payload.formatsCount,
+      "facets": action.payload.formats
+    };
+    colors = {...colors, ...addColors(action.payload.formats, state.colors)};
+  }
+  //
+  result.colors = colors;
+  return result;
 }
 
 function onDatasetListFacetFetchFailed(state: State) {
@@ -215,6 +241,15 @@ function onDatasetListFacetFetchFailed(state: State) {
     ...state,
     "status": state.status === Status.Updating ? Status.Ready : Status.Failed,
   }
+}
+
+function onDatasetListUpdateViewState(
+  state: State, payload: DatasetListViewState
+): State {
+  return {
+    ...state,
+    "viewState": payload,
+  };
 }
 
 const reducerName = "dataset-list";
@@ -226,30 +261,34 @@ export default {
 
 const stateSelector = (state: any): State => state[reducerName];
 
-export function selectDatasetListStatus(state:any) {
+export function selectDatasetListStatus(state: any) {
   return stateSelector(state).status;
 }
 
-export function selectDatasetList(state:any) {
+export function selectDatasetList(state: any) {
   return stateSelector(state).datasets;
 }
 
-export function selectDatasetListCount(state:any) {
+export function selectDatasetListCount(state: any) {
   return stateSelector(state).datasetsCount;
 }
 
-export function selectThemesFacet(state:any) {
+export function selectThemesFacet(state: any) {
   return stateSelector(state).themes;
 }
 
-export function selectKeywordsFacet(state:any) {
+export function selectKeywordsFacet(state: any) {
   return stateSelector(state).keywords;
 }
 
-export function selectPublishersFacet(state:any) {
+export function selectPublishersFacet(state: any) {
   return stateSelector(state).publishers;
 }
 
-export function selectFormatsFacet(state:any) {
+export function selectFormatsFacet(state: any) {
   return stateSelector(state).formats;
+}
+
+export function selectViewState(state: any) {
+  return stateSelector(state).viewState;
 }

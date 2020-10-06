@@ -12,7 +12,6 @@ import {
   qualitySelector,
   Status,
 } from "./dataset-detail-reducer";
-import {fetchDatasets} from "../dataset-list/dataset-list-service";
 import {
   Dataset,
   DatasetPart,
@@ -22,6 +21,7 @@ import {
 import {fetchDatasetLabel, fetchLabels} from "../labels/index";
 import {jsonLdToDistributionOrDataService} from "./jsonld-to-distribution";
 import {JsonLdEntity} from "../jsonld";
+import {jsonLdToDatasetList} from "../dataset-list/jsonld-to-datasets";
 
 export type ThunkVoidResult = ThunkAction<void, any, any, AnyAction>;
 
@@ -179,13 +179,34 @@ export function fetchDescendants(
     "formatLimit": 0,
     "isPartOf": [iri],
   };
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const language = selectLanguage(state);
     // We set query and then use the same method as for fetching the list.
-    dispatch(DatasetDetailActions.setDescendantsQuery({"query": query}));
-    dispatch(fetchDatasets(query));
+    dispatch(DatasetDetailActions.fetchDescendants.request());
+    try {
+      const jsonld = await getApiInstance().fetchDatasetList(language, query);
+      if (jsonld === undefined) {
+        dispatch(DatasetDetailActions.fetchDescendants.failure({
+          "dataset": iri,
+          "error": new Error("Missing JSON-LD data."),
+        }));
+        return;
+      }
+      const payload = jsonLdToDatasetList(jsonld);
+      dispatch(DatasetDetailActions.fetchDescendants.success({
+        "dataset": iri,
+        "payload": payload,
+        "jsonld": jsonld,
+      }));
+    } catch (ex) {
+      dispatch(DatasetDetailActions.fetchDescendants.failure({
+        "dataset": iri,
+        "error": ex,
+      }));
+    }
   };
 }
-
 
 export function fetchDistribution(distributionIri: string): ThunkVoidResult {
   return async (dispatch, getState) => {

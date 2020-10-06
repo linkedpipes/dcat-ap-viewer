@@ -9,16 +9,14 @@ import {
   QualityFetchPayload,
   QualityFetchPayloadFailed,
   QualityFetchPayloadSuccess,
-  FetchDescendantsPayload,
   DistributionFetchPayload,
   DistributionFetchPayloadSuccess,
   DistributionFetchPayloadFailed,
+  FetchDescendantsPayloadSuccess,
+  FetchDescendantsPayloadFailed,
 } from "./dataset-detail-actions";
 import {
-  DatasetListActions,
   DatasetListActionsType,
-  DatasetsFetchPayloadSuccess,
-  DatasetsFetchPayloadFailed,
 } from "../dataset-list/dataset-list-actions";
 import {
   Dataset,
@@ -109,11 +107,9 @@ function reducer(state = initialStatus, action: Actions) {
       return onFetchQualitySuccess(state, action.payload);
     case getType(DatasetDetailActions.fetchQuality.failure):
       return onFetchQualityFailed(state, action.payload);
-    case getType(DatasetDetailActions.setDescendantsQuery):
-      return onSetDescendantsQuery(state, action.payload);
-    case getType(DatasetListActions.fetchDatasets.success):
+    case getType(DatasetDetailActions.fetchDescendants.success):
       return onFetchDescendantsSuccess(state, action.payload);
-    case getType(DatasetListActions.fetchDatasets.failure):
+    case getType(DatasetDetailActions.fetchDescendants.failure):
       return onFetchDescendantsFailed(state, action.payload);
     case getType(DatasetDetailActions.fetchDistribution.request):
       return onFetchDistribution(state, action.payload);
@@ -259,31 +255,9 @@ function onFetchQualityFailed(
   };
 }
 
-function onSetDescendantsQuery(
-  state: State, action: FetchDescendantsPayload): State {
-  if (state.descendants.resourceStatus === Status.Ready) {
-    return {
-      ...state,
-      "descendantsQuery": action.query,
-      "descendants": {
-        ...state.descendants,
-        "resourceStatus": Status.Updating,
-      },
-    };
-  }
-  return {
-    ...state,
-    "descendantsQuery": action.query,
-    "descendants": {
-      "datasets": [],
-      "resourceStatus": Status.Loading,
-    },
-  };
-}
-
 function onFetchDescendantsSuccess(
-  state: State, action: DatasetsFetchPayloadSuccess): State {
-  if (action.query !== state.descendantsQuery) {
+  state: State, action: FetchDescendantsPayloadSuccess): State {
+  if (state.dataset.iri !== action.dataset) {
     return state;
   }
   return {
@@ -297,8 +271,8 @@ function onFetchDescendantsSuccess(
 }
 
 function onFetchDescendantsFailed(
-  state: State, action: DatasetsFetchPayloadFailed): State {
-  if (action.query !== state.descendantsQuery) {
+  state: State, action: FetchDescendantsPayloadFailed): State {
+  if (state.dataset.iri !== action.dataset) {
     return state;
   }
   return {

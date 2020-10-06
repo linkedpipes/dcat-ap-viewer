@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {PropTypes} from "prop-types";
 import {
@@ -11,8 +11,8 @@ import {
   selectKeywordsFacet,
   selectFormatsFacet,
   selectPublishersFacet,
+  toggleFacet,
 } from "../../../client/dataset-list";
-import {fetchMoreFacets, onToggleFacet} from "./dataset-list-facet-service";
 
 function datasetListFilters(props) {
   const tLabel = useSelector(selectTLabel);
@@ -24,8 +24,10 @@ function datasetListFilters(props) {
   const dispatch = useDispatch();
   const Facet = getRegisteredElement("app.dataset-list.facets.element");
   //
-  const onClickIsPartOf = (iri) => onToggleFacet(
-    props.onUpdateNavigation, props.query, "isPartOf", iri);
+  const onClickIsPartOf = useCallback((value) => {
+    const nextQuery = toggleFacet(props.query, "isPartOf", value);
+    props.onUpdateViewQuery(nextQuery);
+  }, [props.query]);
   const [onFetchPublishers, onClickPublishers] =
     createDatasetCallback(dispatch, props, "publisher");
   const [onFetchThemes, onClickThemes] =
@@ -89,14 +91,21 @@ function datasetListFilters(props) {
 
 datasetListFilters.propTypes = {
   "query": PropTypes.object.isRequired,
-  "onUpdateNavigation": PropTypes.func.isRequired,
+  "state": PropTypes.object.isRequired,
+  "onUpdateViewQuery": PropTypes.func.isRequired,
+  "onUpdateViewState": PropTypes.func.isRequired,
 };
 
 function createDatasetCallback(dispatch, props, name) {
-  const onFetchMore =
-    (count) => fetchMoreFacets(dispatch, props.query, name, count);
-  const onClickFacet =
-    (iri) => onToggleFacet(props.onUpdateNavigation, props.query, name, iri);
+  const onFetchMore = useCallback((count) => {
+    const nextState = {...props.state};
+    nextState[name + "Limit"] = count;
+    props.onUpdateViewState(nextState);
+  }, [props.state, name]);
+  const onClickFacet = useCallback((value) => {
+    const nextQuery = toggleFacet(props.query, name, value);
+    props.onUpdateViewQuery(nextQuery);
+  }, [props.query, name]);
   return [onFetchMore, onClickFacet];
 }
 

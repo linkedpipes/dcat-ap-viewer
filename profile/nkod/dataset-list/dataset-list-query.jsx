@@ -10,10 +10,9 @@ import {
 import ViewSelector from "./ui/view-selector";
 import SearchBox from "./ui/search-box";
 import {
+  fetchDatasetTypeahead,
   createDefaultQuery,
-  toDatasetListQuery,
-} from "./dataset-list-query-service";
-import {fetchDatasetTypeahead} from "../../../client/dataset-list";
+} from "../../../client/dataset-list";
 
 function datasetListQuery(props) {
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -21,7 +20,7 @@ function datasetListQuery(props) {
   const [temporalEnd, setTemporalEnd] = useState(props.query.temporalEnd);
   const t = useSelector(selectT);
   const service = useDatasetListQueryService(
-    props.onUpdateNavigation, props.query);
+    props.onUpdateViewQuery, props.query);
   //
   let searchBox = undefined;
   return (
@@ -87,24 +86,24 @@ register({
 
 datasetListQuery.propTypes = {
   "query": PropTypes.object.isRequired,
-  "onUpdateNavigation": PropTypes.func.isRequired,
+  "onUpdateViewQuery": PropTypes.func.isRequired,
 };
 
-function useDatasetListQueryService(onUpdateNavigation, query) {
+function useDatasetListQueryService(onUpdateViewQuery, query) {
   const language = useSelector(selectLanguage);
   return {
     "onSetView": (view) => {
-      onUpdateNavigation({...query, "view": view});
+      onUpdateViewQuery({...query, "view": view});
     },
     "onSetSearchText": (text) => {
-      onUpdateNavigation({...query, "search": text});
+      onUpdateViewQuery({...query, "search": text});
     },
     "onClearFilters": (searchBox) => {
       searchBox.clear();
-      onUpdateNavigation(createDefaultQuery());
+      onUpdateViewQuery(createDefaultQuery());
     },
     "onSetTemporal": (start, end) => {
-      onUpdateNavigation({
+      onUpdateViewQuery({
         ...query,
         "temporalStart": start,
         "temporalEnd": end,
@@ -113,8 +112,7 @@ function useDatasetListQueryService(onUpdateNavigation, query) {
       });
     },
     "onFetchTypeahead": (text) => {
-      const datasetQuery = toDatasetListQuery(query);
-      return fetchDatasetTypeahead(datasetQuery, language, text);
+      return fetchDatasetTypeahead(query, language, text);
     },
   };
 }

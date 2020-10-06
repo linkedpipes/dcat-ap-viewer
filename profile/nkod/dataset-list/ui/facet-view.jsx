@@ -1,14 +1,12 @@
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React, {useCallback, useState} from "react";
+import {useSelector} from "react-redux";
 import {PropTypes} from "prop-types";
 import {Button} from "reactstrap";
 import TagCloud from "../../user-iterface/tag-cloud";
 import {selectT} from "../../../client-api";
 import {
-  fetchMoreFacets,
-  onToggleFacet,
-  updateFacets,
-} from "../dataset-list-facet-service";
+  toggleFacet,
+} from "../../../../client/dataset-list";
 
 const DEFAULT_FACET_SIZE = 32;
 
@@ -16,18 +14,19 @@ const INCREASE_BY_SIZE = 16;
 
 export default function GenericFacetView(props) {
   const t = useSelector(selectT);
-  const dispatch = useDispatch();
   const [size, setSize] = useState(DEFAULT_FACET_SIZE);
-  const onShowMore = () => {
+  const onShowMore = useCallback(() => {
     const nextSize = size + INCREASE_BY_SIZE;
     setSize(nextSize);
-    fetchMoreFacets(dispatch, props.query, props.facetName, nextSize);
-  };
-  const onClickFacet = (facet) => onToggleFacet(
-    props.onUpdateNavigation, props.query, props.facetName, facet.code);
-  useEffect(() => updateFacets(
-    dispatch, {...props.query, [props.facetName + "Limit"]: size}
-  ), [props.query]);
+    const nextState = {...this.state};
+    nextState[props.facetName + "Limit"] = nextSize;
+    props.onUpdateViewState(nextState);
+  }, [size]);
+  const onClickFacet = useCallback((value) => {
+    const nextQuery = toggleFacet(props.query, props.facetName, value);
+    props.onUpdateNavigation(nextQuery);
+  }, [props.query, props.facetName]);
+  //
   return renderGenericFacetView(
     t, onClickFacet, onShowMore,
     props.selectFacetLabel, props.facetData, props.facetCount
@@ -37,6 +36,7 @@ export default function GenericFacetView(props) {
 GenericFacetView.propTypes = {
   "facetName": PropTypes.string.isRequired,
   "query": PropTypes.object.isRequired,
+  "state": PropTypes.object.isRequired,
   "facetData": PropTypes.arrayOf(PropTypes.exact({
     "iri": PropTypes.string.isRequired,
     "code": PropTypes.string.isRequired,
@@ -46,6 +46,7 @@ GenericFacetView.propTypes = {
   "facetCount": PropTypes.number.isRequired,
   "selectFacetLabel": PropTypes.func.isRequired,
   "onUpdateNavigation": PropTypes.func.isRequired,
+  "onUpdateViewState": PropTypes.func.isRequired,
 };
 
 function renderGenericFacetView(

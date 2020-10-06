@@ -8,6 +8,7 @@ import {
 } from "./dataset-detail-model";
 import {JsonLdEntity} from "../jsonld";
 import {DatasetListQuery} from "../api/api-interface";
+import {DatasetList} from "../dataset-list/dataset-list-model";
 
 export interface DatasetFetchPayload {
   dataset: string;
@@ -69,8 +70,15 @@ export interface DatasetDetailChangePayload {
   dataset: string;
 }
 
-export interface FetchDescendantsPayload {
-  query: DatasetListQuery
+export interface FetchDescendantsPayloadSuccess {
+  dataset:string;
+  payload: DatasetList;
+  jsonld: JsonLdEntity[];
+}
+
+export interface FetchDescendantsPayloadFailed {
+  dataset:string;
+  error: Error;
 }
 
 export const DatasetDetailActions = {
@@ -104,9 +112,13 @@ export const DatasetDetailActions = {
   "unMountDatasetDetail": createAction(
     "app.datasetDetail.unMount"
   )(),
-  "setDescendantsQuery": createAction(
-    "app.datasetDetail.descendants"
-  )<FetchDescendantsPayload>(),
+  "fetchDescendants": createAsyncAction(
+    "app.datasetDetail.descendants.request",
+    "app.datasetDetail.descendants.success",
+    "app.datasetDetail.descendants.failure",
+  )<void,
+    FetchDescendantsPayloadSuccess,
+    FetchDescendantsPayloadFailed>(),
 };
 
 export type DatasetDetailActionsType = ActionType<typeof DatasetDetailActions>;

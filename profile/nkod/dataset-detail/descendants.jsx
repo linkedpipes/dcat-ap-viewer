@@ -32,13 +32,13 @@ function Descendants(props) {
     dispatch(fetchDescendants(props.iri, page * pageSize, pageSize));
   }, [page, pageSize]);
   useEffect(() => {
-    if (descendants.status === Status.Ready) {
+    if (descendants.resourceStatus === Status.Ready) {
       dispatch(fetchLabels(collectLabels(descendants.datasets)));
     }
   }, [descendants]);
   //
-  if (descendants.status !== Status.Ready &&
-    descendants.status !== Status.Updating) {
+  if (descendants.resourceStatus !== Status.Ready  &&
+    descendants.resourceStatus !== Status.Updating) {
     return null;
   }
   if (descendants.count === 0) {

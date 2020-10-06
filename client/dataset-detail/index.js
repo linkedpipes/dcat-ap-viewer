@@ -4,7 +4,6 @@ import reducer from "./dataset-detail-reducer";
 
 export {
   Status,
-  ResourceStatus,
   datasetSelector,
   qualitySelector,
   descendantsSelector,

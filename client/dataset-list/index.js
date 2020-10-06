@@ -11,21 +11,21 @@ export {
   selectKeywordsFacet,
   selectPublishersFacet,
   selectThemesFacet,
-  selectDatasetQuery,
 } from "./dataset-list-reducer";
 export {
   ELEMENT_DATASET_LIST,
 } from "./dataset-list-container";
 export {
-  fetchDatasets,
   replaceNavigation,
-  updateDatasets,
-  fetchFacets,
   fetchDatasetTypeahead,
 } from "./dataset-list-service";
 export {
   Facet,
 } from "./dataset-list-model";
+export {
+  toggleFacet,
+  createDefaultQuery,
+} from "./dataset-list-query-service";
 
 register({
   "name": reducer.name,
