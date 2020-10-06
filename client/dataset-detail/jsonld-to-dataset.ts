@@ -23,21 +23,11 @@ import {
   SKOS,
   VCARD,
 } from "../vocabulary/vocabulary"
-import {
-  ContactPoint,
-  DataService,
-  Dataset,
-  DatasetCustom,
-  Distribution,
-} from "./dataset-detail-model";
-import {
-  jsonLdToDistributionOrDataService
-} from "./jsonld-to-distribution";
+import {ContactPoint, Dataset, DatasetCustom,} from "./dataset-detail-model";
 
 export function jsonLdToDataset(jsonld: JsonLdEntity[]): Dataset {
   const entity = getEntitiesByType(jsonld, DCAT.Dataset)[0];
   const iri = getId(entity);
-  const distributions = getResources(entity, DCAT.distribution);
   const datasets = getResources(entity, DCTERMS.hasPart);
   return {
     // Mandatory.
@@ -45,7 +35,7 @@ export function jsonLdToDataset(jsonld: JsonLdEntity[]): Dataset {
     "description": getStrings(entity, DCTERMS.description),
     // Recommended.
     "contactPoints": loadContactPoints(jsonld, entity),
-    "distributions": loadDistributions(jsonld, distributions),
+    "distributions": getResources(entity, DCAT.distribution),
     "keywords": getStrings(entity, DCAT.keyword),
     "publisher": getResource(entity, DCTERMS.publisher),
     ...loadThemes(jsonld, entity),
@@ -82,21 +72,6 @@ export function jsonLdToDataset(jsonld: JsonLdEntity[]): Dataset {
     // Custom.
     ...loadForm(jsonld, entity),
   };
-}
-
-function loadDistributions(
-  jsonld: JsonLdEntity[], iris: string[]
-): (Distribution | DataService)[] {
-  const result: (Distribution | DataService)[] = [];
-  iris.sort();
-  for (const iri of iris) {
-    const distribution = jsonLdToDistributionOrDataService(jsonld, iri);
-    if (distribution === undefined) {
-      continue;
-    }
-    result.push(distribution);
-  }
-  return result;
 }
 
 function loadContactPoints(jsonld: JsonLdEntity[], dataset: JsonLdEntity)

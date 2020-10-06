@@ -49,17 +49,17 @@ const DatasetView = ({iri}) => {
   const quality = useSelector(
     (state) => qualitySelector(state, iri));
   useEffect(() => {
-    if (dataset.status === Status.Undefined) {
+    if (dataset.resourceStatus === Status.Undefined) {
       dispatch(fetchDataset(iri));
     }
-    if (dataset.status === Status.Ready) {
+    if (dataset.resourceStatus === Status.Ready) {
       dispatch(fetchDatasetQuality(dataset.iri));
     }
   }, [dataset]);
   //
   const LoadingView = getRegisteredElement(STATUS_LOADING);
   const FailedView = getRegisteredElement(STATUS_FAILED);
-  switch(dataset.status) {
+  switch(dataset.resourceStatus) {
   case Status.Undefined:
   case Status.Loading:
     return (<LoadingView/>);
@@ -145,7 +145,7 @@ function datasetReadyView(
         openModal={openModal}
       />
       <hr/>
-      <Distributions distributions={dataset.distributions}/>
+      <Distributions parts={dataset.distributions}/>
       <Descendants
         iri={dataset.iri}
         t={t}

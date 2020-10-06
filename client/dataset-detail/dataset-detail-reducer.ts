@@ -10,6 +10,9 @@ import {
   QualityFetchPayloadFailed,
   QualityFetchPayloadSuccess,
   FetchDescendantsPayload,
+  DistributionFetchPayload,
+  DistributionFetchPayloadSuccess,
+  DistributionFetchPayloadFailed,
 } from "./dataset-detail-actions";
 import {
   DatasetListActions,
@@ -18,10 +21,10 @@ import {
   DatasetsFetchPayloadFailed,
 } from "../dataset-list/dataset-list-actions";
 import {
-  DataService,
   Dataset,
-  Distribution,
   QualityMeasures,
+  DatasetPart,
+  LoadableResource
 } from "./dataset-detail-model";
 import {
   DatasetListItem,
@@ -29,18 +32,13 @@ import {
 import {getType} from "typesafe-actions";
 import {DatasetListQuery} from "../api/api-interface";
 import {Status} from "../app/resource-status";
+
 export {Status} from "../app/resource-status";
 
-export interface ResourceStatus {
-  iri?: string;
-  status: Status;
-  error?: Error;
-}
-
 export interface Descendants {
-  count?:number;
+  count?: number;
   datasets: DatasetListItem[];
-  status: Status;
+  resourceStatus: Status;
 }
 
 interface State {
@@ -48,7 +46,7 @@ interface State {
   /**
    * Current main dataset.
    */
-  dataset: (Dataset & ResourceStatus) | ResourceStatus;
+  dataset: (Dataset & LoadableResource) | LoadableResource;
   /**
    * Other datasets in the hierarchy.
    */
@@ -60,24 +58,22 @@ interface State {
   /**
    * Distributions or data services.
    */
-  parts: Record<string,
-    (Distribution & ResourceStatus) |
-    (DataService & ResourceStatus) |
-    ResourceStatus>;
+  parts: Record<string, DatasetPart & LoadableResource>;
   /**
    * Quality records for all data.
    */
-  quality: Record<string, (QualityMeasures & ResourceStatus) | ResourceStatus>;
+  quality: Record<string, (QualityMeasures & LoadableResource)
+    | LoadableResource>;
 }
 
 const initialStatus: State = {
   "active": false,
   "dataset": {
-    "status": Status.Undefined,
+    "resourceStatus": Status.Undefined,
   },
   "descendants": {
     "datasets": [],
-    "status": Status.Undefined,
+    "resourceStatus": Status.Undefined,
   },
   "descendantsQuery": undefined,
   "parts": {},
@@ -119,6 +115,12 @@ function reducer(state = initialStatus, action: Actions) {
       return onFetchDescendantsSuccess(state, action.payload);
     case getType(DatasetListActions.fetchDatasets.failure):
       return onFetchDescendantsFailed(state, action.payload);
+    case getType(DatasetDetailActions.fetchDistribution.request):
+      return onFetchDistribution(state, action.payload);
+    case getType(DatasetDetailActions.fetchDistribution.success):
+      return onFetchDistributionSuccess(state, action.payload);
+    case getType(DatasetDetailActions.fetchDistribution.failure):
+      return onFetchDistributionFailed(state, action.payload);
     default:
       return state;
   }
@@ -130,13 +132,14 @@ function onDatasetMount(
     ...state,
     "active": true,
     "dataset": createEmptyResourceStatus(action.dataset),
+    "parts": {},
   };
 }
 
-function createEmptyResourceStatus(iri: string): ResourceStatus {
+function createEmptyResourceStatus(iri: string): LoadableResource {
   return {
     "iri": iri,
-    "status": Status.Undefined,
+    "resourceStatus": Status.Undefined,
   };
 }
 
@@ -152,8 +155,9 @@ function onDatasetChange(
     "descendantsQuery": undefined,
     "descendants": {
       "datasets": [],
-      "status": Status.Undefined,
+      "resourceStatus": Status.Undefined,
     },
+    "parts": {},
   };
 }
 
@@ -164,13 +168,14 @@ function onFetchDataset(state: State, action: DatasetFetchPayload): State {
   return {
     ...state,
     "dataset": createLoadingResourceStatus(state.dataset.iri),
+    "parts": {},
   };
 }
 
-function createLoadingResourceStatus(iri: string): ResourceStatus {
+function createLoadingResourceStatus(iri: string): LoadableResource {
   return {
     "iri": iri,
-    "status": Status.Loading,
+    "resourceStatus": Status.Loading,
   };
 }
 
@@ -179,16 +184,24 @@ function onFetchDatasetSuccess(
   if (state.dataset.iri !== action.dataset) {
     return state;
   }
+  const parts: Record<string, DatasetPart & LoadableResource> = {};
+  for (const part of action.partsPayload) {
+    if (part.iri === undefined) {
+      continue;
+    }
+    parts[part.iri] = wrapReadyResourceStatus(part);
+  }
   return {
     ...state,
     "dataset": wrapReadyResourceStatus(action.payload),
+    "parts": parts,
   };
 }
 
-function wrapReadyResourceStatus<T>(data: T): ResourceStatus & T {
+function wrapReadyResourceStatus<T>(data: T): LoadableResource & T {
   return {
     ...data,
-    "status": Status.Ready,
+    "resourceStatus": Status.Ready,
   };
 }
 
@@ -200,13 +213,16 @@ function onFetchDatasetFailed(
   return {
     ...state,
     "dataset": createFailedResourceStatus(state.dataset.iri, action.error),
+    "parts": {},
   };
 }
 
-function createFailedResourceStatus(iri: string, error: Error): ResourceStatus {
+function createFailedResourceStatus(
+  iri: string, error: Error
+): LoadableResource {
   return {
     "iri": iri,
-    "status": Status.Failed,
+    "resourceStatus": Status.Failed,
     "error": error,
   };
 }
@@ -245,13 +261,13 @@ function onFetchQualityFailed(
 
 function onSetDescendantsQuery(
   state: State, action: FetchDescendantsPayload): State {
-  if (state.descendants.status === Status.Ready) {
+  if (state.descendants.resourceStatus === Status.Ready) {
     return {
       ...state,
       "descendantsQuery": action.query,
       "descendants": {
         ...state.descendants,
-        "status": Status.Updating,
+        "resourceStatus": Status.Updating,
       },
     };
   }
@@ -260,7 +276,7 @@ function onSetDescendantsQuery(
     "descendantsQuery": action.query,
     "descendants": {
       "datasets": [],
-      "status": Status.Loading,
+      "resourceStatus": Status.Loading,
     },
   };
 }
@@ -275,7 +291,7 @@ function onFetchDescendantsSuccess(
     "descendants": {
       "count": action.payload.datasetsCount,
       "datasets": action.payload.datasets,
-      "status": Status.Ready,
+      "resourceStatus": Status.Ready,
     },
   };
 }
@@ -289,9 +305,43 @@ function onFetchDescendantsFailed(
     ...state,
     "descendants": {
       "datasets": [],
-      "status": Status.Failed,
+      "resourceStatus": Status.Failed,
     },
   };
+}
+
+function onFetchDistribution(
+  state: State, action: DistributionFetchPayload) {
+  return {
+    ...state,
+    "parts": {
+      ...state.parts,
+      [action.distribution]: createLoadingResourceStatus(action.distribution),
+    }
+  }
+}
+
+function onFetchDistributionSuccess(
+  state: State, action: DistributionFetchPayloadSuccess) {
+  return {
+    ...state,
+    "parts": {
+      ...state.parts,
+      [action.distribution]: wrapReadyResourceStatus(action.payload),
+    }
+  }
+}
+
+function onFetchDistributionFailed(
+  state: State, action: DistributionFetchPayloadFailed) {
+  return {
+    ...state,
+    "parts": {
+      ...state.parts,
+      [action.distribution]: createFailedResourceStatus(
+        action.distribution, action.error),
+    }
+  }
 }
 
 const reducerName = "dataset-detail";
@@ -303,18 +353,22 @@ export default {
 
 const stateSelector = (state: any): State => state[reducerName];
 
-const undefinedResource: ResourceStatus = {
-  "status": Status.Undefined,
+const undefinedResource: LoadableResource = {
+  "resourceStatus": Status.Undefined,
 };
 
 export const datasetSelector =
-  (state: any): (Dataset & ResourceStatus) | ResourceStatus =>
+  (state: any): (Dataset & LoadableResource) | LoadableResource =>
     stateSelector(state).dataset;
 
 export const qualitySelector =
   (state: any, iri: string):
-    (QualityMeasures & ResourceStatus) | ResourceStatus =>
+    (QualityMeasures & LoadableResource) | LoadableResource =>
     stateSelector(state).quality[iri] || undefinedResource;
 
 export const descendantsSelector =
   (state: any): Descendants => stateSelector(state).descendants;
+
+export const datasetPartSelector =
+  (state: any, iri: string): (DatasetPart & LoadableResource) | LoadableResource =>
+    stateSelector(state).parts[iri] || {...undefinedResource, "iri": iri};

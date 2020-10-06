@@ -13,6 +13,7 @@ import "./dataset-detail/keywords";
 import "./dataset-detail/parts";
 import "./dataset-detail/part-data-service";
 import "./dataset-detail/part-distribution";
+import "./dataset-detail/part-system";
 import "./dataset-detail/descendants";
 import "./dataset-detail/webpage-metadata";
 import "./dcat-ap-forms";

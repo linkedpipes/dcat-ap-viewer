@@ -1,24 +1,17 @@
 import {
-  JsonLdEntity,
-  getId,
-  getResources,
   getEntityByIri,
-  getStrings,
-  getResource,
-  getPlainStrings,
+  getId,
   getPlainString,
+  getPlainStrings,
+  getResource,
+  getResources,
+  getStrings,
+  JsonLdEntity,
 } from "../jsonld";
+import {ADMS, DCAT, DCTERMS, FOAF, PU, SPDX,} from "../vocabulary/vocabulary"
 import {
-  DCAT,
-  DCTERMS,
-  FOAF,
-  ADMS,
-  SPDX,
-  PU,
-} from "../vocabulary/vocabulary"
-import {
-  Distribution,
   DataService,
+  Distribution,
   DistributionLegal,
   DistributionType,
 } from "./dataset-detail-model";

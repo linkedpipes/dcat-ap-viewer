@@ -1,7 +1,10 @@
 import {createAction, createAsyncAction, ActionType} from "typesafe-actions";
 import {
+  DataService,
   Dataset,
+  Distribution,
   QualityMeasures,
+  DatasetPart,
 } from "./dataset-detail-model";
 import {JsonLdEntity} from "../jsonld";
 import {DatasetListQuery} from "../api/api-interface";
@@ -13,11 +16,27 @@ export interface DatasetFetchPayload {
 export interface DatasetFetchPayloadSuccess {
   dataset: string;
   payload: Dataset;
+  partsPayload: DatasetPart[],
   jsonld: JsonLdEntity[];
 }
 
 export interface DatasetFetchPayloadFailed {
   dataset: string;
+  error: Error;
+}
+
+export interface DistributionFetchPayload {
+  distribution: string;
+}
+
+export interface DistributionFetchPayloadSuccess {
+  distribution: string;
+  payload: Distribution | DataService;
+  jsonld: JsonLdEntity[];
+}
+
+export interface DistributionFetchPayloadFailed {
+  distribution: string;
   error: Error;
 }
 
@@ -62,6 +81,13 @@ export const DatasetDetailActions = {
   )<DatasetFetchPayload,
     DatasetFetchPayloadSuccess,
     DatasetFetchPayloadFailed>(),
+  "fetchDistribution": createAsyncAction(
+    "app.fetchDistribution.request",
+    "app.fetchDistribution.success",
+    "app.fetchDistribution.failure",
+  )<DistributionFetchPayload,
+    DistributionFetchPayloadSuccess,
+    DistributionFetchPayloadFailed>(),
   "fetchQuality": createAsyncAction(
     "app.fetchQuality.request",
     "app.fetchQuality.success",

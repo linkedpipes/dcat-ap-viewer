@@ -5,16 +5,23 @@ import {jsonLdToQualityMeasures} from "./jsonld-to-quality";
 import {selectLanguage} from "../app/component-api";
 import {getApiInstance} from "../api/api-action";
 import {DatasetDetailActions} from "./dataset-detail-actions";
-import {FlatJsonLdPromise} from "../api/api-interface";
+import {DatasetListQuery, FlatJsonLdPromise} from "../api/api-interface";
 import {
   datasetSelector,
+  datasetPartSelector,
   qualitySelector,
   Status,
 } from "./dataset-detail-reducer";
-import {DatasetListQuery} from "../api/api-interface";
 import {fetchDatasets} from "../dataset-list/dataset-list-service";
-import {Dataset} from "./dataset-detail-model";
-import {fetchLabels, fetchDatasetLabel} from "../labels/index";
+import {
+  Dataset,
+  DatasetPart,
+  isDataService,
+  isDistribution,
+} from "./dataset-detail-model";
+import {fetchDatasetLabel, fetchLabels} from "../labels/index";
+import {jsonLdToDistributionOrDataService} from "./jsonld-to-distribution";
+import {JsonLdEntity} from "../jsonld";
 
 export type ThunkVoidResult = ThunkAction<void, any, any, AnyAction>;
 
@@ -22,8 +29,7 @@ export function fetchDataset(datasetIri: string): ThunkVoidResult {
   return async (dispatch, getState) => {
     const state = getState();
     const language = selectLanguage(state);
-    const dataset = datasetSelector(state);
-    if (dataset.status === Status.Loading) {
+    if (datasetSelector(state).resourceStatus === Status.Loading) {
       return;
     }
     dispatch(DatasetDetailActions.fetchDataset.request({
@@ -39,15 +45,20 @@ export function fetchDataset(datasetIri: string): ThunkVoidResult {
         }));
         return;
       }
-      const payload = jsonLdToDataset(jsonld);
+      const dataset = jsonLdToDataset(jsonld);
+      const datasetParts = parsePartsFromDatasetJsonLd(jsonld, dataset);
       dispatch(DatasetDetailActions.fetchDataset.success({
         "dataset": datasetIri,
-        "payload": payload,
+        "payload": dataset,
+        "partsPayload": datasetParts,
         "jsonld": jsonld,
       }));
-      fetchLabelsForDataset(dispatch, payload);
-      if (payload.parentDataset) {
-        dispatch(fetchDatasetLabel(payload.parentDataset));
+      fetchLabelsForDataset(dispatch, dataset);
+      for (const part of datasetParts) {
+        fetchLabelsForDatasetPart(dispatch, part);
+      }
+      if (dataset.parentDataset) {
+        dispatch(fetchDatasetLabel(dataset.parentDataset));
       }
     } catch (ex) {
       dispatch(DatasetDetailActions.fetchDataset.failure({
@@ -56,6 +67,58 @@ export function fetchDataset(datasetIri: string): ThunkVoidResult {
       }));
     }
   }
+}
+
+function parsePartsFromDatasetJsonLd(
+  jsonld: JsonLdEntity[], dataset: Dataset
+): DatasetPart[] {
+  const result = [];
+  for (const iri of dataset.distributions) {
+    const part = jsonLdToDistributionOrDataService(jsonld, iri);
+    if (part !== undefined) {
+      result.push(part);
+    }
+  }
+  return result;
+}
+
+function fetchLabelsForDataset(
+  dispatch: ThunkDispatch<any, any, AnyAction>, dataset: Dataset
+) {
+  const iris: string [] = [
+    ...dataset.spatial,
+    ...dataset.themes,
+    ...dataset.datasetThemes,
+  ];
+  if (dataset.frequency !== undefined) {
+    iris.push(dataset.frequency);
+  }
+  if (dataset.publisher !== undefined) {
+    iris.push(dataset.publisher);
+  }
+  dispatch(fetchLabels(iris));
+}
+
+function fetchLabelsForDatasetPart(
+  dispatch: ThunkDispatch<any, any, AnyAction>, part: DatasetPart
+) {
+  if (!isDistribution(part) && !isDataService(part)) {
+    return;
+  }
+  const iris = [];
+  if (part.format) {
+    iris.push(part.format);
+  }
+  if (part.mediaType) {
+    iris.push(part.mediaType);
+  }
+  if (part.compressFormat) {
+    iris.push(part.compressFormat);
+  }
+  if (part.packageFormat) {
+    iris.push(part.packageFormat);
+  }
+  dispatch(fetchLabels(iris));
 }
 
 export function fetchDatasetQuality(datasetIri: string): ThunkVoidResult {
@@ -69,7 +132,7 @@ function fetchQuality(
     const state = getState();
     const language = selectLanguage(state);
     const quality = qualitySelector(state, iri);
-    if (quality.status !== Status.Undefined) {
+    if (quality.resourceStatus !== Status.Undefined) {
       return;
     }
     dispatch(DatasetDetailActions.fetchQuality.request({"iri": iri}));
@@ -96,22 +159,6 @@ function fetchQuality(
   };
 }
 
-function fetchLabelsForDataset(
-  dispatch: ThunkDispatch<any, any, AnyAction>, dataset: Dataset
-) {
-  const iris: string [] = [
-    ...dataset.spatial,
-    ...dataset.themes,
-    ...dataset.datasetThemes,
-  ];
-  if (dataset.frequency !== undefined) {
-    iris.push(dataset.frequency);
-  }
-  if (dataset.publisher !== undefined) {
-    iris.push(dataset.publisher);
-  }
-  dispatch(fetchLabels(iris));
-}
 
 export function fetchDatasetPartQuality(iri: string): ThunkVoidResult {
   return fetchQuality(iri, getApiInstance().fetchQualityDistribution);
@@ -140,4 +187,52 @@ export function fetchDescendants(
 }
 
 
-
+export function fetchDistribution(distributionIri: string): ThunkVoidResult {
+  return async (dispatch, getState) => {
+    const state = getState();
+    const language = selectLanguage(state);
+    const dataset = datasetSelector(state);
+    if (dataset.resourceStatus !== Status.Ready) {
+      return;
+    }
+    const distribution = datasetPartSelector(state, distributionIri);
+    if (distribution !== undefined
+      && distribution.resourceStatus !== Status.Undefined) {
+      // We have distribution loaded in any state, do not fetch again.
+      return
+    }
+    dispatch(DatasetDetailActions.fetchDistribution.request({
+      "distribution": distributionIri,
+    }));
+    try {
+      const jsonld = await getApiInstance().fetchDistribution(
+        language, distributionIri);
+      if (jsonld === undefined) {
+        dispatch(DatasetDetailActions.fetchDistribution.failure({
+          "distribution": distributionIri,
+          "error": new Error("Missing JSON-LD data."),
+        }));
+        return;
+      }
+      const payload = jsonLdToDistributionOrDataService(jsonld, distributionIri);
+      if (payload === undefined) {
+        dispatch(DatasetDetailActions.fetchDistribution.failure({
+          "distribution": distributionIri,
+          "error": new Error("Missing distribution data."),
+        }));
+        return;
+      }
+      dispatch(DatasetDetailActions.fetchDistribution.success({
+        "distribution": distributionIri,
+        "payload": payload,
+        "jsonld": jsonld,
+      }));
+      fetchLabelsForDatasetPart(dispatch, payload);
+    } catch (ex) {
+      dispatch(DatasetDetailActions.fetchDistribution.failure({
+        "distribution": distributionIri,
+        "error": ex,
+      }));
+    }
+  };
+}

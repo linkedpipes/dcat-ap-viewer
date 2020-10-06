@@ -8,6 +8,7 @@ export {
   datasetSelector,
   qualitySelector,
   descendantsSelector,
+  datasetPartSelector,
 } from "./dataset-detail-reducer";
 export {
   ELEMENT_DATASET_DETAIL,
@@ -17,6 +18,7 @@ export {
   fetchDatasetQuality,
   fetchDatasetPartQuality,
   fetchDescendants,
+  fetchDistribution,
 } from "./dataset-detail-service";
 export {
   DistributionType,

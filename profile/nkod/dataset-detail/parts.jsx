@@ -1,7 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {PropTypes} from "prop-types";
 import {
-  fetchLabels,
   getRegisteredElement,
   register,
   selectT,
@@ -17,17 +16,17 @@ import {
 } from "../nkod-component-names";
 import {useDispatch, useSelector} from "react-redux";
 import {
+  fetchDistribution,
+  fetchDatasetPartQuality,
   qualitySelector,
   Status,
-} from "../../../client/dataset-detail/dataset-detail-reducer";
-import {
-  fetchDatasetPartQuality,
-} from "../../../client/dataset-detail/dataset-detail-service";
-import {
+  datasetPartSelector,
   DistributionType,
-} from "../../../client/dataset-detail/dataset-detail-model";
+} from "../../../client/dataset-detail";
 
-function Parts({distributions}) {
+const PART_SYSTEM = "nkod.dataset-detail.system-part";
+
+function Parts({parts}) {
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(4);
 
@@ -39,24 +38,24 @@ function Parts({distributions}) {
     "openModal": (body) => dispatch(showModal(undefined, body)),
   };
 
-  if (distributions.length === 0) {
+  if (parts.length === 0) {
     return null;
   }
 
   return (
     <div>
       <div className="row">
-        {selectArray(distributions, page, pageSize).map((distribution) => (
+        {selectArray(parts, page, pageSize).map((iri) => (
           <Part
-            key={distribution.iri}
-            distribution={distribution}
+            key={iri}
+            iri={iri}
             dispatch={dispatch}
             args={args}
           />
         ))}
       </div>
       <Paginator
-        recordsCount={distributions.length}
+        recordsCount={parts.length}
         pageIndex={page}
         pageSize={pageSize}
         defaultPageSize={4}
@@ -69,7 +68,7 @@ function Parts({distributions}) {
 }
 
 Parts.propTypes = {
-  "distributions": PropTypes.array.isRequired,
+  "parts": PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 register({
@@ -87,38 +86,48 @@ function selectArray(items, page, pageSize) {
   return result;
 }
 
-function Part({dispatch, args, distribution}) {
+function Part({dispatch, args, iri}) {
+  const part = useSelector((state) => datasetPartSelector(state, iri));
   const quality = useSelector(
-    (state) => qualitySelector(state, distribution.iri));
-  if (quality.status === Status.Undefined) {
-    dispatch(fetchDatasetPartQuality(distribution.iri));
+    (state) => qualitySelector(state, part.iri));
+  useEffect(() => {
+    if (part.resourceStatus === Status.Undefined) {
+      dispatch(fetchDistribution(iri));
+      return;
+    }
+    if (quality.resourceStatus === Status.Undefined) {
+      dispatch(fetchDatasetPartQuality(part.iri));
+    }
+  }, [part]);
+  if (part.resourceStatus !== Status.Ready) {
+    return partSystem(part, args);
   }
-  dispatch(fetchLabels(collectLabels(distribution)));
-  if (distribution.type === DistributionType.DataService) {
-    return partDataService(distribution, quality, undefined, args);
+  if (part.type === DistributionType.DataService) {
+    return partDataService(part, quality, args);
   }
-  return partDistribution(distribution, quality, args);
+  return partDistribution(part, quality, args);
 }
 
 Part.propTypes = {
   "dispatch": PropTypes.func.isRequired,
   "args": PropTypes.object.isRequired,
-  "distribution": PropTypes.object.isRequired,
+  "iri": PropTypes.string.isRequired,
 };
 
-function collectLabels(distribution) {
-  return [
-    distribution.format,
-    distribution.mediaType,
-    distribution.compressFormat,
-    distribution.packageFormat,
-  ];
+function partSystem(part, args) {
+  const Component = getRegisteredElement(PART_SYSTEM);
+  return (
+    <Component
+      part={part}
+      {...args}
+    />
+  );
 }
 
 function partDistribution(distribution, quality, args) {
-  const Distribution = getRegisteredElement(DATASET_DETAIL_DISTRIBUTION);
+  const Component = getRegisteredElement(DATASET_DETAIL_DISTRIBUTION);
   return (
-    <Distribution
+    <Component
       distribution={distribution}
       quality={quality}
       {...args}
@@ -126,13 +135,12 @@ function partDistribution(distribution, quality, args) {
   );
 }
 
-function partDataService(
-  dataService, distributionQuality, dataServiceQuality, args) {
-  const DataService = getRegisteredElement(DATASET_DETAIL_DATA_SERVICE);
+function partDataService(dataService, quality, args) {
+  const Component = getRegisteredElement(DATASET_DETAIL_DATA_SERVICE);
   return (
-    <DataService
+    <Component
       dataService={dataService}
-      quality={distributionQuality}
+      quality={quality}
       {...args}
     />
   );

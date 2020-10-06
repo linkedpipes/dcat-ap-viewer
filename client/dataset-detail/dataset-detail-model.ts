@@ -1,4 +1,11 @@
 import {Literal} from "../jsonld";
+import {Status} from "../app/resource-status";
+
+export interface LoadableResource {
+  iri?: string;
+  resourceStatus: Status;
+  error?: Error;
+}
 
 interface DatasetMandatory {
   iri: string;
@@ -7,7 +14,7 @@ interface DatasetMandatory {
 
 interface DatasetRecommended {
   contactPoints: ContactPoint[];
-  distributions: (Distribution | DataService)[];
+  distributions: string[];
   keywords: Literal[];
   publisher?: string;
   themes: string[];
@@ -149,6 +156,8 @@ export type DataService = Distribution & {
   endpointURL?: string;
   dataService: string;
 }
+
+export type DatasetPart = (Distribution | DataService);
 
 export function isDataService(content : any): content is DataService {
   return content.type === DistributionType.DataService;
