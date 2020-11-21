@@ -1,0 +1,89 @@
+{
+  "cs": {
+    "title asc": "Název vzestupně",
+    "title desc": "Název sestupně",
+    "query.datasetsFound": {
+      "0": "Nenalezena žádná datové sada",
+      "1": "Nalezena 1 datové sada",
+      "2": "Nalezeny {count} datové sady",
+      "5": "Nalezeno {count} datových sad"
+    },
+    "facet.publishers": "Poskytovatelé",
+    "facet.themes": "Témata",
+    "facet.keywords": "Klíčová slova",
+    "facet.formats": "Formáty",
+    "facet.hide": "Skrýt filtry",
+    "facet.show": "Zobrazit filtry",
+    "isPartOfFacet": "Nadřazený dataset",
+    "facet.showPopular": "Zobrazit pouze populární",
+    "facet.showMore": "Zobrazit další",
+    "facet.showAll": "Zobrazit vše",
+    "query.temporal": "Časové pokrytí",
+    "query.from": "od",
+    "query.to": "do",
+    "query.hideFilters": "Skrýt pokročilé filtry",
+    "query.showFilters": "Zobrazit pokročilé filtry",
+    "query.clearFilters": "Smaž filtry",
+    "query.with": " na dotaz",
+    "query.lastYear": "Minulý rok",
+    "query.thisYear": "Tento rok",
+    "datasetList": "Seznam datových sad",
+    "keywordCloud": "Klíčová slova",
+    "themeCloud": "Témata",
+    "themesFound": {
+      "0": "Nenalezeno žádné téma",
+      "1": "Nalezeno jedno téma",
+      "2": "Nalezena {count} témata",
+      "5": "Nalezeno {count} témat"
+    },
+    "keywordsFound": {
+      "0": "Nenalezeno žádné klíčové slovo",
+      "1": "Nalezeno jedno klíčová slovo",
+      "2": "Nalezena {count} klíčová slova",
+      "5": "Nalezeno {count} klíčových slov"
+    },
+    "page-title.datasets" : "Datové sady"
+  },
+  "en": {
+    "title asc": "Title Ascending",
+    "title desc": "Title Descending",
+    "query.datasetsFound": {
+      "0": "No dataset found",
+      "1": "1 dataset found",
+      "2": "{count} datasets found"
+    },
+    "facet.publishers": "Publishers",
+    "facet.themes": "Themes",
+    "facet.keywords": "Keywords",
+    "facet.formats": "Formats",
+    "facet.hide": "Hide filters",
+    "facet.show": "Show filters",
+    "isPartOfFacet": "Is part of dataset",
+    "facet.showPopular": "Show popular only",
+    "facet.showMore": "Show more",
+    "facet.showAll": "Show all",
+    "query.temporal": "Temporal coverage",
+    "query.from": "from",
+    "query.to": "to",
+    "query.hideFilters": "Hide advanced filters",
+    "query.showFilters": "Show advanced filters",
+    "query.clearFilters": "Clear filters",
+    "query.with": " with query",
+    "query.lastYear": "Last year",
+    "query.thisYear": "This year",
+    "datasetList": "Dataset list",
+    "keywordCloud": "Keywords",
+    "themeCloud": "Themes",
+    "themesFound": {
+      "0": "No themes found",
+      "1": "One theme found",
+      "2": "{count} themes found"
+    },
+    "keywordsFound": {
+      "0": "No keywords found",
+      "1": "One keyword found",
+      "2": "{count} keywords found"
+    },
+    "page-title.datasets" : "Datasets"
+  }
+}

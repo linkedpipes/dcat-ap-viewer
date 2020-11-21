@@ -1,0 +1,8 @@
+{
+  "cs": {
+    "status.loading": "Načítám data ..."
+  },
+  "en": {
+    "status.loading": "Loading ..."
+  }
+}

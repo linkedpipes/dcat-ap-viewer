@@ -1,0 +1,8 @@
+{
+  "cs": {
+    "status.failed": "Nepodařilo se načíst data."
+  },
+  "en": {
+    "status.failed": "Can't load data."
+  }
+}

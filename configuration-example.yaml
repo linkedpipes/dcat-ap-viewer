@@ -32,7 +32,8 @@ dcat-ap-viewer:
         - v2-quality-publishers
   client:
     # Name of a profile, i.e. name of directory in ./profile/
-    profile: nkod
+    profiles:
+      - profile-lkod
     # Public URL without url-subdirectory, used to create full links.
     url-base: "http://localhost:8030/"
     # If application is served from subdirectory, name of the subdirectory.

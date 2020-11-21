@@ -1,0 +1,14 @@
+.indeterminate-loader {
+    width: 100%;
+    height: 5px;
+    background-color: var(--color-background);
+    overflow: hidden;
+}
+
+.indeterminate-loader .progress {
+    background-color: var(--color-text-accent);
+    height: 5px;
+    width: 0;
+    -webkit-animation: indeterminate-loader-animation 3.0s infinite 0.7s linear;
+    animation: indeterminate-loader-animation 3.0s infinite 0.7s linear;
+}

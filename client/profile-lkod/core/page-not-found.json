@@ -1,0 +1,14 @@
+{
+  "cs": {
+    "title": "404 stránka nenalezena",
+    "textBefore": "Zkuste hledat na stránce ",
+    "link": "datových sad",
+    "textAfter": "."
+  },
+  "en": {
+    "title": "404 page not found",
+    "textBefore": "You can try to search on the ",
+    "link": "datasets",
+    "textAfter": " page."
+  }
+}

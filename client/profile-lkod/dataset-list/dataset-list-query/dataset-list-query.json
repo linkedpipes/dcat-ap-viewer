@@ -1,0 +1,12 @@
+{
+  "cs": {
+    "search.searching": "Vyhledávám data ...",
+    "search.noDataFound": "Dotazu neodpovídají žádná data.",
+    "search.search": "Vyhledat"
+  },
+  "en": {
+    "search.searching": "Searching ...",
+    "search.noDataFound": "No data found.",
+    "search.search": "Search"
+  }
+}

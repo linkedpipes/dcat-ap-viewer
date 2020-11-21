@@ -1,6 +1,10 @@
+//
+// Shared configuration entry point, used by server and webpack (client).
+//
+
 const path = require("path");
 const fs = require("fs");
-const YAML  = require("yaml");
+const YAML = require("yaml");
 
 (function initialize() {
   // We use env. prefix as this allow us to pass the argument
@@ -9,18 +13,16 @@ const YAML  = require("yaml");
   if (configurationPath === undefined) {
     configurationPath = path.join(__dirname, "configuration.yaml");
   }
-  console.log("Using configuration: ", configurationPath);
   const file = fs.readFileSync(configurationPath, "utf8");
   const configuration = YAML.parse(file)["dcat-ap-viewer"];
 
-  // TODO Use function to transform to make sure there is proper structure.
   module.exports = {
     "port": configuration["port"],
     "serve_static_content": configuration["server-static-content"],
     "providers": configuration["providers"],
     "helmet": configuration["helmet"] || {},
     "client": {
-      "profile": configuration["client"]["profile"],
+      "profiles": configuration["client"]["profiles"],
       "title": {
         "default": configuration["client"]["title-default"] || "",
         "prefix": configuration["client"]["title-prefix"] || "",
@@ -31,6 +33,7 @@ const YAML  = require("yaml");
         "base": configuration["client"]["url-base"],
       },
       "dereference_prefix": configuration["client"]["dereference-prefix"] || "",
+      "default_language": configuration["client"]["default-language"] || "cs",
     },
   };
 })();
