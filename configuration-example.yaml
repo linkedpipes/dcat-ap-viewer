@@ -31,17 +31,11 @@ dcat-ap-viewer:
         - v2-quality-distribution
         - v2-quality-publishers
   client:
-    # Name of a profile, i.e. name of directory in ./profile/
+    # Name of a profile directory within ./client/ directory.
+    # Read readme file in the profile directory to get more information
+    # about following options.
     profiles:
       - profile-lkod
-    # Public URL without url-subdirectory, used to create full links.
-    url-base: "http://localhost:8030/"
-    # If application is served from subdirectory, name of the subdirectory.
-    url-subdirectory: ""
-    # Default page title show for example during loading.
-    title-default: "Národní katalog"
-    # Prefix and suffix used as a page title.
+    title-default: "Katalog"
     title-prefix: ""
-    title-suffix: " - NKOD"
-    # URL of dcat-ap-forms.
-    form-url: "https://dev.nkod.opendata.cz/formulář/"
+    title-suffix: ""

@@ -104,7 +104,7 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
 curl http://localhost:8983/solr/dcat-ap-viewer/config -H 'Content-type:application/json' -d'{
     "set-property" : {"requestDispatcher.requestParsers.enableRemoteStreaming":true},
     "set-property" : {"requestDispatcher.requestParsers.enableStreamBody":true}
-}'
+}'w
 ```
 
 Install [Apache CouchDB], e.g. via a package manager, or run it in [Docker](https://hub.docker.com/_/couchdb/).
@@ -117,6 +117,8 @@ Install LinkedPipes DCAT-AP viewer
 npm install
 ```
 - Copy and edit the configuration file: ```cp configuration-example.yaml configuration.yaml```
+  Please refer to the profile of your choice, ```client/profile-lkod``` or ```client/profile-nkod``` , for more information about the configuration.
+  
 
 Load the data
 - Install [LinkedPipes ETL] and import, configure and run the [preparation pipeline]. It has the DCAT-AP catalog (its RDF representation) on the input, this is where you provide your DCAT-AP dump. The pipeline assumes that Solr is running on ```localhost:8983``` and CouchDB is running on ```localhost:5984```.
