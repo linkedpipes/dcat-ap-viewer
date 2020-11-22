@@ -52,12 +52,12 @@ register({
   "view": DatasetDetail,
   "navigation": {
     "cs": {
-      "/dataset": "/datové-sada",
-      "dataset": "datové-sada",      
+      "/dataset": "/datová-sada",
+      "dataset": "iri",
     },
     "en": {
       "/dataset": "/dataset",
-      "dataset": "dataset",
+      "dataset": "iri",
     },
   },
   "translations": translations,
