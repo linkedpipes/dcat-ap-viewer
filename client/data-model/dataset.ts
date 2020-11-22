@@ -84,7 +84,7 @@ interface Temporal {
 }
 
 /**
- * Properties related to implementation of dataset hierarchy.
+ * Properties related to implementation.
  */
 export interface NkodDataset extends DcatApDataset {
 
@@ -97,5 +97,9 @@ export interface NkodDataset extends DcatApDataset {
   catalogSource?: string;
 
   lkod?: string;
+
+  isFromForm: boolean;
+
+  isFromCatalog: boolean;
 
 }

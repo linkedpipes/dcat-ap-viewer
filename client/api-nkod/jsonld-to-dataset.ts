@@ -11,7 +11,7 @@ import {
   getResources,
   getStrings,
   getPlainStrings,
-  getDate,
+  getDate, getTypes,
 } from "./jsonld";
 import {
   DCAT, DCTERMS, FOAF, NKOD, LP, ADMS, OWL, VCARD, SKOS, EUA,
@@ -200,6 +200,8 @@ function createEmptyNkodDataset(iri: string): NkodDataset {
     "catalog": undefined,
     "catalogSource": undefined,
     "lkod": undefined,
+    "isFromForm": false,
+    "isFromCatalog": false,
   }
 }
 
@@ -327,4 +329,10 @@ function loadDatasetNkod(
     output.catalogSource = getId(catalogSource);
   }
   output.lkod = getResource(entity, NKOD.lkod);
+  const types = getTypes(entity);
+  output.isFromForm = types.includes(NKOD.SourceForm);
+  output.isFromForm =
+    types.includes(NKOD.SourceCkan)
+    || types.includes(NKOD.SourceDcat)
+    || types.includes(NKOD.SourceSparql);
 }
