@@ -53,11 +53,9 @@ function locationToNavigation(location: Location): NavigationData {
   const search = parse(location.search);
   const query: ParsedQuery = {};
   for (const [key, value] of Object.entries(search)) {
-    const resolvedKey = resolveQuery(key);
-    if (resolvedKey === undefined) {
-      continue;
+    for (const resolvedKey of resolveQuery(key)) {
+      query[resolvedKey] = value;
     }
-    query[resolvedKey] = value;
   }
   const {path, language} = resolvePath(location.pathname);
   return {

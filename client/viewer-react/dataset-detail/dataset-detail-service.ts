@@ -38,7 +38,6 @@ export function useDatasetDetailApi(iri: string): DatasetDetailData {
   }, []);
 
   useEffect(() => {
-    const iri = String(navigation.query.dataset);
     dispatch(DatasetDetailActions.setDatasetDetail({"datasetIri": iri}));
     dispatch(fetchDatasetDetail(
       navigation.language,

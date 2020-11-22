@@ -53,15 +53,16 @@ export function resolvePath(path: string): { path: string, language?: string } {
   }
 }
 
-export function resolveQuery(query: string): string | undefined {
+export function resolveQuery(query: string): string [] {
+  const result = [];
   for (const paths of Object.values(navigation)) {
     for (const [globalPath, localPath] of Object.entries(paths)) {
       if (localPath === query) {
-        return globalPath;
+        result.push(globalPath);
       }
     }
   }
-  return undefined;
+  return result;
 }
 
 register({
