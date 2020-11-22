@@ -22,15 +22,6 @@ function DatasetListFilters(props) {
         hydeCount={true}
       />
       }
-      {/*<Facet*/}
-      {/*  label={"facet.publishers"}*/}
-      {/*  facetData={props.state.publishers}*/}
-      {/*  activeFacets={props.query.publishers}*/}
-      {/*  facetCount={props.state.publishersCount}*/}
-      {/*  onFacetClick={callbacks.onClickPublishers}*/}
-      {/*  onFetchMore={callbacks.onFetchPublishers}*/}
-      {/*  selectFacetLabel={(item) => selectLabel(item.queryCode)}*/}
-      {/*/>*/}
       <Facet
         label={"facet.themes"}
         facetData={props.state.themes}
@@ -76,12 +67,6 @@ DatasetListFilters.propTypes = {
       "queryCode": PropTypes.string.isRequired,
       "count": PropTypes.number,
     })).isRequired,
-    "publishers": PropTypes.arrayOf(PropTypes.shape({
-      "title": PropTypes.object,
-      "queryCode": PropTypes.string.isRequired,
-      "count": PropTypes.number,
-    })).isRequired,
-    "publishersCount": PropTypes.number.isRequired,
     "themes": PropTypes.arrayOf(PropTypes.shape({
       "title": PropTypes.object,
       "queryCode": PropTypes.string.isRequired,
@@ -111,21 +96,6 @@ function useCallbacks(onUpdateQuery, query, state) {
       "isPartOf": toggleInArray(query.isPartOf, value),
     });
   }, [onUpdateQuery, query]);
-
-  // const onFetchPublishers = useCallback((count) => {
-  //   onUpdateQuery({
-  //     "publishersLimit": Math.min(
-  //       query.publishersLimit + count,
-  //       state.publishersCount
-  //     ),
-  //   });
-  // }, [onUpdateQuery, query]);
-  //
-  // const onClickPublishers = useCallback((value) => {
-  //   onUpdateQuery({
-  //     "publishers": toggleInArray(query.publishers, value),
-  //   });
-  // }, [onUpdateQuery, query]);
 
   const onFetchThemes = useCallback((count) => {
     onUpdateQuery({
@@ -177,8 +147,6 @@ function useCallbacks(onUpdateQuery, query, state) {
 
   return {
     "onClickIsPartOf": onClickIsPartOf,
-    // "onFetchPublishers": onFetchPublishers,
-    // "onClickPublishers": onClickPublishers,
     "onFetchThemes": onFetchThemes,
     "onClickThemes": onClickThemes,
     "onFetchKeywords": onFetchKeywords,
