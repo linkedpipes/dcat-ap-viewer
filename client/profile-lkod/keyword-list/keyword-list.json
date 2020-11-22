@@ -1,6 +1,6 @@
 {
   "cs": {
-    "keywords": {
+    "keywords.title": {
       "0": "Nenalezeno žádné klíčové slovo",
       "1": "Nalezeno jedno klíčová slovo",
       "2": "Nalezena {count} klíčová slova",
@@ -9,7 +9,7 @@
     "page-title.keywords" : "Klíčová slova"
   },
   "en": {
-    "keywords": {
+    "keywords.title": {
       "0": "No keywords found",
       "1": "One keyword found",
       "2": "{count} keywords found"

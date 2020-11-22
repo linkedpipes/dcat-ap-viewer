@@ -12,8 +12,8 @@ import translations from "./keyword-list.json";
 import "./keyword-list.css";
 
 const KeywordList = () => {
-  const navigation = useContext(NavigationContext);
-  const data = useKeywordsListApi(navigation.language);
+  const {language} = useContext(NavigationContext);
+  const data = useKeywordsListApi(language);
   usePageTitle("page-title.keywords");
 
   if (data.loading) {
@@ -28,7 +28,7 @@ const KeywordList = () => {
   return (
     <Container className="p-3">
       <h4>
-        {t("keywords", {"count": data.keywords.length})}
+        {t("keywords.title", {"count": data.keywords.length})}
       </h4>
       <hr/>
       <TagCloud tags={tags} renderFunction={renderTag}/>
