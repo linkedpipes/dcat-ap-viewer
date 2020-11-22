@@ -11,12 +11,10 @@ import translation from "./form.json";
 
 export default function DatasetDetailFormLinks(props) {
   const {language} = useContext(NavigationContext);
-  if (props.dataset.isFromForm) {
-    return renderForForm(language, props.dataset);
-  }
   if (props.dataset.isFromCatalog) {
     return renderForCatalog(language, props.dataset);
   }
+  return renderForForm(language, props.dataset);
 }
 
 DatasetDetailFormLinks.propTypes = {
