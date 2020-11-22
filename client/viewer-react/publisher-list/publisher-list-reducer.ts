@@ -59,7 +59,15 @@ function onPublishersListFetchSuccess(
   return {
     ...state,
     "status": ResourceStatus.Ready,
-    "publishers": action.publishers,
+    "publishers": [...action.publishers].sort(
+      (left, right) => {
+        if (left.datasetCount !== undefined
+          && right.datasetCount !== undefined) {
+          return -(left.datasetCount - right.datasetCount);
+        }
+        // Else consider them equal.
+        return 0;
+      }),
   };
 }
 

@@ -65,19 +65,23 @@ export function useCatalogListApi(language: string): CatalogListData {
 
 }
 
-export type ThunkVoidResult = ThunkAction<void, any, any, AnyAction>;
+type ThunkVoidResult = ThunkAction<void, any, any, AnyAction>;
 
 export function fetchCatalogList(language: string): ThunkVoidResult {
   return async (dispatch) => {
-    dispatch(CatalogListActions.fetchCatalogList.request(null));
+    dispatch(CatalogListActions.fetchCatalogList.request({
+      "loadingIndicator" :1
+    }));
     try {
       const response = await getApi().fetchCatalogList(language);
       dispatch(CatalogListActions.fetchCatalogList.success({
+        "loadingIndicator" : -1,
         "catalogs": response.catalogs,
         "labels": response.labels,
       }));
     } catch (ex) {
       dispatch(CatalogListActions.fetchCatalogList.failure({
+        "loadingIndicator" : -1,
         "error": ex,
       }));
     }

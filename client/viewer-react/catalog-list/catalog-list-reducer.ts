@@ -72,7 +72,7 @@ function onCatalogsListFetchFailed(
   };
 }
 
-const reducerName = "publisher-list.reducer";
+const reducerName = "catalog-list.reducer";
 
 register({
   "name": reducerName,

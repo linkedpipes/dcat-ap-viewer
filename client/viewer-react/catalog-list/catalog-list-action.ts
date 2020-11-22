@@ -2,7 +2,15 @@ import {createAction, ActionType, createAsyncAction} from "typesafe-actions";
 import {Catalog} from "../../data-model/catalog";
 import {Label} from "../../data-api/api-label";
 
+export interface CatalogListFetchPayloadRequest {
+
+  loadingIndicator: number;
+
+}
+
 export interface CatalogListFetchPayloadSuccess {
+
+  loadingIndicator: number;
 
   catalogs: Catalog[];
 
@@ -11,6 +19,8 @@ export interface CatalogListFetchPayloadSuccess {
 }
 
 export interface CatalogListFetchPayloadFailed {
+
+  loadingIndicator: number;
 
   error: Error;
 
@@ -23,7 +33,7 @@ export const CatalogListActions = {
     "app.catalogList.request",
     "app.catalogList.success",
     "app.catalogList.failure",
-  )<null,
+  )<CatalogListFetchPayloadRequest,
     CatalogListFetchPayloadSuccess,
     CatalogListFetchPayloadFailed>(),
 };

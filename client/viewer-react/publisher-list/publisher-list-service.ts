@@ -65,25 +65,25 @@ export function usePublisherListApi(language: string): PublisherListData {
 
 }
 
-export type ThunkVoidResult = ThunkAction<void, any, any, AnyAction>;
+type ThunkVoidResult = ThunkAction<void, any, any, AnyAction>;
 
 function fetchPublisherList(language: string): ThunkVoidResult {
   return async (dispatch) => {
-    dispatch(PublisherListActions.fetchPublisherList.request(null));
+    dispatch(PublisherListActions.fetchPublisherList.request({
+      "loadingIndicator": 1,
+    }));
     try {
       const response = await getApi().fetchPublisherList(language);
       dispatch(PublisherListActions.fetchPublisherList.success({
+        "loadingIndicator": -1,
         "publishers": response.publishers,
         "labels": response.labels,
       }));
     } catch (ex) {
       dispatch(PublisherListActions.fetchPublisherList.failure({
+        "loadingIndicator": -1,
         "error": ex,
       }));
     }
   };
 }
-
-// function collectLabels(publishers: Publisher[]): string[] {
-//   return publishers.map(publisher => publisher.iri);
-// }

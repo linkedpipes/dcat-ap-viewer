@@ -2,7 +2,15 @@ import {createAction, ActionType, createAsyncAction} from "typesafe-actions";
 import {Publisher} from "../../data-model/publisher";
 import {Label} from "../../data-api/api-label";
 
+export interface PublisherListFetchPayloadRequest {
+
+  loadingIndicator: number;
+
+}
+
 export interface PublisherListFetchPayloadSuccess {
+
+  loadingIndicator: number;
 
   publishers: Publisher[];
 
@@ -11,6 +19,8 @@ export interface PublisherListFetchPayloadSuccess {
 }
 
 export interface PublisherListFetchPayloadFailed {
+
+  loadingIndicator: number;
 
   error: Error;
 
@@ -23,7 +33,7 @@ export const PublisherListActions = {
     "app.publisherList.request",
     "app.publisherList.success",
     "app.publisherList.failure",
-  )<null,
+  )<PublisherListFetchPayloadRequest,
     PublisherListFetchPayloadSuccess,
     PublisherListFetchPayloadFailed>(),
 };
