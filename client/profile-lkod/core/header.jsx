@@ -1,11 +1,6 @@
-import React, {useState, useCallback} from "react";
+import React, {useState} from "react";
 import {
-  Navbar,
-  NavbarToggler,
-  Container,
-  Collapse,
-  Nav,
-  NavItem,
+  Navbar, NavbarToggler, Container, Collapse, Nav, NavItem,
 } from "reactstrap";
 
 import {register, Namespace} from "../viewer-api";
@@ -17,15 +12,11 @@ import translations from "./header.json";
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggle = useCallback(() => {
-    setIsOpen(!isOpen);
-  }, [isOpen, setIsOpen]);
-
   return (
     <Namespace.Provider value="header">
       <Container>
         <Navbar light expand="md">
-          <NavbarToggler onClick={toggle}/>
+          <NavbarToggler onClick={() => setIsOpen(!isOpen)}/>
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
@@ -46,5 +37,5 @@ function Header() {
 register({
   "name": "header",
   "element": Header,
-  "translations": translations
+  "translations": translations,
 });

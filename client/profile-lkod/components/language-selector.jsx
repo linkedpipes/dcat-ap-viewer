@@ -1,7 +1,8 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import {PropTypes} from "prop-types";
 import {
-  NavItem, NavLink, Dropdown, DropdownItem, DropdownMenu, DropdownToggle,
+  NavItem, NavLink, UncontrolledDropdown, DropdownItem, DropdownMenu,
+  DropdownToggle,
 } from "reactstrap";
 
 import {NavigationContext, createUrl, translateString} from "../viewer-api";
@@ -9,13 +10,12 @@ import {getLanguages} from "../../viewer-react/service/translations";
 
 export default function LanguageSelector() {
   const navigation = useContext(NavigationContext);
-  const [open, setOpen] = useState(false);
 
   const languages = getLanguages()
     .filter(language => language !== navigation.language);
   return (
     <NavItem>
-      <Dropdown isOpen={open} toggle={() => setOpen(!open)}>
+      <UncontrolledDropdown>
         <DropdownToggle caret nav>
           <LanguageImage language={navigation.language}/>.
         </DropdownToggle>
@@ -30,7 +30,7 @@ export default function LanguageSelector() {
             </DropdownItem>
           ))}
         </DropdownMenu>
-      </Dropdown>
+      </UncontrolledDropdown>
     </NavItem>
   );
 }
