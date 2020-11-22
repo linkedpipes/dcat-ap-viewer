@@ -70,6 +70,15 @@ register({
     "beforeCreateStore": () => {
       getViews().forEach((item) => {
         for (const [language, entries] of Object.entries(item.navigation)) {
+          if (process.env.NODE_ENV !== "production") {
+            // Check for collisions.
+            for (const key of Object.keys(entries)) {
+              if (navigation[language] !== undefined
+                && navigation[language][key] !== undefined) {
+                console.error("Path collision for", key);
+              }
+            }
+          }
           navigation[language] = {
             ...(navigation[language] || {}),
             ...entries
@@ -83,6 +92,11 @@ register({
           translations[language] = translations[language] || {};
           const localTranslations = translations[language];
           for (const [key, value] of Object.entries(entries)) {
+            if (process.env.NODE_ENV !== "production") {
+              if (localTranslations[prefix + key] !== undefined) {
+                console.error("Translation collision for", prefix, key);
+              }
+            }
             localTranslations[prefix + key] = value;
           }
         }
