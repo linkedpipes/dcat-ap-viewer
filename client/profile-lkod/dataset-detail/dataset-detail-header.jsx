@@ -20,17 +20,7 @@ function DatasetDetailHeader(props) {
         >
           <i className="material-icons pl-2">open_in_new</i>
         </a>
-        {/*<DcatApForms*/}
-        {/*  t={t}*/}
-        {/*  dataset={dataset}*/}
-        {/*  language={language}*/}
-        {/*/>*/}
       </h1>
-      {/*<h2>*/}
-      {/*  <Link to={getPublisherSearchLink(language, dataset)}>*/}
-      {/*    {selectLabel(props.dataset.publisher)}*/}
-      {/*  </Link>*/}
-      {/*</h2>*/}
       {props.dataset.parentDataset !== undefined && (
         <p>
           {t("datasetIsPartOf")}&nbsp;
@@ -52,10 +42,6 @@ register({
   "name": "dataset-detail.header",
   "element": DatasetDetailHeader,
 });
-
-// function getPublisherSearchLink(language, dataset) {
-//   return createUrl(language, "/datasets", {"publisher": dataset.publisher});
-// }
 
 function descendantsUrl(language, iri) {
   return createUrl(language, "/dataset", {"dataset": iri});
