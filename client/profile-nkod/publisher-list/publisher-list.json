@@ -1,0 +1,30 @@
+{
+  "cs": {
+    "page-title.publishers": "Poskytovatelé",
+    "publishersFound": {
+      "0": "Nenalezen žádný poskytovatel",
+      "1": "Nalezen 1 poskytovatel",
+      "2": "Nalezeny {count} poskytovatelé",
+      "5": "Nalezeno {count} poskytovatelů"
+    },
+    "publishersDatasets": {
+      "0": "Žádná datové sada",
+      "1": "1 datová sada",
+      "2": "{count} datové sady",
+      "5": "{count} datových sad"
+    }
+  },
+  "en": {
+    "page-title.publishers": "Publishers",
+    "publishersFound": {
+      "0": "No publisher found",
+      "1": "{count} publisher found",
+      "2": "{count} publishers found"
+    },
+    "publishersDatasets": {
+      "0": "No dataset",
+      "1": "1 dataset",
+      "2": "{count} datasets"
+    }
+  }
+}

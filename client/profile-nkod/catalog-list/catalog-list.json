@@ -1,0 +1,19 @@
+{
+  "cs": {
+    "page-title.catalogs": "Katalogy",
+    "catalogsFound": {
+      "0": "Nenalezen žádný katalog",
+      "1": "Nalezen 1 katalog",
+      "2": "Nalezeny {count} katalogy",
+      "5": "Nalezeno {count} katalogů"
+    }
+  },
+  "en": {
+    "page-title.catalogs": "Catalogs",
+    "catalogsFound": {
+      "0": "No catalog found",
+      "1": "{count} catalog found",
+      "2": "{count} catalogs found"
+    }
+  }
+}
