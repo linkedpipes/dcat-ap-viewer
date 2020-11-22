@@ -3,9 +3,11 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const configuration = require("../../configuration").client;
 
+const profile = configuration.profiles.slice(-1)[0]
+
 module.exports = {
   "entry": [
-    path.join(__dirname, "..", "profile-lkod", "index.js"),
+    path.join(__dirname, "..", profile, "index.js"),
   ],
   "output": {
     "path": path.join(__dirname, "..", "dist"),
@@ -31,17 +33,14 @@ module.exports = {
   "plugins": [
     new HtmlWebpackPlugin({
       "filename": "index.html",
-      "title": configuration.title.default,
-      "template": path.join(__dirname, "..", "profile-lkod", "index.html"),
+      "title": configuration.pageTitleDefault,
+      "template": path.join(
+        __dirname, "..", profile, "index.html"
+      ),
       "inject": true,
     }),
     new webpack.DefinePlugin({
-      "CONFIGURATION": JSON.stringify({
-        "pageTitlePrefix": configuration.title.prefix,
-        "pageTitleSuffix": configuration.title.suffix,
-        "dereferenceUrlPrefix": configuration.dereference_prefix,
-        "defaultLanguage": configuration.default_language
-      }),
+      "CONFIGURATION": JSON.stringify(configuration),
     }),
   ],
 };

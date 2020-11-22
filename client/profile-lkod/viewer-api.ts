@@ -11,7 +11,7 @@ export * from "../viewer-react/dataset-detail/dataset-detail-service";
 export * from "../viewer-react/service/label";
 export * from "../viewer-react/service/modal";
 export * from "../viewer-react/service/page-title";
-export {default as configuration} from "../viewer-react/service/configuration"
+export {default as configuration} from "./lkod-configuration"
 export {QUALITY} from "./vocabulary-quality";
 export {LEGAL} from "./vocabulary-legal";
 

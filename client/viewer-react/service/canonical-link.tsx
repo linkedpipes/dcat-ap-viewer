@@ -1,4 +1,4 @@
-import configuration from "./configuration";
+import configuration from "../viewer-configuration";
 import {Helmet} from "react-helmet";
 import React from "react";
 

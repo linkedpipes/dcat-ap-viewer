@@ -4,7 +4,7 @@ import {parse, ParsedQuery} from "query-string";
 import {useLocation} from "react-router-dom";
 import {Location} from "history";
 
-import configuration from "./configuration";
+import configuration from "../viewer-configuration";
 import {getLanguages, resolvePath, resolveQuery} from "./translations";
 import {getApi} from "../api-instance";
 import {LabelActions} from "./label";

@@ -16,25 +16,20 @@ const YAML = require("yaml");
   const file = fs.readFileSync(configurationPath, "utf8");
   const configuration = YAML.parse(file)["dcat-ap-viewer"];
 
+  const client = sanitizeConfiguration(configuration["client"]);
+  // As YAML import arrays as dictionaries we need to sanitize 'profiles'.
+  client.profiles = Object.values(client.profiles);
+
   module.exports = {
     "port": configuration["port"],
-    "serve_static_content": configuration["server-static-content"],
-    "providers": configuration["providers"],
+    "serveStaticContent": configuration["server-static-content"] || false,
+    "providers": configuration["providers"] || [],
     "helmet": configuration["helmet"] || {},
-    "client": {
-      "profiles": configuration["client"]["profiles"],
-      "title": {
-        "default": configuration["client"]["title-default"] || "",
-        "prefix": configuration["client"]["title-prefix"] || "",
-        "suffix": configuration["client"]["title-suffix"] || "",
-      },
-      "form_url": configuration["client"]["form-url"],
-      "url": {
-        "base": configuration["client"]["url-base"],
-      },
-      "dereference_prefix": configuration["client"]["dereference-prefix"] || "",
-      "default_language": configuration["client"]["default-language"] || "cs",
-    },
+    /**
+     * As this is provided to the profile, it may have custom properties
+     * so we only do some basic sanitization.
+     */
+    "client": client,
   };
 })();
 
@@ -61,4 +56,34 @@ function readProgramArgument(name) {
     }
   });
   return output;
+}
+
+function sanitizeConfiguration(configuration) {
+  const result = {};
+  for (const [key, value] of Object.entries(configuration)) {
+    if (typeof value === "object") {
+      result[sanitizeConfigurationKey(key)] = sanitizeConfiguration(value);
+    } else {
+      result[sanitizeConfigurationKey(key)] = value;
+    }
+  }
+  return result;
+}
+
+function sanitizeConfigurationKey(key) {
+  let result = "";
+  let capitalizeNext = false;
+  for (const char of key) {
+    if (char === "-") {
+      capitalizeNext = true;
+      continue;
+    }
+    if (capitalizeNext) {
+      result += char.toLocaleUpperCase();
+      capitalizeNext = false;
+      continue;
+    }
+    result += char;
+  }
+  return result;
 }

@@ -2,7 +2,7 @@ import {useContext, useEffect} from "react";
 
 import {NavigationContext} from "./navigation";
 import {translateString} from "./i18";
-import configuration from "./configuration";
+import configuration from "../viewer-configuration";
 
 /**
  * Use given strings to set page title.
