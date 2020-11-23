@@ -52,7 +52,7 @@ a.dropdown-item {
 }
 
 a.dropdown-item:hover {
-    color: var(--color-text-accent);
+    color: var(--color-text-accent-inverted);
     background-color: var(--color-background);
 }
 
@@ -86,6 +86,10 @@ a.dropdown-item:hover {
 
 .page-item.active .page-link {
     background-color: var(--color-text-accent);
+}
+
+a:hover, nav a:hover, .card-link:hover, .page-item.active a.page-link {
+    text-decoration: underline;
 }
 
 @media (max-width: 576px) {
@@ -151,8 +155,12 @@ a.dropdown-item:hover {
     color: var(--color-text-accent);
 }
 
-.navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link.active {
-    color: var(--color-text-accent-inverted);
+.navbar-light a.dropdown-item:hover {
+    background-color: var(--color-background-footer);
+}
+
+.navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link.active, .navbar-light a.dropdown-item:hover {
+    color: var(--color-text-accent-inverted);    
 }
 
 .navbar-light a.dropdown-item {

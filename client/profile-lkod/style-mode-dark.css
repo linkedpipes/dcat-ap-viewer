@@ -4,19 +4,19 @@
         --color-background: #111;
         --color-background-footer: #222;
         --color-border: rgba(255, 255, 255, 0.125);
-        --color-text-default: #ddd;
+        --color-text-default: white;
         --color-text-inverted: #222;
         --color-text-accent: #3bb5dc;
-        --color-text-accent-inverted: #3bb5dc;
+        --color-text-accent-inverted: white;
         --color-base: #057fa544;
+    }
+
+    html.bg-light {
+        background-color: var(--color-background-footer) !important;
     }
 
     .text-muted {
         color: var(--color-text-default);
-    }
-
-    a:hover, nav a:hover, .page-item.active a.page-link {
-        text-decoration: underline;
     }
 
     li.filter-button:hover, li.filter-button:active{
