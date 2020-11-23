@@ -1,6 +1,6 @@
 {
   "cs": {
-    "page-title.catalogs": "Katalogy",
+    "page-title.catalogs": "Lokální katalogy",
     "catalogsFound": {
       "0": "Nenalezen žádný katalog",
       "1": "Nalezen 1 katalog",
@@ -9,7 +9,7 @@
     }
   },
   "en": {
-    "page-title.catalogs": "Catalogs",
+    "page-title.catalogs": "Local catalogs",
     "catalogsFound": {
       "0": "No catalog found",
       "1": "{count} catalog found",
