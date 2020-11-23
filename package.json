@@ -7,7 +7,9 @@
   "scripts": {
     "dev": "node server/develop/server-develop.js",
     "lint": "eslint --ext .js,.jsx --ignore-path .gitignore . --fix",
-    "unit-test": "jest -c client/jest.config.js --collectCoverage"
+    "unit-test": "jest -c client/jest.config.js --collectCoverage",
+    "build": "cross-env NODE_ENV=production webpack --config ./client/build/webpack.production.js",
+    "start": "node server/production/server-production.js"
   },
   "license": "MIT",
   "repository": "github:linkedpipes/dcat-ap-viewer",
