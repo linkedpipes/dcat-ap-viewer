@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import {PropTypes} from "prop-types";
 import {ListGroupItem} from "reactstrap";
 
-import {t} from "../../viewer-api";
+import {t, translateString, NavigationContext} from "../../viewer-api";
 
 export default function DataServiceConformsTo(props) {
+  const {language} = useContext(NavigationContext);
   const conformsTo = props.dataService.dataServiceConformsTo;
   if (conformsTo.length === 0) {
     return null;
@@ -15,7 +16,7 @@ export default function DataServiceConformsTo(props) {
         <div key={iri}>
           <a
             href={iri}
-            title={t("followLink")}
+            title={translateString(language, "followLink")}
             rel="nofollow noopener noreferrer"
             target="_blank"
           >
