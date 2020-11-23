@@ -21,7 +21,7 @@ function PartDataService(props) {
   return (
     <Card>
       <CardBody>
-        {renderPartTitle(selectLabel, props.iri)}
+        {renderPartTitle(selectLabel, props.part)}
         {renderPartFormat(selectLabel, props.part)}
       </CardBody>
       <Row className="pb-2">
@@ -77,8 +77,11 @@ register({
   "element": PartDataService,
 });
 
-function renderPartTitle(selectLabel, iri) {
-  const label = selectLabel(iri, null);
+function renderPartTitle(selectLabel, dataService) {
+  let label = selectLabel(dataService.iri, null);
+  if (label === null) {
+    label = selectLabel(dataService.dataService, null);
+  }
   if (label === null) {
     return null;
   }
