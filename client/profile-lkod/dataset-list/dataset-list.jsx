@@ -147,4 +147,5 @@ register({
       "/": "/",
     },
   },
+  "exact": true,
 });
