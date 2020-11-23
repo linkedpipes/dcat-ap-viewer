@@ -133,3 +133,18 @@ register({
   },
   "translations": translations,
 });
+
+// Register as a default view.
+register({
+  "url": "/",
+  "name": "default.view",
+  "view": DatasetList,
+  "navigation": {
+    "cs": {
+      "/": "/",
+    },
+    "en": {
+      "/": "/",
+    },
+  },
+});
