@@ -24,7 +24,7 @@ function DatasetDetailHeader(props) {
       {props.dataset.parentDataset !== undefined && (
         <p>
           {t("datasetIsPartOf")}&nbsp;
-          <a href={descendantsUrl(props.dataset.parentDataset)}>
+          <a href={parentUrl(props.language, props.dataset.parentDataset)}>
             {selectLabel(props.dataset.parentDataset)}
           </a>
         </p>
@@ -43,6 +43,6 @@ register({
   "element": DatasetDetailHeader,
 });
 
-function descendantsUrl(language, iri) {
+function parentUrl(language, iri) {
   return createUrl(language, "/dataset", {"dataset": iri});
 }
