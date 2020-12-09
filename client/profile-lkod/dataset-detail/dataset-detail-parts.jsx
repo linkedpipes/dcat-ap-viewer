@@ -21,7 +21,7 @@ function DatasetDetailParts(props) {
     <React.Fragment>
       <Row>
         {selectArray(distributions, page, pageSize).map((iri) => (
-          <DatasetDetailPart key={iri} iri={iri}/>
+          <DatasetDetailPart language={props.language} key={iri} iri={iri}/>
         ))}
       </Row>
       <Paginator
@@ -76,6 +76,7 @@ function DatasetDetailPart(props) {
   return (
     <Col sm="12" md="6" lg="6" className="mb-3">
       <Component
+        language={props.language}
         iri={props.iri}
         part={data.distribution}
         quality={quality}
@@ -86,4 +87,5 @@ function DatasetDetailPart(props) {
 
 DatasetDetailPart.propTypes = {
   "iri": PropTypes.string.isRequired,
+  "language": PropTypes.string.isRequired,
 };

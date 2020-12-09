@@ -2,7 +2,7 @@ import React from "react";
 import {PropTypes} from "prop-types";
 import {ListGroupItem} from "reactstrap";
 
-import {t} from "../../viewer-api";
+import {t, translateString} from "../../viewer-api";
 
 export default function CompressFormat(props) {
   const compressFormat = props.distribution.compressFormat;
@@ -19,7 +19,7 @@ export default function CompressFormat(props) {
         {props.selectLabel(compressFormat)}
         <a
           href={compressFormat}
-          title={t("followLink")}
+          title={translateString(props.language, "followLink")}
           rel="nofollow noopener noreferrer"
           target="_blank"
         >
@@ -36,6 +36,7 @@ export default function CompressFormat(props) {
 }
 
 CompressFormat.propTypes = {
+  "language": PropTypes.string.isRequired,
   "selectLabel": PropTypes.func.isRequired,
   "distribution": PropTypes.object.isRequired,
 };

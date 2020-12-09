@@ -47,14 +47,17 @@ function PartDataService(props) {
                 dataService={props.part} quality={dataServiceQuality}
               />
               <MediaTypeItem
+                language={props.language}
                 distribution={props.part} quality={props.quality}
                 selectLabel={selectLabel}
               />
               <CompressFormat
+                language={props.language}
                 distribution={props.part}
                 selectLabel={selectLabel}
               />
               <PackageFormat
+                language={props.language}
                 distribution={props.part}
                 selectLabel={selectLabel}
               />
@@ -67,6 +70,7 @@ function PartDataService(props) {
 }
 
 PartDataService.propTypes = {
+  "language": PropTypes.string.isRequired,
   "iri": PropTypes.string.isRequired,
   "part": PropTypes.object.isRequired,
   "quality": PropTypes.object,

@@ -2,7 +2,7 @@ import React from "react";
 import {PropTypes} from "prop-types";
 import {ListGroupItem} from "reactstrap";
 
-import {t} from "../../viewer-api";
+import {t, translateString} from "../../viewer-api";
 
 export default function PackageFormat(props) {
   const packageFormat = props.distribution.packageFormat;
@@ -19,7 +19,7 @@ export default function PackageFormat(props) {
         {props.selectLabel(packageFormat, "")}
         <a
           href={packageFormat}
-          title={t("followLink")}
+          title={translateString(props.language, "followLink")}
           rel="nofollow noopener noreferrer"
           target="_blank"
         >
@@ -34,6 +34,7 @@ export default function PackageFormat(props) {
 }
 
 PackageFormat.propTypes = {
+  "language": PropTypes.string.isRequired,
   "selectLabel": PropTypes.func.isRequired,
   "distribution": PropTypes.object.isRequired,
 };

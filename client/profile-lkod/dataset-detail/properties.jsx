@@ -16,7 +16,7 @@ function Properties(props) {
       {firstColumn(selectLabel, props.language, props.dataset)}
       {secondColumn(selectLabel, props.language, props.dataset)}
       {thirdColumn(selectLabel, props.dataset, quality)}
-      {fourthColumn(selectLabel, props.dataset)}
+      {fourthColumn(selectLabel, props.language, props.dataset)}
     </div>
   );
 }
@@ -42,7 +42,7 @@ function firstColumn(selectLabel, language, dataset) {
         {
           dataset.datasetThemes.map(iri =>
             ddLabelLink(
-              selectLabel, iri,
+              selectLabel, language, iri,
               datasetSearchUrl(language, {"themes": iri})
             )
           )
@@ -55,7 +55,7 @@ function firstColumn(selectLabel, language, dataset) {
         {
           dataset.themes.map(iri =>
             ddLabelLink(
-              selectLabel, iri,
+              selectLabel, language, iri,
               datasetSearchUrl(language, {"themes": iri})
             )
           )
@@ -71,7 +71,7 @@ function isNotEmpty(value) {
   return value !== undefined && value.length !== 0;
 }
 
-function ddLabelLink(selectLabel, iri, url) {
+function ddLabelLink(selectLabel, language, iri, url) {
   return (
     <dd key={iri}>
       <Link to={url}>
@@ -79,7 +79,7 @@ function ddLabelLink(selectLabel, iri, url) {
       </Link>
       <a
         href={iri}
-        title={t("followLink")}
+        title={translateString(language, "followLink")}
         rel="nofollow noopener noreferrer"
         target="_blank"
       >
@@ -107,7 +107,7 @@ function linkIcon() {
 }
 
 function secondColumn(selectLabel, language, dataset) {
-  const spatial = spatialCoverage(selectLabel, dataset);
+  const spatial = spatialCoverage(selectLabel, language, dataset);
   const spatialResolution = spatialCoverageResolution(dataset);
   const temporal = temporalCoverage(dataset);
   const temporalResolution = temporalCoverageResolution(language, dataset);
@@ -127,25 +127,25 @@ function secondColumn(selectLabel, language, dataset) {
   );
 }
 
-function spatialCoverage(selectLabel, dataset) {
+function spatialCoverage(selectLabel, language, dataset) {
   if (!isNotEmpty(dataset.spatial)) {
     return null;
   }
   return (
     <React.Fragment>
       <dt>{t("spatial")}</dt>
-      {dataset.spatial.map(iri => ddLabel(selectLabel, iri))}
+      {dataset.spatial.map(iri => ddLabel(selectLabel, language, iri))}
     </React.Fragment>
   );
 }
 
-function ddLabel(selectLabel, iri) {
+function ddLabel(selectLabel, language, iri) {
   return (
     <dd key={iri}>
       {selectLabel(iri)}
       <a
         href={iri}
-        title={t("followLink")}
+        title={translateString(language, "followLink")}
         rel="nofollow noopener noreferrer"
         target="_blank"
       >
@@ -409,7 +409,7 @@ function specification(dataset) {
   ));
 }
 
-function fourthColumn(selectLabel, dataset) {
+function fourthColumn(selectLabel, language, dataset) {
   const hasFrequency = isNotEmpty(dataset.frequency);
   if (!hasFrequency) {
     return null;
@@ -418,7 +418,7 @@ function fourthColumn(selectLabel, dataset) {
     <div className="col-12 col-sm-6 col-md-3">
       <dl>
         <dt>{t("frequency")}</dt>
-        {ddLabel(selectLabel, dataset.frequency)}
+        {ddLabel(selectLabel, language, dataset.frequency)}
       </dl>
     </div>
   );

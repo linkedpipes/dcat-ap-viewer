@@ -2,7 +2,7 @@ import React from "react";
 import {PropTypes} from "prop-types";
 import {ListGroupItem} from "reactstrap";
 
-import {t, QUALITY} from "../../viewer-api";
+import {t, QUALITY, translateString} from "../../viewer-api";
 import {QualityIconsForMeasures} from "../quality-icons";
 
 export default function MediaTypeItem(props) {
@@ -27,7 +27,7 @@ export default function MediaTypeItem(props) {
         {props.selectLabel(mediaType, "")}
         <a
           href={mediaType}
-          title={t("followLink")}
+          title={translateString(props.language, "followLink")}
           rel="nofollow noopener noreferrer"
           target="_blank"
         >
@@ -46,6 +46,7 @@ export default function MediaTypeItem(props) {
 }
 
 MediaTypeItem.propTypes = {
+  "language": PropTypes.string.isRequired,
   "selectLabel": PropTypes.func.isRequired,
   "distribution": PropTypes.object.isRequired,
   "quality": PropTypes.object,
