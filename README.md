@@ -9,8 +9,8 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 - supports [EU Vocabularies] codelists
 
 ## Requirements
-- [Node.js] & npm
-- [OpenJDK] 8 or 13 for Apache Solr, if not dockerized
+- [Node.js] (not 15 ATM) & npm
+- [OpenJDK] for Apache Solr, if not dockerized
 - [Apache Solr] 8.5 ([Docker](https://hub.docker.com/_/solr/))
 - [Apache CouchDB] 2.3 and up ([Docker](https://hub.docker.com/_/couchdb/))
 
@@ -104,7 +104,7 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
 curl http://localhost:8983/solr/dcat-ap-viewer/config -H 'Content-type:application/json' -d'{
     "set-property" : {"requestDispatcher.requestParsers.enableRemoteStreaming":true},
     "set-property" : {"requestDispatcher.requestParsers.enableStreamBody":true}
-}'w
+}'
 ```
 
 Install [Apache CouchDB], e.g. via a package manager, or run it in [Docker](https://hub.docker.com/_/couchdb/).
@@ -127,14 +127,14 @@ Load the data
 ## Running DCAT-AP Viewer
 Before the first run the DCAT-AP Viewer client javascript needs to be compiled using command:
 ```
-npm run build -- -env.configFileLocation=configuration.yaml
+npm run build
 ``` 
 After the compilation is done the following command can be used to start the server:
 ```
-npm run start -- -env.configFileLocation=configuration.yaml
+npm run start
 ```
 
-[OpenJDK]: <https://jdk.java.net/12/>
+[OpenJDK]: <https://jdk.java.net/15/>
 [Node.js]: <https://nodejs.org>
 [Apache Solr]: <http://lucene.apache.org/solr/>
 [Apache CouchDB]: <http://couchdb.apache.org/>
