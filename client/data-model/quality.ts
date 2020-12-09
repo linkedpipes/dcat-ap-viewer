@@ -14,6 +14,12 @@ export interface QualityMeasure {
 
   note?: Literal;
 
+  /**
+   * As some attributes with quality can have multiple values,
+   * we use this co connect quality with particular value.
+   */
+  object?: string;
+
 }
 
 /**
@@ -27,11 +33,17 @@ export class QualityMeasures {
     this.measures = measures;
   }
 
-  public getMeasure(measureOf: string): QualityMeasure | undefined {
+  public getMeasure(
+    measureOf: string, object: string | undefined = undefined
+  ): QualityMeasure | undefined {
     for (const measure of this.measures) {
-      if (measure.measureOf === measureOf) {
-        return measure;
+      if (measure.measureOf !== measureOf) {
+        continue;
       }
+      if (object !== undefined  && measure.object !== object) {
+        continue;
+      }
+      return measure;
     }
     return undefined;
   }

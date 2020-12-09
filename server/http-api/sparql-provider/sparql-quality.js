@@ -28,6 +28,7 @@ function qualitySparql(iri) {
 prefix dqv: <http://www.w3.org/ns/dqv#>
 prefix sdmx-dimension: <http://purl.org/linked-data/sdmx/2009/dimension#>
 prefix skos: <http://www.w3.org/2004/02/skos/core#> 
+prefix schema: <http://schema.org/>
 
 CONSTRUCT {
   ?measure a dqv:QualityMeasurement ;
@@ -35,7 +36,8 @@ CONSTRUCT {
     dqv:isMeasurementOf ?MeasurementOf ;
     dqv:value ?value ;
     sdmx-dimension:refPeriod ?refPeriod ;
-    skos:note ?note .
+    skos:note ?note ;
+    schema:object ?object .
 } WHERE {
   ?measure a dqv:QualityMeasurement ;
     dqv:computedOn <${iri}> ;
@@ -47,6 +49,9 @@ CONSTRUCT {
   OPTIONAL {
     ?measure skos:note ?note .
   }  
+  OPTIONAL {
+    ?measure schema:object ?object .
+  }
 }
 `;
 }

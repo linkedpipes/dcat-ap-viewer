@@ -6,7 +6,7 @@ import {
   getValue,
   getId,
 } from "./jsonld";
-import {SKOS, SDMX, DQV} from "./vocabulary"
+import {SKOS, SDMX, DQV, SCHEMA} from "./vocabulary"
 import {QualityMeasures, QualityMeasure} from "../data-model/quality";
 
 export function jsonLdToQualityMeasures(jsonld: JsonLdEntity[])
@@ -20,6 +20,7 @@ export function jsonLdToQualityMeasures(jsonld: JsonLdEntity[])
       "computedOn": getResource(entity, DQV.computedOn),
       "measureOf": getResource(entity, DQV.isMeasurementOf),
       "note": getString(entity, SKOS.note),
+      "object": getResource(entity, SCHEMA.object),
     })
   });
   measures.sort((left, right) => left.iri.localeCompare(right.iri));

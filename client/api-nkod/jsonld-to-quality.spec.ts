@@ -31,7 +31,10 @@ test("Load quality JSON-LD.", async () => {
     }],
     "http://www.w3.org/ns/dqv#value": [{
       "@value": false
-    }]
+    }],
+    "http://schema.org/object": [{
+      "@id": "https://data.gov.cz/object",
+    }],
   }]);
   const actual = await jsonLdToQualityMeasures(input as any);
   const expected = [{
@@ -40,14 +43,15 @@ test("Load quality JSON-LD.", async () => {
     "lastCheck": "2020-10-23 15:37:45",
     "computedOn": "https://data.gov.cz/56ca3053d092a21ced39ef30df66491c",
     "measureOf": "https://data.gov.cz/zdroj/datová-kvalita/metriky/metrikaDostupnostiCORSPodmínekUžitíAutorskáDatabáze",
-    "note": undefined
+    "note": undefined,
   }, {
     "iri": "https://dev.nkod.opendata.cz/zdroj/datová-kvalita/b",
     "value": false,
     "lastCheck": "2020-10-23 15:39:38",
     "computedOn": "https://data.gov.cz/56ca3053d092a21ced39ef30df66491c",
     "measureOf": "https://data.gov.cz/zdroj/datová-kvalita/metriky/metrikaDostupnostiCORSPodmínekUžitíAutorskáDatabáze",
-    "note": undefined
+    "note": undefined,
+    "object": "https://data.gov.cz/object",
   }];
   expect(actual.measures).toEqual(expected);
 });

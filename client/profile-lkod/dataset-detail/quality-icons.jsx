@@ -9,7 +9,7 @@ import {
 /**
  * Render quality icons for selected measures.
  */
-export function QualityIconsForMeasures({quality, measureDefinitions}) {
+export function QualityIconsForMeasures({quality, measureDefinitions, object}) {
   const {showModal} = useContext(ModalContext);
   const navigation = useContext(NavigationContext);
   if (quality === undefined || quality.failed) {
@@ -23,7 +23,8 @@ export function QualityIconsForMeasures({quality, measureDefinitions}) {
   return (
     <div className="float-right">
       {measureDefinitions.map((definition) => renderQualityIcon(
-        showModal, navigation.language, quality.quality, definition))
+        showModal, navigation.language, quality.quality, definition,
+        object))
       }
     </div>
   );
@@ -42,10 +43,15 @@ QualityIconsForMeasures.propTypes = {
     "iconTrue": PropTypes.string.isRequired,
     "iconFalse": PropTypes.string.isRequired,
   })),
+  /**
+   * Optional, can be used to apply additional filter on the quality measures.
+   */
+  "object": PropTypes.string,
 };
 
-function renderQualityIcon(showModal, language, quality, measureDefinition) {
-  const measure = quality.getMeasure(measureDefinition.measureOf);
+function renderQualityIcon(
+  showModal, language, quality, measureDefinition, object) {
+  const measure = quality.getMeasure(measureDefinition.measureOf, object);
   if (measure === undefined) {
     return null;
   }

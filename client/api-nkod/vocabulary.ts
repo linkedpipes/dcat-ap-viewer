@@ -104,6 +104,7 @@ const SCHEMA_PREFIX = "http://schema.org/";
 
 export const SCHEMA = {
   "Organization": SCHEMA_PREFIX + "Organization",
+  "object": SCHEMA_PREFIX + "object",
 };
 
 const SKOS_PREFIX = "http://www.w3.org/2004/02/skos/core#";

@@ -25,7 +25,9 @@
     "access.schemaQualityFalse": "Schéma bylo {date} nedostupné. {note}",
     "access.schemaQualityCorsTrue": "Technika CORS byla pro schéma dostupná {date}.",
     "access.schemaQualityCorsFalse": "Technika CORS nebyla pro schéma dostupná {date}.",
-    "access.conformsTo": "Specifikace"
+    "access.conformsTo": "Specifikace",
+    "access.conformsToQualityTrue": "Specifikace byla {date} dostupná.",
+    "access.conformsToQualityFalse": "Specifikace byla {date} nedostupná. {note}"
   },
   "en": {
     "access.compressFormat": "Compress format",
@@ -53,6 +55,8 @@
     "access.schemaQualityFalse": "The schema was unavailable on {date}. {note}",
     "access.schemaQualityCorsTrue": "CORS for the schema was available on {date}.",
     "access.schemaQualityCorsFalse": "CORS for the schema was not available on {date}.",
-    "access.conformsTo": "Specification"
+    "access.conformsTo": "Specification",
+    "access.conformsToQualityTrue": "Specification was available on {date}.",
+    "access.conformsToQualityFalse": "Specification was unavailable on {date}. {note}"
   }
 }
