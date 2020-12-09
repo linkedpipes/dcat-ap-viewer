@@ -1,8 +1,13 @@
 import {register, getViews, getTranslation} from "../core/register";
+import set = Reflect.set;
 
 const translations: Record<string, Record<string, string>> = {};
 
-const navigation: Record<string, Record<string, string>> = {};
+// Language, global name, local name.
+const navigationPath: Record<string, Record<string, string>> = {};
+
+// Language, path, global name, local name.
+const navigationQuery: Record<string, Record<string, Record<string, string>>> = {};
 
 export const PAGE_NOT_FOUND_PATH = "/page-not-found"
 
@@ -17,7 +22,7 @@ export function getTranslations(language: string): Record<string, string> {
 }
 
 export function getPath(language: string, path: string): string {
-  const data = navigation[language] || {};
+  const data = navigationPath[language] || {};
   if (data[path] == undefined && process.env.NODE_ENV !== "production") {
     if (!REPORTED.has(path + language)) {
       console.log("Missing path of '" + path + "' for " + language);
@@ -27,11 +32,13 @@ export function getPath(language: string, path: string): string {
   return data[path] || path;
 }
 
-export function getQuery(language: string, query: string): string {
-  const data = navigation[language] || {};
+export function getQuery(
+  language: string, path: string, query: string
+): string {
+  const data = (navigationQuery[language] || {})[path] || {};
   if (data[query] == undefined && process.env.NODE_ENV !== "production") {
     if (!REPORTED.has(query + language)) {
-      console.log("Missing path of '" + query + "' for " + language);
+      console.log("Missing query of '" + query + "' for " + language);
       REPORTED.add(query + language);
     }
   }
@@ -40,7 +47,7 @@ export function getQuery(language: string, query: string): string {
 
 export function resolvePath(path: string): { path: string, language?: string } {
   const decodedPath = decodeURI(path);
-  for (const [language, paths] of Object.entries(navigation)) {
+  for (const [language, paths] of Object.entries(navigationPath)) {
     for (const [globalPath, localPath] of Object.entries(paths)) {
       if (localPath === decodedPath) {
         return {"path": globalPath, "language": language};
@@ -53,57 +60,84 @@ export function resolvePath(path: string): { path: string, language?: string } {
   }
 }
 
-export function resolveQuery(query: string): string [] {
-  const result = [];
-  for (const paths of Object.values(navigation)) {
-    for (const [globalPath, localPath] of Object.entries(paths)) {
+export function resolveQuery(path: string, query: string): string | undefined {
+  for (const language of Object.keys(navigationQuery)) {
+    const queryMap = navigationQuery[language][path] || {};
+    for (const [globalPath, localPath] of Object.entries(queryMap)) {
       if (localPath === query) {
-        result.push(globalPath);
+        return globalPath;
       }
     }
   }
-  return result;
+  return undefined;
+}
+
+function beforeCreateStore() {
+  collectNavigationInformation();
+  collectTranslations();
+  console.log("Translations\n", translations,
+    "\n", navigationPath,
+    "\n", navigationQuery);
+}
+
+function collectNavigationInformation() {
+  const visited = new Set();
+  getViews().forEach((item) => {
+    const path = item.url;
+    for (const [language, entries] of Object.entries(item.navigation)) {
+      if (navigationPath[language] === undefined) {
+        navigationPath[language] = {};
+      }
+      if (navigationQuery[language] === undefined) {
+        navigationQuery[language] = {};
+      }
+      // There can be only one view with given path. So we always create.
+      navigationQuery[language][path] = {};
+      //
+      if (process.env.NODE_ENV !== "production") {
+        for (const globalKey of Object.keys(entries)) {
+          const key = `${path}:${language}:${entries}:${globalKey}`;
+          if (visited.has(key)) {
+            console.error("Path collision for", key);
+          }
+          visited.add(key);
+        }
+      }
+      //
+      for (const [globalKey, localKey] of Object.entries(entries)) {
+        if (globalKey.startsWith("/")) {
+          navigationPath[language][globalKey] = localKey;
+        } else {
+          navigationQuery[language][path][globalKey] = localKey;
+        }
+      }
+    }
+  });
+}
+
+function collectTranslations() {
+  getTranslation().forEach((item) => {
+    const prefix = item.translationsNamespace === undefined ?
+      "" : item.translationsNamespace + ".";
+    for (const [language, entries] of Object.entries(item.translations)) {
+      translations[language] = translations[language] || {};
+      const localTranslations = translations[language];
+      for (const [key, value] of Object.entries(entries)) {
+        if (process.env.NODE_ENV !== "production") {
+          if (localTranslations[prefix + key] !== undefined) {
+            console.error("Translation collision for", prefix, key);
+          }
+        }
+        localTranslations[prefix + key] = value;
+      }
+    }
+  });
 }
 
 register({
   "name": "service.translation",
   "service": {
-    "beforeCreateStore": () => {
-      getViews().forEach((item) => {
-        for (const [language, entries] of Object.entries(item.navigation)) {
-          if (process.env.NODE_ENV !== "production") {
-            // Check for collisions.
-            for (const key of Object.keys(entries)) {
-              if (navigation[language] !== undefined
-                && navigation[language][key] !== undefined) {
-                console.error("Path collision for", key);
-              }
-            }
-          }
-          navigation[language] = {
-            ...(navigation[language] || {}),
-            ...entries
-          };
-        }
-      });
-      getTranslation().forEach((item) => {
-        const prefix = item.translationsNamespace === undefined ?
-          "" : item.translationsNamespace + ".";
-        for (const [language, entries] of Object.entries(item.translations)) {
-          translations[language] = translations[language] || {};
-          const localTranslations = translations[language];
-          for (const [key, value] of Object.entries(entries)) {
-            if (process.env.NODE_ENV !== "production") {
-              if (localTranslations[prefix + key] !== undefined) {
-                console.error("Translation collision for", prefix, key);
-              }
-            }
-            localTranslations[prefix + key] = value;
-          }
-        }
-      });
-      console.log("Translations\n", translations, "\n", navigation);
-    },
+    "beforeCreateStore": beforeCreateStore,
   },
 });
 

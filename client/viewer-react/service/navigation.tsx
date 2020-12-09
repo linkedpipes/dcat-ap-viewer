@@ -51,13 +51,16 @@ export const NavigationConsumer = NavigationContext.Consumer;
 
 function locationToNavigation(location: Location): NavigationData {
   const search = parse(location.search);
+  const {path, language} = resolvePath(location.pathname);
   const query: ParsedQuery = {};
   for (const [key, value] of Object.entries(search)) {
-    for (const resolvedKey of resolveQuery(key)) {
-      query[resolvedKey] = value;
+    const resolvedKey = resolveQuery(path, key);
+    if (resolvedKey === undefined) {
+      continue;
     }
+    query[resolvedKey] = value;
   }
-  const {path, language} = resolvePath(location.pathname);
+  console.log("locationToNavigation", search, "\n", query);
   return {
     "path": path,
     "language": language || getDefaultLanguage(),

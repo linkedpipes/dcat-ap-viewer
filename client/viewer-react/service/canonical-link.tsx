@@ -54,7 +54,7 @@ function createUrl(navigation: NavigationData, language: string): string {
     } else {
       query += "&";
     }
-    query += `${getQuery(language, key)}=${value}`;
+    query += `${getQuery(language, navigation.path, key)}=${value}`;
   }
   return result + query;
 }

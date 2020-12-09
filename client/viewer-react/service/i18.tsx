@@ -129,20 +129,23 @@ export function tUrl(
   return (
     <NavigationConsumer>
       {({language}) => {
-        let url = getPath(language, path) + createQueryString(language, query);
+        let url = getPath(language, path)
+          + createQueryString(language, path, query);
         return element(url);
       }}
     </NavigationConsumer>
   );
 }
 
-function createQueryString(language: string, query: ParsedQuery | undefined) {
+function createQueryString(
+  language: string, path: string, query: ParsedQuery | undefined
+) {
   if (query === undefined) {
     return "";
   }
   let result = "";
   Object.entries(query).forEach(([key, value]) => {
-    const keyStr: string = getQuery(language, key);
+    const keyStr: string = getQuery(language, path, key);
     let valueArray: string[] = asArray(value);
     valueArray.forEach((valueStr) => {
       if (result === "") {
@@ -169,5 +172,5 @@ function asArray<T>(value: T | T[] | null | undefined): T[] {
 export function createUrl(
   language: string, path: string, query: ParsedQuery | undefined
 ): string {
-  return getPath(language, path) + createQueryString(language, query);
+  return getPath(language, path) + createQueryString(language, path, query);
 }
