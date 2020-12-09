@@ -22,7 +22,7 @@ const YAML = require("yaml");
 
   module.exports = {
     "port": configuration["port"],
-    "serveStaticContent": configuration["server-static-content"] || false,
+    "serveStaticContent": configuration["serve-static-content"] || false,
     "providers": configuration["providers"] || [],
     "helmet": configuration["helmet"] || {},
     /**

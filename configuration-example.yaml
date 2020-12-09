@@ -2,9 +2,13 @@ dcat-ap-viewer:
   version: 2
   # Port used for dcat-ap-viewer.
   port: 8030
-  # Set to true if you want dcat-ap-viewer to serve static content. This
-  # value should be set to false in a production.
-  server-static-content: false
+  # Set to true if you want dcat-ap-viewer to serve static content from
+  # "dist" directory. After "npm run build" this directory contains HTML, CSS,
+  # JavaScript and other static files. This value should be set to false in
+  # a production and static content should be server by other application
+  # like Nginx. For more information how visit
+  # https://github.com/linkedpipes/dcat-ap-viewer/wiki/Let's-deploy-to-production
+  serve-static-content: false
   providers:
   # For more information about providers and their configuration please
   # see https://github.com/linkedpipes/dcat-ap-viewer/wiki/Providers.
