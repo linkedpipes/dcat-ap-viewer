@@ -127,7 +127,8 @@ function textToSolrQuery(language, text) {
   }
   // We ask for title first to prioritize it before _text_.
   // We want datasets that have the given value in label to be returned first.
-  return prepareFieldQueryForTokens("_text_", tokens);
+  return prepareFieldQueryForTokens("title_" + language + "_query", tokens)
+    + " OR " + prepareFieldQueryForTokens("_text_", tokens);
 }
 
 /**
@@ -409,7 +410,7 @@ function buildTypeaheadSolrQuery(query, defaultLanguage) {
   };
   if (query.text) {
     userQuery["text"] = encodeURIComponent(
-      textToSolrQueryForTypeahead(userQuery.language, query.text));
+      textToSolrQuery(userQuery.language, query.text));
   }
   //
   let url = "rows=8"
@@ -420,19 +421,6 @@ function buildTypeaheadSolrQuery(query, defaultLanguage) {
   url += facetsToSolrQuery(userQuery);
   url += temporalToSolrQuery(userQuery);
   return [url, query.language];
-}
-
-function textToSolrQueryForTypeahead(language, text) {
-  text = escapeSolrQueryValue(text);
-
-  const tokens = splitQueryToTokens(text);
-  if (tokens.length === 0) {
-    return "";
-  }
-  // We ask for title first to prioritize it before _text_.
-  // We want datasets that have the given value in label to be returned first.
-  return prepareFieldQueryForTokens("title_" + language, tokens)
-    + " OR " + prepareFieldQueryForTokens("_text_", tokens);
 }
 
 function solrResponseToTypeaheadDatasets(content, language, defaultLanguage) {
