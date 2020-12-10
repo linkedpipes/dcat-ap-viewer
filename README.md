@@ -83,14 +83,14 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
     "add-field" : { "name" : "title_cs", "type" : "string", "multiValued" : false },
     "add-field" : { "name" : "title_cs_sort", "type" : "string_icu_cs", "docValues" : true, "multiValued" : false },
     "add-field" : { "name" : "title_cs_query", "type" : "ascii_string", "multiValued" : false },
-    "add-copy-field" : { "source" : "title_cs", "dest" : "title_cs_query" },
+    "add-copy-field" : { "source" : "title_cs_sort", "dest" : "title_cs_query" },
 
     "add-field" : { "name" : "description_en", "type" : "string", "multiValued" : false },
     "add-field" : { "name" : "keyword_en", "type" : "strings" },
     "add-field" : { "name" : "title_en", "type" : "string", "multiValued" : false },
     "add-field" : { "name" : "title_en_sort", "type" : "string_icu_en", "docValues" : true, "multiValued" : false },
     "add-field" : { "name" : "title_en_query", "type" : "ascii_string", "multiValued" : false },
-    "add-copy-field" : { "source" : "title_en", "dest" : "title_en_query" },
+    "add-copy-field" : { "source" : "title_en_sort", "dest" : "title_en_query" },
 
     "replace-field" : { "name": "_text_", "type" : "ascii_string", "multiValued" : true, "indexed" : true, "stored" : false },
     "add-copy-field" : { "source" : "title_cs", "dest" : "_text_" },
