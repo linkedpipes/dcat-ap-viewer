@@ -301,18 +301,26 @@ function thirdColumn(selectLabel, dataset, quality) {
   return (
     <div className="col-12 col-sm-6 col-md-3">
       <dl>
-        {hasDocumentation && documentationLabel(quality)}
-        {hasDocumentation && documentation(dataset)}
+        {hasDocumentation && documentationLabel()}
+        {hasDocumentation && documentation(quality, dataset)}
         {hasContacts && <dt>{t("contactPoint")}</dt>}
         {hasContacts && contactPoints(selectLabel, dataset.contactPoints)}
-        {hasSpecification && specificationLabel(quality)}
-        {hasSpecification && specification(dataset)}
+        {hasSpecification && specificationLabel()}
+        {hasSpecification && specification(quality, dataset)}
       </dl>
     </div>
   );
 }
 
-function documentationLabel(quality) {
+function documentationLabel() {
+  return (
+    <dt>
+      {t("documentation")}
+    </dt>
+  );
+}
+
+function documentation(quality, dataset) {
   const definitions = [{
     "measureOf": QUALITY.documentation,
     "labelTrue": "documentationQualityTrue",
@@ -326,24 +334,16 @@ function documentationLabel(quality) {
     "iconTrue": "http",
     "iconFalse": "http",
   }];
-  return (
-    <dt>
-      {t("documentation")}
-      <QualityIconsForMeasures
-        quality={quality}
-        measureDefinitions={definitions}
-      />
-    </dt>
-  );
-}
-
-function documentation(dataset) {
   return dataset.documentation.map((iri) => (
     <dd key={iri}>
       <a href={iri} rel="nofollow noopener noreferrer">
         {t("documentationDownload")}
       </a>
-      <br/>
+      <QualityIconsForMeasures
+        object={iri}
+        quality={quality}
+        measureDefinitions={definitions}
+      />
     </dd>
   ));
 }
@@ -373,7 +373,15 @@ function contactPoint(selectLabel, contactPoint) {
   );
 }
 
-function specificationLabel(quality) {
+function specificationLabel() {
+  return (
+    <dt>
+      {t("specification")}
+    </dt>
+  );
+}
+
+function specification(quality, dataset) {
   const definitions = [{
     "measureOf": QUALITY.specification,
     "labelTrue": "specificationQualityTrue",
@@ -387,24 +395,16 @@ function specificationLabel(quality) {
     "iconTrue": "http",
     "iconFalse": "http",
   }];
-  return (
-    <dt>
-      {t("specification")}
-      <QualityIconsForMeasures
-        quality={quality}
-        measureDefinitions={definitions}
-      />
-    </dt>
-  );
-}
-
-function specification(dataset) {
   return dataset.conformsTo.map((iri) => (
     <dd key={iri}>
       <a href={iri} rel="nofollow noopener noreferrer">
         {t("specificationOpen")}
       </a>
-      <br/>
+      <QualityIconsForMeasures
+        object={iri}
+        quality={quality}
+        measureDefinitions={definitions}
+      />
     </dd>
   ));
 }
