@@ -40,25 +40,33 @@ function Footer() {
               </li>
               <li>{t("footer.telephone")}: +420 974 816 395
               </li>
-              <li><a href="http://www.mvcr.cz/">{t("footer.mvcr")}</a></li>
+              <li><a href="https://www.mvcr.cz/">{t("footer.mvcr")}</a></li>
+              <li><a href="https://data.gov.cz">{t("footer.opendata")}</a></li>
             </ul>
           </Col>
           <Col md="4">
             <strong>{t("footer.links")}</strong>
             <ul>
               <li>{t("footer.catalogForDownload")}: <a
-                href="https://data.gov.cz/soubor/nkod.trig">
-                {t("footer.downloadCatalog")}
-              </a>, <a href="https://data.gov.cz/soubor/datové-sady.csv">
+                href="/soubor/nkod.trig">
+                {t("footer.downloadCatalogTriG")}
+              </a>, <a
+                href="/soubor/nkod.hdt">
+                {t("footer.downloadCatalogHDT")}
+              </a>, <a
+                href="/soubor/nkod.json">
+                {t("footer.downloadCatalogJSON")}
+              </a>, <a href="/soubor/datové-sady.csv">
                 {t("footer.downloadDatasets")}
-              </a>, <a href="https://data.gov.cz/soubor/distribuce.csv">
+              </a>, <a href="/soubor/distribuce.csv">
                 {t("footer.downloadDistributions")}
               </a></li>
-              <li><a href="https://data.gov.cz/sparql">
+              <li>API: <a href="/sparql">
                 {t("footer.sparqlEndpoint")}
-              </a></li>
-              <li><a href="https://data.gov.cz">
-                {t("footer.opendata")}
+              </a>, <a href="/ldf">
+                {t("footer.ldfEndpoint")}
+              </a>, <a href="/graphql">
+                {t("footer.graphQLEndpoint")}
               </a></li>
               <li>{t("footer.catalogRunsAt")}{" "}
                 <a href="https://github.com/linkedpipes/dcat-ap-viewer">
