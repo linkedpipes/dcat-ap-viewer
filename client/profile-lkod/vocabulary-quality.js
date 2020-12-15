@@ -44,4 +44,6 @@ export const QUALITY = {
     QUALITY_PREFIX + "metrikaDostupnostiCORSEndpointURL",
   "conformsTo":
     QUALITY_PREFIX + "metrikaDostupnostiServiceConformsTo",
+  "conformsToCors":
+    QUALITY_PREFIX + "metrikaDostupnostiCORSServiceConformsTo",
 };

@@ -17,6 +17,12 @@ export default function DataServiceConformsTo(props) {
     "labelFalse": "access.conformsToQualityFalse",
     "iconTrue": "verified_user",
     "iconFalse": "link_off",
+  }, {
+    "measureOf": QUALITY.conformsToCors,
+    "labelTrue": "access.conformsToQualityCorsTrue",
+    "labelFalse": "access.conformsToQualityCorsFalse",
+    "iconTrue": "http",
+    "iconFalse": "http",
   }];
   return (
     <ListGroupItem className="px-2">
