@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types";
 import {Link} from "react-router-dom";
 
 import {
-  t, register, useLabelApi, configuration, createUrl,
+  t, translateString, register, useLabelApi, configuration, createUrl,
 } from "../viewer-api";
 import FormDialogLinks from "../form/dialog-links";
 
@@ -16,7 +16,7 @@ function DatasetDetailHeader(props) {
         {selectLabel(props.dataset.iri)}
         <a
           href={configuration.dereferenceUrlPrefix + props.dataset.iri}
-          title={t("followLink")}
+          title={translateString(props.language, "followLink")}
           target="_blank"
           rel="noopener noreferrer"
         >

@@ -2,7 +2,7 @@ import React from "react";
 import {PropTypes} from "prop-types";
 
 import {
-  t, register, useLabelApi, configuration, createUrl,
+  t, translateString, register, useLabelApi, configuration, createUrl,
 } from "../viewer-api";
 
 function DatasetDetailHeader(props) {
@@ -14,7 +14,7 @@ function DatasetDetailHeader(props) {
         {selectLabel(props.dataset.iri)}
         <a
           href={configuration.dereferenceUrlPrefix + props.dataset.iri}
-          title={t("followLink")}
+          title={translateString(props.language, "followLink")}
           target="_blank"
           rel="noopener noreferrer"
         >
