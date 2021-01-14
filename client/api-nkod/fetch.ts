@@ -1,6 +1,21 @@
 import {JsonLdEntity} from "./jsonld";
 import {flatten} from "jsonld";
 
+export class ResponseIsNotOk extends Error {
+
+  public code: number;
+
+  constructor(code: number) {
+    super(`Fetch response code: ${code}`);
+    this.code = code;
+  }
+
+  public isNotFound() {
+    return this.code === 404;
+  }
+
+}
+
 export async function fetchJson(url: string): Promise<object> {
   let response;
   try {
@@ -15,11 +30,7 @@ export async function fetchJson(url: string): Promise<object> {
     throw new Error("Can't fetch data.");
   }
   if (response.ok === false) {
-    if (response.status === 404) {
-      return {};
-    } else {
-      throw new Error(`Fetch response code: ${response.status}`);
-    }
+    throw new ResponseIsNotOk(response.status);
   }
   try {
     return await response.json();
@@ -33,4 +44,21 @@ export async function fetchJsonLd(url: string): Promise<JsonLdEntity[]> {
   let json = await fetchJson(url);
   let jsonld = await flatten(json as any);
   return jsonld as any;
+}
+
+/**
+ * Return empty array on status code 404.
+ */
+export async function fetchJsonLdIgnoreNotFound(
+  url: string): Promise<JsonLdEntity[]> {
+  try {
+    return await fetchJsonLd(url);
+  } catch (error) {
+    if (error instanceof ResponseIsNotOk
+      && (error as ResponseIsNotOk).isNotFound()) {
+      return [];
+    } else {
+      throw error;
+    }
+  }
 }

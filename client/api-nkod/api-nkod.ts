@@ -17,7 +17,7 @@ import {
 import {ApiKeyword, FetchKeywordListResponse} from "../data-api/api-keyword";
 import {ApiLabel, FetchLabelResponse} from "../data-api/api-label";
 import {ApiQuality} from "../data-api/api-quality";
-import {fetchJsonLd} from "./fetch";
+import {fetchJsonLd, fetchJsonLdIgnoreNotFound} from "./fetch";
 import {jsonLdToCatalogs} from "./jsonld-to-catalog";
 import {jsonLdToLabels} from "./jsonld-to-label";
 import {QualityMeasures} from "../data-model/quality";
@@ -51,7 +51,7 @@ export class ApiNkod
     if (language) {
       url += "&language=" + language;
     }
-    const jsonld = await fetchJsonLd(url);
+    const jsonld = await fetchJsonLdIgnoreNotFound(url);
     return {
       "labels": jsonLdToLabels(jsonld),
     };
@@ -65,7 +65,7 @@ export class ApiNkod
     if (language) {
       url += "&language=" + language;
     }
-    const jsonld = await fetchJsonLd(url);
+    const jsonld = await fetchJsonLdIgnoreNotFound(url);
     return {
       "labels": jsonLdToLabels(jsonld),
     };
@@ -107,7 +107,7 @@ export class ApiNkod
       params += "&sort=" + encodeURIComponent(query.sort);
     }
     const url = "./api/v2/dataset?" + params;
-    const jsonld = await fetchJsonLd(url);
+    const jsonld = await fetchJsonLdIgnoreNotFound(url);
     return {
       "datasets": jsonLdToDatasetList(jsonld),
       "labels": jsonLdToLabels(jsonld),
@@ -160,7 +160,7 @@ export class ApiNkod
     if (language) {
       url += "language=" + language
     }
-    const jsonld = await fetchJsonLd(url);
+    const jsonld = await fetchJsonLdIgnoreNotFound(url);
     return  {
       "labels": jsonLdToLabels(jsonld),
     };
@@ -174,7 +174,7 @@ export class ApiNkod
     if (language) {
       url += "&language=" + language;
     }
-    const jsonld = await fetchJsonLd(url);
+    const jsonld = await fetchJsonLdIgnoreNotFound(url);
     return {
       "labels": jsonLdToLabels(jsonld),
     };
@@ -202,7 +202,7 @@ export class ApiNkod
     if (language) {
       url += "&language=" + language;
     }
-    const jsonld = await fetchJsonLd(url);
+    const jsonld = await fetchJsonLdIgnoreNotFound(url);
     return jsonLdToQualityMeasures(jsonld);
   }
 
