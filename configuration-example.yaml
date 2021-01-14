@@ -41,3 +41,8 @@ dcat-ap-viewer:
     page-title-default: "DCAT-AP Viewer"
     page-title-prefix: ""
     page-title-suffix: " - LP-DAV"
+    # Configure URL prefix used to dereference values.
+    dereference-url-prefix: ""
+    # URL of the dcat-ap forms running instance.
+    # https://github.com/linkedpipes/dcat-ap-forms
+    dcat-ap-forms-url: ""
