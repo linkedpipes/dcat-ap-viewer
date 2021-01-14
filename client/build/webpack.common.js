@@ -3,7 +3,7 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const configuration = require("../../configuration").client;
 
-const profile = configuration.profiles.slice(-1)[0]
+const profile = configuration.profiles.slice(-1)[0];
 
 module.exports = {
   "entry": [

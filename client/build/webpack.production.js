@@ -12,7 +12,7 @@ module.exports = merge(common, {
   "mode": "production",
   "output": {
     "filename": "assets/bundle.[chunkhash].js",
-    "path": path.join(__dirname, "..", "..", "dist")
+    "path": path.join(__dirname, "..", "..", "dist"),
   },
   "optimization": {
     "splitChunks": {
@@ -56,8 +56,8 @@ module.exports = merge(common, {
     new CopyWebpackPlugin({
       "patterns": configuration.profiles.map((profile) => ({
         "from": path.join(__dirname, "..", profile, "assets"),
-        "to": path.join(__dirname, "..", "..", "dist", "assets")
-      }))
+        "to": path.join(__dirname, "..", "..", "dist", "assets"),
+      })),
     }),
   ],
 });
