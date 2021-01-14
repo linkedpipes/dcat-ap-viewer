@@ -77,7 +77,7 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
     "add-field" : { "name" : "temporal-start", "type" : "pdate", "docValues" : true, "multiValued" : false },
     "add-field" : { "name" : "temporal-end", "type" : "pdate", "docValues" : true, "multiValued" : false },
     "add-field" : { "name" : "spatial", "type" : "strings" },
-    "add-field" : { "name" : "publisher", "type" : "string" , "indexed" : true, "multiValued" : false },
+    "add-field" : { "name" : "isPartOf", "type" : "string" , "indexed" : true, "multiValued" : false },
 
     "add-field" : { "name" : "description_cs", "type" : "string", "multiValued" : false },
     "add-field" : { "name" : "keyword_cs", "type" : "strings" },
