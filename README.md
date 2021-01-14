@@ -18,21 +18,21 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 - [LinkedPipes ETL], the [preparation pipeline] and the [codelist pipeline]
 
 ## Installation
-[Install Solr](https://lucene.apache.org/solr/guide/8_5/installing-solr.html) or run in it [Docker](https://hub.docker.com/_/solr/).
+[Install Solr](https://lucene.apache.org/solr/guide/8_7/installing-solr.html) or run in it [Docker](https://hub.docker.com/_/solr/).
 It will contain the search index. 
 For installation, you may proceed like this:
-- Download [Apache Solr] - e.g. ```solr-8.5.0.tgz```
-- Extract the service installer ```tar xzf solr-8.5.0.tgz solr-8.5.0/bin/install_solr_service.sh --strip-components=2```
-- Run the service installer ```sudo bash ./install_solr_service.sh solr-8.5.0.tgz```
+- Download [Apache Solr] - e.g. ```solr-8.7.0.tgz```
+- Extract the service installer ```tar xzf solr-8.5.0.tgz solr-8.7.0/bin/install_solr_service.sh --strip-components=2```
+- Run the service installer ```sudo bash ./install_solr_service.sh solr-8.7.0.tgz```
 
 Next, configure Solr like this:
 - Create Solr core ```sudo -u solr /opt/solr/bin/solr create -c dcat-ap-viewer```
 
 - Add following to `dcat-ap-viewer/conf/solrconfig.xml` file (adjust the version numbers as necessary) and restart Solr.
 ```
-  <lib path="${solr.install.dir:../../../..}/dist/solr-analysis-extras-8.5.0.jar" />  
+  <lib path="${solr.install.dir:../../../..}/dist/solr-analysis-extras-8.7.0.jar" />  
   <lib path="${solr.install.dir:../../../..}/contrib/analysis-extras/lib/icu4j-62.1.jar" />  
-  <lib path="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs/lucene-analyzers-icu-8.5.0.jar" />
+  <lib path="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs/lucene-analyzers-icu-8.7.0.jar" />
 ```
 
 - Prepare Solr schema (change locale to your language, the example bellow is for `cs` and `en`):
