@@ -11,7 +11,7 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 ## Requirements
 - [Node.js] (not 15 ATM) & npm
 - [OpenJDK] for Apache Solr, if not dockerized
-- [Apache Solr] 8.5 ([Docker](https://hub.docker.com/_/solr/))
+- [Apache Solr] 8.7 ([Docker](https://hub.docker.com/_/solr/))
 - [Apache CouchDB] 2.3 and up ([Docker](https://hub.docker.com/_/couchdb/))
 
 ### Requirements for data preparation
@@ -22,7 +22,7 @@ It addresses the most painful disadvantages of CKAN when it comes to representin
 It will contain the search index. 
 For installation, you may proceed like this:
 - Download [Apache Solr] - e.g. ```solr-8.7.0.tgz```
-- Extract the service installer ```tar xzf solr-8.5.0.tgz solr-8.7.0/bin/install_solr_service.sh --strip-components=2```
+- Extract the service installer ```tar xzf solr-8.7.0.tgz solr-8.7.0/bin/install_solr_service.sh --strip-components=2```
 - Run the service installer ```sudo bash ./install_solr_service.sh solr-8.7.0.tgz```
 
 Next, configure Solr like this:
