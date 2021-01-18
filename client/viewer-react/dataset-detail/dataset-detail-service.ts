@@ -114,10 +114,14 @@ export function useDistributionApi(iri: string): DistributionData {
   const dispatch = useDispatch();
   const navigation = useContext(NavigationContext);
   const state = useSelector((state) => distributionSelector(state, iri));
+  // The data may be already available.
+  const shouldFetch = state?.status === ResourceStatus.Undefined;
 
   useEffect(() => {
-    dispatch(fetchDistribution(navigation.language, iri));
-  }, [navigation.language, iri]);
+    if (shouldFetch) {
+      dispatch(fetchDistribution(navigation.language, iri));
+    }
+  }, [navigation.language, iri, shouldFetch]);
 
   return {
     ...statusToObject(state?.status),
@@ -196,7 +200,7 @@ function fetchQuality(language: string, iri: string): ThunkVoidResult {
 }
 
 export function useDescendantsApi(
-  iri: string, offset: number, limit:number
+  iri: string, offset: number, limit: number
 ): DescendantsData {
   const dispatch = useDispatch();
   const navigation = useContext(NavigationContext);
@@ -214,7 +218,7 @@ export function useDescendantsApi(
 }
 
 function fetchDescendants(
-  language: string, datasetIri: string, offset: number, limit:number
+  language: string, datasetIri: string, offset: number, limit: number
 ): ThunkVoidResult {
   const query: DatasetListQuery = {
     "limit": limit,
