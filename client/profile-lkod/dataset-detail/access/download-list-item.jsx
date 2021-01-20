@@ -47,16 +47,30 @@ DownloadListItem.propTypes = {
 };
 
 function getDownloadUrl(distribution) {
-  if (isEmpty(distribution.downloadURL)) {
-    if (isEmpty(distribution.accessURL)) {
-      console.error("Missing downloadURL, accessURL", distribution);
+  const downloadURL = getNonEmptyFromArray(distribution.downloadURL);
+  const accessURL = getNonEmptyFromArray(distribution.accessURL);
+  if (downloadURL === undefined) {
+    if (accessURL === undefined) {
+      console.error("Missing downloadURL and accessURL for:", distribution);
       return undefined;
     } else {
-      return distribution.accessURL[0];
+      return distribution.accessURL;
     }
   } else {
-    return distribution.downloadURL[0];
+    return distribution.downloadURL;
   }
+}
+
+function getNonEmptyFromArray(array) {
+  if (array === undefined || array === null) {
+    return undefined;
+  }
+  for (const item of array) {
+    if (!isEmpty(item)) {
+      return item;
+    }
+  }
+  return undefined;
 }
 
 function isEmpty(value) {
