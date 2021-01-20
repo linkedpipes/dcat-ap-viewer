@@ -60,7 +60,6 @@ function locationToNavigation(location: Location): NavigationData {
     }
     query[resolvedKey] = value;
   }
-  console.log("locationToNavigation", search, "\n", query);
   return {
     "path": path,
     "language": language || getDefaultLanguage(),

@@ -23,28 +23,24 @@ export function useDatasetListQuery() {
     parsedQueryToQuery(navigation.query, createDefaultDatasetListQuery()));
   const state = useSelector(datasetListSelector);
   const history = useHistory();
-  // console.log("useDatasetListQuery", state);
 
   useEffect(() => {
     if (isStatusLoading(state.status)) {
       // Do not allow change of query when loading data.
-      console.log("useDatasetListQuery.useEffect : loading");
       return;
     }
     const newQuery = parsedQueryToQuery(navigation.query, query);
     const listQuery = prepareDatasetListQuery(newQuery);
     if (datasetListQueryEquals(state.query, listQuery)) {
-      console.log("useDatasetListQuery.useEffect : update");
       setQuery(newQuery);
     } else {
-      console.log("useDatasetListQuery.useEffect : equal");
+      return;
     }
   }, [navigation.query, state.status, state.query, query, setQuery]);
 
   const updateQuery = useCallback((change) => {
     if (isStatusLoading(state.status)) {
       // Do not allow change of query when loading data.
-      console.log("useDatasetListQuery.updateQuery : loading");
       return;
     }
     const newQuery = {...query, ...change};
@@ -54,7 +50,6 @@ export function useDatasetListQuery() {
     const nextUrl = createUrl(navigation.language, "/datasets", urlQuery);
     const currentUrl = history.location.pathname + (
       history.location.search === "" ? "" : "?" + history.location.search);
-    console.log("useDatasetListQuery.updateQuery", newQuery);
     if (currentUrl !== nextUrl) {
       history.push(nextUrl);
     }
@@ -170,14 +165,8 @@ export function useDatasetListApi(
     const listQuery = prepareDatasetListQuery(query);
     if (datasetListQueryEquals(lastListQuery, listQuery)
       || isStatusLoading(state.status)) {
-      console.log(
-        "useDatasetListApi.useEffect : ignore\n",
-        lastListQuery, "\n", listQuery);
       return;
     }
-    console.log(
-      "useDatasetListApi.useEffect: fetch in", language,
-      "\n", lastListQuery, "\n->\n", query, "\n", listQuery)
     dispatch(fetchDatasetListData(language, listQuery));
   }, [language, query]);
 
