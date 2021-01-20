@@ -358,13 +358,10 @@ function contactPoints(selectLabel, contactPoints) {
 }
 
 function contactPoint(selectLabel, contactPoint) {
-  let label = selectLabel(contactPoint.iri);
+  let label = selectLabel(contactPoint.iri, null);
   let email = isNotEmpty(contactPoint.email) ? contactPoint.email : null;
   if (label === null) {
     label = email;
-    if (label == null) {
-      label = "";
-    }
   }
   let iri = contactPoint.email ?
     "mailto:" + contactPoint.email : contactPoint.iri;
