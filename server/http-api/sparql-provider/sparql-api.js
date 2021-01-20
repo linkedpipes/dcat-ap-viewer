@@ -46,8 +46,8 @@ function requestParams(url, format) {
   return {
     "url": url,
     "headers": {
-      "accept": format
-    }
+      "accept": format,
+    },
   }
 }
 

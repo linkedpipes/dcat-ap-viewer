@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types";
 import {Card, CardTitle} from "reactstrap";
 import {translateString} from "../../viewer-api";
 
-function LegalDcatApColumn(props) {
+function LegalColumnDcatAp(props) {
   return (
     <Card>
       <CardTitle tag="h6" className="text-muted pl-2 pt-2">
@@ -17,12 +17,12 @@ function LegalDcatApColumn(props) {
         </a>
       </CardTitle>
     </Card>
-  )
+  );
 }
 
-LegalDcatApColumn.propTypes = {
+LegalColumnDcatAp.propTypes = {
   "license": PropTypes.string.isRequired,
   "language": PropTypes.string.isRequired,
 };
 
-export default LegalDcatApColumn;
+export default LegalColumnDcatAp;

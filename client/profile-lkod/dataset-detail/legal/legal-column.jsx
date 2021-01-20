@@ -25,7 +25,7 @@ function LegalColumn(props) {
     // Use as a fallback if there is no legal information.
     return (
       <DcatApLegalColumn license={license} language={language}/>
-    )
+    );
   }
   return (
     <Card>

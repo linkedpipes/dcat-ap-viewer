@@ -1,9 +1,9 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {Card, CardTitle, ListGroup} from "reactstrap";
-import {t, translateString} from "../../viewer-api";
+import {translateString} from "../../viewer-api";
 
-function LegalDcatApColumn(props) {
+function LegalColumnMissing(props) {
   return (
     <Card>
       <CardTitle tag="h6" className="text-muted pl-2 pt-2">
@@ -15,11 +15,11 @@ function LegalDcatApColumn(props) {
         </li>
       </ListGroup>
     </Card>
-  )
+  );
 }
 
-LegalDcatApColumn.propTypes = {
-  "license": PropTypes.string.isRequired,
+LegalColumnMissing.propTypes = {
+  "language": PropTypes.string.isRequired,
 };
 
-export default LegalDcatApColumn;
+export default LegalColumnMissing;
