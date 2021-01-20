@@ -25,7 +25,7 @@ export default function PersonalData(props) {
     label = "license.personalMissing";
     message = "license.personalMissingComment";
   } else {
-    console.error(
+    console.warn(
       "Unexpected value for personal data: ",
       props.legal.personalData);
     return null;

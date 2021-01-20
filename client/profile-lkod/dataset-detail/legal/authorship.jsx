@@ -123,7 +123,7 @@ function renderMissing(language, showModal) {
 function renderCustom(language, showModal, legal, quality) {
   const message = translateString(language, "license.authorCustomComment");
   return (
-    <li className="list-group-item px-2">
+    <React.Fragment>
       <div>
         <a
           href={legal.authorship}
@@ -146,7 +146,7 @@ function renderCustom(language, showModal, legal, quality) {
       <div className="label">
         {t("license.authorType")}
       </div>
-    </li>
+    </React.Fragment>
   );
 }
 
