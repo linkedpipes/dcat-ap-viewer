@@ -3,6 +3,7 @@ import {PropTypes} from "prop-types";
 import {ListGroup, ListGroupItem} from "reactstrap";
 
 import {register, t} from "../viewer-api";
+import {formatNumber} from "../core/format";
 
 const DEFAULT_FACET_SIZE = 7;
 
@@ -54,7 +55,7 @@ function Facet(props) {
         {
           !props.hydeCount
           && props.facetCount !== undefined
-          && " (" + props.facetCount + ")"
+          && " (" + formatNumber(props.facetCount) + ")"
         }
       </h3>
       <ListGroup>
@@ -69,7 +70,7 @@ function Facet(props) {
               style={{"wordWrap": "break-word"}}
             >
               {props.selectFacetLabel(item)}
-              {!props.hydeCount && " (" + item.count + ")"}
+              {!props.hydeCount && " (" + formatNumber(item.count) + ")"}
               {index < props.activeFacets.length &&
               <i
                 className="material-icons center pl-2"

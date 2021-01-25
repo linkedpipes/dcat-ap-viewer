@@ -5,6 +5,7 @@ import {Button} from "reactstrap";
 
 import TagCloud from "../components/tag-cloud";
 import {t} from "../viewer-api";
+import {formatNumber} from "../core/format";
 
 const INCREASE_BY_SIZE = 15;
 
@@ -18,7 +19,7 @@ export default function FacetView(props) {
   return (
     <React.Fragment>
       <h4>
-        {t(props.title, {"count": props.facetCount})}
+        {t(props.title, {"count": formatNumber(props.facetCount)})}
       </h4>
       <div style={{"textAlign": "center", "display": "block"}}>
         <TagCloud
@@ -67,7 +68,7 @@ function tagRenderer(selectFacetLabel, tag, size) {
   return (
     <span className="tag-cloud-tag" style={style} key={tag.queryCode}>
       <span style={{"color": tag.color, "fontSize": size}}>
-        {selectFacetLabel(tag)} ({tag.count})
+        {selectFacetLabel(tag)} ({formatNumber(tag.count)})
       </span>
     </span>
   );

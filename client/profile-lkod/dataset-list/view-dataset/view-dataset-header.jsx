@@ -11,6 +11,7 @@ import {
 
 import {t, useLabelApi} from "../../viewer-api";
 import TagLine from "../../components/tag-line";
+import {formatNumber} from "../../core/format";
 
 const SORT_OPTIONS = ["title asc", "title desc"];
 
@@ -25,7 +26,8 @@ export default function DatasetsViewHeader(props) {
     <Row>
       <Col xs={12} md={9}>
         <h4>
-          {t("query.datasetsFound", {"count": props.state.datasetsCount})}
+          {t("query.datasetsFound", {
+            "count": formatNumber(props.state.datasetsCount)})}
           <SearchText search={props.query.search}/>
         </h4>
         <TagLine
