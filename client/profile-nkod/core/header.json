@@ -1,6 +1,7 @@
 {
   "cs": {
     "header.logoAlt": "Otevřená data",
+    "header.articles": "Články",
     "header.news": "Novinky",
     "header.datasets": "Datové sady",
     "header.publishers": "Poskytovatelé",
@@ -9,12 +10,13 @@
     "header.forInterestedInOpenData": "Pro zájemce o otevírání dat",
     "header.forProgrammes": "Pro uživatele a programátory",
     "header.forPublishers": "Pro poskytovatele dat",
-    "header.catalogs": "Katalogy",
+    "header.catalogs": "Lokální katalogy",
     "language.cs": "Čeština",
     "language.en": "English"
   },
   "en": {
     "header.logoAlt": "Open data",
+    "header.articles": "Posts",
     "header.news": "News",
     "header.datasets": "Datasets",
     "header.publishers": "Publishers",
@@ -23,7 +25,7 @@
     "header.forInterestedInOpenData": "About Open Data",
     "header.forProgrammes": "For users and programmers",
     "header.forPublishers": "For publishers",
-    "header.catalogs": "Catalogs",
+    "header.catalogs": "Local catalogs",
     "language.cs": "Čeština",
     "language.en": "English"
   }
