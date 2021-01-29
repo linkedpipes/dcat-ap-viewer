@@ -81,11 +81,11 @@ function renderMissing(language, showModal) {
       <div>
         {t("license.missing")}
         <i
-          className="material-icons text-success float-right"
+          className="material-icons text-danger float-right"
           title={message}
           onClick={() => showModal(message)}
         >
-          check
+          warning
         </i>
       </div>
       <div className="label">

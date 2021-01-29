@@ -43,9 +43,9 @@ register({
 function shouldRenderDcatApLegal(distribution) {
   return distribution.license !== undefined
     && distribution.legal.author === undefined
-    && distribution.legal.authorship === undefined
+    && distribution.legal.authorship === "missing"
     && distribution.legal.databaseAuthor === undefined
-    && distribution.legal.databaseAuthorship === undefined
-    && distribution.legal.personalData === undefined
-    && distribution.legal.protectedDatabase === undefined;
+    && distribution.legal.databaseAuthorship === "missing"
+    && distribution.legal.personalData === "missing"
+    && distribution.legal.protectedDatabase === "missing";
 }

@@ -48,9 +48,9 @@ register({
 
 function isLegalEmpty(legal) {
   return legal.author === undefined
-    && legal.authorship === undefined
+    && legal.authorship === "missing"
     && legal.databaseAuthor === undefined
-    && legal.databaseAuthorship === undefined
-    && legal.personalData === undefined
-    && legal.protectedDatabase === undefined;
+    && legal.databaseAuthorship === "missing"
+    && legal.personalData === "missing"
+    && legal.protectedDatabase === "missing";
 }

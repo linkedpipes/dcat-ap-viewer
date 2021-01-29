@@ -75,12 +75,12 @@ function jsonLdToLegal(
 
 function createMissingLegal(): DistributionLegal {
   return {
-    "authorship": undefined,
+    "authorship": "missing",
     "author": undefined,
-    "databaseAuthorship": undefined,
+    "databaseAuthorship": "missing",
     "databaseAuthor": undefined,
-    "protectedDatabase": undefined,
-    "personalData": undefined,
+    "protectedDatabase": "missing",
+    "personalData": "missing",
   };
 }
 
