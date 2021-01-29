@@ -20,7 +20,7 @@ function Header() {
     <Namespace.Provider value="header">
       <Container>
         <Navbar light expand="md">
-          <NavbarBrand href="https://data.gov.cz/">
+          <NavbarBrand href="/">
             <img
               width="174" height="30"
               alt={translateString(language, "header.logoAlt")}
@@ -32,7 +32,12 @@ function Header() {
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="https://data.gov.cz/novinky/">
+                <NavLink href="/články/">
+                  {t("header.articles")}
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/novinky/">
                   {t("header.news")}
                 </NavLink>
               </NavItem>
@@ -52,7 +57,7 @@ function Header() {
                   </DropdownToggle>
                   <DropdownMenu right>
                     <DropdownItem
-                      href="https://opendata.gov.cz/informace:základy-otevřených-dat-pro-zájemce"
+                      href="/informace/základy-otevřených-dat-pro-zájemce/"
                     >
                       {t("header.forInterestedInOpenData")}
                     </DropdownItem>

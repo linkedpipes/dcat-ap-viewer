@@ -83,9 +83,27 @@ function Footer() {
                   {t("footer.nkodDocumentation")}
                 </a>
               </li>
+              <li>
+                <a href="/prohlášení-o-přístupnosti">
+                  {t("footer.accessibility")}
+                </a>
+              </li>
             </ul>
           </Col>
           <Col md="4">
+            <strong>{t("footer.thanksTitle")}</strong>
+            <p>{t("footer.thanks1")}
+              <a
+                href="https://www.esfcr.cz/projekty-opz/-/asset_publisher/ODuZumtPTtTa/content/implementace-strategii-v-oblasti-otevrenych-dat-ii">
+                {t("footer.thanksLink1")}
+              </a>
+              {t("footer.thanks2")}
+              <a
+                href="https://www.esfcr.cz/projekty-opz/-/asset_publisher/ODuZumtPTtTa/content/rozvoj-datovych-politik-v-oblasti-zlepsovani-kvality-a-interoperability-dat-verejne-spravy">
+                {t("footer.thanksLink2")}
+              </a>
+              {t("footer.thanks3")}
+            </p>
             <div className="bg-white shadow">
               <img
                 alt={translateString(language, "footer.euOzp")}
@@ -99,10 +117,10 @@ function Footer() {
         </Row>
         <hr/>
         <Row>
-          <Col md="12" className="font-italic">
+          <Col md="12">
             {t("footer.legalStart")}
             <a
-              href="https://www.zakonyprolidi.cz/cs/2008-64"
+              href={translateString(language, "footer.legalLinkURL")}
               title={translateString(language, "footer.legalLink")}
             >
               {t("footer.legalLink")}
