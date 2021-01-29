@@ -16,7 +16,9 @@ import "../profile-lkod/dataset-detail/dataset-detail-parts";
 import "../profile-lkod/dataset-detail/dataset-detail-descendants";
 import "../profile-lkod/dataset-detail/part-data-service";
 import "../profile-lkod/dataset-detail/part-distribution";
-import "../profile-lkod/dataset-detail/legal/legal-column";
+import "../profile-lkod/dataset-detail/legal/legal-column-czech";
+import "../profile-lkod/dataset-detail/legal/legal-column-dcatap";
+import "../profile-lkod/dataset-detail/legal/legal-column-missing";
 import "../profile-lkod/dataset-list/view-dataset/view-dataset";
 import "../profile-lkod/dataset-list/view-theme/view-theme";
 import "../profile-lkod/dataset-list/view-keyword/view-keyword";
@@ -26,6 +28,7 @@ import "./core/header";
 import "./core/footer";
 import "./catalog-list/catalog-list";
 import "./dataset-detail/dataset-detail-header";
+import "./dataset-detail/legal/legal-column";
 import "./dataset-list/dataset-list-facet";
 import "./publisher-list/publisher-list";
 

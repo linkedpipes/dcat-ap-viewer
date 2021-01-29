@@ -8,16 +8,10 @@ import {
 function LegalColumn(props) {
   const {showModal} = useContext(ModalContext);
   const {language} = useContext(NavigationContext);
-  if (isLegalEmpty(props.distribution.legal)) {
+  if (shouldRenderDcatApLegal(props.distribution.legal)) {
     const license = props.distribution.license;
-    if (license === undefined) {
-      const MissingLegalColumn =
-        getElement("dataset-detail.parts.legal-column-missing").element;
-      return (
-        <MissingLegalColumn language={language}/>
-      );
-    }
-    // Use as a fallback if there is no legal information.
+    // Use as a fallback if there is no Czech legal information, but there
+    // is DCAT-AP compatible.
     const DcatApLegalColumn =
       getElement("dataset-detail.parts.legal-column-dcat-ap").element;
     return (
@@ -46,11 +40,12 @@ register({
   "element": LegalColumn,
 });
 
-function isLegalEmpty(legal) {
-  return legal.author === undefined
-    && legal.authorship === undefined
-    && legal.databaseAuthor === undefined
-    && legal.databaseAuthorship === undefined
-    && legal.personalData === undefined
-    && legal.protectedDatabase === undefined;
+function shouldRenderDcatApLegal(distribution) {
+  return distribution.license !== undefined
+    && distribution.legal.author === undefined
+    && distribution.legal.authorship === undefined
+    && distribution.legal.databaseAuthor === undefined
+    && distribution.legal.databaseAuthorship === undefined
+    && distribution.legal.personalData === undefined
+    && distribution.legal.protectedDatabase === undefined;
 }

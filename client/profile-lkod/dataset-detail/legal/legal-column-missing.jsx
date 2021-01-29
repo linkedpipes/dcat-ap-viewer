@@ -1,7 +1,9 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {Card, CardTitle, ListGroup} from "reactstrap";
-import {translateString} from "../../viewer-api";
+import {register, registerOnlyOnce, translateString} from "../../viewer-api";
+
+import translations from "./legal-column.json";
 
 function LegalColumnMissing(props) {
   return (
@@ -22,4 +24,12 @@ LegalColumnMissing.propTypes = {
   "language": PropTypes.string.isRequired,
 };
 
-export default LegalColumnMissing;
+register({
+  "name": "dataset-detail.parts.legal-column-missing",
+  "element": LegalColumnMissing,
+});
+
+registerOnlyOnce({
+  "name": "dataset-detail.parts.legal-column-translation",
+  "translations": translations,
+});

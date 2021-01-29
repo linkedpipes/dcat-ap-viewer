@@ -19,8 +19,6 @@ const DatasetList = () => {
     "page-title.datasets", undefined,
     selectTitleFromQuery(query, selectLabel));
 
-  console.log("DatasetList.Render\n", query, "\n", state);
-
   if (state.loading) {
     const LoadingView = getElement("application.loading").element;
     return (<LoadingView/>);

@@ -84,12 +84,20 @@ function isTranslation(object: Registrable): object is Translation {
 const registered: { [name: string]: Registrable } = {};
 
 export function register(
-  entity: Reducer | Element | View | Service | Translation
+  entity: Reducer | Element | View | Service | Translation,
 ): void {
   if (registered[entity.name] === undefined) {
     registered[entity.name] = entity;
   } else {
     console.error("Re-register of", entity.name);
+  }
+}
+
+export function registerOnlyOnce(
+  entity: Reducer | Element | View | Service | Translation,
+) {
+  if (registered[entity.name] === undefined) {
+    registered[entity.name] = entity;
   }
 }
 

@@ -1,7 +1,9 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {Card, CardTitle} from "reactstrap";
-import {translateString} from "../../viewer-api";
+import {register, registerOnlyOnce, translateString} from "../../viewer-api";
+
+import translations from "./legal-column.json";
 
 function LegalColumnDcatAp(props) {
   return (
@@ -25,4 +27,12 @@ LegalColumnDcatAp.propTypes = {
   "language": PropTypes.string.isRequired,
 };
 
-export default LegalColumnDcatAp;
+register({
+  "name": "dataset-detail.parts.legal-column-dcat-ap",
+  "element": LegalColumnDcatAp,
+});
+
+registerOnlyOnce({
+  "name": "dataset-detail.parts.legal-column-translation",
+  "translations": translations,
+});
