@@ -59,7 +59,7 @@
     "specification": "Specifikace",
     "specificationOpen": "Zobrazit specifikaci",
     "datasetIsPartOf": "Tato datová sada je součástí datové sady",
-    "showAllDescendantsLink": "Zobrazit v seznamu datasetů.",
+    "showAllDescendantsLink": "Zobrazit všechny dílčí datové sady v seznamu datových sad",
     "followLink": "Přejít na odkaz"
   },
   "en": {
@@ -116,7 +116,7 @@
     "specification": "Specification",
     "specificationOpen": "Show specification",
     "datasetIsPartOf": "This dataset is part of ",
-    "showAllDescendantsLink": "See all in dataset list view.",
+    "showAllDescendantsLink": "See all datasets of the dataset series in the dataset list view",
     "followLink": "Dereference link"
   }
 }
