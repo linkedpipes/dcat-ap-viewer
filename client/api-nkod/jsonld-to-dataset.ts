@@ -331,9 +331,5 @@ function loadDatasetNkod(
   output.lkod = getResource(entity, NKOD.lkod);
   const types = getTypes(entity);
   output.isFromForm = types.includes(NKOD.SourceForm);
-  output.isFromCatalog =
-    types.includes(NKOD.SourceLkod)
-    || types.includes(NKOD.SourceCkan)
-    || types.includes(NKOD.SourceDcat)
-    || types.includes(NKOD.SourceSparql);
+  output.isFromCatalog = types.includes(NKOD.SourceLkod);
 }
