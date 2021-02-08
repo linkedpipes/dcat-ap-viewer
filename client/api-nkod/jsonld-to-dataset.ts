@@ -149,9 +149,18 @@ export default function jsonLdToDatasetTypeahead(
   return result;
 }
 
-export function jsonLdToDataset(jsonld: JsonLdEntity[]): NkodDataset {
-  const entity = getEntitiesByType(jsonld, DCAT.Dataset)[0];
-  const result = createEmptyNkodDataset(getId(entity));
+export function jsonLdToDataset(
+  jsonld: JsonLdEntity[], datasetIri: string
+): NkodDataset {
+  const entity = getEntityByIri(jsonld, datasetIri);
+  if (entity === undefined) {
+    throw Error(`Missing dataset for ${datasetIri}`);
+  }
+  const types = getTypes(entity);
+  if (!types.includes(DCAT.Dataset)) {
+    console.warn("Missing ", DCAT.Dataset, "type for dataset entity.");
+  }
+  const result = createEmptyNkodDataset(datasetIri);
   loadDatasetMandatory(jsonld, entity, result);
   loadDatasetRecommended(jsonld, entity, result);
   loadDatasetThemes(jsonld, entity, result);

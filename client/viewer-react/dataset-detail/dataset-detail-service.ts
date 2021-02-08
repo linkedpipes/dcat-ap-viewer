@@ -84,6 +84,7 @@ function fetchDatasetDetail(language: string, iri: string): ThunkVoidResult {
         "publishers": response.publishers,
       }));
     } catch (error) {
+      console.error("Can't load dataset.", error);
       dispatch(DatasetDetailActions.fetchDataset.failure({
         "datasetIri": iri,
         "loadingIndicator": -1,
