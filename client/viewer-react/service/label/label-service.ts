@@ -84,7 +84,7 @@ function fetchLabel(
         "labels": response.labels,
       }));
     } catch (ex) {
-      console.log("", ex);
+      console.log("Can't fetch label for", iri, "in", language, ex);
       dispatch(LabelActions.fetchLabel.failure());
     }
   };
