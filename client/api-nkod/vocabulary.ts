@@ -148,9 +148,10 @@ const NKOD_PREFIX = "https://data.gov.cz/slovník/nkod/";
 
 export const NKOD = {
   "SourceForm": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/Formulář",
-  "SourceCkan": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/CkanLkod",
-  "SourceDcat": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkod",
-  "SourceSparql": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DcatLkodSparql",
+  "SourceLkod": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/LKOD",
+  "SourceCkan": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/CKAN",
+  "SourceDcat": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/DokumentyDCAT",
+  "SourceSparql": NKOD_PREFIX + "typ-datové-sady-dle-zdroje/SPARQL",
   "lkod": NKOD_PREFIX + "lkod",
   "ExceptionalPublisher": NKOD_PREFIX + "VzornýPoskytovatel",
   "DcatApSparql": NKOD_PREFIX + "DcatApSparql",
