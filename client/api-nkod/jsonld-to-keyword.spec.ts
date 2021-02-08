@@ -28,13 +28,14 @@ test("Load keywords JSON-LD.", async () => {
   const expected = [{
     "code": "přirozený pohyb",
     "title": {
-      "cs": "přirozený pohyb",
+      // Keywords are without a language.
+      "": "přirozený pohyb",
     },
     "usedByPublisherCount": 1,
   }, {
     "code": "uchazeč o práci",
     "title": {
-      "cs": "uchazeč o práci",
+      "": "uchazeč o práci",
     },
     "usedByPublisherCount": 3,
   }];

@@ -181,6 +181,7 @@ test("Load dataservice JSON-LD.", async () => {
     "packageFormat": undefined,
     "compressFormat": undefined,
     "dataService": "https://localhost/distribution/service",
+    "dataServiceConformsTo": [],
     "dataServiceTitle": {
       "en": "Another service Name",
     },
