@@ -55,6 +55,8 @@
       "5": "vteřin"
     },
     "/dataset": "Datová-sada",
+    "datasetSeriesTitle": "Datové sady této datové série",
+    "distributionsTitle": "Distribuce datové sady",
     "page-title.dataset": "Datová sada",
     "specification": "Specifikace",
     "specificationOpen": "Zobrazit specifikaci",
@@ -112,6 +114,8 @@
       "2": "seconds"
     },
     "/dataset": "Dataset",
+    "datasetSeriesTitle": "Datasets of this dataset series",
+    "distributionsTitle": "Distributions of the dataset",
     "page-title.dataset": "Dataset",
     "specification": "Specification",
     "specificationOpen": "Show specification",
