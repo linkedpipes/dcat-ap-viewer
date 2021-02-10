@@ -5,13 +5,6 @@ module.exports = (api) => {
   const presets = [
     "@babel/preset-react",
     ["@babel/preset-env", {
-      "targets": {
-        /**
-         * We need Chrome 41 to support Google search. As for newer version
-         * Google search fails to interpret the page.
-         */
-        "chrome": 41,
-      },
       "useBuiltIns": "usage",
       "corejs": {
         "version": 3,
