@@ -24,11 +24,11 @@ function DatasetDetailHeader(props) {
         </a>
         <FormDialogLinks dataset={props.dataset}/>
       </h1>
-      <h2>
+      <p className="h2">
         <Link to={getPublisherSearchLink(props.language, props.dataset)}>
           {selectLabel(props.dataset.publisher)}
         </Link>
-      </h2>
+      </p>
       {props.dataset.parentDataset !== undefined && (
         <p>
           {t("datasetIsPartOf")}&nbsp;
