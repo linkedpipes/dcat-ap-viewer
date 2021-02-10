@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types";
 import {Link} from "react-router-dom";
 
 import {
-  t, translateString, register, useLabelApi, configuration, createUrl,
+  translateString, register, useLabelApi, configuration, createUrl,
 } from "../viewer-api";
 import FormDialogLinks from "../form/dialog-links";
 
@@ -29,14 +29,6 @@ function DatasetDetailHeader(props) {
           {selectLabel(props.dataset.publisher)}
         </Link>
       </p>
-      {props.dataset.parentDataset !== undefined && (
-        <p>
-          {t("datasetIsPartOf")}&nbsp;
-          <a href={parentUrl(props.language, props.dataset.parentDataset)}>
-            {selectLabel(props.dataset.parentDataset)}
-          </a>
-        </p>
-      )}
     </React.Fragment>
   );
 }
@@ -53,8 +45,4 @@ register({
 
 function getPublisherSearchLink(language, dataset) {
   return createUrl(language, "/datasets", {"publishers": dataset.publisher});
-}
-
-function parentUrl(language, iri) {
-  return createUrl(language, "/dataset", {"dataset": iri});
 }
