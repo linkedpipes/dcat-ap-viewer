@@ -91,7 +91,7 @@ function CatalogListItem(props) {
               {props.selectLabel(catalog.iri)}
             </span>
             <a
-              href={catalog.iri}
+              href={configuration.dereferenceUrlPrefix + catalog.iri}
               target="_blank"
               rel="noopener noreferrer">
               <i className="material-icons md-18">
