@@ -150,9 +150,12 @@ test("Load dataset JSON-LD.", async () => {
       "http://www.w3.org/ns/dcat#CatalogRecord"
     ]
   }]);
-  const actual = await jsonLdToDataset(input as any);
+  const iri = "https://data.gov.cz/zdroj/datové-sady/Poskytovatel1/9999992";
+  const actual = await jsonLdToDataset(input as any, iri);
   const expected = {
-    "iri": "https://data.gov.cz/zdroj/datové-sady/Poskytovatel1/9999992",
+    "iri": iri,
+    "isFromCatalog": false,
+    "isFromForm": true,
     "title": {
       "cs": "Moje druhá DCAT2 datová sada - se službama",
       "en": "My second DCAT2 dataset - with services",

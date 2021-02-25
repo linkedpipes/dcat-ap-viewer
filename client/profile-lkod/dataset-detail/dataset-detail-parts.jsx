@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types";
 import {Row, Col} from "reactstrap";
 
 import {
-  getElement, register, useDistributionApi, useQualityApi,
+  t, getElement, register, useDistributionApi, useQualityApi,
 } from "../viewer-api";
 import Paginator from "../components/paginator";
 import {DistributionType} from "../../data-model/distribution";
@@ -19,6 +19,8 @@ function DatasetDetailParts(props) {
 
   return (
     <React.Fragment>
+      <h2>{t("distributionsTitle")}</h2>
+      <br/>
       <Row>
         {selectArray(distributions, page, pageSize).map((iri) => (
           <DatasetDetailPart language={props.language} key={iri} iri={iri}/>

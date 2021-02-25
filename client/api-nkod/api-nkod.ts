@@ -80,7 +80,7 @@ export class ApiNkod
       url += "&language=" + language;
     }
     const jsonld = await fetchJsonLd(url);
-    const dataset = jsonLdToDataset(jsonld);
+    const dataset = jsonLdToDataset(jsonld, iri);
     const distributions = [];
     for (const iri of dataset.distributions) {
       const distribution = jsonLdToDistributionOrDataService(jsonld, iri);

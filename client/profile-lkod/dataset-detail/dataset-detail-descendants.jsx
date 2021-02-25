@@ -35,6 +35,8 @@ function DatasetDetailDescendants(props) {
 
   return (
     <React.Fragment>
+      <h2>{t("datasetSeriesTitle")}</h2>
+      <br/>
       {data.datasets.map((dataset) => (
         <DescendantsItem
           key={dataset.iri}

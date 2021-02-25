@@ -2,7 +2,7 @@ import React from "react";
 import {PropTypes} from "prop-types";
 
 import {
-  t, translateString, register, useLabelApi, configuration, createUrl,
+  translateString, register, useLabelApi, configuration,
 } from "../viewer-api";
 
 function DatasetDetailHeader(props) {
@@ -21,14 +21,6 @@ function DatasetDetailHeader(props) {
           <i className="material-icons pl-2">open_in_new</i>
         </a>
       </h1>
-      {props.dataset.parentDataset !== undefined && (
-        <p>
-          {t("datasetIsPartOf")}&nbsp;
-          <a href={parentUrl(props.language, props.dataset.parentDataset)}>
-            {selectLabel(props.dataset.parentDataset)}
-          </a>
-        </p>
-      )}
     </React.Fragment>
   );
 }
@@ -42,7 +34,3 @@ register({
   "name": "dataset-detail.header",
   "element": DatasetDetailHeader,
 });
-
-function parentUrl(language, iri) {
-  return createUrl(language, "/dataset", {"dataset": iri});
-}

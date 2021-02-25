@@ -63,7 +63,7 @@ function Footer() {
               </a></li>
               <li>API: <a href="/sparql">
                 {t("footer.sparqlEndpoint")}
-              </a>, <a href="/ldf">
+              </a>, <a href="/ldf/">
                 {t("footer.ldfEndpoint")}
               </a>, <a href="/graphql">
                 {t("footer.graphQLEndpoint")}
