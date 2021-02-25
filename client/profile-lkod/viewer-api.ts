@@ -11,9 +11,12 @@ export * from "../viewer-react/dataset-detail/dataset-detail-service";
 export * from "../viewer-react/service/label";
 export * from "../viewer-react/service/modal";
 export * from "../viewer-react/service/page-title";
-export {default as configuration} from "./lkod-configuration"
+
+// Access to viewer-react.
 export {QUALITY} from "./vocabulary-quality";
 export {LEGAL} from "./vocabulary-legal";
+export {default as configuration} from "./lkod-configuration"
+export {formatNumber} from "../viewer-react/format-utils";
 
 // Often used components goes here.
 export * from "./components/link";

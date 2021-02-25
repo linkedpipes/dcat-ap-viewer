@@ -9,9 +9,8 @@ import {
   Col,
 } from "reactstrap";
 
-import {t, useLabelApi} from "../../viewer-api";
+import {t, useLabelApi, formatNumber} from "../../viewer-api";
 import TagLine from "../../components/tag-line";
-import {formatNumber} from "../../core/format";
 
 const SORT_OPTIONS = ["title asc", "title desc"];
 

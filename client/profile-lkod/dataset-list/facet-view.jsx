@@ -4,8 +4,7 @@ import {PropTypes} from "prop-types";
 import {Button} from "reactstrap";
 
 import TagCloud from "../components/tag-cloud";
-import {t} from "../viewer-api";
-import {formatNumber} from "../core/format";
+import {t, formatNumber} from "../viewer-api";
 
 const INCREASE_BY_SIZE = 15;
 

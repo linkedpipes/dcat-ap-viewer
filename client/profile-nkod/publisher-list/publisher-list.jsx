@@ -9,7 +9,7 @@ import {
 import {
   t, register, getElement,
   NavigationContext, usePageTitle, useLabelApi,
-  usePublisherListApi, createUrl,
+  usePublisherListApi, createUrl, formatNumber,
 } from "../viewer-api";
 
 import translations from "./publisher-list.json";
@@ -32,7 +32,7 @@ function PublisherList() {
   return (
     <Container className="p-3">
       <h4>
-        {t("publishersFound", {"count": data.publishers.length})}
+        {t("publishersFound", {"count": formatNumber(data.publishers.length)})}
       </h4>
       <hr/>
       <Row>
@@ -77,7 +77,9 @@ function PublisherListItem(props) {
         </CardBody>
         <ListGroup flush={true}>
           <ListGroupItem>
-            {t("publishersDatasets", {"count": props.publisher.datasetCount})}
+            {t("publishersDatasets", {
+              "count": formatNumber(props.publisher.datasetCount),
+            })}
           </ListGroupItem>
         </ListGroup>
       </Card>

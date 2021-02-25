@@ -2,8 +2,7 @@ import React, {useState, useCallback} from "react";
 import {PropTypes} from "prop-types";
 import {ListGroup, ListGroupItem} from "reactstrap";
 
-import {register, t} from "../viewer-api";
-import {formatNumber} from "../core/format";
+import {register, t, formatNumber} from "../viewer-api";
 
 const DEFAULT_FACET_SIZE = 7;
 
