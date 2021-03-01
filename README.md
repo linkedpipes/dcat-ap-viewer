@@ -97,7 +97,9 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
     "add-copy-field" : { "source" : "title_cs", "dest" : "_text_" },
     "add-copy-field" : { "source" : "title_en", "dest" : "_text_" },
     "add-copy-field" : { "source" : "description_cs", "dest" : "_text_" },
-    "add-copy-field" : { "source" : "description_en", "dest" : "_text_" }
+    "add-copy-field" : { "source" : "description_en", "dest" : "_text_" },
+    "add-copy-field" : { "source" : "title_cs", "dest" : "_text_" },
+    "add-copy-field" : { "source" : "keyword_en", "dest" : "_text_" }    
 }'
 ```
 - And then:
