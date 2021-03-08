@@ -37,5 +37,5 @@ Keywords.propTypes = {
 export default Keywords;
 
 function datasetListUrl(language, iri) {
-  return createUrl(language, "/datasets", {"keyword": iri});
+  return createUrl(language, "/datasets", {"keywords": iri});
 }
