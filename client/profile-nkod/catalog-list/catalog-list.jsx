@@ -100,7 +100,7 @@ function CatalogListItem(props) {
             </a>
           </ListGroupItem>
           <ListGroupItem>
-            <a href={"mailto:" + catalog.contactEmail}>
+            <a href={catalog.contactEmail}>
               <i className="material-icons pr-2 md-24 center">
                 email
               </i>
