@@ -11,7 +11,6 @@ function Keywords(props) {
   if (filteredKeywords.length === 0) {
     return null;
   }
-  console.log("KEYWRODS", t("keywords") );
   return (
     <React.Fragment>
       <span className="visually-hidden">{t("keywords")}:</span>
