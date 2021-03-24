@@ -25,15 +25,15 @@ function PartDataService(props) {
         {renderPartFormat(selectLabel, props.part)}
       </CardBody>
       <Row className="pb-2">
-        <Col xs="6" className="pl-4 pr-1">
+        <Col xs="6" className="ps-4 pe-1">
           <LegalColumn
             distribution={props.part}
             quality={props.quality}
           />
         </Col>
-        <Col xs="6" className="pl-1 pr-4">
+        <Col xs="6" className="ps-1 pe-4">
           <Card>
-            <CardTitle tag="h6" className="text-muted pl-2 pt-2">
+            <CardTitle tag="h6" className="text-muted ps-2 pt-2">
               {t("dataServiceAccess")}
             </CardTitle>
             <ListGroup flush={true}>

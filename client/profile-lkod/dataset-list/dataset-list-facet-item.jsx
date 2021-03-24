@@ -73,7 +73,7 @@ function Facet(props) {
               {!props.hydeCount && " (" + formatNumber(item.count) + ")"}
               {index < props.activeFacets.length &&
               <i
-                className="material-icons center pl-2"
+                className="material-icons center ps-2"
                 style={{"float": "right"}}
               >
                 close

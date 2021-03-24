@@ -13,7 +13,7 @@ import translations from "./legal-column.json";
 function LegalColumnCzech(props) {
   return (
     <Card>
-      <CardTitle tag="h6" className="text-muted pl-2 pt-2">
+      <CardTitle tag="h6" className="text-muted ps-2 pt-2">
         {t("distributionLicense")}
       </CardTitle>
       <ListGroup flush={true}>

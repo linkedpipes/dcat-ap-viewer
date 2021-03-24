@@ -31,7 +31,7 @@ function renderForForm(language, dataset) {
         target="_blank"
         rel="nofollow noopener noreferrer"
       >
-        <i className="material-icons pl-2" style={actionStyle}>
+        <i className="material-icons ps-2" style={actionStyle}>
           edit
         </i>
       </a>
@@ -41,7 +41,7 @@ function renderForForm(language, dataset) {
         target="_blank"
         rel="nofollow noopener noreferrer"
       >
-        <i className="material-icons pl-2" style={actionStyle}>
+        <i className="material-icons ps-2" style={actionStyle}>
           file_copy
         </i>
       </a>
@@ -51,7 +51,7 @@ function renderForForm(language, dataset) {
         target="_blank"
         rel="nofollow noopener noreferrer"
       >
-        <i className="material-icons pl-2" style={actionStyle}>
+        <i className="material-icons ps-2" style={actionStyle}>
           delete_forever
         </i>
       </a>
@@ -69,7 +69,7 @@ function renderForCatalog(language, dataset) {
         target="_blank"
         rel="nofollow noopener noreferrer"
       >
-        <i className="material-icons pl-2" style={actionStyle}>
+        <i className="material-icons ps-2" style={actionStyle}>
           file_copy
         </i>
       </a>
@@ -79,7 +79,7 @@ function renderForCatalog(language, dataset) {
         target="_blank"
         rel="nofollow noopener noreferrer"
       >
-        <i className="material-icons pl-2" style={actionStyle}>
+        <i className="material-icons ps-2" style={actionStyle}>
           delete_forever
         </i>
       </a>

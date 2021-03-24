@@ -72,7 +72,7 @@ function CatalogListItem(props) {
       <Card className="p-2">
         <CardBody className="px-2">
           <CardTitle tag="h5">
-            <span className="pr-2">
+            <span className="pe-2">
               {props.selectLabel(catalog.publisher)}
             </span>
             <a
@@ -87,7 +87,7 @@ function CatalogListItem(props) {
         </CardBody>
         <ListGroup flush={true}>
           <ListGroupItem>
-            <span className="pr-2">
+            <span className="pe-2">
               {props.selectLabel(catalog.iri)}
             </span>
             <a
@@ -101,7 +101,7 @@ function CatalogListItem(props) {
           </ListGroupItem>
           <ListGroupItem>
             <a href={catalog.contactEmail}>
-              <i className="material-icons pr-2 md-24 center">
+              <i className="material-icons pe-2 md-24 center">
                 email
               </i>
               {
@@ -114,7 +114,7 @@ function CatalogListItem(props) {
             {catalog.homepage &&
             <a
               href={catalog.homepage}
-              className="pr-2"
+              className="pe-2"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -127,7 +127,7 @@ function CatalogListItem(props) {
             }
             <a
               href={catalog.endpoint}
-              className="pr-2"
+              className="pe-2"
               target="_blank"
               rel="noopener noreferrer"
             >

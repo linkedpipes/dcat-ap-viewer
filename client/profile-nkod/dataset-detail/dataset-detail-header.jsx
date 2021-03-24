@@ -20,7 +20,7 @@ function DatasetDetailHeader(props) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <i className="material-icons pl-2">open_in_new</i>
+          <i className="material-icons ps-2">open_in_new</i>
         </a>
         <FormDialogLinks dataset={props.dataset}/>
       </h1>

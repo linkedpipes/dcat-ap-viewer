@@ -8,7 +8,7 @@ import translations from "./legal-column.json";
 function LegalColumnMissing(props) {
   return (
     <Card>
-      <CardTitle tag="h6" className="text-muted pl-2 pt-2">
+      <CardTitle tag="h6" className="text-muted ps-2 pt-2">
         {translateString(props.language, "distributionLicense")}
       </CardTitle>
       <ListGroup flush={true}>
