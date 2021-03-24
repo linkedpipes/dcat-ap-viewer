@@ -48,7 +48,7 @@ function keywordsToTags(keywords) {
 function renderTag(tag, size, color) {
   return (
     <span className="tag-cloud-tag" key={tag.code}>
-      {tUrl("/datasets", {"keyword": tag.code}, (url) => (
+      {tUrl("/datasets", {"keywords": tag.code}, (url) => (
         <Link to={url}>
           <span style={{"color": color, "fontSize": size}}>
             {tLiteral(tag.title)}
