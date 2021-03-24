@@ -26,7 +26,7 @@ export function getPath(language: string, path: string): string {
   const data = navigationPath[language] || {};
   if (data[path] == undefined && process.env.NODE_ENV !== "production") {
     if (!REPORTED.has(path + language)) {
-      console.log("Missing path of '" + path + "' for " + language);
+      console.trace("Missing path of '" + path + "' for " + language);
       REPORTED.add(path + language);
     }
   }
@@ -39,7 +39,7 @@ export function getQuery(
   const data = (navigationQuery[language] || {})[path] || {};
   if (data[query] == undefined && process.env.NODE_ENV !== "production") {
     if (!REPORTED.has(query + language)) {
-      console.log("Missing query of '" + query + "' for " + language);
+      console.trace("Missing query of '" + query + "' for " + language);
       REPORTED.add(query + language);
     }
   }
@@ -79,9 +79,9 @@ export function resolveQuery(path: string, query: string): string | undefined {
 function beforeCreateStore() {
   collectNavigationInformation();
   collectTranslations();
-  console.log("Translations\n", translations,
-    "\n", navigationPath,
-    "\n", navigationQuery);
+  console.log("Translations:\n", translations,
+    "\nPaths:\n", navigationPath,
+    "\nQuery:\n", navigationQuery);
 }
 
 function collectNavigationInformation() {

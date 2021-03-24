@@ -7,6 +7,7 @@ import "../profile-lkod/core/status-failed";
 import "../profile-lkod/core/status-loading";
 import "../profile-lkod/keyword-list/keyword-list";
 import "../profile-lkod/dataset-list/dataset-list";
+import "../profile-lkod/dataset-list/dataset-list-invalid-query";
 import "../profile-lkod/dataset-list/dataset-list-facet-item";
 import "../profile-lkod/dataset-list/dataset-list-query/dataset-list-query";
 import "../profile-lkod/dataset-detail/dataset-detail";

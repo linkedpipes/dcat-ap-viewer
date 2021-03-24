@@ -11,6 +11,7 @@ import "./keyword-list/keyword-list";
 import "./dataset-list/dataset-list";
 import "./dataset-list/dataset-list-facet";
 import "./dataset-list/dataset-list-facet-item";
+import "./dataset-list/dataset-list-invalid-query";
 import "./dataset-list/dataset-list-query/dataset-list-query";
 import "./dataset-detail/dataset-detail";
 import "./dataset-detail/dataset-detail-metadata";

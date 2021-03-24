@@ -7,13 +7,19 @@ import {useHistory} from "react-router-dom";
 
 import {NavigationContext} from "../service/navigation";
 import {
-  DatasetListQuery, Facet, TypeaheadDataset
+  DatasetListQuery,
+  Facet,
+  TypeaheadDataset
 } from "../../data-api/api-dataset";
 import {datasetListSelector} from "./dataset-list-reducer";
-import {ResourceStatus, isStatusLoading} from "../resource-status";
+import {isStatusLoading, ResourceStatus} from "../resource-status";
 import {DatasetListActions} from "./dataset-list-actions";
 import {getApi} from "../api-instance";
-import {DatasetListData, ExtendedDatasetListQuery} from "./dataset-list-model";
+import {
+  DatasetListData,
+  ExtendedDatasetListQuery,
+  InvalidQueryReport,
+} from "./dataset-list-model";
 import {createUrl} from "../service/i18";
 
 export function useDatasetListQuery() {
@@ -21,6 +27,7 @@ export function useDatasetListQuery() {
 
   const [query, setQuery] = useState(
     parsedQueryToQuery(navigation.query, createDefaultDatasetListQuery()));
+
   const state = useSelector(datasetListSelector);
   const history = useHistory();
 
@@ -31,7 +38,8 @@ export function useDatasetListQuery() {
     }
     const newQuery = parsedQueryToQuery(navigation.query, query);
     const listQuery = prepareDatasetListQuery(newQuery);
-    if (datasetListQueryEquals(state.query, listQuery)) {
+    if (datasetListQueryEquals(state.query, listQuery)
+      || query.report.length !== newQuery.report.length) {
       setQuery(newQuery);
     } else {
       return;
@@ -62,29 +70,73 @@ export function useDatasetListQuery() {
 function parsedQueryToQuery(
   parsedQuery: ParsedQuery, lastQuery: ExtendedDatasetListQuery,
 ): ExtendedDatasetListQuery {
+  const report: InvalidQueryReport = [];
+  const {asInteger, asIriArray} = createQueryParsers(report);
   return {
-    "page": parsedQuery.page !== undefined ?
-      Number(parsedQuery.page) - 1 : 0,
-    "pageSize": parsedQuery.pageSize !== undefined ?
-      Number(parsedQuery.pageSize) : 10,
-    "showMore": parsedQuery.showMore !== undefined ?
-      Number(parsedQuery.showMore) : 0,
+    "page": asInteger(parsedQuery, "page", 0, -1),
+    "pageSize": asInteger(parsedQuery, "pageSize", 10),
+    "showMore": asInteger(parsedQuery, "showMore", 0),
     "sort": parsedQuery.sort ? parsedQuery.sort as any : "title asc",
     "search": parsedQuery.search ? parsedQuery.search as any : "",
-    "publishers": asArray(parsedQuery.publishers),
+    "publishers": asIriArray(parsedQuery, "publishers"),
     "publishersLimit": lastQuery.publishersLimit,
-    "themes": asArray(parsedQuery.themes),
+    "themes": asIriArray(parsedQuery, "themes"),
     "themesLimit": lastQuery.themesLimit,
     "keywords": asArray(parsedQuery.keywords),
     "keywordsLimit": lastQuery.keywordsLimit,
-    "formats": asArray(parsedQuery.formats),
+    "formats": asIriArray(parsedQuery, "formats"),
     "formatsLimit": lastQuery.formatsLimit,
     "temporalStart": parsedQuery.temporalStart ?
       parsedQuery.temporalStart as any : "",
     "temporalEnd": parsedQuery.temporalEnd ?
       parsedQuery.temporalEnd as any : "",
-    "isPartOf": asArray(parsedQuery.isPartOf),
-    "view": parsedQuery.view ? Number(parsedQuery.view) : 0,
+    "isPartOf": asIriArray(parsedQuery, "isPartOf"),
+    "view": asInteger(parsedQuery, "view", 0),
+    "report": report,
+  };
+}
+
+function createQueryParsers(report: InvalidQueryReport) {
+
+  function isUrl(value: string): boolean {
+    value = value.toLocaleLowerCase();
+    return value.startsWith("http://") || value.startsWith("https://");
+  }
+
+  return {
+    "asInteger": (
+      parsedQuery: ParsedQuery, name: string,
+      defaultValue: number, shift: number = 0
+    ): number => {
+      const value = parsedQuery[name]
+      if (value === undefined) {
+        return defaultValue;
+      }
+      const asNumber = Number(value);
+      if (Number.isNaN(asNumber)) {
+        report.push({
+          "name": name,
+          "value": value
+        });
+        return defaultValue;
+      }
+      return asNumber + shift;
+    },
+    "asIriArray": (parsedQuery: ParsedQuery, name: string): string[] => {
+      const values = asArray(parsedQuery[name]);
+      const result: string[] = [];
+      values.forEach(value => {
+        if (isUrl(value)) {
+          result.push(value);
+        } else {
+          report.push({
+            "name": name,
+            "value": value,
+          });
+        }
+      });
+      return result;
+    }
   };
 }
 
@@ -116,7 +168,8 @@ function createDefaultDatasetListQuery(): ExtendedDatasetListQuery {
     "temporalStart": "",
     "temporalEnd": "",
     "isPartOf": [],
-    "view": 0
+    "view": 0,
+    "report": [],
   };
 }
 

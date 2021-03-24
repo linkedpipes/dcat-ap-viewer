@@ -12,6 +12,14 @@ export interface DatasetListData extends DatasetList {
 
 }
 
+export type InvalidQueryReport  = {
+
+  name: string;
+
+  value: unknown;
+
+}[];
+
 export interface ExtendedDatasetListQuery {
 
   page: number;
@@ -47,5 +55,10 @@ export interface ExtendedDatasetListQuery {
   isPartOf: string[];
 
   view: number;
+
+  /**
+   * Contains errors related to parsing the query.
+   */
+  report: InvalidQueryReport;
 
 }

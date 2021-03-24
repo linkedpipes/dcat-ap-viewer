@@ -19,6 +19,11 @@ const DatasetList = () => {
     "page-title.datasets", undefined,
     selectTitleFromQuery(query, selectLabel));
 
+  if (query.report.length > 0) {
+    const InvalidQueryView = getElement("dataset-list.invalid-query").element;
+    return (<InvalidQueryView report={query.report}/>);
+  }
+
   if (state.loading) {
     const LoadingView = getElement("application.loading").element;
     return (<LoadingView/>);

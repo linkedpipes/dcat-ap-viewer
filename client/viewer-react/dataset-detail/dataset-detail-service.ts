@@ -94,7 +94,6 @@ function fetchDatasetDetail(language: string, iri: string): ThunkVoidResult {
   };
 }
 
-
 /**
  * Return data for all distributions, does not perform fetch. The data
  * may be available if fetched before or as a part of the dataset fetch.

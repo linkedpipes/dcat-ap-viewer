@@ -42,7 +42,9 @@
       "2": "Nalezena {count} klíčová slova",
       "5": "Nalezeno {count} klíčových slov"
     },
-    "page-title.datasets" : "Datové sady"
+    "page-title.datasets" : "Datové sady",
+    "invalid_dataset_list_query_argument": "Nevalidní URL parametry.",
+    "invalid_dataset_list_query_argument_link": "Datové sady"
   },
   "en": {
     "title asc": "Title Ascending",
@@ -84,6 +86,8 @@
       "1": "One keyword found",
       "2": "{count} keywords found"
     },
-    "page-title.datasets" : "Datasets"
+    "page-title.datasets" : "Datasets",
+    "invalid_dataset_list_query_argument": "Invalid URL query parameters.",
+    "invalid_dataset_list_query_argument_link": "Show all datasets"
   }
 }
