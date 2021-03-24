@@ -13,6 +13,7 @@ import {
 } from "../viewer-api";
 
 import translations from "./publisher-list.json";
+import "./publisher-list.css";
 
 function PublisherList() {
   const {language} = useContext(NavigationContext);

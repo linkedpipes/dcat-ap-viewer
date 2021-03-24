@@ -17,7 +17,7 @@ export default function LanguageSelector() {
     <NavItem>
       <UncontrolledDropdown>
         <DropdownToggle caret nav>
-          <LanguageImage language={navigation.language}/>.
+          <LanguageImage language={navigation.language}/>
         </DropdownToggle>
         <DropdownMenu className="language-drop-down">
           {languages.map((language) => (
@@ -26,7 +26,7 @@ export default function LanguageSelector() {
               tag={NavLink}
               href={createLanguageHref(navigation, language)}
             >
-              <LanguageImage language={language}/>.
+              <LanguageImage language={language}/>
             </DropdownItem>
           ))}
         </DropdownMenu>

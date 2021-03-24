@@ -18,7 +18,7 @@ function Header() {
         <Navbar light expand="md">
           <NavbarToggler onClick={() => setIsOpen(!isOpen)}/>
           <Collapse isOpen={isOpen} navbar>
-            <Nav className="ml-auto" navbar>
+            <Nav className="ms-auto" navbar>
               <NavItem>
                 {navLink("/datasets", "header.datasets")}
               </NavItem>

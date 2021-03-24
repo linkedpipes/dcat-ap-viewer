@@ -1,11 +1,12 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {AsyncTypeahead} from "react-bootstrap-typeahead";
-import {InputGroup, InputGroupAddon, InputGroupText, Button} from "reactstrap";
+import {InputGroup, InputGroupText, Button} from "reactstrap";
 
 import {t} from "../../viewer-api";
 
 import "react-bootstrap-typeahead/css/Typeahead.css";
+import "./search-box.css";
 
 /**
  * Wrap AsyncTypeahead component.
@@ -42,14 +43,12 @@ export default class SearchBox extends React.Component {
       defaultSelected = [this.props.defaultValue];
     }
     return (
-      <InputGroup>
-        <InputGroupAddon addonType="prepend">
-          <InputGroupText>
-            <i className="material-icons">search</i>
-          </InputGroupText>
-        </InputGroupAddon>
+      <InputGroup id="search-box">
+        <InputGroupText>
+          <i className="material-icons">search</i>
+        </InputGroupText>
         <AsyncTypeahead
-          id="search-box"
+          id="search-box-typeahead"
           minLength={2}
           multiple={false}
           useCache={false}
@@ -71,14 +70,12 @@ export default class SearchBox extends React.Component {
             <span>{text}</span>
           )}
         />
-        <InputGroupAddon addonType="append">
-          <Button
-            color="primary"
-            onClick={this.onSearch}
-          >
-            {t("search.search")}
-          </Button>
-        </InputGroupAddon>
+        <Button
+          color="primary"
+          onClick={this.onSearch}
+        >
+          {t("search.search")}
+        </Button>
       </InputGroup>
     );
   }

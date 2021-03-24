@@ -30,7 +30,7 @@ function Header() {
           </NavbarBrand>
           <NavbarToggler onClick={() => setIsOpen(!isOpen)}/>
           <Collapse isOpen={isOpen} navbar>
-            <Nav className="ml-auto" navbar>
+            <Nav className="ms-auto" navbar>
               <NavItem>
                 <NavLink href="/články/">
                   {t("header.articles")}

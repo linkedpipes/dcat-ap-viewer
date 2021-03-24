@@ -17,11 +17,11 @@ export function QualityIconsForMeasures({quality, measureDefinitions, object}) {
   }
   if (quality.loading) {
     return (
-      <Spinner size="sm" color="secondary" className="float-right"/>
+      <Spinner size="sm" color="secondary" className="float-end"/>
     );
   }
   return (
-    <div className="float-right">
+    <div className="float-end">
       {measureDefinitions.map((definition) => renderQualityIcon(
         showModal, navigation.language, quality.quality, definition,
         object))

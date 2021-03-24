@@ -7,6 +7,8 @@ import {
   UncontrolledDropdown,
 } from "reactstrap";
 
+import "./paginator.css";
+
 export default class Paginator extends React.PureComponent {
 
   render() {

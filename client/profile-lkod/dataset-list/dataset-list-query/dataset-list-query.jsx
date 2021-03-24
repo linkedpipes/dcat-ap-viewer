@@ -95,7 +95,7 @@ function DatasetListQuery(props) {
       <Row>
         <Col>
           <Button
-            className="mt-2 mr-2"
+            className="mt-2 me-2"
             onClick={() => setShowAdvanced(!showAdvanced)}
           >
             {showAdvanced ? t("query.hideFilters") : t("query.showFilters")}
@@ -107,7 +107,7 @@ function DatasetListQuery(props) {
           </Button>
         </Col>
         <Col className="mt-2">
-          <div className="float-lg-right">
+          <div className="float-lg-end">
             <ViewSelector
               value={props.query.view}
               onChange={onSetViewType}

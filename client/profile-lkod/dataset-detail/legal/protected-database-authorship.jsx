@@ -39,7 +39,7 @@ function renderNo(language, showModal) {
       <div>
         {t("license.specialdbNo")}
         <i
-          className="material-icons text-success float-right"
+          className="material-icons text-success float-end"
           title={message}
           onClick={() => showModal(message)}
         >
@@ -60,7 +60,7 @@ function renderCc0(language, showModal) {
       <div>
         {t("license.specialdbCc0")}
         <i
-          className="material-icons text-success float-right"
+          className="material-icons text-success float-end"
           title={message}
           onClick={() => showModal(message)}
         >
@@ -81,7 +81,7 @@ function renderMissing(language, showModal) {
       <div>
         {t("license.missing")}
         <i
-          className="material-icons text-danger float-right"
+          className="material-icons text-danger float-end"
           title={message}
           onClick={() => showModal(message)}
         >
@@ -108,7 +108,7 @@ function renderCustom(language, showModal, legal, quality) {
         >
           {t("license.specialdbCustom")}
         </a>
-        <div className="float-right">
+        <div className="float-end">
           <i
             className="material-icons text-warning"
             title={message}

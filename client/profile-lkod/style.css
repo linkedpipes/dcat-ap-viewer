@@ -173,37 +173,6 @@ a:hover, nav a:hover, .card-link:hover, .page-item.active a.page-link {
     text-decoration: none;
 }
 
-/* Paginator. */
-
-.paginator .page-link {
-    border-color: var(--color-base);
-    cursor: pointer;
-}
-
-.paginator .page-item a.page-link {
-    background-color: var(--color-text-inverted);
-}
-
-.paginator .page-item a.page-link:hover {
-    background-color: var(--color-text-accent);
-    color: var(--color-text-inverted);
-}
-
-.paginator .page-item.active a.page-link {
-    color: var(--color-text-inverted);
-    background-color: var(--color-base);
-}
-
-.paginator button.dropdown-item {
-    color: var(--color-text-accent);
-    background-color: var(--color-background);
-}
-
-.paginator button.dropdown-item:hover {
-    color: var(--color-text-accent);
-    background-color: var(--color-background);
-}
-
 /* Filter */
 
 .filter-button {
@@ -267,3 +236,5 @@ dd {
 .list-group-flush .list-group-item:first-child {
     border-top-width: 1px
 }
+
+/* Temporal filter */

@@ -41,7 +41,7 @@ function renderNo(language, showModal) {
       <div>
         {t("license.authorNo")}
         <i
-          className="material-icons text-success float-right"
+          className="material-icons text-success float-end"
           title={message}
           onClick={() => showModal(message)}
         >
@@ -62,7 +62,7 @@ function renderCcBy(language, showModal, legal) {
       <div>
         {t("license.authorCcBy")}
         <i
-          className="material-icons text-warning float-right"
+          className="material-icons text-warning float-end"
           title={message}
           onClick={() => showModal(message)}
         >
@@ -83,7 +83,7 @@ function renderMissing(language, showModal) {
       <div>
         {t("license.missing")}
         <i
-          className="material-icons text-danger float-right"
+          className="material-icons text-danger float-end"
           title={message}
           onClick={() => showModal(message)}
         >
@@ -109,7 +109,7 @@ function renderCustom(language, showModal, legal, quality) {
         >
           {t("license.dbCustom")}
         </a>
-        <div className="float-right">
+        <div className="float-end">
           <i
             className="material-icons text-warning"
             title={message}

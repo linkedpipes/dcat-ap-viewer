@@ -37,7 +37,7 @@ export default function PersonalData(props) {
       <div>
         {translatedLabel}
         <i
-          className={"material-icons float-right" + iconClass}
+          className={"material-icons float-end" + iconClass}
           title={translatedMessage}
           onClick={() => props.showModal(translatedMessage)}
         >
