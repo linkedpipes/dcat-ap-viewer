@@ -6,8 +6,9 @@ const translations: Record<string, Record<string, string>> = {};
 // Language, global name, local name.
 const navigationPath: Record<string, Record<string, string>> = {};
 
-// Language, path, global name, local name.
-const navigationQuery: Record<string, Record<string, Record<string, string>>> = {};
+// Language, path, global name, local names.
+const navigationQuery: Record<string, Record<string, Record<string, string[]>>>
+  = {};
 
 export const PAGE_NOT_FOUND_PATH = "/page-not-found"
 
@@ -42,7 +43,7 @@ export function getQuery(
       REPORTED.add(query + language);
     }
   }
-  return data[query] || query;
+  return data[query][0] || query;
 }
 
 export function resolvePath(path: string): { path: string, language?: string } {
@@ -63,8 +64,8 @@ export function resolvePath(path: string): { path: string, language?: string } {
 export function resolveQuery(path: string, query: string): string | undefined {
   for (const language of Object.keys(navigationQuery)) {
     const queryMap = navigationQuery[language][path] || {};
-    for (const [globalPath, localPath] of Object.entries(queryMap)) {
-      if (localPath === query) {
+    for (const [globalPath, localPaths] of Object.entries(queryMap)) {
+      if (localPaths.includes(query)) {
         return globalPath;
       }
     }
@@ -104,10 +105,17 @@ function collectNavigationInformation() {
         }
       }
       //
-      for (const [globalKey, localKey] of Object.entries(entries)) {
+      for (let [globalKey, localKey] of Object.entries(entries)) {
         if (globalKey.startsWith("/")) {
+          if (Array.isArray(localKey)) {
+            localKey = localKey[0];
+            console.error("Multiple values for path are not supported");
+          }
           navigationPath[language][globalKey] = localKey;
         } else {
+          if (!Array.isArray(localKey)) {
+            localKey = [localKey];
+          }
           navigationQuery[language][path][globalKey] = localKey;
         }
       }

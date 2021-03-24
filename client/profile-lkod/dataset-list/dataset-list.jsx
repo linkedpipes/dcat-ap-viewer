@@ -96,14 +96,14 @@ register({
   "navigation": {
     "cs": {
       "/datasets": "/datové-sady",
-      "keywords": "klíčová-slova",
+      "keywords": ["klíčová-slova", "klíčová slova"],
       "themes": "témata",
       "formats": "formáty",
       "page": "stránka",
       "pageSize": "velikost-stránky",
       "search": "dotaz",
-      "temporalEnd": "časové-období-začátek",
-      "temporalStart": "časové-období-konec",
+      "temporalEnd": ["časové-období-začátek", "temporal start"],
+      "temporalStart": ["časové-období-konec", "temporal end"],
       "view": "vizualizace",
       "sort": "pořadí",
       "publishers": "poskytovatel",

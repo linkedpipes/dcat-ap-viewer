@@ -40,7 +40,7 @@ export interface View extends Registrable {
   view: React.Component;
 
   // Translation of url and query arguments.
-  navigation: Record<string, Record<string, string>>;
+  navigation: Record<string, Record<string, string | string[]>>;
 
   // If true exact path is used without the prefix.
   exact?: boolean;
