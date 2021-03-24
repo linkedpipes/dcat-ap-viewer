@@ -43,7 +43,10 @@ export function getQuery(
       REPORTED.add(query + language);
     }
   }
-  return data[query][0] || query;
+  if (data[query] === undefined || data[query].length === 0) {
+    return query;
+  }
+  return data[query][0];
 }
 
 export function resolvePath(path: string): { path: string, language?: string } {
