@@ -55,7 +55,7 @@ function Header() {
                   <DropdownToggle caret nav>
                     {translateString(language, "header.more")}
                   </DropdownToggle>
-                  <DropdownMenu right>
+                  <DropdownMenu end>
                     <DropdownItem
                       href="/informace/základy-otevřených-dat-pro-zájemce/"
                     >
