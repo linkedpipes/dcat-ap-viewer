@@ -23,7 +23,7 @@ function createProvider() {
     "v2-init-data": createInitialData(),
     "v2-quality": createQuality(),
     "v2-catalog-list": createCatalogList(),
-  }
+  };
 }
 
 function createDatasetList() {

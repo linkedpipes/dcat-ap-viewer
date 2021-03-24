@@ -47,10 +47,6 @@ function handleApiError(res, error) {
   }
 }
 
-function isErrorCode(statusCode) {
-  return statusCode > 499 && statusCode < 501;
-}
-
 function RequestFailed(url, error) {
   this.url = url;
   this.error = error;

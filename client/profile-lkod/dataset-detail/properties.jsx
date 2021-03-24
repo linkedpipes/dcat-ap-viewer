@@ -43,8 +43,8 @@ function firstColumn(selectLabel, language, dataset) {
           dataset.datasetThemes.map(iri =>
             ddLabelLink(
               selectLabel, language, iri,
-              datasetSearchUrl(language, {"themes": iri})
-            )
+              datasetSearchUrl(language, {"themes": iri}),
+            ),
           )
         }
       </dl>
@@ -56,8 +56,8 @@ function firstColumn(selectLabel, language, dataset) {
           dataset.themes.map(iri =>
             ddLabelLink(
               selectLabel, language, iri,
-              datasetSearchUrl(language, {"themes": iri})
-            )
+              datasetSearchUrl(language, {"themes": iri}),
+            ),
           )
         }
       </dl>

@@ -18,15 +18,18 @@ export default function DatasetsViewHeader(props) {
 
   const labelSelector = useLabelApi();
 
+  const {onUpdateQuery} = props;
   const setSort = useCallback((value) => {
-    props.onUpdateQuery({"sort": value});
-  }, [props.onUpdateQuery]);
+    onUpdateQuery({"sort": value});
+  }, [onUpdateQuery]);
+  
   return (
     <Row>
       <Col xs={12} md={9}>
         <h4>
           {t("query.datasetsFound", {
-            "count": formatNumber(props.state.datasetsCount)})}
+            "count": formatNumber(props.state.datasetsCount),
+          })}
           <SearchText search={props.query.search}/>
         </h4>
         <TagLine

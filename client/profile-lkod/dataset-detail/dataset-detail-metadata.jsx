@@ -27,7 +27,7 @@ register({
 });
 
 function createJsonLdDescription(
-  selectLabel, language, dataset, distributions
+  selectLabel, language, dataset, distributions,
 ) {
   const context = {
     "@context": "http://schema.org/",

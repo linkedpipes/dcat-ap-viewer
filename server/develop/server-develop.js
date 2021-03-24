@@ -7,7 +7,7 @@ const webpackHotMiddleware = require("webpack-hot-middleware");
 const config = require("../../configuration");
 const logger = require("../logging");
 const httpApi = require("../http-api/http-api");
-const webpackConfig = require("../../client/build/webpack.develop");
+const webpackConfig = require("../../build/webpack.develop");
 
 /**
  * Entry point for running the backend.

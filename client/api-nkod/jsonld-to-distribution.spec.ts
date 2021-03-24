@@ -2,6 +2,59 @@ import {flatten} from "jsonld";
 import {jsonLdToDistributionOrDataService} from "./jsonld-to-distribution";
 import {DistributionType} from "../data-model/distribution";
 
+test("Load missing distribution.", async () => {
+  const input = await flatten([{
+    "@id": "https://localhost/distribution",
+    "@type": ["http://www.w3.org/ns/dcat#Distribution"],
+  }]);
+  const actual = await jsonLdToDistributionOrDataService(
+    input as any, "https://localhost/distribution/wrongUrl"
+  );
+  const expected = undefined;
+  expect(actual).toEqual(expected);
+});
+
+test("Load empty distribution.", async () => {
+  const input = await flatten([{
+    "@id": "https://localhost/distribution",
+    "@type": ["http://www.w3.org/ns/dcat#Distribution"],
+  }]);
+  const actual = await jsonLdToDistributionOrDataService(
+    input as any, "https://localhost/distribution"
+  );
+  const expected = {
+    "iri": "https://localhost/distribution",
+    "title": undefined,
+    "accessURL": undefined,
+    "description": undefined,
+    "format": undefined,
+    "license": undefined,
+    "byteSize": undefined,
+    "checksum": [],
+    "documentation": [],
+    "downloadURL": [],
+    "language": [],
+    "conformsTo": [],
+    "mediaType": undefined,
+    "issued": undefined,
+    "rights": undefined,
+    "status": undefined,
+    "modified": undefined,
+    "packageFormat": undefined,
+    "compressFormat": undefined,
+    "type": DistributionType.Distribution,
+    "legal": {
+      "authorship": "missing",
+      "author": undefined,
+      "databaseAuthorship": "missing",
+      "databaseAuthor": undefined,
+      "protectedDatabase": "missing",
+      "personalData": "missing",
+    }
+  };
+  expect(actual).toEqual(expected);
+});
+
 test("Load distribution JSON-LD.", async () => {
   const input = await flatten([{
     "@id": "https://localhost/distribution",

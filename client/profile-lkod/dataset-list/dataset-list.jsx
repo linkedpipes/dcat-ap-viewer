@@ -79,13 +79,13 @@ function selectTitleFromQuery(query, selectLabel) {
 
 function selectView(view) {
   switch (view) {
-  default:
-  case 0:
-    return getElement("app.dataset-list.view-dataset").element;
-  case 1:
-    return getElement("app.dataset-list.view-keyword").element;
-  case 2:
-    return getElement("app.dataset-list.view-theme").element;
+    default:
+    case 0:
+      return getElement("app.dataset-list.view-dataset").element;
+    case 1:
+      return getElement("app.dataset-list.view-keyword").element;
+    case 2:
+      return getElement("app.dataset-list.view-theme").element;
   }
 }
 

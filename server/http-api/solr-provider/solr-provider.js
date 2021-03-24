@@ -17,7 +17,7 @@ function createProvider(configuration) {
     "v2-dataset-list": createV2DatasetListGet(configuration),
     "v2-dataset-typeahead": createV2DatasetTypeaheadGet(configuration),
     "v2-publisher-list": createV2PublisherListGet(configuration),
-  }
+  };
 }
 
 function createV1InfoGet(configuration) {
@@ -60,7 +60,7 @@ function solrResponseToStatistics(content, language) {
       "publishers": facetFields["publisher"].length / 2,
       "keywords": facetFields["keyword_" + language].length / 2,
     },
-  }
+  };
 }
 
 function createV2DatasetListGet(configuration) {
@@ -179,23 +179,23 @@ function facetsToSolrQuery(userQuery) {
 
   userQuery.keyword.forEach((item) => {
     url += "&fq=keyword_" + userQuery.language
-      + ":\"" + encodeURIComponent(item) + "\""
+      + ":\"" + encodeURIComponent(item) + "\"";
   });
 
   userQuery.publisher.forEach((item) => {
-    url += "&fq=publisher:\"" + encodeURIComponent(item) + "\""
+    url += "&fq=publisher:\"" + encodeURIComponent(item) + "\"";
   });
 
   userQuery.format.forEach((item) => {
-    url += "&fq=format:\"" + encodeURIComponent(item) + "\""
+    url += "&fq=format:\"" + encodeURIComponent(item) + "\"";
   });
 
   userQuery.theme.forEach((item) => {
-    url += "&fq=theme:\"" + encodeURIComponent(item) + "\""
+    url += "&fq=theme:\"" + encodeURIComponent(item) + "\"";
   });
 
   userQuery.isPartOf.forEach((item) => {
-    url += "&fq=isPartOf:\"" + encodeURIComponent(item) + "\""
+    url += "&fq=isPartOf:\"" + encodeURIComponent(item) + "\"";
   });
 
   return url;
@@ -266,7 +266,7 @@ function solrResponseToDatasets(content, query, languagePreferences) {
       ...convertFacet(
         facets["theme"], "urn:theme", query.themeLimit),
     ],
-  }
+  };
 }
 
 function datasetListContext() {
@@ -371,7 +371,7 @@ function asLiteral(item, propertyName, language, languagePreferences) {
     return {
       "@language": language,
       "@value": preferredValue,
-    }
+    };
   }
   // Just pick what is available.
   for (let lang of languagePreferences) {
@@ -380,7 +380,7 @@ function asLiteral(item, propertyName, language, languagePreferences) {
       return {
         "@language": lang,
         "@value": value,
-      }
+      };
     }
   }
 }

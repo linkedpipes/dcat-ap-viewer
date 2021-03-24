@@ -15,7 +15,7 @@ function createProvider(configuration) {
     "v2-label-item": createLabelItem(configuration),
     "v2-init-data": createInitDataGet(configuration),
     "v2-catalog-list": createCatalogListGet(configuration),
-  }
+  };
 }
 
 function createDatasetsItemGet(configuration) {
@@ -25,7 +25,7 @@ function createDatasetsItemGet(configuration) {
       .then(transformDatasetItem)
       .then(data => responseJsonLd(res, data))
       .catch(error => handleApiError(res, error));
-  }
+  };
 }
 
 function transformDatasetItem(content) {
@@ -47,7 +47,7 @@ function createDistributionItemGet(configuration) {
       .then(transformDistributionItem)
       .then(data => responseJsonLd(res, data))
       .catch(error => handleApiError(res, error));
-  }
+  };
 }
 
 function transformDistributionItem(content) {
@@ -62,7 +62,7 @@ function createKeywordListGet(configuration) {
       .then(transformKeywordList)
       .then(data => responseJsonLd(res, data))
       .catch(error => handleApiError(res, error));
-  }
+  };
 }
 
 function transformKeywordList(content) {
@@ -76,7 +76,7 @@ function createLabelItem(configuration) {
       .then(transformLabelItem)
       .then(data => responseJsonLd(res, data))
       .catch(error => handleApiError(res, error));
-  }
+  };
 }
 
 function transformLabelItem(content) {
@@ -89,7 +89,7 @@ function createInitDataGet(configuration) {
       .then(transformInitData)
       .then(data => responseJsonLd(res, data))
       .catch(error => handleApiError(res, error));
-  }
+  };
 }
 
 function transformInitData(content) {
@@ -102,7 +102,7 @@ function createCatalogListGet(configuration) {
       .then(transformCatalogList)
       .then(data => responseJsonLd(res, data))
       .catch(error => handleApiError(res, error));
-  }
+  };
 }
 
 function transformCatalogList(content) {

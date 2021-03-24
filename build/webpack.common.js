@@ -1,13 +1,13 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const configuration = require("../../configuration").client;
+const configuration = require("../configuration").client;
 
 const profile = configuration.profiles.slice(-1)[0];
 
 module.exports = {
   "entry": [
-    path.join(__dirname, "..", profile, "index.js"),
+    path.join(__dirname, "..", "client", profile, "index.js"),
   ],
   "output": {
     "path": path.join(__dirname, "..", "dist"),
@@ -35,7 +35,7 @@ module.exports = {
       "filename": "index.html",
       "title": configuration.pageTitleDefault,
       "template": path.join(
-        __dirname, "..", profile, "index.html"
+        __dirname, "..", "client", profile, "index.html",
       ),
       "inject": true,
     }),

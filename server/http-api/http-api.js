@@ -37,7 +37,7 @@ function createRootProvider() {
     result = {
       ...result,
       ...createProvider(providerConfiguration),
-    }
+    };
   });
   return result;
 }
@@ -63,7 +63,7 @@ function defaultProvider() {
     "v2-quality-distribution": notImplemented,
     "v2-quality-publishers": notImplemented,
     "v2-catalog-list": notImplemented,
-  }
+  };
 }
 
 function createProvider(providerConfiguration) {

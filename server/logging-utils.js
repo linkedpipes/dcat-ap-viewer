@@ -17,7 +17,7 @@ function measureTime(name, callback) {
     const duration = process.hrtime(start);
     const durationInMs = Math.floor(
       (duration[0] * MS_PER_SEC) + (duration[1] / NS_PER_MS));
-    logger.info(name, {"duration": durationInMs})
+    logger.info(name, {"duration": durationInMs});
   };
 }
 

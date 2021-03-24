@@ -24,11 +24,11 @@ function createProvider(configuration) {
     "v2-init-data": createProxyUrl(url),
     "v2-quality": createProxyUrl(url),
     "v2-catalog-list": createProxyUrl(url),
-  }
+  };
 }
 
 function createProxyUrl(url) {
   return (req, res) => {
-    req.pipe(request(url + req.url)).pipe(res)
+    req.pipe(request(url + req.url)).pipe(res);
   };
 }

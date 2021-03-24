@@ -31,7 +31,7 @@ function defaultUserQuery(language) {
     "limit": 10,
     "language": language,
     "isPartOf": [],
-  }
+  };
 }
 
 function parseDatasetUserQuery(query) {

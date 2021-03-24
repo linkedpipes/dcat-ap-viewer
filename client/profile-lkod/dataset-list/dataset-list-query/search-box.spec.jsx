@@ -9,13 +9,17 @@ Enzyme.configure({"adapter": new Adapter()});
 const noop = () => {
 };
 
+jest.mock("../../viewer-api", () => ({
+  "t": (template) => template,
+}));
+
 describe("search box", () => {
 
   function createComponent(userProps = {}) {
     const props = {
       "defaultValue": "",
-      "onSearch": noop,
-      "query": {},
+      "onSetValue": noop,
+      "fetchTypeahead": (text) => Promise.resolve([]),
       ...userProps,
     };
     return mount(<SeachBox {...props} />);
@@ -40,14 +44,14 @@ describe("search box", () => {
   it("search by suggested value and enter.", () => {
     const onSearch = jest.fn();
     const searchValue = "vts";
-    const component = createComponent({"onSearch": onSearch});
+    const component = createComponent({"onSetValue": onSearch});
     const inputComponent = component.find("input.form-control");
     // These are actually ignored.
     inputComponent.simulate("keyDown", {"keyCode": "86"});
     inputComponent.simulate("keyDown", {
-      "key": "Enter",
-      "target": {"value": searchValue},
-    }
+        "key": "Enter",
+        "target": {"value": searchValue},
+      },
     );
     expect(onSearch.mock.calls).toHaveLength(1);
     expect(onSearch.mock.calls[0][0]).toBe(searchValue);

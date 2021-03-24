@@ -5,7 +5,6 @@ import {
   getPlainStrings,
   getResource,
   getResources,
-  getStrings,
   getString,
   JsonLdEntity,
 } from "./jsonld";

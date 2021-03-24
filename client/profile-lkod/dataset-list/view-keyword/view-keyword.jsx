@@ -6,20 +6,22 @@ import {register} from "../../viewer-api";
 
 function DatasetListKeywordView(props) {
 
+  const {onUpdateQuery, query, state} = props;
+
   const onClickFacet = useCallback((value) => {
-    props.onUpdateQuery({
-      "keywords": toggleInArray(props.query.keywords, value.queryCode),
+    onUpdateQuery({
+      "keywords": toggleInArray(query.keywords, value.queryCode),
     });
-  }, [props.onUpdateQuery, props.query]);
+  }, [onUpdateQuery, query]);
 
   const onShowMore = useCallback((count) => {
-    props.onUpdateQuery({
+    onUpdateQuery({
       "keywordsLimit": Math.min(
-        props.query.keywordsLimit + count,
-        props.state.keywordsCount
+        query.keywordsLimit + count,
+        state.keywordsCount,
       ),
     });
-  }, [props.onUpdateQuery, props.query]);
+  }, [onUpdateQuery, query, state]);
 
   return (
     <FacetView

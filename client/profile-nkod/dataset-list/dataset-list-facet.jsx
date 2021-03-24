@@ -116,10 +116,10 @@ function useCallbacks(onUpdateQuery, query, state) {
     onUpdateQuery({
       "publishersLimit": Math.min(
         query.publishersLimit + count,
-        state.publishersCount
+        state.publishersCount,
       ),
     });
-  }, [onUpdateQuery, query]);
+  }, [onUpdateQuery, query.publishersLimit, state.publishersCount]);
 
   const onClickPublishers = useCallback((value) => {
     onUpdateQuery({
@@ -131,26 +131,26 @@ function useCallbacks(onUpdateQuery, query, state) {
     onUpdateQuery({
       "themesLimit": Math.min(
         query.themesLimit + count,
-        state.themesCount
+        state.themesCount,
       ),
     });
-  }, [onUpdateQuery, query]);
+  }, [onUpdateQuery, query.themesLimit, state.themesCount]);
 
   const onClickThemes = useCallback((value) => {
     onUpdateQuery({
       "themes": toggleInArray(query.themes, value),
       "page": 0,
     });
-  }, [onUpdateQuery, query]);
+  }, [onUpdateQuery, query.themes]);
 
   const onFetchKeywords = useCallback((count) => {
     onUpdateQuery({
       "keywordsLimit": Math.min(
         query.keywordsLimit + count,
-        state.keywordsCount
+        state.keywordsCount,
       ),
     });
-  }, [onUpdateQuery, query]);
+  }, [onUpdateQuery, query.keywordsLimit, state.keywordsCount]);
 
   const onClickKeywords = useCallback((value) => {
     onUpdateQuery({
@@ -163,10 +163,10 @@ function useCallbacks(onUpdateQuery, query, state) {
     onUpdateQuery({
       "formatsLimit": Math.min(
         query.formatsLimit + count,
-        state.formatsCount
+        state.formatsCount,
       ),
     });
-  }, [onUpdateQuery, query]);
+  }, [onUpdateQuery, query.formatsLimit, state.formatsCount]);
 
   const onClickFormats = useCallback((value) => {
     onUpdateQuery({

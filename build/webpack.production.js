@@ -6,7 +6,7 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const common = Object.assign({}, require("./webpack.common"));
-const configuration = require("../../configuration").client;
+const configuration = require("../configuration").client;
 
 module.exports = merge(common, {
   "mode": "production",

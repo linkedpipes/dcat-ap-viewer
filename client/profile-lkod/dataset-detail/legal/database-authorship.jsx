@@ -23,14 +23,14 @@ DatabaseAuthorship.propTypes = {
 
 function render({language, showModal, legal, quality}) {
   switch (LEGAL[legal.databaseAuthorship]) {
-  case "no":
-    return renderNo(language, showModal);
-  case "ccBy":
-    return renderCcBy(language, showModal, legal);
-  case "missing":
-    return renderMissing(language, showModal);
-  default:
-    return renderCustom(language, showModal, legal, quality);
+    case "no":
+      return renderNo(language, showModal);
+    case "ccBy":
+      return renderCcBy(language, showModal, legal);
+    case "missing":
+      return renderMissing(language, showModal);
+    default:
+      return renderCustom(language, showModal, legal, quality);
   }
 }
 

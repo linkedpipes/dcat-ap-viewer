@@ -19,7 +19,7 @@ export default function DatasetListItem(props) {
       && link(
         "/datasets",
         selectLabel(props.dataset.publisher),
-        {"publisher": props.dataset.publisher}
+        {"publisher": props.dataset.publisher},
       )}
       <p style={{
         "overflow": "hidden",

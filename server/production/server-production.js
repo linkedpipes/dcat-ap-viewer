@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const helmet = require("helmet")
+const helmet = require("helmet");
 
 const config = require("../../configuration");
 const logger = require("../logging");

@@ -30,7 +30,7 @@ function addRegisteredReducers(configuration) {
 function prepareEnhancer() {
   const composeEnhancers = getComposeMethod();
   return composeEnhancers(
-    applyMiddleware(thunk)
+    applyMiddleware(thunk),
   );
 }
 

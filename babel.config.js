@@ -28,5 +28,5 @@ module.exports = (api) => {
     "presets": presets,
     "plugins": plugins,
     "ignore": ignore,
-  }
+  };
 };

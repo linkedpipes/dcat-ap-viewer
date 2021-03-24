@@ -7,20 +7,22 @@ import {register, useLabelApi} from "../../viewer-api";
 function DatasetListThemeView(props) {
   const labelSelector = useLabelApi();
 
+  const {onUpdateQuery, query, state} = props;
+
   const onClickFacet = useCallback((value) => {
-    props.onUpdateQuery({
-      "themes": toggleInArray(props.query.themes, value.queryCode),
+    onUpdateQuery({
+      "themes": toggleInArray(query.themes, value.queryCode),
     });
-  }, [props.onUpdateQuery, props.query]);
+  }, [onUpdateQuery, query]);
 
   const onShowMore = useCallback((count) => {
-    props.onUpdateQuery({
+    onUpdateQuery({
       "themesLimit": Math.min(
-        props.query.themesLimit + count,
-        props.state.themesCount
+        query.themesLimit + count,
+        state.themesCount,
       ),
     });
-  }, [props.onUpdateQuery, props.query]);
+  }, [onUpdateQuery, query, state]);
 
   return (
     <FacetView

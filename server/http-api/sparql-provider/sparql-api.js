@@ -48,7 +48,7 @@ function requestParams(url, format) {
     "headers": {
       "accept": format,
     },
-  }
+  };
 }
 
 function logLongRunningQuery(startTime, queryTime, query) {

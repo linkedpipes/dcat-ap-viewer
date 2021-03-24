@@ -265,7 +265,6 @@ function loadDatasetThemes(
   for (const iri of getResources(entity, DCAT.theme)) {
     const entity = getEntityByIri(jsonld, iri);
     if (entity === undefined) {
-      console.warn("Missing data for theme:", iri);
       output.themes.push(iri);
       continue;
     }

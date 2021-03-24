@@ -101,10 +101,10 @@ function useCallbacks(onUpdateQuery, query, state) {
     onUpdateQuery({
       "themesLimit": Math.min(
         query.themesLimit + count,
-        state.themesCount
+        state.themesCount,
       ),
     });
-  }, [onUpdateQuery, query]);
+  }, [onUpdateQuery, query.themesLimit, state.themesCount]);
 
   const onClickThemes = useCallback((value) => {
     onUpdateQuery({
@@ -117,33 +117,33 @@ function useCallbacks(onUpdateQuery, query, state) {
     onUpdateQuery({
       "keywordsLimit": Math.min(
         query.keywordsLimit + count,
-        state.keywordsCount
+        state.keywordsCount,
       ),
     });
-  }, [onUpdateQuery, query]);
+  }, [onUpdateQuery, query.keywordsLimit, state.keywordsCount]);
 
   const onClickKeywords = useCallback((value) => {
     onUpdateQuery({
       "keywords": toggleInArray(query.keywords, value),
       "page": 0,
     });
-  }, [onUpdateQuery, query]);
+  }, [onUpdateQuery, query.keywords]);
 
   const onFetchFormats = useCallback((count) => {
     onUpdateQuery({
       "formatsLimit": Math.min(
         query.formatsLimit + count,
-        state.formatsCount
+        state.formatsCount,
       ),
     });
-  }, [onUpdateQuery, query]);
+  }, [onUpdateQuery, query.formatsLimit, state.formatsCount]);
 
   const onClickFormats = useCallback((value) => {
     onUpdateQuery({
       "formats": toggleInArray(query.formats, value),
       "page": 0,
     });
-  }, [onUpdateQuery, query]);
+  }, [onUpdateQuery, query.formats]);
 
   return {
     "onClickIsPartOf": onClickIsPartOf,

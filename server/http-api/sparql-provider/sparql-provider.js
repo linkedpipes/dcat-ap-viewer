@@ -41,7 +41,7 @@ function createProvider(configuration) {
     "v2-init-data": createInitialDataListGet(),
     // "v2-catalog-list"          NOT SUPPORTED
     ...quality.createProvider(configuration),
-  }
+  };
 }
 
 function createDatasetListGet(configuration) {
@@ -102,7 +102,7 @@ function selectSubArray(array, offset, limit) {
   return array.slice(0, limit);
 }
 
-function transformDatasetForResponse(datasetsJsonLd, language) {
+function transformDatasetForResponse(datasetsJsonLd) {
   return datasetsJsonLd;
 }
 
@@ -110,7 +110,7 @@ function transformFacetsForType(allFacets, facetType, limit) {
   const facets = allFacets.filter(
     (item) => item["urn:facet"][0]["@id"] === facetType);
   facets.sort((left, right) =>
-    right["urn:count"][0]["@value"] - left["urn:count"][0]["@value"])
+    right["urn:count"][0]["@value"] - left["urn:count"][0]["@value"]);
   return [
     {
       "@type": "urn:FacetMetadata",
@@ -118,7 +118,7 @@ function transformFacetsForType(allFacets, facetType, limit) {
       "urn:count": facets.length,
     },
     ...selectSubArray(facets, 0, limit),
-  ]
+  ];
 }
 
 function createDatasetItemGet(configuration) {
@@ -171,7 +171,7 @@ function createLabelItemGet(configuration) {
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
       .catch(error => handleApiError(res, error));
-  }
+  };
 }
 
 function createInitialDataListGet() {
@@ -186,7 +186,7 @@ function createPublisherListGet(configuration) {
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
       .catch(error => handleApiError(res, error));
-  }
+  };
 }
 
 function createKeywordListGet(configuration) {
@@ -196,5 +196,5 @@ function createKeywordListGet(configuration) {
     executeSparqlConstruct(configuration.url, query)
       .then(data => res.json(data))
       .catch(error => handleApiError(res, error));
-  }
+  };
 }

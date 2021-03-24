@@ -30,20 +30,21 @@ function Facet(props) {
 
   const showPopular = useCallback(() => setVisible(DEFAULT_FACET_SIZE), []);
 
+  const {facetData, onFetchMore} = props;
   const showMore = useCallback(() => {
     const limit = visible + SHOW_MORE_STEP;
     setVisible(limit);
-    if (limit >= props.facetData.length) {
-      props.onFetchMore(limit);
+    if (limit >= facetData.length) {
+      onFetchMore(limit);
     }
-  }, [visible, props.facetData, props.onFetchMore]);
+  }, [visible, facetData, onFetchMore]);
 
   const items = [
     ...selectActiveFacetsToShow(props.facetData, props.activeFacets),
     ...selectRemainingFacetsToShow(
       props.facetData,
       visible - props.activeFacets.length,
-      props.activeFacets
+      props.activeFacets,
     ),
   ];
 

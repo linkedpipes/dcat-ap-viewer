@@ -18,17 +18,19 @@ const PAGE_SIZES = [10, 20, 40, 80];
 
 function DatasetListDatasetView(props) {
 
+  const {onUpdateQuery, query} = props;
+
   const onShowMore = useCallback(() => {
-    props.onUpdateQuery({"showMore": props.query.showMore + 6});
-  }, [props.onUpdateQuery, props.query]);
+    onUpdateQuery({"showMore": query.showMore + 6});
+  }, [onUpdateQuery, query]);
 
   const onPage = useCallback((value) => {
-    props.onUpdateQuery({"page": value, "showMore": 0});
-  }, [props.onUpdateQuery]);
+    onUpdateQuery({"page": value, "showMore": 0});
+  }, [onUpdateQuery]);
 
   const onPageSize = useCallback((value) => {
-    props.onUpdateQuery({"page": 0, "pageSize": value, "showMore": 0});
-  }, [props.onUpdateQuery]);
+    onUpdateQuery({"page": 0, "pageSize": value, "showMore": 0});
+  }, [onUpdateQuery]);
 
   // const showPublisher = getShowPublisher(props.query);
 
@@ -50,7 +52,7 @@ function DatasetListDatasetView(props) {
       </div>
       <br/>
       {getShowMoreVisible(
-        props.state.datasetsCount, props.query, props.state.datasets
+        props.state.datasetsCount, props.query, props.state.datasets,
       ) && (
         <React.Fragment>
           <Button onClick={onShowMore}>

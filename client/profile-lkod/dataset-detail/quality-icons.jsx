@@ -62,7 +62,7 @@ function renderQualityIcon(
       {
         "date": measure.lastCheck,
         "note": selectLiteral(language, measure.note),
-      }
+      },
     );
     return (
       <i
@@ -81,7 +81,7 @@ function renderQualityIcon(
       {
         "date": measure.lastCheck,
         "note": selectLiteral(language, measure.note),
-      }
+      },
     );
     return (
       <i

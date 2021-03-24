@@ -44,7 +44,7 @@ function datasetFilterSelector(query) {
   ${temporalFilter}
   ${createTextFilter(query)}
   ${createIsPartOfFilter(query)}
-`
+`;
 }
 
 function addPredicates(transformer, predicate, values) {
@@ -94,14 +94,20 @@ function createTemporal(query) {
     ( str(?endDate)   > "${start}" && str(?endDate)   < "${end}" ) ||
     ( str(?startDate) < "${start}" && str(?endDate)   > "${end}" )     
   )`,
-  ]
+  ];
 }
 
 function createOrder(query) {
   // We support sort only by 'title'.
   const orderWhereClause = `
-  OPTIONAL { ?dataset dcterms:title ?label_primary   . FILTER(LANG(?label_primary) = "cs") }
-  OPTIONAL { ?dataset dcterms:title ?label_secondary . FILTER(LANG(?label_secondary) = "en") }
+  OPTIONAL { 
+    ?dataset dcterms:title ?label_primary . 
+    FILTER(LANG(?label_primary) = "cs") 
+  }
+  OPTIONAL { 
+    ?dataset dcterms:title ?label_secondary .
+    FILTER(LANG(?label_secondary) = "en")
+  }
   BIND( COALESCE(?label_primary, ?label_secondary) as ?label )
 `;
   let orderPostQuery = "";

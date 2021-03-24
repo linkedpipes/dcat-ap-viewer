@@ -10,7 +10,7 @@ const {executeSparqlConstruct} = require("./sparql-api");
 function createProvider(configuration) {
   return {
     "v2-quality": createV2Quality(configuration),
-  }
+  };
 }
 
 function createV2Quality(configuration) {

@@ -1,25 +1,11 @@
-# Set the default behavior, in case people don't have core.autocrlf set.
-* text eol=lf
+.*
 
-# Denote all files that are truly binary and should not be modified.
-*.png binary
-*.jpg binary
-
-# Netbeans files.
-nbactions.xml
-nb-configuration.xml
-
-# IntelliJ IDEA files.
 *.iml
-
-# Genrated files.
-node_modules/
-dist/
 *.log
 *.d.ts
 
-# All files/directiries starting with dot.
-.*
-
-# Configuraiton file.
 configuration.yaml
+
+node_modules/
+dist/
+client/coverage
