@@ -237,4 +237,6 @@ dd {
     border-top-width: 1px
 }
 
-/* Temporal filter */
+a {
+    text-decoration: none;
+}
