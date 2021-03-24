@@ -24,7 +24,7 @@ const YAML = require("yaml");
     "port": configuration["port"],
     "serveStaticContent": configuration["serve-static-content"] || false,
     "providers": configuration["providers"] || [],
-    "helmet": configuration["helmet"] || {},
+    "helmet": configuration["helmet"],
     /**
      * As this is provided to the profile, it may have custom properties
      * so we only do some basic sanitization.

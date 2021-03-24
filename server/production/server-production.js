@@ -12,7 +12,9 @@ const httpApi = require("../http-api/http-api");
  */
 (function main() {
   const app = express();
-  app.use(helmet(config.helmet));
+  if (config.helmet !== undefined) {
+    app.use(helmet(config.helmet));
+  }
   if (config.serveStaticContent) {
     initializeStatic(app, express);
   }
