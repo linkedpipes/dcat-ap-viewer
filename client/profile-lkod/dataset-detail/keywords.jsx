@@ -11,9 +11,10 @@ function Keywords(props) {
   if (filteredKeywords.length === 0) {
     return null;
   }
+  console.log("KEYWRODS", t("keywords") );
   return (
     <React.Fragment>
-      <span className="sr-only">{t("keywords") + ":"}</span>
+      <span className="visually-hidden">{t("keywords")}:</span>
       {filteredKeywords.map((keyword) => (
         <Link
           className="btn badge-info mx-1"
