@@ -46,3 +46,5 @@ dcat-ap-viewer:
     # URL of the dcat-ap forms running instance.
     # https://github.com/linkedpipes/dcat-ap-forms
     dcat-ap-forms-url: ""
+    # Used as a fallback and for canonical URL specification.
+    default-language: "cs"
