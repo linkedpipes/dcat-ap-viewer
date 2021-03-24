@@ -127,8 +127,10 @@ function textToSolrQuery(language, text) {
   }
   // We ask for title first to prioritize it before _text_.
   // We want datasets that have the given value in label to be returned first.
-  return prepareFieldQueryForTokens("title_" + language + "_query", tokens)
-    + " OR " + prepareFieldQueryForTokens("_text_", tokens);
+  return "" +
+    "( "
+    + prepareFieldQueryForTokens("title_" + language + "_query", tokens)
+    + " ) OR ( " + prepareFieldQueryForTokens("_text_", tokens) + " )";
 }
 
 /**
@@ -168,7 +170,6 @@ function prepareFieldQueryForTokens(field, tokens) {
   }
   return result;
 }
-
 
 function paginationToSolrQuery(userQuery) {
   return "&start=" + userQuery["offset"] + "&rows=" + userQuery["limit"];
@@ -384,7 +385,6 @@ function asLiteral(item, propertyName, language, languagePreferences) {
     }
   }
 }
-
 
 function createV2DatasetTypeaheadGet(configuration) {
   // default-language
