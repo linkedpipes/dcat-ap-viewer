@@ -6,9 +6,6 @@ import SeachBox from "./search-box";
 
 Enzyme.configure({"adapter": new Adapter()});
 
-const noop = () => {
-};
-
 jest.mock("../../viewer-api", () => ({
   "t": (template) => template,
 }));
@@ -18,8 +15,9 @@ describe("search box", () => {
   function createComponent(userProps = {}) {
     const props = {
       "defaultValue": "",
-      "onSetValue": noop,
-      "fetchTypeahead": (text) => Promise.resolve([]),
+      "onSetValue": () => {
+      },
+      "fetchTypeahead": () => Promise.resolve([]),
       ...userProps,
     };
     return mount(<SeachBox {...props} />);
