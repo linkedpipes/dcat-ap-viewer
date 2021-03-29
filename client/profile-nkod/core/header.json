@@ -12,7 +12,8 @@
     "header.forPublishers": "Pro poskytovatele dat",
     "header.catalogs": "Lokální katalogy",
     "language.cs": "Čeština",
-    "language.en": "English"
+    "language.en": "English",
+    "header.suggestions": "Podnět na data k otevření"
   },
   "en": {
     "header.logoAlt": "Open data",
@@ -27,6 +28,7 @@
     "header.forPublishers": "For publishers",
     "header.catalogs": "Local catalogs",
     "language.cs": "Čeština",
-    "language.en": "English"
+    "language.en": "English",
+    "header.suggestions": "Suggest data to be opened"
   }
 }

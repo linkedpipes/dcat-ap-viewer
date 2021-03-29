@@ -72,6 +72,9 @@ function Header() {
                     <DropdownItem href={createUrl(language, "/catalogs")}>
                       {t("header.catalogs")}
                     </DropdownItem>
+                    <DropdownItem href="https://docs.google.com/forms/d/e/1FAIpQLSdUaVaCITtmHdTGxsU5xPvdzIygOA7wHHaotPRPAbglCF3mpw/viewform">
+                      {t("header.suggestions")}
+                    </DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </NavItem>

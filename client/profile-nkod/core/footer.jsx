@@ -17,7 +17,7 @@ function Footer() {
       <Container>
         <Row>
           <Col md="4">
-            <strong>{t("footer.nkodRegistration")}</strong>
+            <h3 className="h6">{t("footer.nkodRegistration")}</h3>
             <ul>
               <li>
                 <a href={getCreateDatasetFormLink(language)}>
@@ -30,7 +30,7 @@ function Footer() {
                 </a>
               </li>
             </ul>
-            <strong>{t("footer.contacts")}</strong>
+            <h3 className="h6">{t("footer.contacts")}</h3>
             <ul>
               <li>{t("footer.contactPerson")}: <a
                 href="mailto:michal.kuban@mvcr.cz">Michal Kubáň</a>
@@ -40,12 +40,13 @@ function Footer() {
               </li>
               <li>{t("footer.telephone")}: +420 974 816 395
               </li>
+              <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdUaVaCITtmHdTGxsU5xPvdzIygOA7wHHaotPRPAbglCF3mpw/viewform">{t("footer.suggestions")}</a></li>
               <li><a href="https://www.mvcr.cz/">{t("footer.mvcr")}</a></li>
               <li><a href="https://data.gov.cz">{t("footer.opendata")}</a></li>
             </ul>
           </Col>
           <Col md="4">
-            <strong>{t("footer.links")}</strong>
+            <h3 className="h6">{t("footer.links")}</h3>
             <ul>
               <li>{t("footer.catalogForDownload")}: <a
                 href="/soubor/nkod.trig">
@@ -91,7 +92,7 @@ function Footer() {
             </ul>
           </Col>
           <Col md="4">
-            <strong>{t("footer.thanksTitle")}</strong>
+            <h3 className="h6">{t("footer.thanksTitle")}</h3>
             <p>{t("footer.thanks1")}
               <a
                 href="https://www.esfcr.cz/projekty-opz/-/asset_publisher/ODuZumtPTtTa/content/implementace-strategii-v-oblasti-otevrenych-dat-ii">
