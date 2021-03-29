@@ -36,7 +36,7 @@ function Footer() {
                 href="mailto:michal.kuban@mvcr.cz">Michal Kubáň</a>
               </li>
               <li>{t("footer.email")}: <a
-                href="mailto:michal.kuban@mvcr.cz">michal.kuban@mvcr.cz</a>
+                href="mailto:otevrenadata@mvcr.cz">otevrenadata@mvcr.cz</a>
               </li>
               <li>{t("footer.telephone")}: +420 974 816 395
               </li>
