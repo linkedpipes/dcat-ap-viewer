@@ -76,7 +76,7 @@ function DatasetDetailPart(props) {
     }
   }
   return (
-    <Col sm="12" md="6" lg="6" xxl="4" className="mb-3">
+    <Col sm="12" md="6" lg="6" xxl="4" className="mb-3 d-flex">
       <Component
         language={props.language}
         iri={props.iri}
