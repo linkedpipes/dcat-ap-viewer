@@ -32,13 +32,18 @@ function Header() {
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ms-auto" navbar>
               <NavItem>
-                <NavLink href="/vzdělávání/">
+                <NavLink href="/vzdělávání">
                   {t("header.education")}
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/články/">
+                <NavLink href="/články">
                   {t("header.articles")}
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/datová-kvalita">
+                  {t("header.quality")}
                 </NavLink>
               </NavItem>
               <NavItem>

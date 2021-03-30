@@ -42,6 +42,11 @@ function Footer() {
               </li>
               <li><a href="https://www.mvcr.cz/">{t("footer.mvcr")}</a></li>
               <li><a href="https://data.gov.cz">{t("footer.opendata")}</a></li>
+              <li>
+                <a href="/prohlášení-o-přístupnosti">
+                  {t("footer.accessibility")}
+                </a>
+              </li>
             </ul>
           </Col>
           <Col md="4">
@@ -85,8 +90,8 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a href="/prohlášení-o-přístupnosti">
-                  {t("footer.accessibility")}
+                <a href="/datová-kvalita">
+                  {t("footer.quality")}
                 </a>
               </li>
             </ul>

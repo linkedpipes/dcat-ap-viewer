@@ -35,7 +35,8 @@
     "footer.legalLinkURL": "https://creativecommons.org/licenses/by/4.0/deed.cs",
     "footer.legalTail": ". Při jeho využití uveďte zdroj a odkažte na patřičnou licenci.",
     "footer.opzLogoLink": "/images/ozp_logo_cz.webp",
-    "footer.suggestions": "Podnět na data k otevření"
+    "footer.suggestions": "Podnět na data k otevření",
+    "footer.quality": "Datová kvalita"
   },
   "en": {
     "footer.nkodRegistration": "Registration in NKOD",
@@ -73,6 +74,7 @@
     "footer.legalLinkURL": "https://creativecommons.org/licenses/by/4.0/",
     "footer.legalTail": ". Please attribute correctly and link to the licence when reusing the content.",
     "footer.opzLogoLink": "/images/ozp_logo_en.webp",
-    "footer.suggestions": "Suggest data to be opened"
+    "footer.suggestions": "Suggest data to be opened",
+    "footer.quality": "Data quality"
   }
 }
