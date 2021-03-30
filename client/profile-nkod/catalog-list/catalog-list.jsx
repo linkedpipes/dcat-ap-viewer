@@ -68,7 +68,7 @@ function CatalogListItem(props) {
   const catalog = props.catalog;
 
   return (
-    <div className="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 mb-3">
+    <div className="col-12 col-sm-12 col-md-4 col-lg-3 col-xl-3 col-xxl-2 mb-3">
       <Card className="p-2">
         <CardBody className="px-2">
           <CardTitle tag="h5">
