@@ -2,7 +2,7 @@
   "cs": {
     "header.logoAlt": "Otevřená data",
     "header.articles": "Články",
-    "header.news": "Novinky",
+    "header.education": "Vzdělávání",
     "header.datasets": "Datové sady",
     "header.publishers": "Poskytovatelé",
     "header.keywords": "Klíčová slova",
@@ -17,8 +17,8 @@
   },
   "en": {
     "header.logoAlt": "Open data",
-    "header.articles": "Posts",
-    "header.news": "News",
+    "header.articles": "Articles",
+    "header.education": "Education",
     "header.datasets": "Datasets",
     "header.publishers": "Publishers",
     "header.keywords": "Keywords",

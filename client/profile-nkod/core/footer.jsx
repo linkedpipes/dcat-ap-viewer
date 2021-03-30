@@ -40,7 +40,6 @@ function Footer() {
               </li>
               <li>{t("footer.telephone")}: +420 974 816 395
               </li>
-              <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdUaVaCITtmHdTGxsU5xPvdzIygOA7wHHaotPRPAbglCF3mpw/viewform">{t("footer.suggestions")}</a></li>
               <li><a href="https://www.mvcr.cz/">{t("footer.mvcr")}</a></li>
               <li><a href="https://data.gov.cz">{t("footer.opendata")}</a></li>
             </ul>
@@ -79,6 +78,7 @@ function Footer() {
                   LinkedPipes ETL
                 </a>
               </li>
+              <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdUaVaCITtmHdTGxsU5xPvdzIygOA7wHHaotPRPAbglCF3mpw/viewform">{t("footer.suggestions")}</a></li>
               <li>
                 <a href="https://github.com/opendata-mvcr/nkod">
                   {t("footer.nkodDocumentation")}
