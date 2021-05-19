@@ -1,3 +1,7 @@
 #search-box .rbt {
     margin-right: 1rem;
 }
+
+#search-box .rbt .rbt-aux .sr-only {
+    visibility: hidden;
+}
