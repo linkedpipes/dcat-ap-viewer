@@ -19,7 +19,7 @@ function PartDataService(props) {
   const dataServiceQuality = useQualityApi(props.part.dataService);
   const LegalColumn = getElement("dataset-detail.parts.legal-column").element;
   return (
-    <Card>
+    <Card className="flex-fill">
       <CardBody>
         {renderPartTitle(selectLabel, props.part)}
         {renderPartFormat(selectLabel, props.part)}

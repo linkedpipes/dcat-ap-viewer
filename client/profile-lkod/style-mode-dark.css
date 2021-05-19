@@ -36,10 +36,10 @@
         text-decoration: none;
     }
 
-    .badge-info {
+    .badge-info, .bg-info, a.badge-info.btn:hover {
         border: 1px solid var(--color-text-accent);
-        background-color: var(--color-background-footer);
-        color: var(--color-text-default);
+        background-color: var(--color-background-footer) !important;
+        color: var(--color-text-default) !important;
     }
 
     .modal-content {

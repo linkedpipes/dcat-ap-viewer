@@ -20,9 +20,9 @@ hr, .list-group-item, .card {
     background-color: var(--color-background-footer);
 }
 
-.badge-info {
-    background-color: var(--color-base);
-    color: var(--color-text-inverted);
+.badge-info, .bg-info, a.badge-info.btn:hover {
+    background-color: var(--color-base) !important;
+    color: var(--color-text-inverted) !important;
 }
 
 .label {

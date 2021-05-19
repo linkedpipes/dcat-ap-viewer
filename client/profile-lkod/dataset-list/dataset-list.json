@@ -43,8 +43,8 @@
       "5": "Nalezeno {count} klíčových slov"
     },
     "page-title.datasets" : "Datové sady",
-    "invalid_dataset_list_query_argument": "Nevalidní URL parametry.",
-    "invalid_dataset_list_query_argument_link": "Datové sady"
+    "invalid_dataset_list_query_argument": "Vyhledávací parametr byl očekáván ve formě IRI.",
+    "invalid_dataset_list_query_argument_link": "Zpět na datové sady"
   },
   "en": {
     "title asc": "Title Ascending",
@@ -87,7 +87,7 @@
       "2": "{count} keywords found"
     },
     "page-title.datasets" : "Datasets",
-    "invalid_dataset_list_query_argument": "Invalid URL query parameters.",
-    "invalid_dataset_list_query_argument_link": "Show all datasets"
+    "invalid_dataset_list_query_argument": "Query parameters were supposed to be in form of an IRI.",
+    "invalid_dataset_list_query_argument_link": "Back to all datasets"
   }
 }

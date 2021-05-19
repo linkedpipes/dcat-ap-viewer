@@ -15,7 +15,7 @@ function PartDistribution(props) {
   const selectLabel = useLabelApi();
   const LegalColumn = getElement("dataset-detail.parts.legal-column").element;
   return (
-    <Card>
+    <Card className="flex-fill">
       <CardBody>
         {renderPartTitle(selectLabel, props.iri)}
         {renderPartFormat(selectLabel, props.part)}

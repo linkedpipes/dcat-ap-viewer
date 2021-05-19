@@ -2,7 +2,8 @@
   "cs": {
     "header.logoAlt": "Otevřená data",
     "header.articles": "Články",
-    "header.news": "Novinky",
+    "header.education": "Vzdělávání",
+    "header.quality": "Datová kvalita",
     "header.datasets": "Datové sady",
     "header.publishers": "Poskytovatelé",
     "header.keywords": "Klíčová slova",
@@ -12,12 +13,14 @@
     "header.forPublishers": "Pro poskytovatele dat",
     "header.catalogs": "Lokální katalogy",
     "language.cs": "Čeština",
-    "language.en": "English"
+    "language.en": "English",
+    "header.suggestions": "Podnět na data k otevření"
   },
   "en": {
     "header.logoAlt": "Open data",
-    "header.articles": "Posts",
-    "header.news": "News",
+    "header.articles": "Articles",
+    "header.education": "Education",
+    "header.quality": "Data quality",
     "header.datasets": "Datasets",
     "header.publishers": "Publishers",
     "header.keywords": "Keywords",
@@ -27,6 +30,7 @@
     "header.forPublishers": "For publishers",
     "header.catalogs": "Local catalogs",
     "language.cs": "Čeština",
-    "language.en": "English"
+    "language.en": "English",
+    "header.suggestions": "Suggest data to be opened"
   }
 }
