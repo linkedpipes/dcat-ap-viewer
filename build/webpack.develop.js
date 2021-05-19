@@ -12,11 +12,6 @@ module.exports = merge({
   "devServer": {
     "hot": true,
   },
-  "resolve": {
-    "alias": {
-      "react-dom": "@hot-loader/react-dom",
-    },
-  },
   "module": {
     "rules": [
       {
