@@ -50,5 +50,9 @@ LanguageImage.propTypes = {
 };
 
 function createLanguageHref(navigation, language) {
-  return createUrl(language, navigation.path, navigation.query);
+  return createUrl(language, navigation.path, {
+    ...navigation.query,
+    // Remove keywords.
+    "keywords": undefined,
+  });
 }
