@@ -16,7 +16,7 @@ function Keywords(props) {
       <span className="visually-hidden">{t("keywords")}:</span>
       {filteredKeywords.map((keyword) => (
         <Link
-          className="btn badge-info mx-1"
+          className="btn badge-info m-1"
           to={datasetListUrl(props.language, keyword)}
           role="button"
           key={keyword}
