@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import {Container} from "reactstrap";
 
 import {
@@ -18,6 +18,13 @@ const DatasetDetail = () => {
   usePageTitle(
     "page-title.dataset", undefined,
     preparePageTitle(selectLabel(navigation.query.dataset, null)));
+
+  // Scroll up after the page is loaded.
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 1);
+  }, []);
 
   if (data.loading) {
     const LoadingView = getElement("application.loading").element;
