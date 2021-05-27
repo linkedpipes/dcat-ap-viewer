@@ -3,7 +3,7 @@
     "title asc": "Název vzestupně",
     "title desc": "Název sestupně",
     "query.datasetsFound": {
-      "0": "Nenalezena žádná datové sada",
+      "0": "Nenalezena žádná datová sada",
       "1": "Nalezena 1 datové sada",
       "2": "Nalezeny {count} datové sady",
       "5": "Nalezeno {count} datových sad"
