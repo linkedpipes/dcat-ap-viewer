@@ -12,6 +12,10 @@ const CATALOG_EDIT = "CATALOG_EDIT";
 
 const CATALOG_DELETE = "CATALOG_DELETE";
 
+const DATASET_QUERY = "DATASET_QUERY";
+
+const COPY_DATASET_QUERY = "DATASET_QUERY";
+
 const LINKS: Record<string, Record<string, string>> = {
   "cs": {
     [DATASET_CREATE]: "registrace-datové-sady",
@@ -20,6 +24,8 @@ const LINKS: Record<string, Record<string, string>> = {
     [CATALOG_CREATE]: "registrace-lokálního-katalogu",
     [CATALOG_EDIT]: "registrace-lokálního-katalogu",
     [CATALOG_DELETE]: "odstranění-lokálního-katalogu",
+    [DATASET_QUERY]: "datová-sada",
+    [COPY_DATASET_QUERY]: "kopírovat-z-datové-sady",
   },
   "en": {
     [DATASET_CREATE]: "dataset-registration",
@@ -28,6 +34,8 @@ const LINKS: Record<string, Record<string, string>> = {
     [CATALOG_CREATE]: "local-catalog-registration",
     [CATALOG_EDIT]: "local-catalog-registration",
     [CATALOG_DELETE]: "local-catalog-withdrawn",
+    [DATASET_QUERY]: "dataset",
+    [COPY_DATASET_QUERY]: "copy-from-dataset",
   },
 };
 
@@ -41,12 +49,12 @@ function formUrlPrefix(): string {
 
 export function getEditDatasetFormLink(language: string, iri: string) {
   return formUrlPrefix() + LINKS[language][DATASET_EDIT]
-    + "?dataset=" + encodeURIComponent(iri);
+    + "?" + LINKS[language][DATASET_QUERY] + "=" + encodeURIComponent(iri);
 }
 
 export function getCopyDatasetFormLink(language: string, iri: string) {
   return formUrlPrefix() + LINKS[language][DATASET_EDIT]
-    + "?copy-from-dataset=" + encodeURIComponent(iri);
+    + "?" + LINKS[language][COPY_DATASET_QUERY] + "=" + encodeURIComponent(iri);
 }
 
 export function getDeleteDatasetFormLink(language: string, iri: string) {
