@@ -38,12 +38,13 @@ export function useDatasetListQuery() {
     }
     const newQuery = parsedQueryToQuery(navigation.query, query);
     const listQuery = prepareDatasetListQuery(newQuery);
-    if (datasetListQueryEquals(state.query, listQuery)
-      || query.report.length !== newQuery.report.length) {
-      setQuery(newQuery);
-    } else {
+
+    const sameInvalidArguments = query.report.length === newQuery.report.length;
+    const sameQuery = datasetListQueryEquals(state.query, listQuery);
+    if (sameInvalidArguments && sameQuery) {
       return;
     }
+    setQuery(newQuery);
   }, [navigation.query, state.status, state.query, query, setQuery]);
 
   const updateQuery = useCallback((change) => {
@@ -276,17 +277,35 @@ function datasetListQueryEquals(
     && left.limit === right.limit
     && left.sort === right.sort
     && left.search === right.search
-    && left.publishers === right.publishers
+    && isArrayEqual(left.publishers, right.publishers)
     && left.publishersLimit === right.publishersLimit
-    && left.themes === right.themes
+    && isArrayEqual(left.themes, right.themes)
     && left.themesLimit === right.themesLimit
-    && left.keywords === right.keywords
+    && isArrayEqual(left.keywords, right.keywords)
     && left.keywordsLimit === right.keywordsLimit
-    && left.formats === right.formats
+    && isArrayEqual(left.formats, right.formats)
     && left.formatsLimit === right.formatsLimit
     && left.temporalStart === right.temporalStart
     && left.temporalEnd === right.temporalEnd
-    && left.isPartOf === right.isPartOf;
+    && isArrayEqual(left.isPartOf, right.isPartOf);
+}
+
+function  isArrayEqual <T>(left:T[] | undefined, right:T[] | undefined) {
+  if (left === right) {
+    return true;
+  }
+  if (left === undefined || right === undefined) {
+    return false;
+  }
+  if (left.length !== right.length) {
+    return false;
+  }
+  for (let index = 0; index < left.length; ++index) {
+    if (left[index] !== right[index]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 function isPartOfAsFacet(
