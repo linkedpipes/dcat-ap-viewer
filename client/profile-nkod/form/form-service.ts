@@ -46,7 +46,7 @@ export function getEditDatasetFormLink(language: string, iri: string) {
 
 export function getCopyDatasetFormLink(language: string, iri: string) {
   return formUrlPrefix() + LINKS[language][DATASET_EDIT]
-    + "?dataset=" + encodeURIComponent(iri) + "&kopie=1";
+    + "?copy-from-dataset=" + encodeURIComponent(iri);
 }
 
 export function getDeleteDatasetFormLink(language: string, iri: string) {
