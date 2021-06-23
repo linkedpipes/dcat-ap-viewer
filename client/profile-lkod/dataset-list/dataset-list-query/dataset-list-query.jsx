@@ -77,7 +77,7 @@ function DatasetListQuery(props) {
     }}>
       <SearchBox
         t={t}
-        defaultValue={props.query.search}
+        value={props.query.search}
         ref={(ref) => searchBox = ref}
         onSetValue={onSetSearchText}
         fetchTypeahead={onFetchTypeahead}

@@ -23,6 +23,7 @@ export default class SearchBox extends React.Component {
       // We start by selecting the value from props.
       "isLoading": false,
       "options": [],
+      "selected": [""],
     };
     this.typeahead = React.createRef();
     this.fetchOptions = this.fetchOptions.bind(this);
@@ -37,11 +38,19 @@ export default class SearchBox extends React.Component {
     this.currentInputValue = undefined;
   }
 
-  render() {
-    let defaultSelected = [];
-    if (this.props.defaultValue !== undefined) {
-      defaultSelected = [this.props.defaultValue];
+  componentDidMount() {
+    // Set initial value, for example use may open link with search value.
+    this.setState({"selected": [this.props.value]});
+  }
+
+  componentDidUpdate(prevProps) {
+    // We update only if the value has changed, for example back navigation.
+    if (prevProps.value !== this.props.value) {
+      this.setState({"selected": [this.props.value]});
     }
+  }
+
+  render() {
     return (
       <InputGroup id="search-box">
         <InputGroupText>
@@ -58,9 +67,9 @@ export default class SearchBox extends React.Component {
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           onInputChange={this.onInputChange}
-          defaultSelected={defaultSelected}
           searchText={t("search.searching")}
           emptyLabel={t("search.noDataFound")}
+          selected={this.state.selected}
           ref={this.typeahead}
           filterBy={() => { // option, props
             // Just show all that we get -> apply no filter.
@@ -114,6 +123,7 @@ export default class SearchBox extends React.Component {
    * Called when use select a suggested value.
    */
   onChange(value) {
+    this.setState({"selected": value});
     if (value.length === 0) {
       // There is change only in text, ignore this.
       return;
@@ -169,7 +179,10 @@ export default class SearchBox extends React.Component {
 }
 
 SearchBox.propTypes = {
-  "defaultValue": PropTypes.string,
+  /**
+   * Last valid search value.
+   */
+  "value": PropTypes.string,
   "onSetValue": PropTypes.func.isRequired,
   "fetchTypeahead": PropTypes.func.isRequired,
 };
