@@ -179,10 +179,9 @@ export default class SearchBox extends React.Component {
 }
 
 SearchBox.propTypes = {
-  /**
-   * Last valid search value.
-   */
+  // Last set value.
   "value": PropTypes.string,
+  "defaultValue": PropTypes.string,
   "onSetValue": PropTypes.func.isRequired,
   "fetchTypeahead": PropTypes.func.isRequired,
 };
