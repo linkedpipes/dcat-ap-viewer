@@ -47,9 +47,9 @@ describe("search box", () => {
     // These are actually ignored.
     inputComponent.simulate("keyDown", {"keyCode": "86"});
     inputComponent.simulate("keyDown", {
-        "key": "Enter",
-        "target": {"value": searchValue},
-      },
+      "key": "Enter",
+      "target": {"value": searchValue},
+    },
     );
     expect(onSearch.mock.calls).toHaveLength(1);
     expect(onSearch.mock.calls[0][0]).toBe(searchValue);
