@@ -15,7 +15,7 @@ function Properties(props) {
     <div className="row">
       {firstColumn(selectLabel, props.language, props.dataset)}
       {secondColumn(selectLabel, props.language, props.dataset)}
-      {thirdColumn(selectLabel, props.dataset, quality)}
+      {thirdColumn(selectLabel, props.language, props.dataset, quality)}
       {fourthColumn(selectLabel, props.language, props.dataset)}
     </div>
   );
@@ -291,7 +291,7 @@ function appendValue(language, labelName, value) {
   return value + " " + translateString(language, labelName, {"count": value});
 }
 
-function thirdColumn(selectLabel, dataset, quality) {
+function thirdColumn(selectLabel, language, dataset, quality) {
   const hasDocumentation = isNotEmpty(dataset.documentation);
   const hasContacts = isNotEmpty(dataset.contactPoints);
   const hasSpecification = isNotEmpty(dataset.conformsTo);
@@ -306,7 +306,8 @@ function thirdColumn(selectLabel, dataset, quality) {
         {hasContacts && <dt>{t("contactPoint")}</dt>}
         {hasContacts && contactPoints(selectLabel, dataset.contactPoints)}
         {hasSpecification && specificationLabel()}
-        {hasSpecification && specification(quality, dataset)}
+        {hasSpecification && specification(
+          selectLabel, language, quality, dataset)}
       </dl>
     </div>
   );
@@ -378,7 +379,7 @@ function specificationLabel() {
   );
 }
 
-function specification(quality, dataset) {
+function specification(selectLabel, language, quality, dataset) {
   const definitions = [{
     "measureOf": QUALITY.specification,
     "labelTrue": "specificationQualityTrue",
@@ -395,7 +396,7 @@ function specification(quality, dataset) {
   return dataset.conformsTo.map((iri) => (
     <dd key={iri}>
       <a href={iri} rel="nofollow noopener noreferrer">
-        {t("specificationOpen")}
+        {selectLabel(iri, translateString(language, "specificationOpen"))}
       </a>
       <QualityIconsForMeasures
         object={iri}
