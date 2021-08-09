@@ -105,7 +105,7 @@ function CatalogListItem(props) {
                 email
               </i>
               {
-                selectLiteral(props.language, catalog.title)
+                selectLiteral(props.language, catalog.contactName)
                 || catalog.contactEmail
               }
             </a>
