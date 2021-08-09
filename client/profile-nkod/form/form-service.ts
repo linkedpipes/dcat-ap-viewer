@@ -14,7 +14,7 @@ const CATALOG_DELETE = "CATALOG_DELETE";
 
 const DATASET_QUERY = "DATASET_QUERY";
 
-const COPY_DATASET_QUERY = "DATASET_QUERY";
+const COPY_DATASET_QUERY = "COPY_DATASET_QUERY";
 
 const LINKS: Record<string, Record<string, string>> = {
   "cs": {
