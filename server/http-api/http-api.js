@@ -1,10 +1,12 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const configuration = require("../../configuration");
 const solrProvider = require("./solr-provider/solr-provider");
 const couchdbProvider = require("./couchdb-provider/couchdb-provider");
 const sparqlProvider = require("./sparql-provider/sparql-provider");
 const testProvider = require("./test-provider/test-provider");
-const proxyProvider =require("./proxy-provider/proxy-provider");
+const proxyProvider = require("./proxy-provider/proxy-provider");
+const storageProvider = require("./storage-provider/storage-provider")
 
 module.exports = {
   "initializeHttpApi": initializeHttpApi,
@@ -28,6 +30,10 @@ function initializeHttpApi(app) {
   v2.get("/init-data", provider["v2-init-data"]);
   v2.get("/catalog", provider["v2-catalog-list"]);
   v2.get("/quality", provider["v2-quality"]);
+  v2.post(
+    "/storage",
+    bodyParser.json({"limit": "512kb"}),
+    provider["v2-storage-post"]);
   app.use("/api/v2", v2);
 }
 
@@ -63,6 +69,7 @@ function defaultProvider() {
     "v2-quality-distribution": notImplemented,
     "v2-quality-publishers": notImplemented,
     "v2-catalog-list": notImplemented,
+    "v2-storage-post": notImplemented,
   };
 }
 
@@ -82,6 +89,9 @@ function createProvider(providerConfiguration) {
   }
   if (providerConfiguration["type"] === "proxy") {
     provider = proxyProvider.createProvider(providerConfiguration);
+  }
+  if (providerConfiguration["type"] === "storage") {
+    provider = storageProvider.createProvider(providerConfiguration);
   }
   return filterProvider(provider, providerConfiguration);
 }
