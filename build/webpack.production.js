@@ -57,6 +57,7 @@ module.exports = merge(common, {
       "patterns": configuration.profiles.map((profile) => ({
         "from": path.join(__dirname, "..", "client", profile, "assets"),
         "to": path.join(__dirname, "..", "dist", "assets"),
+        "noErrorOnMissing": true,
       })),
     }),
   ],
