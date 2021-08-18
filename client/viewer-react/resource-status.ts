@@ -33,6 +33,10 @@ export function updateStatusLoading(status: ResourceStatus): ResourceStatus {
   return ResourceStatus.Loading;
 }
 
+export function isStatusLoadingOrFailed(status: ResourceStatus) {
+  return isStatusLoading(status) || status === ResourceStatus.Failed;
+}
+
 export function isStatusLoading(status: ResourceStatus) {
   return status === ResourceStatus.Loading
     || status === ResourceStatus.Updating;
