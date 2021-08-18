@@ -11,7 +11,7 @@ import {EvaluationLikeButton} from "../dataset-similarity-evaluation";
 export function SimilarDatasetItem(props) {
   const selectLabel = useLabelApi();
   const {loading, failed, dataset} =
-    withDatasetDetail(props.language, props.dataset);
+    withDatasetDetail(props.language, props.dataset.iri);
 
   if (loading) {
     const Component = getElement("application.loading").element;
@@ -20,16 +20,20 @@ export function SimilarDatasetItem(props) {
 
   if (failed) {
     const Component = getElement("application.failed").element;
-    return (<Component/>);
+    return (
+      <div>
+        <Component/>
+      </div>
+    );
   }
 
   return (
     <div>
-      <Link to={datasetDetailLinkUrl(props.language, props.dataset)}>
+      <Link to={datasetDetailLinkUrl(props.language, props.dataset.iri)}>
         <h4>{selectLabel(dataset.iri)}</h4>
       </Link>
       <div style={{"float": "right"}}>
-        <EvaluationLikeButton dataset={props.dataset}/>
+        <EvaluationLikeButton dataset={props.dataset.iri}/>
       </div>
       <p style={{
         "overflow": "hidden",
@@ -47,7 +51,7 @@ export function SimilarDatasetItem(props) {
 
 SimilarDatasetItem.propTypes = {
   "language": PropTypes.string.isRequired,
-  "dataset": PropTypes.string.isRequired,
+  "dataset": PropTypes.object.isRequired,
 };
 
 

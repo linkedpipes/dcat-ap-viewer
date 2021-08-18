@@ -16,7 +16,7 @@ import "../profile-lkod/dataset-detail/dataset-detail-metadata";
 import "./dataset-detail/dataset-detail-header";
 import "../profile-lkod/dataset-detail/dataset-detail-body";
 import "./dataset-detail/dataset-detail-parts";
-import "../profile-lkod/dataset-detail/dataset-detail-descendants";
+import "./dataset-detail/dataset-detail-descendants";
 import "../profile-lkod/dataset-detail/part-data-service";
 import "../profile-lkod/dataset-detail/part-distribution";
 import "../profile-lkod/dataset-detail/legal/legal-column";

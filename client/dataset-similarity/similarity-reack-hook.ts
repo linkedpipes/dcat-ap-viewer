@@ -6,9 +6,11 @@ import {LabelActions} from "../viewer-react/service/label";
 
 export function withSimilarDatasets(dataset: string) {
   const [state, setState] = useState<{
-    "loading": boolean,
-    "failed": boolean,
-    "datasets": string[],
+    loading: boolean,
+    failed: boolean,
+    datasets: {
+      iri: string,
+    }[],
   }>({
     "loading": true,
     "failed": false,

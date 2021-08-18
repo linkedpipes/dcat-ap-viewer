@@ -8,7 +8,7 @@ import {
 import {t} from "../../viewer-react/service/i18";
 
 function DatasetDetailParts(props) {
-  const {loading, failed, datasets} = withSimilarDatasets(props.dataset);
+  const {loading, failed, datasets} = withSimilarDatasets(props.dataset.iri);
 
   if (loading) {
     const Component = getElement("application.loading").element;
@@ -22,10 +22,10 @@ function DatasetDetailParts(props) {
   return (
     <React.Fragment>
       <h2>{t("similarDatasets")}</h2>
-      {datasets.map((iri) => (
+      {datasets.map((dataset) => (
         <SimilarDatasetItem
-          key={iri}
-          dataset={iri}
+          key={dataset.iri}
+          dataset={dataset}
           language={props.language}/>
       ))}
     </React.Fragment>
