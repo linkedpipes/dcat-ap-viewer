@@ -12,7 +12,11 @@ import {
   TypeaheadDataset
 } from "../../data-api/api-dataset";
 import {datasetListSelector} from "./dataset-list-reducer";
-import {isStatusLoading, ResourceStatus} from "../resource-status";
+import {
+  isStatusLoading,
+  isStatusLoadingOrFailed,
+  ResourceStatus
+} from "../resource-status";
 import {DatasetListActions} from "./dataset-list-actions";
 import {getApi} from "../api-instance";
 import {
@@ -32,7 +36,7 @@ export function useDatasetListQuery() {
   const history = useHistory();
 
   useEffect(() => {
-    if (isStatusLoading(state.status)) {
+    if (isStatusLoadingOrFailed(state.status)) {
       // Do not allow change of query when loading data.
       return;
     }
