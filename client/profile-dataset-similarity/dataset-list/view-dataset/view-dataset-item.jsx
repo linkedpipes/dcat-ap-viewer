@@ -30,6 +30,7 @@ export default function DatasetListItem(props) {
         "display": "-webkit-box",
         "WebkitLineClamp": "3",
         "WebkitBoxOrient": "vertical",
+        "minHeight": "3rem",
       }}>
         {tLiteral(props.dataset.description)}
       </p>

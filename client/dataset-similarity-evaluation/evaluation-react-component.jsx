@@ -41,8 +41,15 @@ export function EvaluationToolbar() {
             />
           </FormGroup>
         </Col>
-        <Col xs={12} md={4}>
-          <Button color={color} onClick={action}>{message}</Button>
+        <Col xs={12} md={4} style={{"position":"relative"}}>
+          <Button color={color} onClick={action}
+            style={{
+              "left": "1rem",
+              "position": "absolute",
+              "bottom": "1rem",
+            }}>
+            {message}
+          </Button>
         </Col>
       </Row>
     </Container>
