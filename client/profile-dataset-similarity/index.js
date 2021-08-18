@@ -38,5 +38,8 @@ import "./core/header";
 import "../dataset-similarity";
 import "../dataset-similarity-evaluation";
 
+// Styles
+import "./style.css";
+
 // Render.
 import "../viewer-react/render";

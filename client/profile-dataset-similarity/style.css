@@ -1,0 +1,4 @@
+select.form-select {
+    background-color: var(--color-background-footer);
+    color: var(--color-text-default);
+}

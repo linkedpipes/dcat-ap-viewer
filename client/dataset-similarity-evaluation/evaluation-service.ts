@@ -5,7 +5,7 @@ import {
   EvaluationReport
 } from "./evaluation-model";
 import {NavigationData} from "../viewer-react/service/navigation";
-import * as useCases from "./use-cases.json";
+import useCases from "./use-cases";
 
 declare var CONFIGURATION: {
 

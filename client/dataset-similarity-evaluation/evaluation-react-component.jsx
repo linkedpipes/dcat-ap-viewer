@@ -6,7 +6,7 @@ import {
   withDatasetEvaluationLike,
   withDatasetEvaluationReport,
 } from "./evaluation-react-hook";
-import * as useCases from "./use-cases.json";
+import useCases from "./use-cases";
 
 export function EvaluationToolbar() {
   const {
