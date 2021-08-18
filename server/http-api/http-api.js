@@ -6,7 +6,7 @@ const couchdbProvider = require("./couchdb-provider/couchdb-provider");
 const sparqlProvider = require("./sparql-provider/sparql-provider");
 const testProvider = require("./test-provider/test-provider");
 const proxyProvider = require("./proxy-provider/proxy-provider");
-const storageProvider = require("./storage-provider/storage-provider")
+const storageProvider = require("./storage-provider/storage-provider");
 
 module.exports = {
   "initializeHttpApi": initializeHttpApi,

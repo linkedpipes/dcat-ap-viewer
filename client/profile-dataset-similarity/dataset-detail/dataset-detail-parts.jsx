@@ -23,13 +23,13 @@ function DatasetDetailParts(props) {
     <React.Fragment>
       <h2>{t("similarDatasets")}</h2>
       {datasets.map((iri) => (
-       <SimilarDatasetItem
-         key={iri}
-         dataset={iri}
-         language={props.language}/>
+        <SimilarDatasetItem
+          key={iri}
+          dataset={iri}
+          language={props.language}/>
       ))}
     </React.Fragment>
-  )
+  );
 }
 
 DatasetDetailParts.propTypes = {

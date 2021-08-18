@@ -23,8 +23,8 @@ export function EvaluationToolbar() {
       <FormGroup>
         <Label for="usecase">UseCase</Label>
         <Input type="select" name="usecase" id="usecase" value={useCase}
-               disabled={active}
-               onChange={event => setUseCase(event.target.value)}>
+          disabled={active}
+          onChange={event => setUseCase(event.target.value)}>
           {useCases.map((item) => (
             <option key={item.key} value={item.key}>{item.title}</option>
           ))}
@@ -35,9 +35,9 @@ export function EvaluationToolbar() {
           <FormGroup>
             <Label for="user">User</Label>
             <Input type="text" name="user" id="user"
-                   placeholder="User identification"
-                   value={user}
-                   onChange={(event) => setUser(event.target.value)}
+              placeholder="User identification"
+              value={user}
+              onChange={(event) => setUser(event.target.value)}
             />
           </FormGroup>
         </Col>

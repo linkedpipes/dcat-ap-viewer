@@ -10,8 +10,8 @@ const path = require("path");
 
 function createProvider(configuration) {
   return {
-    "v2-storage-post": createStoreContentPost(configuration)
-  }
+    "v2-storage-post": createStoreContentPost(configuration),
+  };
 }
 
 function createStoreContentPost(configuration) {
@@ -34,7 +34,7 @@ function createStoreContentPost(configuration) {
         logger.error("Can't save data.", {"error": error});
         res.status(500).send("");
       });
-  }
+  };
 }
 
 function jsonToFile(json, path) {
