@@ -43,7 +43,7 @@ function DatasetDetailParts(props) {
       <br/>
       {groups.map((group) => (
         <SimilarDatasetGroupItem
-          key={group[0].iri}
+          key={useGroups + group[0].iri}
           group={group}
           language={props.language}
           useGroups={useGroups}/>
