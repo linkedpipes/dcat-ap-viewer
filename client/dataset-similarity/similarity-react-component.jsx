@@ -13,7 +13,7 @@ export function SimilarDatasetGroupItem(props) {
 
   const [expanded, setExpanded] = useState(false);
 
-  if (props.useGroups) {
+  if (props.useGroups && props.group.length > 1) {
     return renderGroup(props, expanded, setExpanded);
   } else {
     return renderDataset(props, props.group[0]);
