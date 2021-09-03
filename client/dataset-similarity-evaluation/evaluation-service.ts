@@ -48,25 +48,55 @@ function guid(): string {
   });
 }
 
+enum LikedSource {
+  /**
+   * Dataset was liked directly, so it can be unliked only directly.
+   */
+  Self,
+  /**
+   * Dataset was liked as a part of a group, it can be unliked directly
+   * or as a part of a group.
+   */
+  ByGroup
+}
+
 export function buildLikedDatasets(report: EvaluationReport): Set<string> {
-  const result: Set<string> = new Set();
+  // For each dataset we store why it is liked.
+  const likedDatasets: Record<string, LikedSource> = {};
   report.history.forEach(action => {
     if (action.dataset === undefined) {
       return;
     }
     if (action.action === EvaluationActionType.like) {
-      result.add(action.dataset);
+      likedDatasets[action.dataset] = LikedSource.Self;
+      (action.children ?? []).forEach(iri => {
+        likedDatasets[iri] = likedDatasets[iri] ?? LikedSource.ByGroup;
+      });
     }
     if (action.action === EvaluationActionType.dislike) {
-      result.delete(action.dataset);
+      delete likedDatasets[action.dataset];
+      (action.children ?? []).forEach(iri => {
+        // We can remove the like only if the dataset was liked
+        // as a part of a group.
+        if (likedDatasets[iri] === LikedSource.ByGroup) {
+          delete likedDatasets[iri];
+        }
+      });
     }
   })
-  return result;
+  return new Set(Object.entries(likedDatasets)
+    .filter(([key, value]) => true)
+    .map(item => item[0])
+  );
 }
 
 function saveToLocalStore(report: EvaluationReport) {
   const key = CONFIGURATION.evaluationName;
-  localStorage.setItem(key, JSON.stringify(report));
+  try {
+    localStorage.setItem(key, JSON.stringify(report));
+  } catch (ex) {
+    // No data saved for you dear user. Can be by private mode.
+  }
 }
 
 function saveToServer(report: EvaluationReport) {
@@ -96,49 +126,55 @@ function createNavigationAction(navigation: NavigationData): EvaluationAction {
 }
 
 export async function likeDataset(
-  report: EvaluationReport, dataset: string,
+  report: EvaluationReport, dataset: string, children: string[],
 ): Promise<EvaluationReport> {
   const result: EvaluationReport = {
     ...report,
-    "history": [...report.history, createLikeAction(dataset)],
+    "history": [...report.history, createLikeAction(dataset, children)],
   };
   saveToLocalStore(result);
   await saveToServer(report);
   return result;
 }
 
-function createLikeAction(dataset: string): EvaluationAction {
+function createLikeAction(
+  dataset: string, children: string[],
+): EvaluationAction {
   return {
     "time": new Date().toISOString(),
     "action": EvaluationActionType.like,
     "dataset": dataset,
+    "children": children,
   }
 }
 
 export async function dislikeDataset(
-  report: EvaluationReport, dataset: string,
+  report: EvaluationReport, dataset: string, children: string[],
 ): Promise<EvaluationReport> {
   const result: EvaluationReport = {
     ...report,
-    "history": [...report.history, createDislikeAction(dataset)],
+    "history": [...report.history, createDislikeAction(dataset, children)],
   };
   saveToLocalStore(result);
   await saveToServer(report);
   return result;
 }
 
-function createDislikeAction(dataset: string): EvaluationAction {
+function createDislikeAction(
+  dataset: string, children: string[],
+): EvaluationAction {
   return {
     "time": new Date().toISOString(),
     "action": EvaluationActionType.dislike,
     "dataset": dataset,
+    "children": children,
   }
 }
 
 export function startEvaluation(
   report: EvaluationReport
 ): EvaluationReport {
-  const result =  {
+  const result = {
     ...report,
     "evaluating": true,
   };
@@ -161,7 +197,7 @@ export async function finishEvaluation(
 export function setUserName(
   report: EvaluationReport, user: string
 ): EvaluationReport {
-  const result =  {
+  const result = {
     ...report,
     "user": user,
   };
@@ -175,7 +211,7 @@ export function setUseCase(
   if (report.evaluating) {
     throw new Error("Can't change use-case after evaluation has started.")
   }
-  const result =  {
+  const result = {
     ...report,
     "useCase": useCase,
   };

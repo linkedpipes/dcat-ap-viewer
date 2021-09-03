@@ -89,7 +89,13 @@ function onFinishEvaluation(
   }
 }
 
-export function withDatasetEvaluationLike(dataset: string) {
+/**
+ * @param dataset Dataset user clicked one.
+ * @param children Similar datasets in group, are liked / disliked with the dataset.
+ */
+export function withDatasetEvaluationLike(
+  dataset: string, children:string[] | null
+) {
   const state = useSelector(evaluationReportSelector);
   const isLiked = useSelector((state) => evaluationLikedSelector(state, dataset));
   const dispatch = useDispatch();
@@ -97,19 +103,22 @@ export function withDatasetEvaluationLike(dataset: string) {
   return {
     "active": state.evaluating,
     "liked": isLiked,
-    "toggle": () => dispatch(onToggleDatasetLike(state, dataset, isLiked)),
+    "toggle": () => dispatch(onToggleDatasetLike(
+      state, dataset, children ?? [], isLiked)),
   };
 }
 
 function onToggleDatasetLike(
-  report: EvaluationReport, dataset: string, isLiked: boolean): ThunkVoidResult {
+  report: EvaluationReport,
+  dataset: string, children:string[], isLiked: boolean
+): ThunkVoidResult {
   return async (dispatch) => {
     let next;
     try {
       if (isLiked) {
-        next = await dislikeDataset(report, dataset);
+        next = await dislikeDataset(report, dataset, children);
       } else {
-        next = await likeDataset(report, dataset);
+        next = await likeDataset(report, dataset, children);
       }
     } catch (ex) {
       alert("Can't send data to server: " + ex);

@@ -42,7 +42,7 @@ export default function DatasetListItem(props) {
 DatasetListItem.propTypes = {
   "dataset": PropTypes.shape({
     "iri": PropTypes.string.isRequired,
-    "publisher": PropTypes.string.isRequired,
+    "publisher": PropTypes.string,
     "description": PropTypes.object.isRequired,
     "formats": PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,

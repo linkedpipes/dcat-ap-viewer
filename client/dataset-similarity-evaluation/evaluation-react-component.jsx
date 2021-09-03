@@ -57,7 +57,8 @@ export function EvaluationToolbar() {
 }
 
 export function EvaluationLikeButton(props) {
-  const {active, liked, toggle} = withDatasetEvaluationLike(props.dataset);
+  const {active, liked, toggle} =
+    withDatasetEvaluationLike(props.dataset, props.children);
 
   const style = {
     "color": liked ? "green" : "gray",
@@ -74,5 +75,6 @@ export function EvaluationLikeButton(props) {
 
 EvaluationLikeButton.propTypes = {
   "dataset": PropTypes.string.isRequired,
+  "children": PropTypes.arrayOf(PropTypes.string.isRequired),
 };
 

@@ -1,29 +1,30 @@
 import {useEffect, useState} from "react";
-import {fetchDataset, fetchSimilar} from "./similarity-service";
+import {fetchDataset, fetchSimilar, fetchSimilarGrouped} from "./similarity-service";
 import {NkodDataset} from "../data-model/dataset";
 import {useDispatch} from "react-redux";
 import {LabelActions} from "../viewer-react/service/label";
 
-export function withSimilarDatasets(dataset: string) {
+export function withSimilarDatasets(dataset: string, grouped:boolean) {
   const [state, setState] = useState<{
     loading: boolean,
     failed: boolean,
-    datasets: {
+    groups: {
       iri: string,
-    }[],
+    }[][],
   }>({
     "loading": true,
     "failed": false,
-    "datasets": [],
+    "groups": [],
   });
 
   useEffect(() => {
-    fetchSimilar(dataset)
+    const fetchFunction = grouped ? fetchSimilarGrouped : fetchSimilar;
+    fetchFunction(dataset)
       .then((data) => {
         setState({
           "loading": false,
           "failed": false,
-          "datasets": data,
+          "groups": data,
         });
       })
       .catch((error) => {
@@ -31,20 +32,22 @@ export function withSimilarDatasets(dataset: string) {
         setState({
           "loading": false,
           "failed": true,
-          "datasets": [],
+          "groups": [],
         });
       });
     setState({
       "loading": true,
       "failed": false,
-      "datasets": [],
+      "groups": [],
     });
-  }, [dataset]);
+  }, [dataset, grouped]);
 
   return state;
 }
 
-export function withDatasetDetail(language: string, dataset: string) {
+export function withDatasetDetail(
+  language: string, dataset: string | undefined
+) {
   const [state, setState] = useState<{
     "loading": boolean,
     "failed": boolean,
@@ -58,6 +61,15 @@ export function withDatasetDetail(language: string, dataset: string) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (dataset === undefined) {
+      setState({
+        "loading": false,
+        "failed": false,
+        "dataset": undefined,
+      });
+      return;
+    }
+
     fetchDataset(language, dataset)
       .then((data) => {
 

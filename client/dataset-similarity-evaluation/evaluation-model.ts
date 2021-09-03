@@ -12,6 +12,7 @@ export type EvaluationAction = {
   time: string;
   navigation?: NavigationData;
   dataset?: string;
+  children?: string[];
 }
 
 export type EvaluationReport = {
