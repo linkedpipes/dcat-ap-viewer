@@ -7,7 +7,7 @@ import {
 } from "../../dataset-similarity";
 import {t} from "../../viewer-react/service/i18";
 import {
-  SimilarDatasetGroupItem
+  SimilarDatasetGroupItem,
 } from "../../dataset-similarity/similarity-react-component";
 
 function DatasetDetailParts(props) {
@@ -31,12 +31,12 @@ function DatasetDetailParts(props) {
       <div style={{"float": "right"}}>
         <div className="form-check form-switch">
           <input className="form-check-input"
-                 type="checkbox"
-                 id="groupDatasets"
-                 checked={useGroups}
-                 onChange={toggleUseGroups}/>
+            type="checkbox"
+            id="groupDatasets"
+            checked={useGroups}
+            onChange={toggleUseGroups}/>
           <label className="form-check-label"
-                 htmlFor="groupDatasets"
+            htmlFor="groupDatasets"
           >Group datasets</label>
         </div>
       </div>

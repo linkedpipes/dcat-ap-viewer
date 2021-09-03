@@ -14,9 +14,9 @@ export function SimilarDatasetGroupItem(props) {
   const [expanded, setExpanded] = useState(false);
 
   if (props.useGroups && props.group.length > 1) {
-    return renderGroup(props, expanded, setExpanded);
+    return renderGroup(props.language, props.group, expanded, setExpanded);
   } else {
-    return renderDataset(props, props.group[0]);
+    return renderDataset(props.language, props.group[0]);
   }
 
 }
@@ -24,10 +24,10 @@ export function SimilarDatasetGroupItem(props) {
 SimilarDatasetGroupItem.propTypes = {
   "language": PropTypes.string.isRequired,
   "group": PropTypes.array.isRequired,
-  "useGroups": PropTypes.bool.isRequired
+  "useGroups": PropTypes.bool.isRequired,
 };
 
-function renderGroup(props, expanded, setExpanded) {
+function renderGroup(language, group, expanded, setExpanded) {
 
   const containerStyle = {
     "borderBottom": "2px solid var(--color-text-default)",
@@ -50,8 +50,8 @@ function renderGroup(props, expanded, setExpanded) {
 
   const icon = expanded ? "expand_less" : "expand_circle_down";
 
-  const first = props.group[0];
-  const tail = props.group.slice(1).map(dataset => dataset.iri);
+  const first = group[0];
+  const tail = group.slice(1).map(dataset => dataset.iri);
   return (
     <div style={containerStyle}>
       <div style={topStyle}>
@@ -60,23 +60,23 @@ function renderGroup(props, expanded, setExpanded) {
         </Button>
         <SimilarDatasetItem
           dataset={first}
-          language={props.language}
-          children={tail}
+          language={language}
+          groupDatasets={tail}
         />
       </div>
-      {expanded && props.group.slice(1).map((dataset) => (
+      {expanded && group.slice(1).map((dataset) => (
         <div style={nestedStyle} key={dataset.iri}>
           <SimilarDatasetItem
             dataset={dataset}
-            language={props.language}
+            language={language}
           />
         </div>
       ))}
     </div>
-  )
+  );
 }
 
-function renderDataset(props, dataset) {
+function renderDataset(language, dataset) {
   const containerStyle = {
     "borderBottom": "2px solid var(--color-text-default)",
     "marginTop": "1rem",
@@ -87,10 +87,10 @@ function renderDataset(props, dataset) {
     <div style={containerStyle}>
       <SimilarDatasetItem
         dataset={dataset}
-        language={props.language}
+        language={language}
       />
     </div>
-  )
+  );
 }
 
 function SimilarDatasetItem(props) {
@@ -134,7 +134,7 @@ function SimilarDatasetItem(props) {
       </div>
       <EvaluationLikeButton
         dataset={props.dataset.iri}
-        children={props.children}
+        groupDatasets={props.groupDatasets}
       />
     </React.Fragment>
   );
@@ -143,7 +143,7 @@ function SimilarDatasetItem(props) {
 SimilarDatasetItem.propTypes = {
   "language": PropTypes.string.isRequired,
   "dataset": PropTypes.object.isRequired,
-  "children": PropTypes.array
+  "groupDatasets": PropTypes.array,
 };
 
 function datasetDetailLinkUrl(language, iri) {
