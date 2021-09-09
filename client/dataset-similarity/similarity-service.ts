@@ -9,20 +9,14 @@ declare var CONFIGURATION: {
 
 }
 
-export async function fetchSimilar(dataset: string): Promise<{
+export async function fetchSimilar(
+  dataset: string, threshold: string
+): Promise<{
   iri: string;
 }[][]> {
   const url = CONFIGURATION.datasetSimilarityEndpoint
-    .replace("${dataset}", encodeURIComponent(dataset)) ;
-  // Wrap items in another array.
-  return  (await axios.get(url)).data.data.map((item :any) => [item]);
-}
-
-export async function fetchSimilarGrouped(dataset: string): Promise<{
-  iri: string;
-}[][]> {
-  const url = CONFIGURATION.datasetSimilarityEndpoint
-    .replace("${dataset}", encodeURIComponent(dataset)) + "?group=0.0";
+      .replace("${dataset}", encodeURIComponent(dataset))
+    + "?group=" + threshold;
   return (await axios.get(url)).data.data;
 }
 

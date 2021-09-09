@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import {Button} from "reactstrap";
 import {PropTypes} from "prop-types";
 
 import {withDatasetDetail} from "./similarity-reack-hook";
@@ -7,15 +8,19 @@ import {Link} from "react-router-dom";
 import {createUrl, selectLiteral} from "../viewer-react/service/i18";
 import {useLabelApi} from "../viewer-react/service/label";
 import {EvaluationLikeButton} from "../dataset-similarity-evaluation";
-import {Button} from "reactstrap";
+import {t} from "../viewer-react/service/i18";
 
 export function SimilarDatasetGroupItem(props) {
-
   const [expanded, setExpanded] = useState(false);
+  const [visible, setVisible] = useState(7);
 
-  if (props.useGroups && props.group.length > 1) {
-    return renderGroup(props.language, props.group, expanded, setExpanded);
+  if (props.group.length > 1) {
+    return renderGroup(
+      props.language, props.group,
+      expanded, setExpanded,
+      visible, setVisible);
   } else {
+    // Special case with only one group.
     return renderDataset(props.language, props.group[0]);
   }
 
@@ -24,10 +29,11 @@ export function SimilarDatasetGroupItem(props) {
 SimilarDatasetGroupItem.propTypes = {
   "language": PropTypes.string.isRequired,
   "group": PropTypes.array.isRequired,
-  "useGroups": PropTypes.bool.isRequired,
 };
 
-function renderGroup(language, group, expanded, setExpanded) {
+function renderGroup(
+  language, group, expanded, setExpanded, visible, setVisible,
+) {
 
   const containerStyle = {
     "borderBottom": "2px solid var(--color-text-default)",
@@ -64,7 +70,7 @@ function renderGroup(language, group, expanded, setExpanded) {
           groupDatasets={tail}
         />
       </div>
-      {expanded && group.slice(1).map((dataset) => (
+      {expanded && group.slice(1, visible).map((dataset) => (
         <div style={nestedStyle} key={dataset.iri}>
           <SimilarDatasetItem
             dataset={dataset}
@@ -72,6 +78,16 @@ function renderGroup(language, group, expanded, setExpanded) {
           />
         </div>
       ))}
+      {expanded && group.length > visible && (
+        <div style={{"height": "3rem"}}>
+          {t("visibleSimilar", {"visible": visible, "length": group.length})}
+          <Button style={{"float": "right"}} size="sm"
+            onClick={() => setVisible(visible + 5)}
+          >
+            {t("showMoreSimilar")}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

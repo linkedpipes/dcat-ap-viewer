@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
-import {fetchDataset, fetchSimilar, fetchSimilarGrouped} from "./similarity-service";
+import {fetchDataset, fetchSimilar} from "./similarity-service";
 import {NkodDataset} from "../data-model/dataset";
 import {useDispatch} from "react-redux";
 import {LabelActions} from "../viewer-react/service/label";
 
-export function withSimilarDatasets(dataset: string, grouped:boolean) {
+export function withSimilarDatasets(dataset: string, threshold: string) {
   const [state, setState] = useState<{
     loading: boolean,
     failed: boolean,
@@ -18,8 +18,10 @@ export function withSimilarDatasets(dataset: string, grouped:boolean) {
   });
 
   useEffect(() => {
-    const fetchFunction = grouped ? fetchSimilarGrouped : fetchSimilar;
-    fetchFunction(dataset)
+    if (threshold == "") {
+      return;
+    }
+    fetchSimilar(dataset, threshold)
       .then((data) => {
         setState({
           "loading": false,
@@ -40,7 +42,7 @@ export function withSimilarDatasets(dataset: string, grouped:boolean) {
       "failed": false,
       "groups": [],
     });
-  }, [dataset, grouped]);
+  }, [dataset, threshold]);
 
   return state;
 }

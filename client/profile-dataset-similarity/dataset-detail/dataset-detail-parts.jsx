@@ -4,52 +4,41 @@ import {PropTypes} from "prop-types";
 import {getElement, register} from "../../viewer-react/core/register";
 import {
   withSimilarDatasets,
+  SimilarDatasetGroupItem,
 } from "../../dataset-similarity";
 import {t} from "../../viewer-react/service/i18";
-import {
-  SimilarDatasetGroupItem,
-} from "../../dataset-similarity/similarity-react-component";
 
 function DatasetDetailParts(props) {
-  const [useGroups, toggleUseGroups] = usePersistentState(
-    "similarity-evaluation-use-groups", false);
+  const [threshold, setThreshold] = usePersistentState(
+    "similarity-evaluation-group-threshold", 0);
+
   const {loading, failed, groups} = withSimilarDatasets(
-    props.dataset.iri, useGroups);
+    props.dataset.iri,
+    threshold === "" ? "" : ("" + threshold / 100));
 
-  if (loading) {
-    const Component = getElement("application.loading").element;
-    return (<Component/>);
-  }
-
-  if (failed) {
-    const Component = getElement("application.failed").element;
-    return (<Component/>);
-  }
   return (
-    <React.Fragment>
+    <div>
       <h2>{t("similarDatasets")}</h2>
-      <div style={{"float": "right"}}>
-        <div className="form-check form-switch">
-          <input className="form-check-input"
-            type="checkbox"
-            id="groupDatasets"
-            checked={useGroups}
-            onChange={toggleUseGroups}/>
-          <label className="form-check-label"
-            htmlFor="groupDatasets"
-          >Group datasets</label>
+      <div style={{"position": "relative"}}>
+        <div style={{"position": "absolute", "right": "0", "top": "-2rem"}}>
+          <label className="form-label" htmlFor="similarityThreshold">
+            Group similarity threshold: {threshold / 100}
+          </label>
+          <input type="range"
+            min="0"
+            max="50"
+            step="10"
+            value={threshold}
+            disabled={loading}
+            onChange={(event) => setThreshold(event.target.value)}
+            className="form-range"
+            id="similarityThreshold"
+          />
         </div>
       </div>
+      {renderContent(loading, failed, groups, props.language)}
       <br/>
-      {groups.map((group) => (
-        <SimilarDatasetGroupItem
-          key={useGroups + group[0].iri}
-          group={group}
-          language={props.language}
-          useGroups={useGroups}/>
-      ))}
-      <br/>
-    </React.Fragment>
+    </div>
   );
 }
 
@@ -64,33 +53,58 @@ register({
   "translations": {
     "cs": {
       "similarDatasets": "Podobné datové sady",
+      "visibleSimilar": "Zobrazeno {visible} z {length}",
+      "showMoreSimilar": "Zobrazit více",
     },
     "en": {
       "similarDatasets": "Similar datasets",
+      "visibleSimilar": "Visible {visible} out of {length}",
+      "showMoreSimilar": "Show more",
     },
   },
 });
 
 function usePersistentState(name, defaultValue) {
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState("");
 
   useEffect(() => {
     const storageValue = localStorage.getItem(name);
     if (storageValue === null) {
-      return;
+      setValue(defaultValue);
+    } else {
+      setValue(JSON.parse(storageValue));
     }
-    setValue(JSON.parse(storageValue));
   }, []);
 
   return [
     value,
-    () => {
+    (newValue) => {
       try {
-        localStorage.setItem(name, JSON.stringify(!value));
+        localStorage.setItem(name, JSON.stringify(newValue));
       } catch (ex) {
         // No data saved for you dear user. Can be by private mode.
       }
-      setValue(!value);
+      setValue(newValue);
     },
   ];
+}
+
+function renderContent(loading, failed, groups, language) {
+  if (loading) {
+    const Component = getElement("application.loading").element;
+    return (<Component/>);
+  }
+
+  if (failed) {
+    const Component = getElement("application.failed").element;
+    return (<Component/>);
+  }
+
+  return groups.map((group) => (
+    <SimilarDatasetGroupItem
+      key={group[0].iri}
+      group={group}
+      language={language}/>
+  ));
+
 }
