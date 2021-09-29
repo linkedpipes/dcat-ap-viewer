@@ -189,6 +189,8 @@ function prepareForUrl(query: ExtendedDatasetListQuery): ParsedQuery {
       String(query.page + 1) : null,
     "pageSize": query.pageSize !== defaultQuery.pageSize ?
       String(query.pageSize) : null,
+    "showMore": query.showMore !== defaultQuery.showMore ?
+      String(query.showMore) : null,
     "sort": query.sort !== defaultQuery.sort ?
       query.sort : null,
     "search": query.search !== defaultQuery.search ?

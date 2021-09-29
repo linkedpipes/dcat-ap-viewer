@@ -11,7 +11,16 @@ import translations from "./dataset-list.json";
 const DatasetList = () => {
   const selectLabel = useLabelApi();
   const navigation = useContext(NavigationContext);
-  const [query, updateQuery] = useDatasetListQuery();
+  const [query, setQuery] = useDatasetListQuery();
+
+  const updateQuery = (update) => {
+    // If show more is not set, then something else has changed
+    // and we rest shorMore.
+    if (update["showMore"] === undefined) {
+      update["showMore"] = 0;
+    }
+    setQuery(update);
+  };
 
   const state = useDatasetListApi(navigation.language, query);
 
@@ -115,6 +124,7 @@ register({
       "language": "jazyk",
       "iri": "iri",
       "isPartOf": "nadřazený-dataset",
+      "showMore": "zobraz-více",
     },
     "en": {
       "/datasets": "/datasets",
@@ -132,6 +142,7 @@ register({
       "language": "language",
       "iri": "iri",
       "isPartOf": "is-part-of",
+      "showMore": "show-more",
     },
   },
   "translations": translations,
