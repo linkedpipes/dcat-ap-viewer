@@ -1,6 +1,7 @@
 import React from "react";
 import {PropTypes} from "prop-types";
 import {Button, FormGroup, Label, Input, Container, Row, Col} from "reactstrap";
+import "./style.css";
 
 import {
   withDatasetEvaluationLike,
@@ -36,6 +37,7 @@ export function EvaluationToolbar() {
             <Label for="user">User</Label>
             <Input type="text" name="user" id="user"
               placeholder="User identification"
+              disabled={active}
               value={user}
               onChange={(event) => setUser(event.target.value)}
             />

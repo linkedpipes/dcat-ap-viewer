@@ -9,7 +9,6 @@ import {createUrl, selectLiteral} from "../viewer-react/service/i18";
 import {useLabelApi} from "../viewer-react/service/label";
 import {EvaluationLikeButton} from "../dataset-similarity-evaluation";
 import {t} from "../viewer-react/service/i18";
-import "./style.css";
 
 export function SimilarDatasetGroupItem(props) {
   const [expanded, setExpanded] = useState(false);
