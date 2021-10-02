@@ -17,7 +17,8 @@ export async function fetchSimilar(
   const url = CONFIGURATION.datasetSimilarityEndpoint
       .replace("${dataset}", encodeURIComponent(dataset))
     + "?group=" + threshold;
-  return (await axios.get(url)).data.data;
+  // We utilize only first 7 groups.
+  return (await axios.get(url)).data.data.slice(0,7);
 }
 
 export async function fetchDataset(
