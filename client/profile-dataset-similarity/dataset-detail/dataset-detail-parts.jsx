@@ -12,17 +12,28 @@ function DatasetDetailParts(props) {
   const [threshold, setThreshold] = usePersistentState(
     "similarity-evaluation-group-threshold", 0);
 
+
   const {loading, failed, groups} = withSimilarDatasets(
     props.dataset.iri,
     threshold === "" ? "" : ("" + threshold / 100));
 
+  const similarityEnum = [
+    "groupNone",
+    "groupXSmall",
+    "groupSmall",
+    "groupMedium",
+    "groupLarge",
+    "groupXLarge",
+  ];
+  const groupIndex = Math.min(similarityEnum.length - 1, threshold / 10);
+  const groupLabel = similarityEnum[groupIndex];
   return (
     <div>
       <h2>{t("similarDatasets")}</h2>
       <div style={{"position": "relative"}}>
         <div style={{"position": "absolute", "right": "0", "top": "-2rem"}}>
           <label className="form-label" htmlFor="similarityThreshold">
-            Group similarity threshold: {threshold / 100}
+            {t("groupingSimilar")}: {t(groupLabel)}
           </label>
           <input type="range"
             min="0"
@@ -55,11 +66,25 @@ register({
       "similarDatasets": "Podobné datové sady",
       "visibleSimilar": "Zobrazeno {visible} z {length}",
       "showMoreSimilar": "Zobrazit více",
+      "groupingSimilar": "Seskupování podobných datasetů",
+      "groupNone": "Žádné",
+      "groupXSmall": "Menší",
+      "groupSmall": "Malé",
+      "groupMedium": "Střední",
+      "groupLarge": "Velké",
+      "groupXLarge": "Hodně Velké",
     },
     "en": {
       "similarDatasets": "Similar datasets",
       "visibleSimilar": "Visible {visible} out of {length}",
       "showMoreSimilar": "Show more",
+      "groupingSimilar": "Grouping similar datasets",
+      "groupNone": "None",
+      "groupXSmall": "Extra Small",
+      "groupSmall": "Small",
+      "groupMedium": "Medium",
+      "groupLarge": "Large",
+      "groupXLarge": "Extra Large",
     },
   },
 });
