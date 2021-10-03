@@ -103,7 +103,12 @@ export function loadFromLocalStoreOrCreate(): EvaluationReport {
     const query = getUrlQueryPart();
     if (query["autoStart"] !== undefined ) {
       result.evaluating = true;
-      result.history.push(createStartEvaluation(true));
+      result.history.push({
+        "time": new Date().toISOString(),
+        "action": EvaluationActionType.autoStart,
+        "window": WINDOW_IDENTIFIER,
+        "href": getHrefForAction(),
+      });
     }
   }
   saveToBrowser(result);
@@ -286,19 +291,14 @@ function createDislikeAction(
 export function startEvaluation(): EvaluationReport {
   const result = secureReport();
   result.evaluating = true;
-  result.history.push(createStartEvaluation(false));
-  saveToBrowser(result);
-  return result;
-}
-
-function createStartEvaluation(autoStart:boolean) : EvaluationAction {
-  return {
+  result.history.push({
     "time": new Date().toISOString(),
     "action": EvaluationActionType.start,
     "window": WINDOW_IDENTIFIER,
     "href": getHrefForAction(),
-    "autoStart": autoStart,
-  };
+  });
+  saveToBrowser(result);
+  return result;
 }
 
 export async function finishEvaluation(): Promise<EvaluationReport> {

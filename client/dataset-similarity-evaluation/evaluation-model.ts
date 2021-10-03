@@ -7,6 +7,7 @@ export enum EvaluationActionType {
   openWindow = "openWindow",
   closeWindow = "closeWindow",
   start = "start",
+  autoStart = "autoStart",
   finish = "finish",
 }
 
@@ -22,8 +23,6 @@ export type EvaluationAction = {
   href: any;
   // Can be used to identify the source window.
   parent?: string;
-  // True if the evaluation was started automatically.
-  autoStart?:boolean;
 }
 
 export type EvaluationReport = {
