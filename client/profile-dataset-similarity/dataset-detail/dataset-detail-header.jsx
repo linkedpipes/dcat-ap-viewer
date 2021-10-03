@@ -1,9 +1,8 @@
 import React from "react";
 import {PropTypes} from "prop-types";
-import {Link} from "react-router-dom";
 
 import {
-  translateString, register, useLabelApi, createUrl, configuration,
+  translateString, register, useLabelApi, configuration,
 } from "../viewer-api";
 import {EvaluationLikeButton} from "../../dataset-similarity-evaluation";
 
@@ -25,9 +24,7 @@ function DatasetDetailHeader(props) {
         <EvaluationLikeButton dataset={props.dataset.iri}/>
       </h1>
       <p className="h2">
-        <Link to={getPublisherSearchLink(props.language, props.dataset)}>
-          {selectLabel(props.dataset.publisher)}
-        </Link>
+        {selectLabel(props.dataset.publisher)}
       </p>
     </React.Fragment>
   );
@@ -42,7 +39,3 @@ register({
   "name": "dataset-detail.header",
   "element": DatasetDetailHeader,
 });
-
-function getPublisherSearchLink(language, dataset) {
-  return createUrl(language, "/datasets", {"publishers": dataset.publisher});
-}
