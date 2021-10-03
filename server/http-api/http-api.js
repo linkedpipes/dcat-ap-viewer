@@ -32,7 +32,7 @@ function initializeHttpApi(app) {
   v2.get("/quality", provider["v2-quality"]);
   v2.post(
     "/storage",
-    bodyParser.json({"limit": "512kb"}),
+    bodyParser.json({"limit": "32mb"}),
     provider["v2-storage-post"]);
   app.use("/api/v2", v2);
 }

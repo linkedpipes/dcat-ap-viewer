@@ -92,6 +92,7 @@ export function loadFromLocalStoreOrCreate(): EvaluationReport {
   if (firstTimeCall) {
     const urlSearchParams = getUrlQueryPart();
     firstTimeCall = false;
+    result.referenceCount += 1;
     result.history.push({
       "action": EvaluationActionType.openWindow,
       "time": new Date().toISOString(),
@@ -128,7 +129,7 @@ export function loadFromBrowser(): EvaluationReport | null {
   if (key === null) {
     return null;
   }
-  const value = sessionStorage.getItem(key);
+  const value = localStorage.getItem(key);
   if (value == null) {
     return null;
   }
@@ -158,6 +159,7 @@ function createReportFromQuery(): EvaluationReport {
     "history": [],
     "evaluating": false,
     "wasFinished": false,
+    "referenceCount": 0,
   };
 }
 
@@ -179,7 +181,7 @@ function getHrefForAction() {
 function saveToBrowser(report: EvaluationReport) {
   const key = getReportStorageKey();
   try {
-    sessionStorage.setItem(key, JSON.stringify(report));
+    localStorage.setItem(key, JSON.stringify(report));
   } catch (ex) {
     // No data saved for you dear user. Can be by private mode.
   }
@@ -340,11 +342,25 @@ window.onbeforeunload = function () {
   if (report === null) {
     return;
   }
+  report.referenceCount -= 1;
   report.history.push({
     "action": EvaluationActionType.closeWindow,
     "time": new Date().toISOString(),
     "window": WINDOW_IDENTIFIER,
     "href": getHrefForAction(),
   });
-  saveToBrowser(report);
+  if (report.referenceCount > 0) {
+    saveToBrowser(report);
+  } else {
+    deleteFromBrowser();
+  }
 };
+
+function deleteFromBrowser() {
+  const key = getReportStorageKey();
+  try {
+    localStorage.removeItem(key);
+  } catch (ex) {
+    // No data saved for you dear user. Can be by private mode.
+  }
+}

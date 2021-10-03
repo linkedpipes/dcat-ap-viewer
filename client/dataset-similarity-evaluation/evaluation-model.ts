@@ -42,4 +42,9 @@ export type EvaluationReport = {
    * We add this to allow user to restart the evaluation.
    */
   wasFinished: boolean;
+  /**
+   * Count number of windows that have reference to this report, used
+   * to delete the report when the last window is closed.
+   */
+  referenceCount:number;
 };
