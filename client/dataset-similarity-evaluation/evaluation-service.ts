@@ -13,39 +13,36 @@ declare var CONFIGURATION: {
 
 }
 
-export function loadFromLocalStoreOrCreate(): EvaluationReport {
-  const key = CONFIGURATION.evaluationName;
-  const value = localStorage.getItem(key);
-  if (value == null) {
-    return createEmptyEvaluationData();
-  }
-  const result = JSON.parse(value) as EvaluationReport;
-  if (result.evaluating) {
-    result.history.push({
-      "action": EvaluationActionType.loaded,
-      "time": new Date().toISOString(),
-    });
-  }
-  return result;
-}
+/**
+ * Data structure used to store use-case independent data.
+ */
+class LocalConfiguration {
 
-function createEmptyEvaluationData(): EvaluationReport {
-  const name = CONFIGURATION.evaluationName;
-  return {
-    "name": name,
-    "identifier": name + "-" + (new Date()).toISOString() + "-" + guid(),
-    "user": guid(),
-    "useCase": useCases[0]["key"],
-    "history": [],
-    "evaluating": false,
-  };
-}
+  private static STORAGE_KEY = "similarity-evaluation-configuration";
 
-function guid(): string {
-  return 'xxxxxxxx-xxxx-xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
+  user:string = "";
+
+  protected constructor() {
+  }
+
+  static load(): LocalConfiguration {
+    const asString = localStorage.getItem(LocalConfiguration.STORAGE_KEY);
+    if (asString === null) {
+      return new LocalConfiguration();
+    }
+    return JSON.parse(asString) as LocalConfiguration;
+  }
+
+  static save(configuration:LocalConfiguration) {
+    try {
+      localStorage.setItem(
+        LocalConfiguration.STORAGE_KEY,
+        JSON.stringify(configuration));
+    } catch (ex) {
+      // No data saved for you dear user. Can be by private mode.
+    }
+  }
+
 }
 
 enum LikedSource {
@@ -60,7 +57,135 @@ enum LikedSource {
   ByGroup
 }
 
-export function buildLikedDatasets(report: EvaluationReport): Set<string> {
+let firstTimeCall = true;
+
+/**
+ * Identification for a window to support multiple tabs.
+ */
+const WINDOW_IDENTIFIER = Date.now() + "";
+
+/**
+ * Identification of the root window, from which all others are open. All
+ * windows with the same root share the localStorage data.
+ */
+let ROOT_IDENTIFIER = "";
+
+(function initializeEvaluation() {
+  const query = getUrlQueryPart();
+  ROOT_IDENTIFIER = query["root"] || Date.now() + "";
+})();
+
+/**
+ * Should be added to every URL query part to allow for tracking.
+ */
+export function getTrackingUrlQuery() {
+  return {
+    "source": WINDOW_IDENTIFIER,
+    "root": ROOT_IDENTIFIER,
+  };
+}
+
+export function loadFromLocalStoreOrCreate(): EvaluationReport {
+  let result = secureReport();
+  // Add event about new window opening, only for the first time, this
+  // method is called.
+  if (firstTimeCall) {
+    const urlSearchParams = getUrlQueryPart();
+    firstTimeCall = false;
+    result.history.push({
+      "action": EvaluationActionType.openWindow,
+      "time": new Date().toISOString(),
+      "window": WINDOW_IDENTIFIER,
+      "href": getHrefForAction(),
+      "parent": urlSearchParams["source"],
+    });
+    const query = getUrlQueryPart();
+    if (query["autoStart"] !== undefined ) {
+      result.evaluating = true;
+      result.history.push(createStartEvaluation(true));
+    }
+  }
+  saveToLocalStore(result);
+  return result;
+}
+
+/**
+ * Return active instance of report class.
+ */
+function secureReport(): EvaluationReport {
+  const useCaseReport = loadReportFromLocalStorage();
+  // use-case report utilize the use-case from query, so if there is
+  // one we return it.
+  if (useCaseReport !== null) {
+    return useCaseReport;
+  }
+  // If there is no stored report for the use-case create a new one.
+  return createReportFromQuery();
+}
+
+export function loadReportFromLocalStorage(): EvaluationReport | null {
+  const key = getReportStorageKey();
+  if (key === null) {
+    return null;
+  }
+  const value = localStorage.getItem(key);
+  if (value == null) {
+    return null;
+  }
+  return JSON.parse(value) as EvaluationReport;
+}
+
+function getReportStorageKey(): string {
+  return "similarity-evaluation:"
+    + CONFIGURATION.evaluationName
+    + ":" + ROOT_IDENTIFIER;
+}
+
+function getUrlQueryPart() {
+  return Object.fromEntries(
+    new URLSearchParams(window.location.search).entries());
+}
+
+function createReportFromQuery(): EvaluationReport {
+  const query = getUrlQueryPart();
+  const name = CONFIGURATION.evaluationName;
+  const configuration = LocalConfiguration.load();
+  return {
+    "name": name,
+    "identifier": name + "-" + Date.now() + "-" + guid(),
+    "user": query["user"] ?? configuration.user ?? guid(),
+    "useCase": query["useCase"] ?? useCases[0]["key"],
+    "history": [],
+    "evaluating": false,
+    "wasFinished": false,
+  };
+}
+
+function guid(): string {
+  return 'xxxxxxxx-xxxx-xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
+function getHrefForAction() {
+  return {
+    "origin": window.location.origin,
+    "pathname": window.location.pathname,
+    "search": window.location.search,
+  };
+}
+
+function saveToLocalStore(report: EvaluationReport) {
+  const key = getReportStorageKey();
+  try {
+    localStorage.setItem(key, JSON.stringify(report));
+  } catch (ex) {
+    // No data saved for you dear user. Can be by private mode.
+  }
+}
+
+export function buildLikedDatasets(report:EvaluationReport): Set<string> {
   // For each dataset we store why it is liked.
   const likedDatasets: Record<string, LikedSource> = {};
   report.history.forEach(action => {
@@ -90,51 +215,38 @@ export function buildLikedDatasets(report: EvaluationReport): Set<string> {
   );
 }
 
-function saveToLocalStore(report: EvaluationReport) {
-  const key = CONFIGURATION.evaluationName;
-  try {
-    localStorage.setItem(key, JSON.stringify(report));
-  } catch (ex) {
-    // No data saved for you dear user. Can be by private mode.
-  }
-}
-
 function saveToServer(report: EvaluationReport) {
   return axios.post("./api/v2/storage", report);
 }
 
-export function addNavigation(
-  report: EvaluationReport, navigation: NavigationData,
-): EvaluationReport {
-  if (!report.evaluating) {
-    return report;
-  }
-  const result: EvaluationReport = {
-    ...report,
-    "history": [...report.history, createNavigationAction(navigation)],
-  };
-  saveToLocalStore(result);
-  return result;
+export function addNavigation(navigation: NavigationData): EvaluationReport {
+  return addActionToReport(createNavigationAction(navigation));
 }
 
 function createNavigationAction(navigation: NavigationData): EvaluationAction {
   return {
     "time": new Date().toISOString(),
     "action": EvaluationActionType.navigation,
+    "window": WINDOW_IDENTIFIER,
+    "href": getHrefForAction(),
     "navigation": navigation,
   }
 }
 
-export async function likeDataset(
-  report: EvaluationReport, dataset: string, children: string[],
-): Promise<EvaluationReport> {
-  const result: EvaluationReport = {
-    ...report,
-    "history": [...report.history, createLikeAction(dataset, children)],
-  };
+function addActionToReport(action: EvaluationAction): EvaluationReport {
+  const result = secureReport();
+  if (!result.evaluating) {
+    return result;
+  }
+  result.history.push(action);
   saveToLocalStore(result);
-  await saveToServer(report);
   return result;
+}
+
+export async function likeDataset(
+  dataset: string, children: string[],
+): Promise<EvaluationReport> {
+  return addActionToReport(createLikeAction(dataset, children));
 }
 
 function createLikeAction(
@@ -145,19 +257,15 @@ function createLikeAction(
     "action": EvaluationActionType.like,
     "dataset": dataset,
     "children": children,
+    "window": WINDOW_IDENTIFIER,
+    "href": getHrefForAction(),
   }
 }
 
 export async function dislikeDataset(
-  report: EvaluationReport, dataset: string, children: string[],
+  dataset: string, children: string[],
 ): Promise<EvaluationReport> {
-  const result: EvaluationReport = {
-    ...report,
-    "history": [...report.history, createDislikeAction(dataset, children)],
-  };
-  saveToLocalStore(result);
-  await saveToServer(report);
-  return result;
+  return addActionToReport(createDislikeAction(dataset, children));
 }
 
 function createDislikeAction(
@@ -168,53 +276,75 @@ function createDislikeAction(
     "action": EvaluationActionType.dislike,
     "dataset": dataset,
     "children": children,
+    "window": WINDOW_IDENTIFIER,
+    "href": getHrefForAction(),
   }
 }
 
-export function startEvaluation(
-  report: EvaluationReport
-): EvaluationReport {
-  const result = {
-    ...report,
-    "evaluating": true,
-  };
+export function startEvaluation(): EvaluationReport {
+  const result = secureReport();
+  result.evaluating = true;
+  result.history.push(createStartEvaluation(false));
   saveToLocalStore(result);
   return result;
 }
 
-export async function finishEvaluation(
-  report: EvaluationReport
-): Promise<EvaluationReport> {
-  await saveToServer(report);
-  const result = {
-    ...createEmptyEvaluationData(),
-    "user": report.user,
+function createStartEvaluation(autoStart:boolean) : EvaluationAction {
+  return {
+    "time": new Date().toISOString(),
+    "action": EvaluationActionType.start,
+    "window": WINDOW_IDENTIFIER,
+    "href": getHrefForAction(),
+    "autoStart": autoStart,
   };
+}
+
+export async function finishEvaluation(): Promise<EvaluationReport> {
+  const result = secureReport();
+  result.evaluating = false;
+  result.wasFinished = true;
+  result.history.push({
+    "time": new Date().toISOString(),
+    "action": EvaluationActionType.finish,
+    "window": WINDOW_IDENTIFIER,
+    "href": getHrefForAction(),
+  });
+  await saveToServer(result);
+  // We allow user to start the evaluation again.
   saveToLocalStore(result);
   return result;
 }
 
-export function setUserName(
-  report: EvaluationReport, user: string
-): EvaluationReport {
-  const result = {
-    ...report,
-    "user": user,
-  };
+export function setUserName(user: string): EvaluationReport {
+  const configuration = LocalConfiguration.load();
+  configuration.user= user;
+  LocalConfiguration.save(configuration);
+  //
+  const result = secureReport();
+  result.user = user;
   saveToLocalStore(result);
   return result;
 }
 
-export function setUseCase(
-  report: EvaluationReport, useCase: string
-): EvaluationReport {
-  if (report.evaluating) {
-    throw new Error("Can't change use-case after evaluation has started.")
+export function setUseCase(useCase: string): EvaluationReport {
+  // This creates new storage report key.
+  const result = secureReport();
+  result.useCase = useCase;
+  saveToLocalStore(result);
+  return result;
+}
+
+// We also save information when a tab is closed.
+window.onbeforeunload = function () {
+  const report = secureReport();
+  if (report === null) {
+    return;
   }
-  const result = {
-    ...report,
-    "useCase": useCase,
-  };
-  saveToLocalStore(result);
-  return result;
-}
+  report.history.push({
+    "action": EvaluationActionType.closeWindow,
+    "time": new Date().toISOString(),
+    "window": WINDOW_IDENTIFIER,
+    "href": getHrefForAction(),
+  });
+  saveToLocalStore(report);
+};

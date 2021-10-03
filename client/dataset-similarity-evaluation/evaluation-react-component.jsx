@@ -13,18 +13,19 @@ export function EvaluationToolbar() {
   const {
     user, setUser,
     useCase, setUseCase,
-    active, startEvaluation, finishEvaluation,
+    active, finished,
+    startEvaluation, finishEvaluation,
   } = withDatasetEvaluationReport();
 
-  const message = active ? "Finish evaluation" : "Start evaluation";
-  const color = active ? "warning" : "primary";
+  const [message, color] = getActionButtonContent(active, finished);
   const action = active ? finishEvaluation : startEvaluation;
+  const uiDisabled = active || finished;
   return (
     <Container>
       <FormGroup>
         <Label for="usecase">UseCase</Label>
         <Input type="select" name="usecase" id="usecase" value={useCase}
-          disabled={active}
+          disabled={uiDisabled}
           onChange={event => setUseCase(event.target.value)}>
           {useCases.map((item) => (
             <option key={item.key} value={item.key}>{item.title}</option>
@@ -37,7 +38,7 @@ export function EvaluationToolbar() {
             <Label for="user">User</Label>
             <Input type="text" name="user" id="user"
               placeholder="User identification"
-              disabled={active}
+              disabled={uiDisabled}
               value={user}
               onChange={(event) => setUser(event.target.value)}
             />
@@ -57,6 +58,17 @@ export function EvaluationToolbar() {
     </Container>
   );
 }
+
+function getActionButtonContent(active, finished) {
+  if (active) {
+    return ["Finish evaluation", "warning"];
+  }
+  if (finished) {
+    return ["Re-open finished evaluation", "danger"];
+  }
+  return ["Start evaluation", "primary"];
+}
+
 
 export function EvaluationLikeButton(props) {
   const {active, liked, toggle} =

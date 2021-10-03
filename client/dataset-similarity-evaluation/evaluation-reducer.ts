@@ -8,6 +8,10 @@ import {
 import {EvaluationActions, EvaluationActionsType} from "./evaluation-actions";
 
 class State {
+  /**
+   * This is a copy of a report, the main report is stored in the
+   * evaluation-service file.
+   */
   report: EvaluationReport;
   likedDatasets: Set<string>;
 

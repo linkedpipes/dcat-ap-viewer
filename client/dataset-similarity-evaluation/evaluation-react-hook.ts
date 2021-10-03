@@ -1,9 +1,13 @@
 import {EvaluationActions} from "./evaluation-actions";
 import {
   addNavigation,
-  setUserName, setUseCase,
-  likeDataset, dislikeDataset,
-  startEvaluation, finishEvaluation,
+  setUserName,
+  setUseCase,
+  likeDataset,
+  dislikeDataset,
+  startEvaluation,
+  finishEvaluation,
+  loadReportFromLocalStorage,
 } from "./evaluation-service";
 import {
   evaluationLikedSelector,
@@ -27,60 +31,64 @@ export function withDatasetEvaluationReport() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(onNavigation(state, navigation));
+    dispatch(onNavigation(navigation));
   }, [navigation]);
+
+  useEffect(() => {
+    // Dispatch does not ever change, so this is run only once
+    // at the start. As the report can be changed by other windows,
+    // we need to be able to react to that and reload.
+    window.addEventListener("storage", () => {
+      const report = loadReportFromLocalStorage();
+      if (report == null) {
+        return;
+      }
+      dispatch(dispatch(EvaluationActions.updateReport(report)));
+    });
+  }, [dispatch]);
 
   return {
     "user": state.user,
     "useCase": state.useCase,
     "active": state.evaluating,
-    "setUser": (value: string) => dispatch(onSetUser(state, value)),
-    "setUseCase": (value: string) => dispatch(onSetUseCase(state, value)),
-    "startEvaluation": () => dispatch(onStartEvaluation(state)),
-    "finishEvaluation": () => dispatch(onFinishEvaluation(state)),
+    "finished": state.wasFinished,
+    "setUser": (value: string) => dispatch(onSetUser(value)),
+    "setUseCase": (value: string) => dispatch(onSetUseCase(value)),
+    "startEvaluation": () => dispatch(onStartEvaluation()),
+    "finishEvaluation": () => dispatch(onFinishEvaluation()),
   };
 }
 
-function onNavigation(
-  report: EvaluationReport, navigation: NavigationData
-): AnyAction {
-  return EvaluationActions.updateReport(addNavigation(report, navigation));
+function onNavigation(navigation: NavigationData): AnyAction {
+  return EvaluationActions.updateReport(addNavigation(navigation));
 }
 
-function onSetUser(
-  report: EvaluationReport, value: string
-): ThunkVoidResult {
+function onSetUser(value: string): ThunkVoidResult {
   return async (dispatch) => {
-    const next = setUserName(report, value);
+    const next = setUserName(value);
     dispatch(EvaluationActions.updateReport(next));
   }
 }
 
-function onSetUseCase(
-  report: EvaluationReport, value: string
-): ThunkVoidResult {
+function onSetUseCase(value: string): ThunkVoidResult {
   return async (dispatch) => {
-    const next = setUseCase(report, value);
+    const next = setUseCase(value);
     dispatch(EvaluationActions.updateReport(next));
   }
 }
 
-function onStartEvaluation(
-  report: EvaluationReport
-): ThunkVoidResult {
+function onStartEvaluation(): ThunkVoidResult {
   return async (dispatch) => {
-    const next = startEvaluation(report);
+    const next = startEvaluation();
     dispatch(EvaluationActions.updateReport(next));
   }
 }
 
-function onFinishEvaluation(
-  report: EvaluationReport
-): ThunkVoidResult {
+function onFinishEvaluation(): ThunkVoidResult {
   return async (dispatch) => {
     let next;
     try {
-      next = await finishEvaluation(report);
+      next = await finishEvaluation();
     } catch (ex) {
       alert("Can't send data to server: " + ex);
       return;
@@ -116,9 +124,9 @@ function onToggleDatasetLike(
     let next;
     try {
       if (isLiked) {
-        next = await dislikeDataset(report, dataset, children);
+        next = await dislikeDataset(dataset, children);
       } else {
-        next = await likeDataset(report, dataset, children);
+        next = await likeDataset(dataset, children);
       }
     } catch (ex) {
       alert("Can't send data to server: " + ex);

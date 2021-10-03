@@ -4,6 +4,7 @@ import {ParsedQuery} from "query-string";
 import {Literal} from "../../data-model/primitives";
 import {NavigationConsumer} from "./navigation";
 import {getTranslations, getQuery, getPath} from "./translations";
+import {getTrackingUrlQuery} from "../../dataset-similarity-evaluation";
 
 const NAMESPACE_SEPARATOR = ".";
 
@@ -91,7 +92,7 @@ function formatString(str: string, args?: object) {
     return str;
   }
   for (let [key, value] of Object.entries(args)) {
-    str = str.replace(new RegExp("\\{" + key + "\\}", "gi"), value);
+    str = str.replace(new RegExp("\\{" + key + "\\}", "gi"), value as string);
   }
   return str;
 }
@@ -141,7 +142,12 @@ function createQueryString(
   language: string, path: string, query: ParsedQuery | undefined
 ) {
   if (query === undefined) {
-    return "";
+    query = getTrackingUrlQuery();
+  } else {
+    query = {
+      ...query,
+      ...getTrackingUrlQuery(),
+    };
   }
   let result = "";
   Object.entries(query).forEach(([key, value]) => {
