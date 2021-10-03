@@ -93,6 +93,10 @@ export function register(
   }
 }
 
+export function removeFromRegistry(name:string): void {
+  delete registered[name];
+}
+
 export function registerOnlyOnce(
   entity: Reducer | Element | View | Service | Translation,
 ) {

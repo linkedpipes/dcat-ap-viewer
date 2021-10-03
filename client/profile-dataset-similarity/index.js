@@ -14,7 +14,7 @@ import "../profile-lkod/dataset-list/dataset-list-query/dataset-list-query";
 import "../profile-lkod/dataset-detail/dataset-detail";
 import "../profile-lkod/dataset-detail/dataset-detail-metadata";
 import "./dataset-detail/dataset-detail-header";
-import "../profile-lkod/dataset-detail/dataset-detail-body";
+import "./dataset-detail/dataset-detail-body";
 import "./dataset-detail/dataset-detail-parts";
 import "./dataset-detail/dataset-detail-descendants";
 import "../profile-lkod/dataset-detail/part-data-service";
@@ -37,6 +37,17 @@ import "../profile-lkod/style-mode-dark.css";
 import "./core/header";
 import "../dataset-similarity";
 import "../dataset-similarity-evaluation";
+
+// Configuration.
+import {removeFromRegistry} from "./viewer-api";
+import configuration from "./profile-configuration";
+// By registering empty elements we can disable the components.
+if (configuration.disableDatasetList) {
+  removeFromRegistry("dataset-list.view");
+}
+if (configuration.disableDatasetSimilarity) {
+  removeFromRegistry("dataset-detail.parts");
+}
 
 // Styles
 import "./style.css";

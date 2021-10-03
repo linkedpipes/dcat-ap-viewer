@@ -11,6 +11,7 @@ import {
 } from "../../dataset-similarity-evaluation";
 
 import translations from "./header.json";
+import configuration from "../profile-configuration";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,12 +23,16 @@ function Header() {
           <NavbarToggler onClick={() => setIsOpen(!isOpen)}/>
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ms-auto" navbar>
+              {!configuration.disableDatasetList &&
               <NavItem>
                 {navLink("/datasets", "header.datasets")}
               </NavItem>
+              }
+              {!configuration.disableDatasetList &&
               <NavItem>
                 {navLink("/keywords", "header.keywords")}
               </NavItem>
+              }
               <LanguageSelector/>
             </Nav>
           </Collapse>
