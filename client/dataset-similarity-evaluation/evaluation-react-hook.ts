@@ -7,7 +7,7 @@ import {
   dislikeDataset,
   startEvaluation,
   finishEvaluation,
-  loadReportFromLocalStorage,
+  loadFromBrowser,
 } from "./evaluation-service";
 import {
   evaluationLikedSelector,
@@ -39,7 +39,7 @@ export function withDatasetEvaluationReport() {
     // at the start. As the report can be changed by other windows,
     // we need to be able to react to that and reload.
     window.addEventListener("storage", () => {
-      const report = loadReportFromLocalStorage();
+      const report = loadFromBrowser();
       if (report == null) {
         return;
       }

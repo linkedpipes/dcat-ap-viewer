@@ -105,7 +105,7 @@ export function loadFromLocalStoreOrCreate(): EvaluationReport {
       result.history.push(createStartEvaluation(true));
     }
   }
-  saveToLocalStore(result);
+  saveToBrowser(result);
   return result;
 }
 
@@ -113,7 +113,7 @@ export function loadFromLocalStoreOrCreate(): EvaluationReport {
  * Return active instance of report class.
  */
 function secureReport(): EvaluationReport {
-  const useCaseReport = loadReportFromLocalStorage();
+  const useCaseReport = loadFromBrowser();
   // use-case report utilize the use-case from query, so if there is
   // one we return it.
   if (useCaseReport !== null) {
@@ -123,12 +123,12 @@ function secureReport(): EvaluationReport {
   return createReportFromQuery();
 }
 
-export function loadReportFromLocalStorage(): EvaluationReport | null {
+export function loadFromBrowser(): EvaluationReport | null {
   const key = getReportStorageKey();
   if (key === null) {
     return null;
   }
-  const value = localStorage.getItem(key);
+  const value = sessionStorage.getItem(key);
   if (value == null) {
     return null;
   }
@@ -176,10 +176,10 @@ function getHrefForAction() {
   };
 }
 
-function saveToLocalStore(report: EvaluationReport) {
+function saveToBrowser(report: EvaluationReport) {
   const key = getReportStorageKey();
   try {
-    localStorage.setItem(key, JSON.stringify(report));
+    sessionStorage.setItem(key, JSON.stringify(report));
   } catch (ex) {
     // No data saved for you dear user. Can be by private mode.
   }
@@ -239,7 +239,7 @@ function addActionToReport(action: EvaluationAction): EvaluationReport {
     return result;
   }
   result.history.push(action);
-  saveToLocalStore(result);
+  saveToBrowser(result);
   return result;
 }
 
@@ -285,7 +285,7 @@ export function startEvaluation(): EvaluationReport {
   const result = secureReport();
   result.evaluating = true;
   result.history.push(createStartEvaluation(false));
-  saveToLocalStore(result);
+  saveToBrowser(result);
   return result;
 }
 
@@ -311,7 +311,7 @@ export async function finishEvaluation(): Promise<EvaluationReport> {
   });
   await saveToServer(result);
   // We allow user to start the evaluation again.
-  saveToLocalStore(result);
+  saveToBrowser(result);
   return result;
 }
 
@@ -322,7 +322,7 @@ export function setUserName(user: string): EvaluationReport {
   //
   const result = secureReport();
   result.user = user;
-  saveToLocalStore(result);
+  saveToBrowser(result);
   return result;
 }
 
@@ -330,7 +330,7 @@ export function setUseCase(useCase: string): EvaluationReport {
   // This creates new storage report key.
   const result = secureReport();
   result.useCase = useCase;
-  saveToLocalStore(result);
+  saveToBrowser(result);
   return result;
 }
 
@@ -346,5 +346,5 @@ window.onbeforeunload = function () {
     "window": WINDOW_IDENTIFIER,
     "href": getHrefForAction(),
   });
-  saveToLocalStore(report);
+  saveToBrowser(report);
 };
