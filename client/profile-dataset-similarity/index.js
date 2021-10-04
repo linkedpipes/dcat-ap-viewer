@@ -38,19 +38,8 @@ import "./core/header";
 import "../dataset-similarity";
 import "../dataset-similarity-evaluation";
 
-// Configuration.
-import {removeFromRegistry} from "./viewer-api";
-import configuration from "./profile-configuration";
-// By registering empty elements we can disable the components.
-if (configuration.disableDatasetList) {
-  removeFromRegistry("dataset-list.view");
-}
-if (configuration.disableDatasetSimilarity) {
-  removeFromRegistry("dataset-detail.parts");
-}
-
 // Styles
 import "./style.css";
 
 // Render.
-import "../viewer-react/render";
+import "./render";
