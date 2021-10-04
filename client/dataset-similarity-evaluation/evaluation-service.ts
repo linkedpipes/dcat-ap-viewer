@@ -253,7 +253,9 @@ function addActionToReport(action: EvaluationAction): EvaluationReport {
 export async function likeDataset(
   dataset: string, children: string[],
 ): Promise<EvaluationReport> {
-  return addActionToReport(createLikeAction(dataset, children));
+  const result = addActionToReport(createLikeAction(dataset, children));
+  await saveToServer(result);
+  return result;
 }
 
 function createLikeAction(
@@ -272,7 +274,9 @@ function createLikeAction(
 export async function dislikeDataset(
   dataset: string, children: string[],
 ): Promise<EvaluationReport> {
-  return addActionToReport(createDislikeAction(dataset, children));
+  const result = addActionToReport(createDislikeAction(dataset, children));
+  await saveToServer(result);
+  return result;
 }
 
 function createDislikeAction(
