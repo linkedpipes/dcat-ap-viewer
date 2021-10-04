@@ -1,7 +1,7 @@
 // Profile lkod specific components
 import "../profile-lkod/core/application";
 import "../profile-lkod/core/loading-indicator";
-import "../profile-lkod/core/page-not-found";
+import "./core/page-not-found";
 import "../profile-lkod/core/modal";
 import "../profile-lkod/core/status-failed";
 import "../profile-lkod/core/status-loading";
