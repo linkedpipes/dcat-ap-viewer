@@ -349,11 +349,7 @@ function contactPoint(selectLabel, contactPoint) {
   if (label === null) {
     label = email;
   }
-  let iri = contactPoint.email ?
-    "mailto:" + contactPoint.email : contactPoint.iri;
-  return (
-    <a href={iri} rel="nofollow noopener noreferrer">{label}</a>
-  );
+  return label;
 }
 
 function specificationLabel() {
