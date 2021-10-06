@@ -9,7 +9,7 @@ import {
 } from "./evaluation-react-hook";
 import useCases from "./use-cases";
 
-export function EvaluationToolbar() {
+export function EvaluationToolbar(props) {
   const {
     user, setUser,
     useCase, setUseCase,
@@ -51,7 +51,7 @@ export function EvaluationToolbar() {
               "position": "absolute",
               "bottom": "1rem",
             }}>
-            {message}
+            {props.t(message)}
           </Button>
         </Col>
       </Row>
@@ -61,14 +61,17 @@ export function EvaluationToolbar() {
 
 function getActionButtonContent(active, finished) {
   if (active) {
-    return ["Finish evaluation", "warning"];
+    return ["finish-evaluation", "warning"];
   }
   if (finished) {
-    return ["Re-open finished evaluation", "danger"];
+    return ["re-start-evaluation", "danger"];
   }
-  return ["Start evaluation", "primary"];
+  return ["start-evaluation", "primary"];
 }
 
+EvaluationToolbar.propTypes = {
+  "t": PropTypes.func.isRequired,
+};
 
 export function EvaluationLikeButton(props) {
   const {active, liked, toggle} =

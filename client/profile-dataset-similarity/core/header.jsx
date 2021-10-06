@@ -3,7 +3,7 @@ import {
   Navbar, NavbarToggler, Container, Collapse, Nav, NavItem,
 } from "reactstrap";
 
-import {register, Namespace} from "../viewer-api";
+import {register, Namespace, t} from "../viewer-api";
 import {navLink} from "../../profile-lkod/components/link";
 import LanguageSelector from "../../profile-lkod/components/language-selector";
 import {
@@ -38,7 +38,7 @@ function Header() {
           </Collapse>
         </Navbar>
       </Namespace.Provider>
-      <EvaluationToolbar/>
+      <EvaluationToolbar t={t}/>
     </Container>
   );
 }

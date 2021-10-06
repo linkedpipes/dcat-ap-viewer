@@ -3,12 +3,18 @@
     "header.datasets": "Datové sady",
     "header.keywords": "Klíčová slova",
     "language.cs": "Čeština",
-    "language.en": "English"
+    "language.en": "English",
+    "start-evaluation": "Začni vyhodnocení",
+    "finish-evaluation": "Ukonči vyhodnocení",
+    "re-start-evaluation": "Obnov ukončené vyhodnocení"
   },
   "en": {
     "header.datasets": "Datasets",
     "header.keywords": "Keywords",
     "language.cs": "Čeština",
-    "language.en": "English"
+    "language.en": "English",
+    "start-evaluation": "Start evaluation",
+    "finish-evaluation": "Finish evaluation",
+    "re-start-evaluation": "Re-open finished evaluation"
   }
 }
