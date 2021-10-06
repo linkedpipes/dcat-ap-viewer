@@ -20,7 +20,9 @@ function createStoreContentPost(configuration) {
     let filePath;
     try {
       const fileName = data.identifier.replace(/[:/\\T]/g, "-");
-      filePath = path.join(configuration.directory, fileName + ".json");
+      filePath = path.join(
+        configuration.directory,
+        fileName + "-" + Date.now() + ".json");
     } catch (error) {
       logger.error(
         "Invalid data.",
