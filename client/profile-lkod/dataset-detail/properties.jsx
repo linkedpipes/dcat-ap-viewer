@@ -364,10 +364,11 @@ function contactPoint(selectLabel, contactPoint) {
   if (label === null) {
     label = email;
   }
-  let iri = contactPoint.email ?
-    "mailto:" + contactPoint.email : contactPoint.iri;
-  return (
+  let iri = "mailto:" + contactPoint.email;
+  return contactPoint.email ? (
     <a href={iri} rel="nofollow noopener noreferrer">{label}</a>
+  ) : (
+    label
   );
 }
 
