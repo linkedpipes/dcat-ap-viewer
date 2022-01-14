@@ -13,7 +13,7 @@ export default function PersonalData(props) {
     label = "license.personalNo";
     message = "license.personalNoComment";
   } else if (mapped === "contains") {
-    iconClass = " text-success";
+    iconClass = " text-warning";
     label = "license.personalYes";
     message = "license.personalYesComment";
   } else if (mapped === "unspecified") {
