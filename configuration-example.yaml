@@ -48,3 +48,5 @@ dcat-ap-viewer:
     dcat-ap-forms-url: ""
     # Used as a fallback and for canonical URL specification.
     default-language: "cs"
+    # Template of URL to use for dashboards, with {} as placeholder for IRI.
+    dashboards-url-template: "{}"
