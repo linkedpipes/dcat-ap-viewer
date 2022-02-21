@@ -12,6 +12,8 @@ import {
   usePublisherListApi, createUrl, formatNumber,
 } from "../viewer-api";
 
+import {default as configuration} from "../nkod-configuration";
+
 import translations from "./publisher-list.json";
 
 function PublisherList() {
@@ -108,5 +110,5 @@ function getPublisherSearchLink(language, publisher) {
 }
 
 function getPublisherDashboardLink(publisher) {
-  return "https://oha01.mvcr.gov.cz/kibana/app/dashboards#/view/77aa5da0-721b-11ec-bbef-ab0fe51320ee?_g=(filters:!((query:(match_phrase:('http:%2F%2Fwww.w3.org%2Fns%2Fdqv%23computedOn.keyword':'" + publisher.iri + "')))))";
+  return configuration.dashboardsUrlTemplate.replace("{}", publisher.iri);
 }

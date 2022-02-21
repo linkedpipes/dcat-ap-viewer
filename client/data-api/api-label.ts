@@ -3,7 +3,7 @@ import {Literal} from "../data-model/primitives";
 export interface ApiLabel {
 
   /**
-   * As optimization we can fetch multiple labels on the start to save
+   * As optimization, we can fetch multiple labels on the start to save
    * later requests.
    */
   fetchInitialLabels(language: string): Promise<FetchLabelResponse>;

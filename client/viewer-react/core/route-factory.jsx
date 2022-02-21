@@ -1,10 +1,10 @@
 //
-// Register all components, this require that we have a knowledge of
+// Register all components, this requires that we have a knowledge of
 // all components before the registration is running.
 //
 
 import React from "react";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 import {getViews, getElement} from "./register";
 
@@ -15,16 +15,10 @@ export function createRoutes() {
   return (
     <BrowserRouter>
       <Application>
-        <Switch>
-          {getRouteObjects().map(page =>
-            <Route
-              key={page.id}
-              path={page.link}
-              component={page.component}
-              exact={page.exact}
-            />)}
-          <Route component={PageNotFound}/>
-        </Switch>
+        <Routes>
+          {getRouteObjects().map(createRoute)}
+          <Route element={PageNotFound}/>
+        </Routes>
       </Application>
     </BrowserRouter>
   );
@@ -54,7 +48,7 @@ function getRouteObjects() {
       }
     });
   });
-  console.log("Routes\n", getViews(), "\n", routes);
+  console.log("Router\n  views:", getViews(), "\n  routers:", routes);
   return routes;
 }
 
@@ -67,4 +61,14 @@ function getViewPaths(view) {
     });
   }
   return result;
+}
+
+function createRoute(page) {
+  const Component = page.component;
+  return <Route
+    key={page.id}
+    path={page.link}
+    element={<Component/>}
+    exact={page.exact}
+  />
 }

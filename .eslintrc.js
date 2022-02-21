@@ -6,7 +6,7 @@ module.exports = {
     "plugin:jest/style"
   ],
   "parserOptions": {
-    "ecmaVersion": 12,
+    "ecmaVersion": 13,
     "sourceType": "module"
   },
   "rules": {

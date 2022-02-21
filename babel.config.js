@@ -4,22 +4,17 @@ module.exports = (api) => {
 
   const presets = [
     "@babel/preset-react",
+    "@babel/preset-typescript",
     ["@babel/preset-env", {
       "useBuiltIns": "usage",
       "corejs": {
-        "version": 3,
+        "version": "3.8",
         "proposals": true,
       },
     }],
   ];
 
   const plugins = [];
-
-  const ignore = [ ];
-
-  // We exclude node_modules as they would cause a lot of warnings.
-  ignore.push("node_modules");
-
   if (api.env(["development"])) {
     plugins.push("react-hot-loader/babel");
   }
@@ -27,6 +22,8 @@ module.exports = (api) => {
   return {
     "presets": presets,
     "plugins": plugins,
-    "ignore": ignore,
+    "ignore": [
+      /node_modules/
+    ],
   };
 };

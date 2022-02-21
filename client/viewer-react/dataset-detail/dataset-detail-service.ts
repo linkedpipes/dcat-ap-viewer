@@ -83,7 +83,7 @@ function fetchDatasetDetail(language: string, iri: string): ThunkVoidResult {
         "labels": response.labels,
         "publishers": response.publishers,
       }));
-    } catch (error) {
+    } catch (error : any) {
       console.error("Can't load dataset.", error);
       dispatch(DatasetDetailActions.fetchDataset.failure({
         "datasetIri": iri,
@@ -143,7 +143,7 @@ function fetchDistribution(language: string, iri: string): ThunkVoidResult {
         "distribution": response.distribution,
         "labels": response.labels,
       }));
-    } catch (error) {
+    } catch (error : any) {
       dispatch(DatasetDetailActions.fetchDistribution.failure({
         "distributionIri": iri,
         "loadingIndicator": -1,
@@ -189,7 +189,7 @@ function fetchQuality(language: string, iri: string): ThunkVoidResult {
         "loadingIndicator": -1,
         "payload": response,
       }));
-    } catch (error) {
+    } catch (error : any) {
       dispatch(DatasetDetailActions.fetchQuality.failure({
         "iri": iri,
         "loadingIndicator": -1,
@@ -251,7 +251,7 @@ function fetchDescendants(
         "datasetsCount": result.datasets.datasetsCount,
         "labels": result.labels,
       }));
-    } catch (error) {
+    } catch (error : any) {
       dispatch(DatasetDetailActions.fetchDescendants.failure({
         "datasetIri": datasetIri,
         "loadingIndicator": -1,

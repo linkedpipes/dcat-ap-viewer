@@ -14,7 +14,6 @@ export function createStore() {
 function prepareReducer() {
   const configuration = {};
   addRegisteredReducers(configuration);
-  console.log("Store\n", configuration);
   return combineReducers(configuration);
 }
 

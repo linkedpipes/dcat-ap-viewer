@@ -6,8 +6,7 @@ export function navLink(url, label) {
   return tUrl(url, {}, (to => (
     <NavLink
       to={to}
-      className="nav-link"
-      activeClassName="active"
+      className={({ isActive }) => isActive ? "active nav-link" : "nav-link"}
     >
       {t(label)}
     </NavLink>

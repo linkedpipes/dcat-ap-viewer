@@ -50,9 +50,8 @@ LanguageImage.propTypes = {
 };
 
 function createLanguageHref(navigation, language) {
-  return createUrl(language, navigation.path, {
-    ...navigation.query,
-    // Remove keywords.
-    "keywords": undefined,
-  });
+  const query = {...navigation.query};
+  // Remove keywords as they are language specific.
+  delete query["keywords"];
+  return createUrl(language, navigation.path, query);
 }

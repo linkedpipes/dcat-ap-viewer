@@ -4,6 +4,8 @@ interface NkodConfiguration {
 
   dcatApFormsUrl: string;
 
+  dashboardsUrlTemplate: string;
+
 }
 
 declare var CONFIGURATION: NkodConfiguration;

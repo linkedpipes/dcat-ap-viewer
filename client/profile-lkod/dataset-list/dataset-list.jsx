@@ -14,8 +14,8 @@ const DatasetList = () => {
   const [query, setQuery] = useDatasetListQuery();
 
   const updateQuery = (update) => {
-    // If show more is not set, then something else has changed
-    // and we rest shorMore.
+    // If show more is not set, then something else has changed,
+    // and we rest showMore.
     if (update["showMore"] === undefined) {
       update["showMore"] = 0;
     }

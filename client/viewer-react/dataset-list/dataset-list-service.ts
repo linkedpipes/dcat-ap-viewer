@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {ThunkAction} from "redux-thunk";
 import {AnyAction} from "redux";
 import {ParsedQuery} from "query-string";
-import {useHistory} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 import {NavigationContext} from "../service/navigation";
 import {
@@ -33,7 +33,8 @@ export function useDatasetListQuery() {
     parsedQueryToQuery(navigation.query, createDefaultDatasetListQuery()));
 
   const state = useSelector(datasetListSelector);
-  const history = useHistory();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isStatusLoadingOrFailed(state.status)) {
@@ -57,14 +58,13 @@ export function useDatasetListQuery() {
       return;
     }
     const newQuery = {...query, ...change};
-    setQuery(newQuery);
 
     const urlQuery = prepareForUrl(newQuery);
     const nextUrl = createUrl(navigation.language, "/datasets", urlQuery);
-    const currentUrl = history.location.pathname + (
-      history.location.search === "" ? "" : "?" + history.location.search);
+    const currentUrl = location.pathname + (
+      location.search === "" ? "" : "?" + location.search);
     if (currentUrl !== nextUrl) {
-      history.push(nextUrl);
+      navigate(nextUrl);
     }
 
   }, [navigation, state.status, query, setQuery, history]);
@@ -145,12 +145,14 @@ function createQueryParsers(report: InvalidQueryReport) {
   };
 }
 
-function asArray(value: string | string[] | undefined | null): string[] {
+function asArray(
+  value: string | (string | null)[] | undefined | null
+): string[] {
   if (value === undefined || value === null) {
     return [];
   }
   if (Array.isArray(value)) {
-    return value;
+    return value.filter(item => item !== null) as string[];
   }
   return [value];
 }
@@ -296,7 +298,7 @@ function datasetListQueryEquals(
     && isArrayEqual(left.isPartOf, right.isPartOf);
 }
 
-function  isArrayEqual <T>(left:T[] | undefined, right:T[] | undefined) {
+function isArrayEqual<T>(left: T[] | undefined, right: T[] | undefined) {
   if (left === right) {
     return true;
   }
@@ -353,7 +355,7 @@ function fetchDatasetListData(
         "content": response.datasets,
         "labels": response.labels,
       }));
-    } catch (error) {
+    } catch (error: any) {
       dispatch(DatasetListActions.fetchDatasetList.failure({
         "loadingIndicator": -1,
         "error": error,

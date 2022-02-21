@@ -37,7 +37,7 @@ export function getQuery(
   language: string, path: string, query: string
 ): string {
   const data = (navigationQuery[language] || {})[path] || {};
-  if (data[query] == undefined && process.env.NODE_ENV !== "production") {
+  if (data[query] === undefined && process.env.NODE_ENV !== "production") {
     if (!REPORTED.has(query + language)) {
       console.trace("Missing query of '" + query + "' for " + language);
       REPORTED.add(query + language);
@@ -79,9 +79,6 @@ export function resolveQuery(path: string, query: string): string | undefined {
 function beforeCreateStore() {
   collectNavigationInformation();
   collectTranslations();
-  console.log("Translations:\n", translations,
-    "\nPaths:\n", navigationPath,
-    "\nQuery:\n", navigationQuery);
 }
 
 function collectNavigationInformation() {

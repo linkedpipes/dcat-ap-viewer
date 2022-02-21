@@ -80,7 +80,7 @@ function fetchKeywordList(language: string): ThunkVoidResult {
         "keywords": response.keywords,
         "labels": response.labels,
       }));
-    } catch (error) {
+    } catch (error : any) {
       dispatch(KeywordListActions.fetchKeywordList.failure({
         "loadingIndicator": -1,
         "error": error,

@@ -79,10 +79,10 @@ function fetchPublisherList(language: string): ThunkVoidResult {
         "publishers": response.publishers,
         "labels": response.labels,
       }));
-    } catch (ex) {
+    } catch (error : any) {
       dispatch(PublisherListActions.fetchPublisherList.failure({
         "loadingIndicator": -1,
-        "error": ex,
+        "error": error,
       }));
     }
   };

@@ -18,7 +18,6 @@ module.exports = {
     "no-restricted-syntax": 0,
     "no-continue": 0,
   },
-  "parser": "babel-eslint",
   "settings": {
     "react": {
       "version": "detect",

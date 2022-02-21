@@ -79,24 +79,11 @@ export function fetchCatalogList(language: string): ThunkVoidResult {
         "catalogs": response.catalogs,
         "labels": response.labels,
       }));
-    } catch (ex) {
+    } catch (error : any) {
       dispatch(CatalogListActions.fetchCatalogList.failure({
         "loadingIndicator" : -1,
-        "error": ex,
+        "error": error,
       }));
     }
   };
 }
-
-// function collectLabels(catalogs: Catalog[]): string[] {
-//   const result: string[] = [];
-//   for (const catalog of catalogs) {
-//     if (catalog.publisher) {
-//       result.push(catalog.publisher);
-//     }
-//     if (catalog.contact) {
-//       result.push(catalog.contact);
-//     }
-//   }
-//   return result;
-// }

@@ -1,6 +1,5 @@
 import {Literal} from "../data-model/primitives";
 import {NkodDataset} from "../data-model/dataset";
-import {QualityMeasures} from "../data-model/quality";
 import {NkodDistribution, NkodDataService} from "../data-model/distribution";
 import {Publisher} from "../data-model/publisher";
 import {Label} from "./api-label";
