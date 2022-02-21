@@ -78,6 +78,15 @@ function PublisherListItem(props) {
         </CardBody>
         <ListGroup flush={true}>
           <ListGroupItem>
+            <a
+              className="pe-2"
+              href={getPublisherDashboardLink(props.publisher)}
+              target="_blank"
+              rel="noopener noreferrer">
+              <i className="material-icons ps-2" >network_check</i>
+            </a>
+          </ListGroupItem>
+          <ListGroupItem>
             {t("publishersDatasets", {
               "count": formatNumber(props.publisher.datasetCount),
             })}
@@ -96,4 +105,8 @@ PublisherListItem.propTypes = {
 
 function getPublisherSearchLink(language, publisher) {
   return createUrl(language, "/datasets", {"publishers": publisher.iri});
+}
+
+function getPublisherDashboardLink(publisher) {
+  return "https://oha01.mvcr.gov.cz/kibana/app/dashboards#/view/77aa5da0-721b-11ec-bbef-ab0fe51320ee?_g=(filters:!((query:(match_phrase:('http:%2F%2Fwww.w3.org%2Fns%2Fdqv%23computedOn.keyword':'" + publisher.iri + "')))))";
 }
