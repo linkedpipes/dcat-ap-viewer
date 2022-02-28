@@ -85,7 +85,7 @@ function PublisherListItem(props) {
               href={getPublisherDashboardLink(props.publisher)}
               target="_blank"
               rel="noopener noreferrer">
-              <i className="material-icons ps-2" >network_check</i>
+              <i className="material-icons ps-2" >line_axis</i>
             </a>
           </ListGroupItem>
           <ListGroupItem>
