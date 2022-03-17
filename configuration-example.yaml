@@ -50,3 +50,15 @@ dcat-ap-viewer:
     default-language: "cs"
     # Template of URL to use for dashboards, with {} as placeholder for IRI.
     dashboards-url-template: "{}"
+    # Query used for YASGUI instance.
+    yasgui-default-query: >
+      SELECT ?typ (COUNT(?s) AS ?pocet)
+      WHERE {
+        ?s a ?typ
+      }
+      GROUP BY ?typ
+      ORDER BY DESC(COUNT(?s))
+      LIMIT 10
+    # If provided and specification is https://www.w3.org/TR/sparql11-protocol/
+    # given values is used as YASGUI endpoint.
+    yasgui-url: https://yasgui.triply.cc/

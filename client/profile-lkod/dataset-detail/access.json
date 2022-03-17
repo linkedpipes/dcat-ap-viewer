@@ -29,7 +29,8 @@
     "access.conformsToQualityTrue": "Specifikace byla {date} dostupná.",
     "access.conformsToQualityFalse": "Specifikace byla {date} nedostupná. {note}",
     "access.conformsToQualityCorsTrue": "Technika CORS byla pro specifikaci dostupná {date}.",
-    "access.conformsToQualityCorsFalse": "Technika CORS nebyla pro specifikaci dostupná {date}."
+    "access.conformsToQualityCorsFalse": "Technika CORS nebyla pro specifikaci dostupná {date}.",
+    "access.sparqlEndpoint": "SPARQL dotazování"
   },
   "en": {
     "access.compressFormat": "Compress format",
@@ -61,6 +62,7 @@
     "access.conformsToQualityTrue": "Specification was available on {date}.",
     "access.conformsToQualityFalse": "Specification was unavailable on {date}. {note}",
     "access.conformsToQualityCorsTrue": "CORS for the specification was available on {date}.",
-    "access.conformsToQualityCorsFalse": "CORS for the specification was not available on {date}."
+    "access.conformsToQualityCorsFalse": "CORS for the specification was not available on {date}.",
+    "access.sparqlEndpoint": "SPARQL querying"
   }
 }
