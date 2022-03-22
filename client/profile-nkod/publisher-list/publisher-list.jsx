@@ -7,7 +7,7 @@ import {
 } from "reactstrap";
 
 import {
-  t, register, getElement,
+  t, translateString, register, getElement,
   NavigationContext, usePageTitle, useLabelApi,
   usePublisherListApi, createUrl, formatNumber,
 } from "../viewer-api";
@@ -84,7 +84,9 @@ function PublisherListItem(props) {
               className="pe-2"
               href={getPublisherDashboardLink(props.publisher)}
               target="_blank"
-              rel="noopener noreferrer">
+              rel="noopener noreferrer"
+              title={translateString(props.language, "publishersDashboard")}
+            >
               <i className="material-icons ps-2" >line_axis</i>
             </a>
           </ListGroupItem>

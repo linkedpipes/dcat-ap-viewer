@@ -12,7 +12,8 @@
       "1": "1 datová sada",
       "2": "{count} datové sady",
       "5": "{count} datových sad"
-    }
+    },
+    "publishersDashboard": "Dashboard poskytovatele"
   },
   "en": {
     "page-title.publishers": "Publishers",
@@ -25,6 +26,7 @@
       "0": "No dataset",
       "1": "1 dataset",
       "2": "{count} datasets"
-    }
+    },
+    "publishersDashboard": "Publisher dashboard"
   }
 }
