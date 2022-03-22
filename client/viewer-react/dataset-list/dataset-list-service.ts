@@ -46,7 +46,8 @@ export function useDatasetListQuery() {
 
     const sameInvalidArguments = query.report.length === newQuery.report.length;
     const sameQuery = datasetListQueryEquals(state.query, listQuery);
-    if (sameInvalidArguments && sameQuery) {
+    const sameExtendedQuery = newQuery?.view === query?.view;
+    if (sameInvalidArguments && sameQuery && sameExtendedQuery) {
       return;
     }
     setQuery(newQuery);
@@ -58,15 +59,18 @@ export function useDatasetListQuery() {
       return;
     }
     const newQuery = {...query, ...change};
-
     const urlQuery = prepareForUrl(newQuery);
     const nextUrl = createUrl(navigation.language, "/datasets", urlQuery);
-    const currentUrl = location.pathname + (
-      location.search === "" ? "" : "?" + location.search);
+    // The nextUrl path is not encoded, so we decode the path here
+    // to make them the same.
+    const currentUrl = decodeURI(location.pathname) + (
+      location.search === "" ? "" : location.search);
+    // We need to set query always, as not all changes are reflected
+    // in the navigation.
+    setQuery(newQuery);
     if (currentUrl !== nextUrl) {
       navigate(nextUrl);
     }
-
   }, [navigation, state.status, query, setQuery, history]);
 
   return [query, updateQuery];
