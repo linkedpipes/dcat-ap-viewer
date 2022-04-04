@@ -6,6 +6,8 @@ interface NkodConfiguration {
 
   dashboardsUrlTemplate: string;
 
+  dashboardsDetailedUrlTemplate: string;
+
 }
 
 declare var CONFIGURATION: NkodConfiguration;

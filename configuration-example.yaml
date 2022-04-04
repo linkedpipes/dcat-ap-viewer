@@ -50,6 +50,8 @@ dcat-ap-viewer:
     default-language: "cs"
     # Template of URL to use for dashboards, with {} as placeholder for IRI.
     dashboards-url-template: "{}"
+    # Template of URL to use for detailed dashboards, with {} as placeholder for IRI.
+    dashboards-detailed-url-template: "{}"
     # Query used for YASGUI instance.
     yasgui-default-query: >
       SELECT ?typ (COUNT(?s) AS ?pocet)

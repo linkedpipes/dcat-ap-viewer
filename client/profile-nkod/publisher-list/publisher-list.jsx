@@ -89,6 +89,15 @@ function PublisherListItem(props) {
             >
               <i className="material-icons ps-2" >line_axis</i>
             </a>
+            <a
+              className="pe-2"
+              href={getPublisherDashboardDetailedLink(props.publisher)}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={translateString(props.language, "publishersDashboardDetailed")}
+            >
+              <i className="material-icons ps-2" >query_stats</i>
+            </a>
           </ListGroupItem>
           <ListGroupItem>
             {t("publishersDatasets", {
@@ -113,4 +122,8 @@ function getPublisherSearchLink(language, publisher) {
 
 function getPublisherDashboardLink(publisher) {
   return configuration.dashboardsUrlTemplate.replace("{}", publisher.iri);
+}
+
+function getPublisherDashboardDetailedLink(publisher) {
+  return configuration.dashboardsDetailedUrlTemplate.replace("{}", publisher.iri);
 }
