@@ -1,0 +1,42 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: "LinkedPipes DCAT-AP Viewer: A Native DCAT-AP Data Catalog"
+message: Please cite this software using these metadata.
+preferred-citation:
+ type: conference-paper
+ conference:
+  name: "17th International Semantic Web Conference (ISWC 2018)"
+ collection-title: "Proceedings of the ISWC 2018 Posters & Demonstrations, Industry and Blue Sky Ideas Tracks co-located with 17th International Semantic Web Conference (ISWC 2018), Monterey, USA, October 8th - to - 12th, 2018"
+ collection-type: proceedings
+ publisher:
+  name: "CEUR-WS.org"
+ volume-title: "CEUR Workshop Proceedings"
+ volume: 2180
+ authors:
+  - given-names: Jakub
+    family-names: Klímek
+    email: jakub.klimek@matfyz.cuni.cz
+    affiliation: Charles University
+    orcid: 'https://orcid.org/0000-0001-7234-3051'
+  - given-names: Petr
+    family-names: Škoda
+    email: petr.skoda@matfyz.cuni.cz
+    affiliation: Charles University
+    orcid: 'https://orcid.org/0000-0002-2732-9370'
+ editors:
+  - given-names: Marieke
+    family-names: van Erp
+  - given-names: Medha
+    family-names: Atre
+  - given-names: Vanessa
+    family-names: López
+  - given-names: Kavitha
+    family-names: Srinivas
+  - given-names: Carolina
+    family-names: Fortuna
+ url: "http://ceur-ws.org/Vol-2180/paper-32.pdf"
+ year: 2018
+ 
+ 
