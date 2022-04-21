@@ -13,7 +13,8 @@
       "2": "{count} datové sady",
       "5": "{count} datových sad"
     },
-    "publishersDashboard": "Dashboard poskytovatele"
+    "publishersDashboard": "Dashboard - měsíční průměry",
+    "publishersDashboardDetailed": "Dashboard - denní měření"
   },
   "en": {
     "page-title.publishers": "Publishers",
@@ -27,6 +28,7 @@
       "1": "1 dataset",
       "2": "{count} datasets"
     },
-    "publishersDashboard": "Publisher dashboard"
+    "publishersDashboard": "Dashboard - monthly averages",
+    "publishersDashboardDetailed": "Dashboard - daily measures"
   }
 }
