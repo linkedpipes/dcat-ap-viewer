@@ -102,4 +102,6 @@ export interface NkodDataset extends DcatApDataset {
 
   isFromCatalog: boolean;
 
+  semanticThemes: string[];
+
 }

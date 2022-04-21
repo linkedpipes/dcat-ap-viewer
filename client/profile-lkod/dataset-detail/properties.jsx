@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 import {
   t, useLabelApi, useQualityApi, createUrl,
-  QUALITY, translateString,
+  QUALITY, translateString, configuration,
 } from "../viewer-api";
 import {QualityIconsForMeasures} from "./quality-icons";
 
@@ -71,14 +71,15 @@ function isNotEmpty(value) {
   return value !== undefined && value.length !== 0;
 }
 
-function ddLabelLink(selectLabel, language, iri, url) {
+function ddLabelLink(selectLabel, language, iri, url, iconUrl) {
+  iconUrl = iconUrl ?? iri;
   return (
     <dd key={iri}>
       <Link to={url}>
         {selectLabel(iri)}
       </Link>
       <a
-        href={iri}
+        href={iconUrl}
         title={translateString(language, "followLink")}
         rel="nofollow noopener noreferrer"
         target="_blank"
@@ -107,6 +108,7 @@ function linkIcon() {
 }
 
 function secondColumn(selectLabel, language, dataset) {
+  const semantic = semanticThemes(selectLabel, language, dataset);
   const spatial = spatialCoverage(selectLabel, language, dataset);
   const spatialResolution = spatialCoverageResolution(dataset);
   const temporal = temporalCoverage(dataset);
@@ -118,6 +120,7 @@ function secondColumn(selectLabel, language, dataset) {
   return (
     <div className="col-12 col-sm-6 col-md-3">
       <dl>
+        {semantic}
         {spatial}
         {spatialResolution}
         {temporal}
@@ -125,6 +128,30 @@ function secondColumn(selectLabel, language, dataset) {
       </dl>
     </div>
   );
+}
+
+function semanticThemes(selectLabel, language, dataset) {
+  if (!isNotEmpty(dataset.spatial)) {
+    return null;
+  }
+  return (
+    <dl>
+      <dt>{t("semanticTopic")}</dt>
+      {
+        dataset.semanticThemes.map(iri =>
+          ddLabelLink(
+            selectLabel, language, iri,
+            datasetSearchUrl(language, {"themes": iri}),
+            semanticBrowser(iri)
+          ),
+        )
+      }
+    </dl>
+  );
+}
+
+function semanticBrowser(iri) {
+  return configuration.semanticBrowser + encodeURIComponent(iri);
 }
 
 function spatialCoverage(selectLabel, language, dataset) {

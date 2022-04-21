@@ -62,3 +62,5 @@ dcat-ap-viewer:
     # If provided and specification is https://www.w3.org/TR/sparql11-protocol/
     # given values is used as YASGUI endpoint.
     yasgui-url: https://yasgui.triply.cc/
+    # URL for semantic themes browser.
+    semantic-browser: https://slovník.gov.cz/prohlížíme/pojem?iri=

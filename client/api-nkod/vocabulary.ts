@@ -192,3 +192,7 @@ export const LP = {
   "order": LP_PREFIX + "order",
   "isPartOf": "urn:isPartOf",
 };
+
+export const SGOV = {
+  "Schema": "https://slovník.gov.cz/",
+};

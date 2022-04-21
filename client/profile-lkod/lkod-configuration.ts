@@ -6,6 +6,8 @@ interface LkodConfiguration {
 
   yasguiDefaultQuery: string;
 
+  semanticBrowser: string;
+
 }
 
 declare var CONFIGURATION: LkodConfiguration;

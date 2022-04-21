@@ -14,7 +14,7 @@ import {
   getDate, getTypes,
 } from "./jsonld";
 import {
-  DCAT, DCTERMS, FOAF, NKOD, LP, ADMS, OWL, VCARD, SKOS, EUA,
+  DCAT, DCTERMS, FOAF, NKOD, LP, ADMS, OWL, VCARD, SKOS, EUA, SGOV
 } from "./vocabulary"
 import {DcatApDataset, NkodDataset} from "../data-model/dataset";
 import {
@@ -211,6 +211,7 @@ function createEmptyNkodDataset(iri: string): NkodDataset {
     "lkod": undefined,
     "isFromForm": false,
     "isFromCatalog": false,
+    "semanticThemes": [],
   }
 }
 
@@ -260,7 +261,7 @@ function loadContactPoints(
  * EUA.dataTheme schema.
  */
 function loadDatasetThemes(
-  jsonld: JsonLdEntity[], entity: JsonLdEntity, output: DcatApDataset
+  jsonld: JsonLdEntity[], entity: JsonLdEntity, output: NkodDataset
 ) {
   for (const iri of getResources(entity, DCAT.theme)) {
     const entity = getEntityByIri(jsonld, iri);
@@ -271,6 +272,8 @@ function loadDatasetThemes(
     const inScheme = getResources(entity, SKOS.inScheme);
     if (inScheme.includes(EUA.dataTheme)) {
       output.datasetThemes.push(iri);
+    } else if (inScheme.includes(SGOV.Schema)) {
+      output.semanticThemes.push(iri);
     } else {
       output.themes.push(iri);
     }
