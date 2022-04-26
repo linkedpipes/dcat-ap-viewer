@@ -272,7 +272,7 @@ function loadDatasetThemes(
     const inScheme = getResources(entity, SKOS.inScheme);
     if (inScheme.includes(EUA.dataTheme)) {
       output.datasetThemes.push(iri);
-    } else if (inScheme.includes(SGOV.Schema)) {
+    } else if (inScheme.includes(SGOV.ObjectType)) {
       output.semanticThemes.push(iri);
     } else {
       output.themes.push(iri);

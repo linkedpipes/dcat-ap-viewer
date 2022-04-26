@@ -194,5 +194,5 @@ export const LP = {
 };
 
 export const SGOV = {
-  "Schema": "https://slovník.gov.cz/",
+  "ObjectType": "https://slovník.gov.cz/základní/pojem/typ-objektu",
 };
