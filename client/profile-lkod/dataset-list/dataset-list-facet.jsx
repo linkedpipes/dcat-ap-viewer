@@ -15,6 +15,7 @@ function DatasetListFilters(props) {
         facetData={props.state.isPartOf}
         activeFacets={props.query.isPartOf}
         facetCount={props.query.isPartOf.length}
+        datasetsCount={props.state.datasetsCount}
         onFacetClick={callbacks.onClickIsPartOf}
         selectFacetLabel={
           (item) => selectLabel(item.queryCode, undefined, "Dataset")
@@ -27,6 +28,7 @@ function DatasetListFilters(props) {
         facetData={props.state.themes}
         activeFacets={props.query.themes}
         facetCount={props.state.themesCount}
+        datasetsCount={props.state.datasetsCount}
         onFacetClick={callbacks.onClickThemes}
         onFetchMore={callbacks.onFetchThemes}
         selectFacetLabel={(item) => selectLabel(item.queryCode)}
@@ -36,6 +38,7 @@ function DatasetListFilters(props) {
         facetData={props.state.keywords}
         activeFacets={props.query.keywords}
         facetCount={props.state.keywordsCount}
+        datasetsCount={props.state.datasetsCount}
         onFacetClick={callbacks.onClickKeywords}
         onFetchMore={callbacks.onFetchKeywords}
         selectFacetLabel={(item) => item.queryCode}
@@ -45,6 +48,7 @@ function DatasetListFilters(props) {
         facetData={props.state.formats}
         activeFacets={props.query.formats}
         facetCount={props.state.formatsCount}
+        datasetsCount={props.state.datasetsCount}
         onFacetClick={callbacks.onClickFormats}
         onFetchMore={callbacks.onFetchFormats}
         selectFacetLabel={(item) => selectLabel(item.queryCode)}
@@ -85,6 +89,7 @@ DatasetListFilters.propTypes = {
       "count": PropTypes.number,
     })).isRequired,
     "formatsCount": PropTypes.number.isRequired,
+    "datasetsCount":  PropTypes.number.isRequired,
   }).isRequired,
   "onUpdateQuery": PropTypes.func.isRequired,
 };

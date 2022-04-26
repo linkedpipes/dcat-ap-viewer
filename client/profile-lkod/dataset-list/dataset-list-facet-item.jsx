@@ -40,7 +40,10 @@ function Facet(props) {
   }, [visible, facetData, onFetchMore]);
 
   const items = [
-    ...selectActiveFacetsToShow(props.facetData, props.activeFacets),
+    ...selectActiveFacetsToShow(
+      props.facetData,
+      props.activeFacets,
+      props.datasetsCount),
     ...selectRemainingFacetsToShow(
       props.facetData,
       visible - props.activeFacets.length,
@@ -131,6 +134,12 @@ Facet.propTypes = {
    */
   "facetCount": PropTypes.number,
   /**
+   * Number of datasets, used for activeFacets as count, to make
+   * sure that we have this number. We may not get that number,
+   * if there are large number of facets with same value.
+   */
+  "datasetsCount": PropTypes.number,
+  /**
    * Called when user click on facet value, the value may be active or
    * inactive.
    */
@@ -150,7 +159,7 @@ register({
   "element": Facet,
 });
 
-function selectActiveFacetsToShow(array, active) {
+function selectActiveFacetsToShow(array, active, datasetsCount) {
   const result = [];
   for (const code of active) {
     let found = false;
@@ -167,7 +176,9 @@ function selectActiveFacetsToShow(array, active) {
     if (!found) {
       result.push({
         "queryCode": code,
-        "count": 0,
+        // As the facet is active it must contain at leas all
+        // returned datasets.
+        "count": datasetsCount,
       });
     }
   }
