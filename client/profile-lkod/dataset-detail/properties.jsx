@@ -131,7 +131,7 @@ function secondColumn(selectLabel, language, dataset) {
 }
 
 function semanticThemes(selectLabel, language, dataset) {
-  if (!isNotEmpty(dataset.spatial)) {
+  if (!isNotEmpty(dataset.semanticThemes)) {
     return null;
   }
   return (
