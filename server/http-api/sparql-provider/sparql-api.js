@@ -15,7 +15,7 @@ const { performance } = require("perf_hooks");
 
 function executeSparqlConstruct(endpoint, query) {
   const format = "application/ld+json";
-  const url = endpoint + "/?timeout=0&query=" + encodeURIComponent(query);
+  const url = endpoint + "?query=" + encodeURIComponent(query);
   const startTime = performance.now();
   return new Promise((resolve, reject) => {
     request(requestParams(url, format), (error, response, body) => {
@@ -67,7 +67,7 @@ function logLongRunningQuery(startTime, queryTime, query) {
 
 function executeSparqlSelect(endpoint, query) {
   const format = "application/json";
-  const url = endpoint + "/?timeout=0&query=" + encodeURIComponent(query);
+  const url = endpoint + "?query=" + encodeURIComponent(query);
   const startTime = performance.now();
   return new Promise((resolve, reject) => {
     request(requestParams(url, format), (error, response, body) => {
