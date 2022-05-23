@@ -11,13 +11,13 @@ import MediaTypeItem from "./access/media-type-item";
 import CompressFormat from "./access/compress-format-item";
 import PackageFormat from "./access/package-format-item";
 import EndpointDescription from "./access/endpoint-description-item";
-import EndpointUrl from "./access/endpoint-url-item";
 import ConformsTo from "./access/data-service-conforms-to-item";
 
 function PartDataService(props) {
   const selectLabel = useLabelApi();
   const dataServiceQuality = useQualityApi(props.part.dataService);
   const LegalColumn = getElement("dataset-detail.parts.legal-column").element;
+  const EndpointUrl = getElement("dataset-detail.parts.endpoint-url").element;
   return (
     <Card className="flex-fill">
       <CardBody>

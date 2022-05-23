@@ -32,6 +32,7 @@ import "./dataset-detail/dataset-detail-header";
 import "./dataset-detail/legal/legal-column";
 import "./dataset-list/dataset-list-facet";
 import "./publisher-list/publisher-list";
+import "./dataset-detail/access/endpoint-url-item";
 
 // Styles.
 import "bootstrap/dist/css/bootstrap.css";

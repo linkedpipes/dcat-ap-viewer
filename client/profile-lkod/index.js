@@ -25,6 +25,7 @@ import "./dataset-detail/legal/legal-column";
 import "./dataset-detail/legal/legal-column-czech";
 import "./dataset-detail/legal/legal-column-dcatap";
 import "./dataset-detail/legal/legal-column-missing";
+import "./dataset-detail/access/endpoint-url-item";
 import "./dataset-list/view-dataset/view-dataset";
 import "./dataset-list/view-theme/view-theme";
 import "./dataset-list/view-keyword/view-keyword";

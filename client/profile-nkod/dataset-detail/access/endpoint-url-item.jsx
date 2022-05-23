@@ -2,8 +2,12 @@ import React from "react";
 import {PropTypes} from "prop-types";
 
 import {t, QUALITY, register} from "../../viewer-api";
-import {QualityIconsForMeasures} from "../quality-icons";
-import configuration from "../../lkod-configuration";
+import {
+  QualityIconsForMeasures,
+} from "../../../profile-lkod/dataset-detail/quality-icons";
+import configuration from "../../nkod-configuration";
+
+import translations from "./endpoint-url-item.json";
 
 function EndpointUrl(props) {
   const endpointURL = props.dataService.endpointURL;
@@ -41,6 +45,10 @@ function EndpointUrl(props) {
         shouldRenderYasgui(props.dataService)
         && renderYasgui(props.dataService.endpointURL)
       }
+      {
+        shouldRenderClassAndTypes()
+        && renderClassAndTypes(props.dataService.endpointURL)
+      }
     </li>
   );
 }
@@ -53,6 +61,7 @@ EndpointUrl.propTypes = {
 register({
   "name": "dataset-detail.parts.endpoint-url",
   "element": EndpointUrl,
+  "translations": translations,
 });
 
 function shouldRenderYasgui(dataService) {
@@ -77,7 +86,7 @@ function renderYasgui(endpointURL) {
   const url = `${yasgui}#query=${query}&endpoint=${endpoint}`;
   return (
     <>
-      <br style={{"clear":"both"}}/>
+      <br style={{"clear": "both"}}/>
       <a
         href={url}
         className="card-link"
@@ -85,6 +94,28 @@ function renderYasgui(endpointURL) {
         target="_blank"
       >
         {t("access.sparqlEndpoint")}
+      </a>
+    </>
+  );
+}
+
+function shouldRenderClassAndTypes() {
+  return isNotEmpty(configuration.classPropertiesUrlTemplate);
+}
+
+function renderClassAndTypes(endpointURL) {
+  const url = configuration.classPropertiesUrlTemplate
+    .replace("{}", encodeURIComponent(endpointURL));
+  return (
+    <>
+      <br style={{"clear": "both"}}/>
+      <a
+        href={url}
+        className="card-link"
+        rel="nofollow noopener noreferrer"
+        target="_blank"
+      >
+        {t("access.classAndTypes")}
       </a>
     </>
   );

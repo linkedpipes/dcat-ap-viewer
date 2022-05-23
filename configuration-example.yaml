@@ -52,6 +52,8 @@ dcat-ap-viewer:
     dashboards-url-template: "{}"
     # Template of URL to use for detailed dashboards, with {} as placeholder for IRI.
     dashboards-detailed-url-template: "{}"
+    # Template of URL to use for "class and types", with {} as placeholder for IRI.
+    class-properties-url-template: "{}"
     # Query used for YASGUI instance.
     yasgui-default-query: >
       SELECT ?typ (COUNT(?s) AS ?pocet)
@@ -64,5 +66,5 @@ dcat-ap-viewer:
     # If provided and specification is https://www.w3.org/TR/sparql11-protocol/
     # given values is used as YASGUI endpoint.
     yasgui-url: https://yasgui.triply.cc/
-    # URL for semantic themes browser.
+    # URL for semantic themes' browser.
     semantic-browser: https://slovník.gov.cz/prohlížíme/pojem?iri=
