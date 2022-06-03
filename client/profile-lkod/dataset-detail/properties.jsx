@@ -37,30 +37,30 @@ function firstColumn(selectLabel, language, dataset) {
   return (
     <div className="col-12 col-sm-6 col-md-3">
       {hasDataThemes &&
-      <dl>
-        <dt>{t("datasetTopic")}</dt>
-        {
-          dataset.datasetThemes.map(iri =>
-            ddLabelLink(
-              selectLabel, language, iri,
-              datasetSearchUrl(language, {"themes": iri}),
-            ),
-          )
-        }
-      </dl>
+        <dl>
+          <dt>{t("datasetTopic")}</dt>
+          {
+            dataset.datasetThemes.map(iri =>
+              ddLabelLink(
+                selectLabel, language, iri,
+                datasetSearchUrl(language, {"themes": iri}),
+              ),
+            )
+          }
+        </dl>
       }
       {hasThemes &&
-      <dl>
-        <dt>{t("topic")}</dt>
-        {
-          dataset.themes.map(iri =>
-            ddLabelLink(
-              selectLabel, language, iri,
-              datasetSearchUrl(language, {"themes": iri}),
-            ),
-          )
-        }
-      </dl>
+        <dl>
+          <dt>{t("topic")}</dt>
+          {
+            dataset.themes.map(iri =>
+              ddLabelLink(
+                selectLabel, language, iri,
+                datasetSearchUrl(language, {"themes": iri}),
+              ),
+            )
+          }
+        </dl>
       }
     </div>
   );
@@ -134,19 +134,42 @@ function semanticThemes(selectLabel, language, dataset) {
   if (!isNotEmpty(dataset.semanticThemes)) {
     return null;
   }
+  let visualisationLink = null;
+  if (configuration.semanticVisualisation) {
+    const url = configuration.semanticVisualisation
+      + encodeURIComponent(dataset.iri);
+    visualisationLink = (
+      <React.Fragment>
+        <dt>{t("semanticRelations")}</dt>
+        <dd>
+          <a
+            href={url}
+            title={translateString(language, "followLink")}
+            rel="nofollow noopener noreferrer"
+            target="_blank"
+          >
+            {t("showSemanticRelations")}
+          </a>
+        </dd>
+      </React.Fragment>
+    );
+  }
   return (
-    <dl>
-      <dt>{t("semanticTopic")}</dt>
-      {
-        dataset.semanticThemes.map(iri =>
-          ddLabelLink(
-            selectLabel, language, iri,
-            datasetSearchUrl(language, {"themes": iri}),
-            semanticBrowser(iri)
-          ),
-        )
-      }
-    </dl>
+    <React.Fragment>
+      <dl>
+        <dt>{t("semanticConcepts")}</dt>
+        {
+          dataset.semanticThemes.map(iri =>
+            ddLabelLink(
+              selectLabel, language, iri,
+              datasetSearchUrl(language, {"themes": iri}),
+              semanticBrowser(iri)
+            ),
+          )
+        }
+      </dl>
+      {visualisationLink}
+    </React.Fragment>
   );
 }
 

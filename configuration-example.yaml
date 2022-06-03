@@ -68,3 +68,6 @@ dcat-ap-viewer:
     yasgui-url: https://yasgui.triply.cc/
     # URL for semantic themes' browser.
     semantic-browser: https://slovník.gov.cz/prohlížíme/pojem?iri=
+    # If set and not empty, then a link to semantic visualisation is shown.
+    # The value is appended by encoded dataset IRI and used as URL.
+    semantic-visualisation: ""

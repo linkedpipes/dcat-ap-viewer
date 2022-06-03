@@ -8,6 +8,8 @@ interface LkodConfiguration {
 
   semanticBrowser: string;
 
+  semanticVisualisation: string;
+
 }
 
 declare var CONFIGURATION: LkodConfiguration;
