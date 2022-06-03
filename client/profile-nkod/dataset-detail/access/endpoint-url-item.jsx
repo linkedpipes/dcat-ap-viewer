@@ -46,8 +46,8 @@ function EndpointUrl(props) {
         && renderYasgui(props.dataService.endpointURL)
       }
       {
-        shouldRenderClassAndTypes()
-        && renderClassAndTypes(props.dataService.endpointURL)
+        shouldRenderClassAndProperties()
+        && renderClassAndProperties(props.dataService.endpointURL)
       }
     </li>
   );
@@ -99,11 +99,11 @@ function renderYasgui(endpointURL) {
   );
 }
 
-function shouldRenderClassAndTypes() {
+function shouldRenderClassAndProperties() {
   return isNotEmpty(configuration.classPropertiesUrlTemplate);
 }
 
-function renderClassAndTypes(endpointURL) {
+function renderClassAndProperties(endpointURL) {
   const url = configuration.classPropertiesUrlTemplate
     .replace("{}", encodeURIComponent(endpointURL));
   return (
@@ -115,7 +115,7 @@ function renderClassAndTypes(endpointURL) {
         rel="nofollow noopener noreferrer"
         target="_blank"
       >
-        {t("access.classAndTypes")}
+        {t("access.classAndProperties")}
       </a>
     </>
   );

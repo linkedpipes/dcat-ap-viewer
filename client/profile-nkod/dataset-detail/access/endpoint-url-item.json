@@ -1,8 +1,8 @@
 {
   "cs": {
-    "access.classAndTypes": "Třídy a vlastnosti"
+    "access.classAndProperties": "Třídy a vlastnosti"
   },
   "en": {
-    "access.classAndTypes": "Class and properties"
+    "access.classAndProperties": "Classes and properties"
   }
 }
