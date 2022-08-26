@@ -44,6 +44,10 @@ function EndpointUrl(props) {
       {
         shouldRenderYasgui(props.dataService)
         && renderYasgui(props.dataService.endpointURL)
+      }
+      {
+        shouldRenderYasgui(props.dataService)
+        && shouldRenderClassesAndProperties()
         && renderClassesAndProperties(props.dataService.endpointURL)
       }
     </li>
