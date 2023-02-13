@@ -163,7 +163,7 @@ function semanticThemes(selectLabel, language, dataset) {
             ddLabelLink(
               selectLabel, language, iri,
               datasetSearchUrl(language, {"themes": iri}),
-              semanticBrowser(iri)
+              semanticBrowser(iri),
             ),
           )
         }

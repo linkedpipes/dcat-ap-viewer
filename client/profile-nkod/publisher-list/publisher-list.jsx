@@ -94,7 +94,8 @@ function PublisherListItem(props) {
               href={getPublisherDashboardDetailedLink(props.publisher)}
               target="_blank"
               rel="noopener noreferrer"
-              title={translateString(props.language, "publishersDashboardDetailed")}
+              title={translateString(
+                props.language, "publishersDashboardDetailed")}
             >
               <i className="material-icons ps-2" >query_stats</i>
             </a>
@@ -125,5 +126,6 @@ function getPublisherDashboardLink(publisher) {
 }
 
 function getPublisherDashboardDetailedLink(publisher) {
-  return configuration.dashboardsDetailedUrlTemplate.replace("{}", publisher.iri);
+  return configuration.dashboardsDetailedUrlTemplate
+    .replace("{}", publisher.iri);
 }

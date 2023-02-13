@@ -16,14 +16,15 @@ module.exports = (api) => {
 
   const plugins = [];
   if (api.env(["development"])) {
-    plugins.push("react-hot-loader/babel");
+    // We could add hot-redeployment here, yet the client application
+    // is simple enough, so it is not required.
   }
 
   return {
     "presets": presets,
     "plugins": plugins,
     "ignore": [
-      /node_modules/
+      /node_modules/,
     ],
   };
 };

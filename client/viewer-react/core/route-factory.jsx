@@ -70,5 +70,5 @@ function createRoute(page) {
     path={page.link}
     element={<Component/>}
     exact={page.exact}
-  />
+  />;
 }

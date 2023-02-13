@@ -1,5 +1,5 @@
 import {useCallback, useContext, useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../hooks";
 import {ThunkAction} from "redux-thunk";
 import {AnyAction} from "redux";
 import {ParsedQuery} from "query-string";
@@ -53,7 +53,7 @@ export function useDatasetListQuery() {
     setQuery(newQuery);
   }, [navigation.query, state.status, state.query, query, setQuery]);
 
-  const updateQuery = useCallback((change) => {
+  const updateQuery = useCallback((change:any) => {
     if (isStatusLoading(state.status)) {
       // Do not allow change of query when loading data.
       return;

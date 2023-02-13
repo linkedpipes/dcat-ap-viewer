@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {useDispatch} from "react-redux";
-import {parse, ParsedQuery} from "query-string";
+import queryString from "query-string";
 import {useLocation} from "react-router-dom";
 import {Location} from "history";
 
@@ -15,7 +15,7 @@ export interface NavigationData {
 
   language: string;
 
-  query: ParsedQuery;
+  query: queryString.ParsedQuery;
 
 }
 
@@ -50,9 +50,9 @@ export function WithNavigation(props: any) {
 export const NavigationConsumer = NavigationContext.Consumer;
 
 function locationToNavigation(location: Location): NavigationData {
-  const search = parse(location.search);
+  const search = queryString.parse(location.search);
   const {path, language} = resolvePath(location.pathname);
-  const query: ParsedQuery = {};
+  const query: queryString.ParsedQuery = {};
   for (const [key, value] of Object.entries(search)) {
     const resolvedKey = resolveQuery(path, key);
     if (resolvedKey === undefined) {

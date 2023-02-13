@@ -1,5 +1,5 @@
 import {useCallback, useContext} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../hooks";
 import {AnyAction} from "redux";
 import {ThunkAction} from "redux-thunk";
 
