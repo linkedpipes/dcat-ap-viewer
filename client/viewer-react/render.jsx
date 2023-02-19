@@ -3,7 +3,7 @@
  * modules were imported.
  */
 import React from "react";
-import ReactDOM from "react-dom";
+import {createRoot} from "react-dom/client";
 import {Provider} from "react-redux";
 
 import {getServices} from "./core/register";
@@ -12,8 +12,11 @@ import {createRoutes} from "./core/route-factory";
 
 getServices().forEach(entry => entry.service.beforeCreateStore());
 
-ReactDOM.render((
+const container = document.getElementById("dcat-ap-viewer");
+const root = createRoot(container);
+
+root.render((
   <Provider store={store}>
     {createRoutes()}
   </Provider>
-), document.getElementById("dcat-ap-viewer"));
+));
