@@ -5,6 +5,9 @@ import {
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
+  Pagination,
+  PaginationItem,
+  PaginationLink
 } from "reactstrap";
 
 import "./paginator.css";
@@ -29,23 +32,22 @@ export default class Paginator extends React.PureComponent {
     const pages = createPageList(recordsCount, pageIndex, pageSize);
     const pageItems = createPageItemsList(pages, pageIndex, onIndexChange);
 
-    const paginationStyle = {
-      "flexWrap": "wrap",
+    const parentStyle = {
       "display": "flex",
-      "listStyle": "none",
+      "justify-content": "space-between",
+      "flexWrap": "wrap",
+      "margin": "0.5rem 0 0 0",
     };
 
     return (
-      <div className="row paginator">
-        <ul className="col-sm-12 col-md-11" style={paginationStyle}>
+      <div style={parentStyle}>
+        <Pagination>
           {pageItems}
-        </ul>
-        <div className="col-sm-12 col-md-1">
-          <ComboBox
-            activeValue={pageSize}
-            values={sizes}
-            onChange={onSizeChange}/>
-        </div>
+        </Pagination>
+        <ComboBox
+          activeValue={pageSize}
+          values={sizes}
+          onChange={onSizeChange}/>
       </div>
     );
   }
@@ -115,24 +117,20 @@ function createPageItemsList(pages, active, onChange) {
 }
 
 function createPageItem(index, isActive, onChange) {
-  let className = "page-item pt-2";
-  if (isActive) {
-    className += " active";
-  }
   return (
-    <li className={className} key={index}>
-      <a className="page-link" onClick={() => onChange(index)}>
+    <PaginationItem key={index} active={isActive}>
+      <PaginationLink onClick={() => onChange(index)}>
         {index + 1}
-      </a>
-    </li>
+      </PaginationLink>
+    </PaginationItem>
   );
 }
 
 function createItemForIndexGap(index) {
   return (
-    <li className="page-item px-3 pt-2" key={"stub_" + index}>
+    <PaginationItem key={"stub_" + index} style={{"margin": "0 1rem 0 1rem"}}>
         ...
-    </li>
+    </PaginationItem>
   );
 }
 
@@ -153,7 +151,7 @@ class ComboBox extends React.Component {
         <DropdownMenu>
           {values.map((value, index) => (
             <DropdownItem key={index}
-              onClick={() => this.onSelect(value)}>
+                          onClick={() => this.onSelect(value)}>
               {value}
             </DropdownItem>
           ))}
