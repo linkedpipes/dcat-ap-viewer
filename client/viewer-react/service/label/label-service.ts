@@ -19,7 +19,7 @@ export function useLabelApi() {
   const navigation = useContext(NavigationContext);
   const labels = useSelector(labelsSelector);
 
-  const selectLabel = useCallback((
+  return useCallback((
     iri: string | undefined,
     defaultValue: string | null | undefined = undefined,
     labelType: LabelType = LabelType.General,
@@ -34,6 +34,10 @@ export function useLabelApi() {
       const label = labelSelector(labels, navigation.language, iri);
       if (label === undefined) {
         if (!isBlankNode(iri)) {
+          // This cause: Cannot update a component (`...`)
+          // while rendering a different component ...
+          // Reason is this function is called when a label is missing,
+          // thus during rendering of a component.
           dispatch(fetchLabel(iri, navigation.language, labelType));
         }
         if (defaultValue === undefined) {
@@ -47,8 +51,6 @@ export function useLabelApi() {
     },
     [navigation.language, labels]
   );
-
-  return selectLabel;
 }
 
 function isBlankNode(iri: string) {
