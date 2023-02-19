@@ -1,26 +1,17 @@
-// import {combineReducers} from "redux";
-// import thunk from "redux-thunk";
-// import { configureStore, applyMiddleware, compose } from "@reduxjs/toolkit";
 import {configureStore, Reducer} from "@reduxjs/toolkit";
 
 import {getReducers} from "./register";
 
 function createStore() {
-  // const reducers = {};
-  // addRegisteredReducers(reducers);
-  // const reducer = prepareReducer();
-  // const enhancers = prepareEnhancers();
   return configureStore({
     "reducer": collectRegisteredReducers(),
     // "enhancers": enhancers,
+    "middleware": getDefaultMiddleware => getDefaultMiddleware({
+      // To remove this we must not use class for state.
+      "serializableCheck": false,
+    }),
   });
 }
-
-// function prepareReducer() {
-//   const configuration = {};
-//   addRegisteredReducers(configuration);
-//   return combineReducers(configuration);
-// }
 
 function collectRegisteredReducers(): Record<string, Reducer> {
   const result: Record<string, Reducer> = {};
@@ -32,20 +23,6 @@ function collectRegisteredReducers(): Record<string, Reducer> {
   });
   return result;
 }
-
-// function prepareEnhancers() {
-//   const composeEnhancers = getComposeMethod();
-//   return composeEnhancers(
-//     applyMiddleware(thunk),
-//   );
-// }
-//
-// function getComposeMethod() {
-//   return (
-//     typeof window !== "undefined"
-//     && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-//   ) || compose;
-// }
 
 export const store = createStore();
 

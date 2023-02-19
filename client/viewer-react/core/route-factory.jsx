@@ -48,7 +48,7 @@ function getRouteObjects() {
       }
     });
   });
-  console.log("Router\n  views:", getViews(), "\n  routers:", routes);
+  console.log("Views:", getViews(), "\nRouters:", routes);
   return routes;
 }
 
