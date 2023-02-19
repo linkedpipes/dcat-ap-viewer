@@ -1,0 +1,10 @@
+{
+  "cs": {
+    "vdf": "VDF: veřejné údaje",
+    "vdfCodelist": "VDF: číselník"
+  },
+  "en": {
+    "vdf": "VDF: public data",
+    "vdfCodelist": "VDF: codelist"
+  }
+}

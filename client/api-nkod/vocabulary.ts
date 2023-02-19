@@ -157,6 +157,8 @@ export const NKOD = {
   "DcatApSparql": NKOD_PREFIX + "DcatApSparql",
   "CkanApiLkod": NKOD_PREFIX + "CkanApiLkod",
   "DcatApLkod": NKOD_PREFIX + "DcatApLkod",
+  "Vdf": NKOD_PREFIX+ "vdf/datová-sada-publikující-veřejné-údaje",
+  "CodeList": NKOD_PREFIX + "vdf/číselník",
 };
 
 const DQV_PREFIX = "http://www.w3.org/ns/dqv#";

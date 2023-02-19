@@ -212,6 +212,8 @@ function createEmptyNkodDataset(iri: string): NkodDataset {
     "isFromForm": false,
     "isFromCatalog": false,
     "semanticThemes": [],
+    "isFromVDF": false,
+    "isCodelist": false,
   }
 }
 
@@ -343,4 +345,6 @@ function loadDatasetNkod(
   const types = getTypes(entity);
   output.isFromForm = types.includes(NKOD.SourceForm);
   output.isFromCatalog = types.includes(NKOD.SourceLkod);
+  output.isFromVDF = types.includes(NKOD.Vdf);
+  output.isCodelist = types.includes(NKOD.CodeList);
 }

@@ -104,4 +104,8 @@ export interface NkodDataset extends DcatApDataset {
 
   semanticThemes: string[];
 
+  isCodelist: boolean;
+
+  isFromVDF: boolean;
+
 }
