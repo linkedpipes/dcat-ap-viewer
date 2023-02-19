@@ -93,6 +93,9 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
     "add-field" : { "name" : "title_en_query", "type" : "ascii_string", "multiValued" : false },
     "add-copy-field" : { "source" : "title_en_sort", "dest" : "title_en_query" },
 
+    "add-field" : { "name" : "vdf_codelist", "type" : "boolean", "multiValued" : false },
+    "add-field" : { "name" : "vdf_public_data", "type" : "boolean", "multiValued" : false },
+
     "replace-field" : { "name": "_text_", "type" : "ascii_string", "multiValued" : true, "indexed" : true, "stored" : false },
     "add-copy-field" : { "source" : "title_cs", "dest" : "_text_" },
     "add-copy-field" : { "source" : "title_en", "dest" : "_text_" },
@@ -146,3 +149,4 @@ npm run start
 [codelist pipeline]: <https://raw.githubusercontent.com/linkedpipes/dcat-ap-viewer/nkod/lp-etl/eumdrnals2couchdb.jsonld>
 [DCAT-AP 2.0.1]: <https://joinup.ec.europa.eu/collection/semantic-interoperability-community-semic/solution/dcat-application-profile-data-portals-europe/release/201-0>
 [EU Vocabularies]: <https://publications.europa.eu/en/web/eu-vocabularies/controlled-vocabularies>
+
