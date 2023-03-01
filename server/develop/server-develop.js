@@ -10,7 +10,7 @@ const httpApi = require("../http-api/http-api");
 const webpackConfig = require("../../build/webpack.develop");
 
 /**
- * Entry point for running the backend.
+ * Starts HTTP API and webpack with rebuild on.
  */
 (function main() {
   const app = express();
