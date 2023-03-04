@@ -31,6 +31,8 @@ function defaultUserQuery(language) {
     "limit": 10,
     "language": language,
     "isPartOf": [],
+    "isVdfPublicData": undefined,
+    "isVdfCodelist": undefined,
   };
 }
 
@@ -58,6 +60,8 @@ function parseDatasetUserQuery(query) {
   addUserQueryValue(query, result, "offset");
   addUserQueryValue(query, result, "limit");
   addUserQueryValue(query, result, "language");
+  addUserQueryByPresence(query, result, "isVdfPublicData");
+  addUserQueryByPresence(query, result, "isVdfCodelist");
   return result;
 }
 
@@ -77,5 +81,9 @@ function addUserQueryValue(query, result, name) {
   }
 }
 
-
+function addUserQueryByPresence(query, result, name) {
+  if (query[name] !== undefined) {
+    result[name] = true;
+  }
+}
 

@@ -88,7 +88,7 @@ function buildDatasetSolrQuery(query, defaultLanguage) {
     ...parseDatasetUserQuery(query),
   };
   if (query.text) {
-    userQuery["text"] = encodeURIComponent(
+    userQuery.text = encodeURIComponent(
       textToSolrQuery(userQuery.language, query.text));
   }
   //
@@ -112,6 +112,7 @@ function buildDatasetSolrQuery(query, defaultLanguage) {
   url += paginationToSolrQuery(userQuery);
   url += facetsToSolrQuery(userQuery);
   url += temporalToSolrQuery(userQuery);
+  url += vdfToSolrQuery(userQuery);
   return [url, userQuery];
 }
 
@@ -134,7 +135,7 @@ function textToSolrQuery(language, text) {
 }
 
 /**
- * Escape values that have controll value in SOLR query.
+ * Escape values that have control value in SOLR query.
  */
 function escapeSolrQueryValue(text) {
   text = text.toLocaleLowerCase();
@@ -228,6 +229,17 @@ function temporalToSolrQuery(userQuery) {
         + userQuery["temporal-end"]
         + "T00%5C:00%5C:00Z+TO+*+%5D";
     }
+  }
+  return url;
+}
+
+function vdfToSolrQuery(userQuery) {
+  let url = "";
+  if (userQuery.isVdfPublicData) {
+    url += "&fq=vdf_public_data:\"true\"";
+  }
+  if (userQuery.isVdfCodelist) {
+    url += "&fq=vdf_codelist:\"true\"";
   }
   return url;
 }

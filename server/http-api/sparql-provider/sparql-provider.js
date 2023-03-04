@@ -4,6 +4,7 @@ const {
   executeSparqlSelect,
 } = require("./sparql-api");
 const quality = require("./sparql-quality");
+const vdf = require("./sparql-vdf");
 const {
   defaultUserQuery,
   parseDatasetUserQuery,
@@ -41,6 +42,7 @@ function createProvider(configuration) {
     "v2-init-data": createInitialDataListGet(),
     // "v2-catalog-list"          NOT SUPPORTED
     ...quality.createProvider(configuration),
+    ...vdf.createProvider(configuration),
   };
 }
 

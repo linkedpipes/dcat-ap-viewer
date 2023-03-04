@@ -28,6 +28,8 @@ function initializeHttpApi(app) {
   v2.get("/init-data", provider["v2-init-data"]);
   v2.get("/catalog", provider["v2-catalog-list"]);
   v2.get("/quality", provider["v2-quality"]);
+  v2.get("/vdf/publishers", provider["v2-vdf-publishers"]);
+  v2.get("/vdf/dataset", provider["v2-vdf-dataset"]);
   app.use("/api/v2", v2);
 }
 
@@ -43,7 +45,7 @@ function createRootProvider() {
 }
 
 /**
- * By default nothing is implemented.
+ * By default, nothing is implemented.
  */
 function defaultProvider() {
   const notImplemented = (req, res) => {
@@ -63,6 +65,8 @@ function defaultProvider() {
     "v2-quality-distribution": notImplemented,
     "v2-quality-publishers": notImplemented,
     "v2-catalog-list": notImplemented,
+    "v2-vdf-publishers": notImplemented,
+    "v2-vdf-dataset": notImplemented,
   };
 }
 

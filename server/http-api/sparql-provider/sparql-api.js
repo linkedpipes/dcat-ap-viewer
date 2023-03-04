@@ -56,7 +56,7 @@ function logLongRunningQuery(startTime, queryTime, query) {
   const durationInSeconds = (endTime - startTime) / 1000;
   if (durationInSeconds > 1) {
     logger.info(
-      "SPARQL query construct.",
+      "SPARQL query.",
       {
         "query-duration-ms": queryTime - startTime,
         "parse-duration-ms": endTime - queryTime,

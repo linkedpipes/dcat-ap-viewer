@@ -15,6 +15,7 @@ function createProvider(configuration) {
     "v2-label-item": createLabelItem(configuration),
     "v2-init-data": createInitDataGet(configuration),
     "v2-catalog-list": createCatalogListGet(configuration),
+    "v2-vdf-publishers": createPublishersCdfGet(configuration),
   };
 }
 
@@ -99,6 +100,15 @@ function transformInitData(content) {
 function createCatalogListGet(configuration) {
   return (req, res) => {
     executeCouchDBGet(configuration, "static", "local_catalogs")
+      .then(transformCatalogList)
+      .then(data => responseJsonLd(res, data))
+      .catch(error => handleApiError(res, error));
+  };
+}
+
+function createPublishersCdfGet(configuration) {
+  return (req, res) => {
+    executeCouchDBGet(configuration, "static", "publishers_vdf")
       .then(transformCatalogList)
       .then(data => responseJsonLd(res, data))
       .catch(error => handleApiError(res, error));
