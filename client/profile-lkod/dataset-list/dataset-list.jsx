@@ -125,6 +125,9 @@ register({
       "iri": "iri",
       "isPartOf": "nadřazený-dataset",
       "showMore": "zobraz-více",
+      // TODO Extract this to NKOD profile
+      "isVdfCodelist": "vdf-číselník",
+      "isVdfPublicData": "vdf-veřejné-údaje",
     },
     "en": {
       "/datasets": "/datasets",
@@ -143,6 +146,9 @@ register({
       "iri": "iri",
       "isPartOf": "is-part-of",
       "showMore": "show-more",
+      // TODO Extract this to NKOD profile
+      "isVdfCodelist": "vdf-codelist",
+      "isVdfPublicData": "vdf-public-data",
     },
   },
   "translations": translations,

@@ -9,7 +9,6 @@ import "../profile-lkod/keyword-list/keyword-list";
 import "../profile-lkod/dataset-list/dataset-list";
 import "../profile-lkod/dataset-list/dataset-list-invalid-query";
 import "../profile-lkod/dataset-list/dataset-list-facet-item";
-import "../profile-lkod/dataset-list/dataset-list-query/dataset-list-query";
 import "../profile-lkod/dataset-detail/dataset-detail";
 import "../profile-lkod/dataset-detail/dataset-detail-metadata";
 import "../profile-lkod/dataset-detail/dataset-detail-body";
@@ -31,6 +30,7 @@ import "./catalog-list/catalog-list";
 import "./dataset-detail/dataset-detail-header";
 import "./dataset-detail/legal/legal-column";
 import "./dataset-list/dataset-list-facet";
+import "./dataset-list/dataset-list-query/dataset-list-query";
 import "./publisher-list/publisher-list";
 import "./dataset-detail/access/endpoint-url-item";
 

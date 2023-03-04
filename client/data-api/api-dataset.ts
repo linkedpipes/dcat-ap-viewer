@@ -147,6 +147,10 @@ export interface DatasetListQuery {
 
   isPartOf: string[];
 
+  isVdfPublicData: boolean;
+
+  isVdfCodelist: boolean;
+
 }
 
 export interface TypeaheadDataset {

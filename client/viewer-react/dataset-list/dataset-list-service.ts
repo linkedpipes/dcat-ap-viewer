@@ -102,6 +102,8 @@ function parsedQueryToQuery(
     "isPartOf": asIriArray(parsedQuery, "isPartOf"),
     "view": asInteger(parsedQuery, "view", 0),
     "report": report,
+    "isVdfCodelist" : parsedQuery.isVdfCodelist === "1",
+    "isVdfPublicData" : parsedQuery.isVdfPublicData === "1",
   };
 }
 
@@ -181,6 +183,8 @@ function createDefaultDatasetListQuery(): ExtendedDatasetListQuery {
     "isPartOf": [],
     "view": 0,
     "report": [],
+    "isVdfCodelist": false,
+    "isVdfPublicData": false,
   };
 }
 
@@ -217,6 +221,8 @@ function prepareForUrl(query: ExtendedDatasetListQuery): ParsedQuery {
       query.isPartOf : null,
     "view": query.view !== defaultQuery.view ?
       String(query.view) : null,
+    "isVdfCodelist": query.isVdfCodelist ? "1" : null,
+    "isVdfPublicData": query.isVdfPublicData ? "1" : null
   };
 }
 
@@ -273,6 +279,8 @@ function prepareDatasetListQuery(
     "temporalStart": query.temporalStart,
     "temporalEnd": query.temporalEnd,
     "isPartOf": query.isPartOf,
+    "isVdfPublicData" : query.isVdfPublicData,
+    "isVdfCodelist": query.isVdfCodelist,
   }
 }
 
@@ -299,7 +307,9 @@ function datasetListQueryEquals(
     && left.formatsLimit === right.formatsLimit
     && left.temporalStart === right.temporalStart
     && left.temporalEnd === right.temporalEnd
-    && isArrayEqual(left.isPartOf, right.isPartOf);
+    && isArrayEqual(left.isPartOf, right.isPartOf)
+    && left.isVdfPublicData === right.isVdfPublicData
+    && left.isVdfCodelist === right.isVdfCodelist;
 }
 
 function isArrayEqual<T>(left: T[] | undefined, right: T[] | undefined) {
@@ -417,6 +427,8 @@ function optimizeDatasetListQuery(
     "temporalStart": nextQuery.temporalStart,
     "temporalEnd": nextQuery.temporalEnd,
     "isPartOf": nextQuery.isPartOf,
+    "isVdfPublicData" : nextQuery.isVdfPublicData,
+    "isVdfCodelist": nextQuery.isVdfCodelist,
   };
 }
 
@@ -428,18 +440,20 @@ function shouldMergeDatasetList(
     return false;
   }
   return prevQuery.sort === query.sort
-    && prevQuery.search == query.search
-    && prevQuery.publishers == query.publishers
-    && prevQuery.themes == query.themes
-    && prevQuery.keywords == query.keywords
-    && prevQuery.formats == query.formats
-    && prevQuery.temporalStart == query.temporalStart
-    && prevQuery.temporalEnd == query.temporalEnd
-    && prevQuery.isPartOf == query.isPartOf;
+    && prevQuery.search === query.search
+    && prevQuery.publishers === query.publishers
+    && prevQuery.themes === query.themes
+    && prevQuery.keywords === query.keywords
+    && prevQuery.formats === query.formats
+    && prevQuery.temporalStart === query.temporalStart
+    && prevQuery.temporalEnd === query.temporalEnd
+    && prevQuery.isPartOf === query.isPartOf
+    && prevQuery.isVdfCodelist === query.isVdfCodelist
+    && prevQuery.isVdfPublicData === query.isVdfPublicData;
 }
 
 /**
- * Should be used a a function.
+ * Should be used as a function.
  */
 export async function fetchTypeahead(
   language: string, query: DatasetListQuery, text: string

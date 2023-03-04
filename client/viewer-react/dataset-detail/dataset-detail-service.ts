@@ -236,6 +236,8 @@ function fetchDescendants(
     "temporalStart": "",
     "temporalEnd": "",
     "isPartOf": [datasetIri],
+    "isVdfCodelist": false,
+    "isVdfPublicData": false,
   };
   return async (dispatch) => {
     dispatch(DatasetDetailActions.fetchDescendants.request({

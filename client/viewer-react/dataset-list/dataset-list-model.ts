@@ -56,6 +56,10 @@ export interface ExtendedDatasetListQuery {
 
   view: number;
 
+  isVdfPublicData: boolean;
+
+  isVdfCodelist: boolean;
+
   /**
    * Contains errors related to parsing the query.
    */

@@ -222,6 +222,8 @@ function datasetQueryFiltersToUrlParams(
   params += query.temporalEnd ?
     ("&temporal-end=" + query.temporalEnd) : "";
   params += query.isPartOf ? facetToParams(query.isPartOf, 0, "isPartOf") : "";
+  params += query.isVdfPublicData ? "&isVdfPublicData" : "";
+  params += query.isVdfCodelist ? "&isVdfCodelist" : "";
   return params;
 }
 
