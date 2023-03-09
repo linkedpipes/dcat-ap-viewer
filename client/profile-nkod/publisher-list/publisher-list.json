@@ -14,7 +14,10 @@
       "5": "{count} datových sad"
     },
     "publishersDashboard": "Dashboard - měsíční průměry",
-    "publishersDashboardDetailed": "Dashboard - denní měření"
+    "publishersDashboardDetailed": "Dashboard - denní měření",
+    "publishersVdfBadge": "VDF",
+    "publishersVdfPublisherBadge": "poskytovatel",
+    "publishersVdfOriginatorBadge": "původce"
   },
   "en": {
     "page-title.publishers": "Publishers",
@@ -29,6 +32,9 @@
       "2": "{count} datasets"
     },
     "publishersDashboard": "Dashboard - monthly averages",
-    "publishersDashboardDetailed": "Dashboard - daily measures"
+    "publishersDashboardDetailed": "Dashboard - daily measures",
+    "publishersVdfBadge": "VDF",
+    "publishersVdfPublisherBadge": "publisher",
+    "publishersVdfOriginatorBadge": "originato"
   }
 }

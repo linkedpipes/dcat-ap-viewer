@@ -3,7 +3,7 @@ import {PropTypes} from "prop-types";
 import {Link} from "react-router-dom";
 import {
   Container, Card, CardBody, CardTitle,
-  ListGroup, ListGroupItem, Row,
+  ListGroup, ListGroupItem, Row, Badge,
 } from "reactstrap";
 
 import {
@@ -13,6 +13,7 @@ import {
 } from "../viewer-api";
 
 import {default as configuration} from "../nkod-configuration";
+import {usePublisherVdf} from "./vdf-service";
 
 import translations from "./publisher-list.json";
 
@@ -20,7 +21,10 @@ function PublisherList() {
   const {language} = useContext(NavigationContext);
   const data = usePublisherListApi(language);
   const selectLabel = useLabelApi();
+  const [vdfPublishers, vdfOriginators] = usePublisherVdf();
   usePageTitle("page-title.publishers");
+
+  console.log({vdfPublishers, vdfOriginators});
 
   if (data.loading) {
     const LoadingView = getElement("application.loading").element;
@@ -44,6 +48,8 @@ function PublisherList() {
             selectLabel={selectLabel}
             language={language}
             publisher={publisher}
+            isVdfPublisher={vdfPublishers.includes(publisher.iri)}
+            isVdfOriginator={vdfOriginators.includes(publisher.iri)}
           />
         ))}
       </Row>
@@ -87,7 +93,7 @@ function PublisherListItem(props) {
               rel="noopener noreferrer"
               title={translateString(props.language, "publishersDashboard")}
             >
-              <i className="material-icons ps-2" >line_axis</i>
+              <i className="material-icons ps-2">line_axis</i>
             </a>
             <a
               className="pe-2"
@@ -97,9 +103,14 @@ function PublisherListItem(props) {
               title={translateString(
                 props.language, "publishersDashboardDetailed")}
             >
-              <i className="material-icons ps-2" >query_stats</i>
+              <i className="material-icons ps-2">query_stats</i>
             </a>
           </ListGroupItem>
+          <PublisherListItemVdf
+            language={props.language}
+            publisher={props.publisher}
+            isVdfPublisher={props.isVdfPublisher}
+            isVdfOriginator={props.isVdfOriginator}/>
           <ListGroupItem>
             {t("publishersDatasets", {
               "count": formatNumber(props.publisher.datasetCount),
@@ -115,17 +126,73 @@ PublisherListItem.propTypes = {
   "selectLabel": PropTypes.func.isRequired,
   "language": PropTypes.string.isRequired,
   "publisher": PropTypes.object.isRequired,
+  "isVdfPublisher": PropTypes.bool.isRequired,
+  "isVdfOriginator": PropTypes.bool.isRequired,
 };
+
+
+function PublisherListItemVdf(props) {
+  const vdfBadge = (
+    <Link to={getPublisherSearchLinkVdf(props.language, props.publisher)}>
+      <Badge color="info" className="mx-1" pill>
+        {t("publishersVdfBadge")}
+      </Badge>
+    </Link>
+  );
+
+  const publisherBadge = (
+    <Badge color="info" className="mx-1" pill>
+      {t("publishersVdfPublisherBadge")}
+    </Badge>
+  );
+
+  const originatorBadge = (
+    <Badge color="info" className="mx-1" pill>
+      {t("publishersVdfOriginatorBadge")}
+    </Badge>
+  );
+
+  if (props.isVdfPublisher && props.isVdfOriginator) {
+    return (
+      <ListGroupItem>
+        {vdfBadge}
+        {publisherBadge}
+        {originatorBadge}
+      </ListGroupItem>
+    )
+  } else if (props.isVdfPublisher) {
+    return (
+      <ListGroupItem>
+        {vdfBadge}
+        {publisherBadge}
+      </ListGroupItem>
+    )
+  } else if (props.isVdfOriginator) {
+    return (
+      <ListGroupItem>
+        {vdfBadge}
+        {originatorBadge}
+      </ListGroupItem>
+    )
+  } else {
+    return null;
+  }
+}
 
 function getPublisherSearchLink(language, publisher) {
   return createUrl(language, "/datasets", {"publishers": publisher.iri});
 }
 
 function getPublisherDashboardLink(publisher) {
-  return configuration.dashboardsUrlTemplate.replace("{}", publisher.iri);
+  return configuration.dashboardsUrlTemplate?.replace("{}", publisher.iri);
 }
 
 function getPublisherDashboardDetailedLink(publisher) {
   return configuration.dashboardsDetailedUrlTemplate
-    .replace("{}", publisher.iri);
+    ?.replace("{}", publisher.iri);
+}
+
+function getPublisherSearchLinkVdf(language, publisher) {
+  return createUrl(language, "/datasets",
+    {"publishers": publisher.iri, "isVdfPublicData": 1});
 }
