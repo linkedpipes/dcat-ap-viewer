@@ -33,6 +33,7 @@ import "./dataset-list/dataset-list-facet";
 import "./dataset-list/dataset-list-query/dataset-list-query";
 import "./publisher-list/publisher-list";
 import "./dataset-detail/access/endpoint-url-item";
+import "./dataset-detail/dataset-detail-vdf";
 
 // Styles.
 import "bootstrap/dist/css/bootstrap.css";

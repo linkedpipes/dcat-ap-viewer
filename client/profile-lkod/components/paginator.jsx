@@ -34,7 +34,7 @@ export default class Paginator extends React.PureComponent {
 
     const parentStyle = {
       "display": "flex",
-      "justify-content": "space-between",
+      "justifyContent": "space-between",
       "flexWrap": "wrap",
       "margin": "0.5rem 0 0 0",
     };
