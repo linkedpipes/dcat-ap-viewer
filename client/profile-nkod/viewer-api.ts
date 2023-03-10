@@ -5,6 +5,7 @@ export * from "../viewer-react/service/i18";
 export * from "../viewer-react/service/navigation";
 export * from "../viewer-react/catalog-list/catalog-list-service";
 export * from "../viewer-react/publisher-list/publisher-list-service";
+export * from "../viewer-react/dataset-list/dataset-list-service";
 export * from "../viewer-react/service/label";
 export * from "../viewer-react/service/modal";
 export * from "../viewer-react/service/page-title";
