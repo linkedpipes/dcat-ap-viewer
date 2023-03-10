@@ -12,7 +12,7 @@ export function useDatasetVdf(language: string, dataset: string) {
     let url = "./api/v2/vdf/dataset?iri=" + encodeURIComponent(dataset);
     fetchJson(url).then((data: any) => {
       setUsedAsCodelistBy(data["isUsedAsCodelistBy"] ?? []);
-      setUsingCodelists(data["usingCodelists"] ?? []);
+      setUsingCodelists(data["isUsingCodelists"] ?? []);
     });
   }, [setUsedAsCodelistBy, setUsingCodelists]);
 
