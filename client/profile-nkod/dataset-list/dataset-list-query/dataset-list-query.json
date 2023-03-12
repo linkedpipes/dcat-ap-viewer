@@ -3,13 +3,16 @@
     "search.searching": "Vyhledávám data ...",
     "search.noDataFound": "Dotazu neodpovídají žádná data.",
     "search.search": "Vyhledat",
-    "search.vdf": "Veřejná datový fond",
+    "search.vdf": "Veřejný datový fond",
     "search.vdf.partOf": "Veřejné údaje",
     "search.vdf.codelist": "Číselník"
   },
   "en": {
     "search.searching": "Searching ...",
     "search.noDataFound": "No data found.",
-    "search.search": "Search"
+    "search.search": "Search",
+    "search.vdf": "Veřejný datový fond",
+    "search.vdf.partOf": "Veřejné údaje",
+    "search.vdf.codelist": "Codelist"
   }
 }
