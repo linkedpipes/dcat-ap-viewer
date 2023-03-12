@@ -127,7 +127,7 @@ function loadDatasetListDatasets(jsonld: JsonLdEntity[], output: DatasetList) {
       "keywords": getStrings(entry, DCAT.keyword),
       "themes": getResources(entry, DCAT.theme),
       "order": Number(getValue(entry, LP.order)),
-      "isPartOf": getResource(entry, LP.isPartOf),
+      "isPartOf": getResource(entry, LP.isPartOf)
     });
   }
 }
@@ -214,6 +214,7 @@ function createEmptyNkodDataset(iri: string): NkodDataset {
     "semanticThemes": [],
     "isFromVDF": false,
     "isCodelist": false,
+    "vdfOriginator": undefined,
   }
 }
 
@@ -347,4 +348,5 @@ function loadDatasetNkod(
   output.isFromCatalog = types.includes(NKOD.SourceLkod);
   output.isFromVDF = types.includes(NKOD.Vdf);
   output.isCodelist = types.includes(NKOD.CodeList);
+  output.vdfOriginator = getResource(entity, NKOD.originator);
 }

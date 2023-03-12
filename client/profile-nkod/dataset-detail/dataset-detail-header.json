@@ -1,10 +1,12 @@
 {
   "cs": {
     "vdf": "VDF: veřejné údaje",
-    "vdfCodelist": "VDF: číselník"
+    "vdfCodelist": "VDF: číselník",
+    "vdfOriginator": "Původce dat:"
   },
   "en": {
     "vdf": "VDF: public data",
-    "vdfCodelist": "VDF: codelist"
+    "vdfCodelist": "VDF: codelist",
+    "vdfOriginator": "Data originator:"
   }
 }

@@ -159,6 +159,7 @@ export const NKOD = {
   "DcatApLkod": NKOD_PREFIX + "DcatApLkod",
   "Vdf": NKOD_PREFIX+ "vdf/datová-sada-publikující-veřejné-údaje",
   "CodeList": NKOD_PREFIX + "vdf/číselník",
+  "originator": NKOD_PREFIX + "původce-dat",
 };
 
 const DQV_PREFIX = "http://www.w3.org/ns/dqv#";

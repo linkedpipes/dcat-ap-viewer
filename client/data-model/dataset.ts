@@ -108,4 +108,6 @@ export interface NkodDataset extends DcatApDataset {
 
   isFromVDF: boolean;
 
+  vdfOriginator?: string;
+
 }

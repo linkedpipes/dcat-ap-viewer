@@ -50,6 +50,14 @@ function DatasetDetailHeader(props) {
         </Link>
       </h2>
 
+      {props.dataset.vdfOriginator && (
+        <div style={{"fontWeight": "bold"}}>
+          {translateString(props.language, "vdfOriginator")}
+          &nbsp;
+          {selectLabel(props.dataset.vdfOriginator)}
+        </div>
+      )}
+
     </React.Fragment>
   );
 }
