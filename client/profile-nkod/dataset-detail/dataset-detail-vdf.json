@@ -4,7 +4,7 @@
     "dataset-detail.vdfCodelist": "Číselníky VDF kódující údaje této datové sady"
   },
   "en": {
-    "dataset-detail.vdfPublishers": "VDF datasets publishing data encoded with this codebook",
-    "dataset-detail.vdfCodelist": "VDF digits encoding the data of this data set"
+    "dataset-detail.vdfPublishers": "Public data fund datasets using this codelist",
+    "dataset-detail.vdfCodelist": "Public data fund codelists used in this dataset"
   }
 }
