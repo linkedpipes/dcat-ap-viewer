@@ -33,11 +33,11 @@ function Footer() {
             <h3 className="h6">{t("footer.contacts")}</h3>
             <ul>
               <li>{t("footer.email")}: <a
-                href="mailto:otevrenadata@mvcr.cz">otevrenadata@mvcr.cz</a>
+                href="mailto:otevrenadata@dia.gov.cz">otevrenadata@dia.gov.cz</a>
               </li>
               <li>{t("footer.telephone")}: +420 974 816 397
               </li>
-              <li><a href="https://www.mvcr.cz/">{t("footer.mvcr")}</a></li>
+              <li><a href="https://digitalizace.gov.cz/">{t("footer.dia")}</a></li>
               <li><a href="https://data.gov.cz">{t("footer.opendata")}</a></li>
               <li>
                 <a href="/prohlášení-o-přístupnosti">
