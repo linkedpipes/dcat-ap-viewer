@@ -78,6 +78,7 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
     "add-field" : { "name" : "temporal-end", "type" : "pdate", "docValues" : true, "multiValued" : false },
     "add-field" : { "name" : "spatial", "type" : "strings" },
     "add-field" : { "name" : "isPartOf", "type" : "string" , "indexed" : true, "multiValued" : false },
+    "add-field" : { "name" : "with_data_service", "type" : "boolean", "multiValued" : false },
 
     "add-field" : { "name" : "description_cs", "type" : "string", "multiValued" : false },
     "add-field" : { "name" : "keyword_cs", "type" : "strings" },
@@ -94,7 +95,7 @@ curl http://localhost:8983/solr/dcat-ap-viewer/schema -X POST -H 'Content-type:a
     "add-copy-field" : { "source" : "title_en_sort", "dest" : "title_en_query" },
 
     "add-field" : { "name" : "vdf_codelist", "type" : "boolean", "multiValued" : false },
-    "add-field" : { "name" : "vdf_public_data", "type" : "boolean", "multiValued" : false },
+    "add-field" : { "name" : "vdf_public_data", "type" : "boolean", "multiValued" : false },    
 
     "replace-field" : { "name": "_text_", "type" : "ascii_string", "multiValued" : true, "indexed" : true, "stored" : false },
     "add-copy-field" : { "source" : "title_cs", "dest" : "_text_" },
