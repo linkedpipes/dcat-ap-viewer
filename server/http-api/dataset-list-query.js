@@ -31,6 +31,7 @@ function defaultUserQuery(language) {
     "limit": 10,
     "language": language,
     "isPartOf": [],
+    "containsService": undefined,
     "isVdfPublicData": undefined,
     "isVdfCodelist": undefined,
   };
@@ -60,6 +61,7 @@ function parseDatasetUserQuery(query) {
   addUserQueryValue(query, result, "offset");
   addUserQueryValue(query, result, "limit");
   addUserQueryValue(query, result, "language");
+  addUserQueryByPresence(query, result, "containsService");
   addUserQueryByPresence(query, result, "isVdfPublicData");
   addUserQueryByPresence(query, result, "isVdfCodelist");
   return result;

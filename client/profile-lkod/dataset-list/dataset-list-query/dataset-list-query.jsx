@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import {PropTypes} from "prop-types";
-import {Button, Col, Row} from "reactstrap";
+import {Button, Col, FormGroup, Input, Label, Row} from "reactstrap";
 
 import SearchBox from "./search-box";
 import ViewSelector from "./view-selector";
@@ -41,6 +41,7 @@ function DatasetListQuery(props) {
       "temporalStart": "",
       "temporalEnd": "",
       "isPartOf": [],
+      "containsService": false,
     });
   };
 
@@ -84,13 +85,29 @@ function DatasetListQuery(props) {
       />
       {
         showAdvanced &&
-        <TemporalFilter
-          start={temporalStart}
-          setStart={setTemporalStart}
-          end={temporalEnd}
-          setEnd={setTemporalEnd}
-          setInterval={onSetInterval}
-        />
+        <div style={{"margin": "1rem 1rem 0 2rem"}}>
+          <TemporalFilter
+            start={temporalStart}
+            setStart={setTemporalStart}
+            end={temporalEnd}
+            setEnd={setTemporalEnd}
+            setInterval={onSetInterval}
+          />
+          <FormGroup
+            check
+            inline
+          >
+            <Input type="checkbox" checked={props.containsService}
+                   onChange={(event) => {
+                     props.onUpdateQuery({
+                       "containsService": !props.containsService
+                     });
+                   }}/>
+            <Label check>
+              {t("search.containsService")}
+            </Label>
+          </FormGroup>
+        </div>
       }
       <Row>
         <Col>

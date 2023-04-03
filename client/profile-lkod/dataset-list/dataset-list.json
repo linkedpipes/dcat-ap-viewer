@@ -44,7 +44,8 @@
     },
     "page-title.datasets" : "Datové sady",
     "invalid_dataset_list_query_argument": "Vyhledávací parametr byl očekáván ve formě IRI.",
-    "invalid_dataset_list_query_argument_link": "Zpět na datové sady"
+    "invalid_dataset_list_query_argument_link": "Zpět na datové sady",
+    "tag-data-service": "Datová služba"
   },
   "en": {
     "title asc": "Title Ascending",
@@ -88,6 +89,7 @@
     },
     "page-title.datasets" : "Datasets",
     "invalid_dataset_list_query_argument": "Query parameters were supposed to be in form of an IRI.",
-    "invalid_dataset_list_query_argument_link": "Back to all datasets"
+    "invalid_dataset_list_query_argument_link": "Back to all datasets",
+    "tag-data-service": "Data service"
   }
 }

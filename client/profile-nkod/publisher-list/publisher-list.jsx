@@ -24,8 +24,6 @@ function PublisherList() {
   const [vdfPublishers, vdfOriginators] = usePublisherVdf();
   usePageTitle("page-title.publishers");
 
-  console.log({vdfPublishers, vdfOriginators});
-
   if (data.loading) {
     const LoadingView = getElement("application.loading").element;
     return (<LoadingView/>);

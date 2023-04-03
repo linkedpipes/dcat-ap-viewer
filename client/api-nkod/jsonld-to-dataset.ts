@@ -127,7 +127,8 @@ function loadDatasetListDatasets(jsonld: JsonLdEntity[], output: DatasetList) {
       "keywords": getStrings(entry, DCAT.keyword),
       "themes": getResources(entry, DCAT.theme),
       "order": Number(getValue(entry, LP.order)),
-      "isPartOf": getResource(entry, LP.isPartOf)
+      "isPartOf": getResource(entry, LP.isPartOf),
+      "containsService": Boolean(getValue(entry, LP.containsService)),
     });
   }
 }

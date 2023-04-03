@@ -125,6 +125,7 @@ register({
       "iri": "iri",
       "isPartOf": "nadřazený-dataset",
       "showMore": "zobraz-více",
+      "containsService": "s-datovou-službou",
       // TODO Extract this to NKOD profile
       "isVdfCodelist": "vdf-číselník",
       "isVdfPublicData": "vdf-veřejné-údaje",
@@ -146,6 +147,7 @@ register({
       "iri": "iri",
       "isPartOf": "is-part-of",
       "showMore": "show-more",
+      "containsService": "contains-data-service",
       // TODO Extract this to NKOD profile
       "isVdfCodelist": "vdf-codelist",
       "isVdfPublicData": "vdf-public-data",

@@ -6,7 +6,7 @@ import {t} from "../../viewer-api";
 
 export default function VdfFilter(props) {
   return (
-    <div style={{"margin": "1rem 1rem 0 2rem"}}>
+    <div>
       <span>{t("search.vdf")}</span>
       &nbsp;
       <FormGroup

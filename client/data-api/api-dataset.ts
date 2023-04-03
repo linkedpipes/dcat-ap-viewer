@@ -90,6 +90,8 @@ export interface DatasetListItem {
 
   isPartOf?: string;
 
+  containsService: boolean;
+
 }
 
 export interface Facet {
@@ -146,6 +148,8 @@ export interface DatasetListQuery {
   temporalEnd: string;
 
   isPartOf: string[];
+
+  containsService: boolean;
 
   isVdfPublicData: boolean;
 

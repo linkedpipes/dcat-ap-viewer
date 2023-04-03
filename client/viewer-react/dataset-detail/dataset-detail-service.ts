@@ -236,6 +236,7 @@ function fetchDescendants(
     "temporalStart": "",
     "temporalEnd": "",
     "isPartOf": [datasetIri],
+    "containsService": false,
     "isVdfCodelist": false,
     "isVdfPublicData": false,
   };

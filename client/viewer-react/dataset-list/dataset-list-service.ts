@@ -102,6 +102,7 @@ function parsedQueryToQuery(
     "isPartOf": asIriArray(parsedQuery, "isPartOf"),
     "view": asInteger(parsedQuery, "view", 0),
     "report": report,
+    "containsService": parsedQuery.containsService === "1",
     "isVdfCodelist" : parsedQuery.isVdfCodelist === "1",
     "isVdfPublicData" : parsedQuery.isVdfPublicData === "1",
   };
@@ -183,6 +184,7 @@ function createDefaultDatasetListQuery(): ExtendedDatasetListQuery {
     "isPartOf": [],
     "view": 0,
     "report": [],
+    "containsService": false,
     "isVdfCodelist": false,
     "isVdfPublicData": false,
   };
@@ -219,6 +221,7 @@ function prepareForUrl(query: ExtendedDatasetListQuery): ParsedQuery {
       query.temporalEnd : null,
     "isPartOf": query.isPartOf.length > 0 ?
       query.isPartOf : null,
+    "containsService": query.containsService ? "1" : null,
     "view": query.view !== defaultQuery.view ?
       String(query.view) : null,
     "isVdfCodelist": query.isVdfCodelist ? "1" : null,
@@ -279,6 +282,7 @@ function prepareDatasetListQuery(
     "temporalStart": query.temporalStart,
     "temporalEnd": query.temporalEnd,
     "isPartOf": query.isPartOf,
+    "containsService": query.containsService,
     "isVdfPublicData" : query.isVdfPublicData,
     "isVdfCodelist": query.isVdfCodelist,
   }
@@ -293,6 +297,7 @@ function datasetListQueryEquals(
   if (left === undefined || right === undefined) {
     return false;
   }
+  // TODO Move this to helper method for DatasetListQuery.
   return left.offset === right.offset
     && left.limit === right.limit
     && left.sort === right.sort
@@ -308,6 +313,7 @@ function datasetListQueryEquals(
     && left.temporalStart === right.temporalStart
     && left.temporalEnd === right.temporalEnd
     && isArrayEqual(left.isPartOf, right.isPartOf)
+    && left.containsService === right.containsService
     && left.isVdfPublicData === right.isVdfPublicData
     && left.isVdfCodelist === right.isVdfCodelist;
 }
@@ -427,6 +433,7 @@ function optimizeDatasetListQuery(
     "temporalStart": nextQuery.temporalStart,
     "temporalEnd": nextQuery.temporalEnd,
     "isPartOf": nextQuery.isPartOf,
+    "containsService": nextQuery.containsService,
     "isVdfPublicData" : nextQuery.isVdfPublicData,
     "isVdfCodelist": nextQuery.isVdfCodelist,
   };
@@ -448,6 +455,7 @@ function shouldMergeDatasetList(
     && prevQuery.temporalStart === query.temporalStart
     && prevQuery.temporalEnd === query.temporalEnd
     && prevQuery.isPartOf === query.isPartOf
+    && prevQuery.containsService === query.containsService
     && prevQuery.isVdfCodelist === query.isVdfCodelist
     && prevQuery.isVdfPublicData === query.isVdfPublicData;
 }

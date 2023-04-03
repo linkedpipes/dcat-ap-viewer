@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import {PropTypes} from "prop-types";
-import {Button, Col, Row} from "reactstrap";
+import {Button, Col, FormGroup, Input, Label, Row} from "reactstrap";
 
 import SearchBox from "../../../profile-lkod/dataset-list/dataset-list-query/search-box";
 import ViewSelector from "../../../profile-lkod/dataset-list/dataset-list-query/view-selector";
@@ -42,6 +42,7 @@ function DatasetListQuery(props) {
       "temporalStart": "",
       "temporalEnd": "",
       "isPartOf": [],
+      "containsService": false,
       "isVdfCodelist": false,
       "isVdfPublicData": false,
     });
@@ -95,7 +96,7 @@ function DatasetListQuery(props) {
       />
       {
         showAdvanced &&
-        <div>
+        <div style={{"margin": "1rem 1rem 0 2rem"}}>
           <TemporalFilter
             start={temporalStart}
             setStart={setTemporalStart}
@@ -103,6 +104,20 @@ function DatasetListQuery(props) {
             setEnd={setTemporalEnd}
             setInterval={onSetInterval}
           />
+          <FormGroup
+            check
+            inline
+          >
+            <Input type="checkbox" checked={props.query.containsService}
+                   onChange={(event) => {
+                     props.onUpdateQuery({
+                       "containsService": !props.query.containsService
+                     });
+                   }}/>
+            <Label check>
+              {t("search.containsService")}
+            </Label>
+          </FormGroup>
           <VdfFilter
             isVdfCodelist={props.query.isVdfCodelist}
             isVdfPublicData={props.query.isVdfPublicData}

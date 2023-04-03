@@ -200,6 +200,10 @@ function facetsToSolrQuery(userQuery) {
     url += "&fq=isPartOf:\"" + encodeURIComponent(item) + "\"";
   });
 
+  if (userQuery.containsService) {
+    url += "&fq=with_data_service:\"true\"";
+  }
+
   return url;
 }
 
@@ -269,6 +273,7 @@ function solrResponseToDatasets(content, query, languagePreferences) {
         "spatial": asResource(item["spatial"]),
         "order": index,
         "isPartOf": asResource(item["isPartOf"]),
+        "containsService": item["with_data_service"],
       })),
       ...convertKeywords(
         facets["keyword_" + query.language], "urn:keyword", query.keywordLimit),
@@ -306,6 +311,7 @@ function datasetListContext() {
     "datasetsCount": "urn:datasetsCount",
     "order": "urn:order",
     "isPartOf": "urn:isPartOf",
+    "containsService": "urn:containsService",
   };
 }
 

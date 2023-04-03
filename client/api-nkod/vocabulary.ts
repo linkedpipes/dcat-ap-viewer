@@ -194,6 +194,7 @@ export const LP = {
   "code": LP_PREFIX + "code",
   "order": LP_PREFIX + "order",
   "isPartOf": "urn:isPartOf",
+  "containsService": "urn:containsService",
 };
 
 export const SGOV = {
