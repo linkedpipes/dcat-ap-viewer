@@ -1,5 +1,9 @@
 /* General page style. */
 
+:root {
+    --color-data-service: #005c00;
+}
+
 body {
     color: var(--color-text-default);
 }
@@ -23,6 +27,12 @@ hr, .list-group-item, .card {
 .badge-info, .bg-info, a.badge-info.btn:hover {
     background-color: var(--color-base) !important;
     color: var(--color-text-inverted) !important;
+}
+
+.badge-data-service {
+    color: var(--color-text-default) !important;
+    background-color: var(--color-background) !important;
+    border: 1px solid var(--color-data-service) !important;
 }
 
 .label {

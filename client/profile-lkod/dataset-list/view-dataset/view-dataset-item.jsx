@@ -1,33 +1,21 @@
-import React, {useContext} from "react";
+import React from "react";
 import {PropTypes} from "prop-types";
 import {Link} from "react-router-dom";
 
 import {
+  t,
   tUrl,
   tLiteral,
   link,
   useLabelApi,
-  translateString,
-  NavigationContext
 } from "../../viewer-api";
-import TagLine from "../../components/tag-line";
+import {TagList} from "../../components/tag-line";
+import {Badge} from "reactstrap";
 
 const DATA_SERVICE = "tag-data-service";
 
 export default function DatasetListItem(props) {
   const selectLabel = useLabelApi();
-  const {language} = useContext(NavigationContext);
-
-  const formats = [
-    ...(props.dataset.containsService ? [DATA_SERVICE] : []),
-    ...props.dataset.formats
-  ];
-  const labelSelector = (value) => {
-    if (DATA_SERVICE === value) {
-      return translateString(language, DATA_SERVICE);
-    }
-    return selectLabel(value);
-  };
 
   return (
     <div>
@@ -37,11 +25,11 @@ export default function DatasetListItem(props) {
         </Link>
       ))}
       {props.showPublisher
-      && link(
-        "/datasets",
-        selectLabel(props.dataset.publisher),
-        {"publisher": props.dataset.publisher},
-      )}
+        && link(
+          "/datasets",
+          selectLabel(props.dataset.publisher),
+          {"publisher": props.dataset.publisher},
+        )}
       <p style={{
         "overflow": "hidden",
         "display": "-webkit-box",
@@ -50,11 +38,7 @@ export default function DatasetListItem(props) {
       }}>
         {tLiteral(props.dataset.description)}
       </p>
-      <TagLine
-        items={formats}
-        size={0.7}
-        labelFunction={labelSelector}
-      />
+      <DatasetItemTags selectLabel={selectLabel} dataset={props.dataset} />
       <hr/>
     </div>
   );
@@ -70,3 +54,48 @@ DatasetListItem.propTypes = {
   }).isRequired,
   "showPublisher": PropTypes.bool.isRequired,
 };
+
+function DatasetItemTags({selectLabel, dataset}) {
+  const badges = [];
+  const badgeStyle = {
+    "marginLeft": "1em",
+    "marginBottom": "0.5em",
+    "fontSize": "0.7em",
+  };
+
+  if (dataset.containsService) {
+    badges.push((<Badge
+      key={DATA_SERVICE}
+      style={badgeStyle}
+      className="badge-data-service"
+      outline
+      pill
+    >
+      {t(DATA_SERVICE)}
+    </Badge>));
+  }
+
+  const formats = dataset.formats ?? [];
+  badges.push(...formats.map(item => (
+    <Badge
+      key={item}
+      style={badgeStyle}
+      color="info"
+      outline
+      pill
+    >
+      {selectLabel(item)}
+    </Badge>
+  )));
+
+  if (badges.length === 0) {
+    return null;
+  }
+
+  return (
+    <div style={{"marginTop": "0.2em"}}>
+      {badges}
+    </div>
+  );
+}
+
