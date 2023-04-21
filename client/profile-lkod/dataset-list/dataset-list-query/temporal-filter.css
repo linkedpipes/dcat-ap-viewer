@@ -1,4 +1,4 @@
-.temporal-filter .form-control {
-    display: inline;
-    padding: 0.2rem 0 0.4rem 0;
+.temporal-filter {
+    display: flex;
+    align-items: center;
 }
