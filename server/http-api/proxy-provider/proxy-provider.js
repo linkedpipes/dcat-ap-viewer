@@ -1,6 +1,5 @@
 //
-// Provider used for testing, return predefined data.
-// It also showcase the format and content the API should return.
+// Proxy API calls to given backend instance.
 //
 
 const request = require("request");

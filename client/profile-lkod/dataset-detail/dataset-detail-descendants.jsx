@@ -91,7 +91,7 @@ function DescendantsItem(props) {
         {selectLiteral(props.language, dataset.description)}
       </p>
       <TagLine
-        items={dataset.formats}
+        items={dataset.fileTypes}
         size={0.7}
         labelFunction={props.selectLabel}
       />

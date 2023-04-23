@@ -134,7 +134,7 @@ function datasetQueryFiltersToUrlParams(
   params += query.search ? "&text=" + encodeURIComponent(query.search) : "";
   params += facetToParams(query.keywords, query.keywordsLimit, "keyword");
   params += facetToParams(query.publishers, query.publishersLimit, "publisher");
-  params += facetToParams(query.formats, query.formatsLimit, "format");
+  params += facetToParams(query.fileTypes, query.fileTypesLimit, "format");
   params += facetToParams(query.themes, query.themesLimit, "theme");
   params += query.temporalStart ?
     ("&temporal-start=" + query.temporalStart) : "";

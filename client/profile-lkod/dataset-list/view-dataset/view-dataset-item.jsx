@@ -3,16 +3,12 @@ import {PropTypes} from "prop-types";
 import {Link} from "react-router-dom";
 
 import {
-  t,
   tUrl,
   tLiteral,
   link,
   useLabelApi,
 } from "../../viewer-api";
-import {TagList} from "../../components/tag-line";
 import {Badge} from "reactstrap";
-
-const DATA_SERVICE = "tag-data-service";
 
 export default function DatasetListItem(props) {
   const selectLabel = useLabelApi();
@@ -49,8 +45,8 @@ DatasetListItem.propTypes = {
     "iri": PropTypes.string.isRequired,
     "publisher": PropTypes.string,
     "description": PropTypes.object.isRequired,
-    "formats": PropTypes.arrayOf(PropTypes.string).isRequired,
-    "containsService": PropTypes.bool.isRequired,
+    "fileTypes": PropTypes.arrayOf(PropTypes.string).isRequired,
+    "dataServiceTypes": PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
   "showPublisher": PropTypes.bool.isRequired,
 };
@@ -63,20 +59,19 @@ function DatasetItemTags({selectLabel, dataset}) {
     "fontSize": "0.7em",
   };
 
-  if (dataset.containsService) {
-    badges.push((<Badge
-      key={DATA_SERVICE}
+  badges.push(...(dataset.dataServiceTypes ?? []).map(item => (
+    <Badge
+      key={item}
       style={badgeStyle}
       className="badge-data-service"
       outline
       pill
     >
-      {t(DATA_SERVICE)}
-    </Badge>));
-  }
+      {selectLabel(item)}
+    </Badge>
+  )));
 
-  const formats = dataset.formats ?? [];
-  badges.push(...formats.map(item => (
+  badges.push(...(dataset.fileTypes ?? []).map(item => (
     <Badge
       key={item}
       style={badgeStyle}

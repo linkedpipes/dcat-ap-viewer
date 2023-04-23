@@ -21,12 +21,14 @@ function defaultUserQuery(language) {
     "keywordLimit": DEFAULT_FACET_RETURN_COUNT,
     "publisher": [],
     "publisherLimit": DEFAULT_FACET_RETURN_COUNT,
-    "format": [],
-    "formatLimit": DEFAULT_FACET_RETURN_COUNT,
+    "fileType": [],
+    "fileTypeLimit": DEFAULT_FACET_RETURN_COUNT,
+    "dataServiceType": [],
+    "dataServiceTypeLimit": DEFAULT_FACET_RETURN_COUNT,
     "theme": [],
     "themeLimit": DEFAULT_FACET_RETURN_COUNT,
-    "temporal-start": undefined,
-    "temporal-end": undefined,
+    "temporalStart": undefined,
+    "temporalEnd": undefined,
     "offset": 0,
     "limit": 10,
     "language": language,
@@ -51,17 +53,18 @@ function parseDatasetUserQuery(query) {
   addUserQueryFacet(query, result, "keywordLimit");
   addUserQueryFacet(query, result, "publisher");
   addUserQueryFacet(query, result, "publisherLimit");
-  addUserQueryFacet(query, result, "format");
-  addUserQueryFacet(query, result, "formatLimit");
+  addUserQueryFacet(query, result, "fileType");
+  addUserQueryFacet(query, result, "fileTypeLimit");
+  addUserQueryFacet(query, result, "dataServiceType");
+  addUserQueryFacet(query, result, "dataServiceTypeLimit");
   addUserQueryFacet(query, result, "theme");
   addUserQueryFacet(query, result, "themeLimit");
   addUserQueryFacet(query, result, "isPartOf");
-  addUserQueryValue(query, result, "temporal-start");
-  addUserQueryValue(query, result, "temporal-end");
+  addUserQueryValue(query, result, ["temporalStart", "temporal-start"]);
+  addUserQueryValue(query, result, ["temporalEnd", "temporal-end"]);
   addUserQueryValue(query, result, "offset");
   addUserQueryValue(query, result, "limit");
   addUserQueryValue(query, result, "language");
-  addUserQueryByPresence(query, result, "containsService");
   addUserQueryByPresence(query, result, "isVdfPublicData");
   addUserQueryByPresence(query, result, "isVdfCodelist");
   return result;
@@ -78,8 +81,13 @@ function addUserQueryFacet(query, result, name) {
 }
 
 function addUserQueryValue(query, result, name) {
-  if (query[name]) {
-    result[name] = query[name];
+  const names = Array.isArray(name) ? name : [name];
+  const outputName = names[0];
+  for (const item of names) {
+    if (query[item]) {
+      result[outputName] = query[item];
+      break;
+    }
   }
 }
 
@@ -88,4 +96,3 @@ function addUserQueryByPresence(query, result, name) {
     result[name] = true;
   }
 }
-

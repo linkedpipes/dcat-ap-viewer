@@ -100,7 +100,8 @@ function buildDatasetSolrQuery(query, defaultLanguage) {
     sort = userQuery.sortBy + " " + userQuery.sortOrder;
   }
   let url = "facet.field=keyword_" + userQuery.language + "&"
-    + "facet.field=format&"
+    + "facet.field=file_type&"
+    + "facet.field=data_service_type&"
     + "facet.field=publisher&"
     + "facet.field=theme&"
     + "facet.sort=count&"
@@ -173,64 +174,66 @@ function prepareFieldQueryForTokens(field, tokens) {
 }
 
 function paginationToSolrQuery(userQuery) {
-  return "&start=" + userQuery["offset"] + "&rows=" + userQuery["limit"];
+  return `&start=${userQuery["offset"]}&rows=${userQuery["limit"]}`;
 }
 
 function facetsToSolrQuery(userQuery) {
-  let url = "";
+  let result = "";
 
   userQuery.keyword.forEach((item) => {
-    url += "&fq=keyword_" + userQuery.language
-      + ":\"" + encodeURIComponent(item) + "\"";
+    result += `&fq=keyword_${userQuery.language}:"${encodeURIComponent(item)}"`;
   });
 
   userQuery.publisher.forEach((item) => {
-    url += "&fq=publisher:\"" + encodeURIComponent(item) + "\"";
+    result += `&fq=publisher:"${encodeURIComponent(item)}"`;
   });
 
-  userQuery.format.forEach((item) => {
-    url += "&fq=format:\"" + encodeURIComponent(item) + "\"";
+  userQuery.fileType.forEach((item) => {
+    result += `&fq=file_type:"${encodeURIComponent(item)}"`;
+  });
+
+  userQuery.dataServiceType.forEach((item) => {
+    result += `&fq=data_service_type:"${encodeURIComponent(item)}"`;
   });
 
   userQuery.theme.forEach((item) => {
-    url += "&fq=theme:\"" + encodeURIComponent(item) + "\"";
+    result += `&fq=theme:"${encodeURIComponent(item)}"`;
   });
 
   userQuery.isPartOf.forEach((item) => {
-    url += "&fq=isPartOf:\"" + encodeURIComponent(item) + "\"";
+    result += `&fq=is_part_of:"${encodeURIComponent(item)}"`;
   });
 
-  if (userQuery.containsService) {
-    url += "&fq=with_data_service:\"true\"";
-  }
-
-  return url;
+  return result;
 }
 
 function temporalToSolrQuery(userQuery) {
   let url = "";
-  if (userQuery["temporal-start"] === undefined) {
-    if (userQuery["temporal-end"] === undefined) {
+  const temporalStart = userQuery["temporalStart"];
+  const temporalEnd = userQuery["temporalEnd"];
+
+  if (temporalStart === undefined) {
+    if (temporalEnd === undefined) {
       // No temporal limits.
     } else {
       // Only temporal end is set.
-      url += "&fq=temporal-start:%5B+*+TO+"
-        + userQuery["temporal-end"]
+      url += "&fq=temporal_start:%5B+*+TO+"
+        + temporalEnd
         + "T00%5C:00%5C:00Z+%5D";
     }
   } else {
-    if (userQuery["temporal-end"] === undefined) {
+    if (temporalEnd === undefined) {
       // Only temporal start is set.
-      url += "&fq=temporal-end:%5B+"
-        + userQuery["temporal-start"]
+      url += "&fq=temporal_end:%5B+"
+        + temporalStart
         + "T00%5C:00%5C:00Z+TO+*+%5D";
     } else {
       // Both temporal values are set.
-      url += "&fq=temporal-start:%5B+*+TO+"
-        + userQuery["temporal-start"]
+      url += "&fq=temporal_start:%5B+*+TO+"
+        + temporalStart
         + "T00%5C:00%5C:00Z+%5D";
-      url += "&fq=temporal-end:%5B+"
-        + userQuery["temporal-end"]
+      url += "&fq=temporal_end:%5B+"
+        + temporalEnd
         + "T00%5C:00%5C:00Z+TO+*+%5D";
     }
   }
@@ -255,34 +258,46 @@ function solrResponseToDatasets(content, query, languagePreferences) {
     "@graph": [
       {
         "@type": "Metadata",
-        "datasetsCount": content["response"]["numFound"],
+        "datasets_count": content["response"]["numFound"],
       },
       ...content["response"]["docs"].map((item, index) => ({
         "@id": item["iri"],
         "@type": "Dataset",
         "modified": item["modified"],
-        "accrualPeriodicity": asResource(item["accrualPeriodicity"]),
+        "accrual_periodicity": asResource(item["accrual_periodicity"]),
         "description": asLiteral(
           item, "description", query.language, languagePreferences),
         "issued": item["issued"],
         "title": asLiteral(item, "title", query.language, languagePreferences),
         "keyword": item["keyword_" + query.language],
         "theme": asResource(item["theme"]),
-        "format": asResource(item["format"]),
+        "file_type": asResource(item["file_type"]),
+        "data_service_type": asResource(item["data_service_type"]),
         "publisher": asResource(item["publisher"]),
         "spatial": asResource(item["spatial"]),
         "order": index,
-        "isPartOf": asResource(item["isPartOf"]),
-        "containsService": item["with_data_service"],
+        "is_part_of": asResource(item["is_part_of"]),
       })),
-      ...convertKeywords(
-        facets["keyword_" + query.language], "urn:keyword", query.keywordLimit),
+      ...convertKeywordsFacet(
+        facets["keyword_" + query.language],
+        "urn:keyword",
+        query.keywordLimit),
       ...convertFacet(
-        facets["format"], "urn:format", query.formatLimit),
+        facets["file_type"],
+        "urn:fileType",
+        query.fileTypeLimit),
       ...convertFacet(
-        facets["publisher"], "urn:publisher", query.publisherLimit),
+        facets["data_service_type"],
+        "urn:dataServiceType",
+        query.dataServiceTypeLimit),
       ...convertFacet(
-        facets["theme"], "urn:theme", query.themeLimit),
+        facets["publisher"],
+        "urn:publisher",
+        query.publisherLimit),
+      ...convertFacet(
+        facets["theme"],
+        "urn:theme",
+        query.themeLimit),
     ],
   };
 }
@@ -295,27 +310,27 @@ function datasetListContext() {
     "count": "urn:count",
     "Dataset": "dcat:Dataset",
     "modified": "dcterms:modified",
-    "accrualPeriodicity": "dcterms:accrualPeriodicity",
+    "accrual_periodicity": "dcterms:accrualPeriodicity",
     "description": "dcterms:description",
     "issued": "dcterms:issued",
     "title": "dcterms:title",
     "keyword": "dcat:keyword",
     "theme": "dcat:theme",
-    "format": "dcterms:format",
+    "file_type": "dcterms:format",
     "publisher": "dcterms:publisher",
     "spatial": "dcterms:spatial",
     "Facet": "urn:Facet",
     "facet": "urn:facet",
     "FacetMetadata": "urn:FacetMetadata",
     "code": "urn:code",
-    "datasetsCount": "urn:datasetsCount",
+    "datasets_count": "urn:datasetsCount",
     "order": "urn:order",
-    "isPartOf": "urn:isPartOf",
-    "containsService": "urn:containsService",
+    "is_part_of": "urn:isPartOf",
+    "data_service_type": "urn:dataServiceType",
   };
 }
 
-function convertKeywords(values, facetIri, limit) {
+function convertKeywordsFacet(values, facetIri, limit) {
   if (!values) {
     return [];
   }
@@ -376,8 +391,7 @@ function convertFacet(values, facetIri, limit) {
 function asResource(value) {
   if (Array.isArray(value)) {
     return value.map(item => ({"@id": item}));
-  }
-  if (value) {
+  } else if (value !== undefined) {
     return {"@id": value};
   } else {
     return undefined;
@@ -405,7 +419,6 @@ function asLiteral(item, propertyName, language, languagePreferences) {
 }
 
 function createV2DatasetTypeaheadGet(configuration) {
-  // default-language
   return (req, res) => {
     const [params, language] =
       buildTypeaheadSolrQuery(req.query, configuration["default-language"]);

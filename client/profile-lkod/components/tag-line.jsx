@@ -2,24 +2,25 @@ import React from "react";
 import {PropTypes} from "prop-types";
 import {Badge} from "reactstrap";
 
-export default function TagLine({items, size = 1, labelFunction}) {
-  if (items === undefined) {
+export default function TagLine(props) {
+  if (props.items === undefined) {
     return null;
   }
   return (
     <div style={{"marginTop": "0.2em"}}>
-      {items.map((item) => (
+      {props.items.map((item) => (
         <Badge
           style={{
             "marginLeft": "1em",
             "marginBottom": "0.5em",
-            "fontSize": size + "em",
+            "fontSize": (props.size ?? 1) + "em",
           }}
-          color="info"
+          color={props.info ?? "info"}
+          className={props.className ?? ""}
           pill
           key={item}
         >
-          {labelFunction(item)}
+          {props.labelFunction(item)}
         </Badge>
       ))}
     </div>
@@ -28,6 +29,8 @@ export default function TagLine({items, size = 1, labelFunction}) {
 
 TagLine.propTypes = {
   "items": PropTypes.arrayOf(PropTypes.string).isRequired,
-  "size": PropTypes.number,
   "labelFunction": PropTypes.func.isRequired,
+  "size": PropTypes.number,
+  "color": PropTypes.string,
+  "className": PropTypes.string,
 };

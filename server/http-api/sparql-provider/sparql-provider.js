@@ -1,3 +1,8 @@
+//
+// Load data from SPARQL endpoint. Be aware that this may be slow,
+// so you should always test it before deployment to production.
+//
+
 const {handleApiError} = require("./../http-utils");
 const {
   executeSparqlConstruct,
@@ -31,16 +36,13 @@ const {
 
 function createProvider(configuration) {
   return {
-    // "v1-info"                  NOT SUPPORTED
     "v2-dataset-list": createDatasetListGet(configuration),
     "v2-dataset-item": createDatasetItemGet(configuration),
     "v2-dataset-typeahead": createDatasetListTypeaheadGet(configuration),
-    // "v2-distribution-item"     NOT SUPPORTED
     "v2-publisher-list": createPublisherListGet(configuration),
     "v2-keyword-list": createKeywordListGet(configuration),
     "v2-label-item": createLabelItemGet(configuration),
     "v2-init-data": createInitialDataListGet(),
-    // "v2-catalog-list"          NOT SUPPORTED
     ...quality.createProvider(configuration),
     ...vdf.createProvider(configuration),
   };

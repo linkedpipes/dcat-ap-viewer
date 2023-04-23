@@ -54,13 +54,23 @@ function DatasetListFilters(props) {
         selectFacetLabel={(item) => item.queryCode}
       />
       <Facet
-        label={"facet.formats"}
-        facetData={props.state.formats}
-        activeFacets={props.query.formats}
-        facetCount={props.state.formatsCount}
+        label={"facet.fileTypes"}
+        facetData={props.state.fileTypes}
+        activeFacets={props.query.fileTypes}
+        facetCount={props.state.fileTypesCount}
         datasetsCount={props.state.datasetsCount}
         onFacetClick={callbacks.onClickFormats}
         onFetchMore={callbacks.onFetchFormats}
+        selectFacetLabel={(item) => selectLabel(item.queryCode)}
+      />
+      <Facet
+        label={"facet.dataServiceTypes"}
+        facetData={props.state.dataServiceTypes}
+        activeFacets={props.query.dataServiceTypes}
+        facetCount={props.state.dataServiceTypesCount}
+        datasetsCount={props.state.datasetsCount}
+        onFacetClick={callbacks.onClickDataServiceTypes}
+        onFetchMore={callbacks.onFetchDataServiceTypes}
         selectFacetLabel={(item) => selectLabel(item.queryCode)}
       />
     </React.Fragment>
@@ -73,7 +83,8 @@ DatasetListFilters.propTypes = {
     "publishers": PropTypes.arrayOf(PropTypes.string).isRequired,
     "themes": PropTypes.arrayOf(PropTypes.string).isRequired,
     "keywords": PropTypes.arrayOf(PropTypes.string).isRequired,
-    "formats": PropTypes.arrayOf(PropTypes.string).isRequired,
+    "fileTypes": PropTypes.arrayOf(PropTypes.string).isRequired,
+    "dataServiceTypes": PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
   "state": PropTypes.shape({
     "isPartOf": PropTypes.arrayOf(PropTypes.shape({
@@ -99,12 +110,18 @@ DatasetListFilters.propTypes = {
       "count": PropTypes.number,
     })).isRequired,
     "keywordsCount": PropTypes.number.isRequired,
-    "formats": PropTypes.arrayOf(PropTypes.shape({
+    "fileTypes": PropTypes.arrayOf(PropTypes.shape({
       "title": PropTypes.object,
       "queryCode": PropTypes.string.isRequired,
       "count": PropTypes.number,
     })).isRequired,
-    "formatsCount": PropTypes.number.isRequired,
+    "fileTypesCount": PropTypes.number.isRequired,
+    "dataServiceTypes": PropTypes.arrayOf(PropTypes.shape({
+      "title": PropTypes.object,
+      "queryCode": PropTypes.string.isRequired,
+      "count": PropTypes.number,
+    })).isRequired,
+    "dataServiceTypesCount": PropTypes.number.isRequired,
     "datasetsCount":  PropTypes.number.isRequired,
   }).isRequired,
   "onUpdateQuery": PropTypes.func.isRequired,
@@ -167,16 +184,32 @@ function useCallbacks(onUpdateQuery, query, state) {
 
   const onFetchFormats = useCallback((count) => {
     onUpdateQuery({
-      "formatsLimit": Math.min(
-        query.formatsLimit + count,
-        state.formatsCount,
+      "fileTypesLimit": Math.min(
+        query.fileTypesLimit + count,
+        state.fileTypesCount,
       ),
     });
-  }, [onUpdateQuery, query.formatsLimit, state.formatsCount]);
+  }, [onUpdateQuery, query.fileTypesLimit, state.fileTypesCount]);
 
   const onClickFormats = useCallback((value) => {
     onUpdateQuery({
-      "formats": toggleInArray(query.formats, value),
+      "fileTypes": toggleInArray(query.fileTypes, value),
+      "page": 0,
+    });
+  }, [onUpdateQuery, query]);
+
+  const onFetchDataServiceTypes = useCallback((count) => {
+    onUpdateQuery({
+      "dataServiceTypesLimit": Math.min(
+        query.dataServiceTypesLimit + count,
+        state.dataServiceTypesLimit,
+      ),
+    });
+  }, [onUpdateQuery, query.dataServiceTypesLimit, state.dataServiceTypesCount]);
+
+  const onClickDataServiceTypes = useCallback((value) => {
+    onUpdateQuery({
+      "dataServiceTypes": toggleInArray(query.dataServiceTypes, value),
       "page": 0,
     });
   }, [onUpdateQuery, query]);
@@ -191,6 +224,8 @@ function useCallbacks(onUpdateQuery, query, state) {
     "onClickKeywords": onClickKeywords,
     "onFetchFormats": onFetchFormats,
     "onClickFormats": onClickFormats,
+    "onClickDataServiceTypes": onClickDataServiceTypes,
+    "onFetchDataServiceTypes": onFetchDataServiceTypes,
   };
 
 }

@@ -11,7 +11,8 @@
     "facet.publishers": "Poskytovatelé",
     "facet.themes": "Témata",
     "facet.keywords": "Klíčová slova",
-    "facet.formats": "Formáty",
+    "facet.fileTypes": "Formáty",
+    "facet.dataServiceTypes": "Formáty datové služby",
     "facet.hide": "Skrýt filtry",
     "facet.show": "Zobrazit filtry",
     "isPartOfFacet": "Datová série",
@@ -44,8 +45,7 @@
     },
     "page-title.datasets" : "Datové sady",
     "invalid_dataset_list_query_argument": "Vyhledávací parametr byl očekáván ve formě IRI.",
-    "invalid_dataset_list_query_argument_link": "Zpět na datové sady",
-    "tag-data-service": "Datová služba"
+    "invalid_dataset_list_query_argument_link": "Zpět na datové sady"
   },
   "en": {
     "title asc": "Title Ascending",
@@ -58,7 +58,8 @@
     "facet.publishers": "Publishers",
     "facet.themes": "Themes",
     "facet.keywords": "Keywords",
-    "facet.formats": "Formats",
+    "facet.fileTypes": "Formats",
+    "facet.dataServiceTypes": "Data service formats",
     "facet.hide": "Hide filters",
     "facet.show": "Show filters",
     "isPartOfFacet": "Dataset series",
@@ -89,7 +90,6 @@
     },
     "page-title.datasets" : "Datasets",
     "invalid_dataset_list_query_argument": "Query parameters were supposed to be in form of an IRI.",
-    "invalid_dataset_list_query_argument_link": "Back to all datasets",
-    "tag-data-service": "Data service"
+    "invalid_dataset_list_query_argument_link": "Back to all datasets"
   }
 }

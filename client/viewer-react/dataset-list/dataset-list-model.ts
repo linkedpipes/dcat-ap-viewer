@@ -44,9 +44,13 @@ export interface ExtendedDatasetListQuery {
 
   keywordsLimit: number;
 
-  formats: string[];
+  fileTypes: string[];
 
-  formatsLimit: number;
+  fileTypesLimit: number;
+
+  dataServiceTypes: string[];
+
+  dataServiceTypesLimit: number;
 
   temporalStart: string;
 
@@ -55,8 +59,6 @@ export interface ExtendedDatasetListQuery {
   isPartOf: string[];
 
   view: number;
-
-  containsService: boolean;
 
   isVdfPublicData: boolean;
 

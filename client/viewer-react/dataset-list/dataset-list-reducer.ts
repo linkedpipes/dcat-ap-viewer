@@ -31,8 +31,10 @@ class State implements DatasetList {
   //
   datasets: DatasetListItem[] = [];
   datasetsCount: number = 0;
-  formats: Facet[] = [];
-  formatsCount: number = 0;
+  fileTypes: Facet[] = [];
+  fileTypesCount: number = 0;
+  dataServiceTypes: Facet[] = [];
+  dataServiceTypesCount: number = 0;
   keywords: Facet[] = [];
   keywordsCount: number = 0;
   publishers: Facet[] = [];
@@ -107,8 +109,10 @@ function onDatasetListSuccess(
       "keywordsCount": content.keywordsCount,
       "publishers": content.publishers,
       "publishersCount": content.publishersCount,
-      "formats": content.formats,
-      "formatsCount": content.formatsCount,
+      "fileTypes": content.fileTypes,
+      "fileTypesCount": content.fileTypesCount,
+      "dataServiceTypes": content.dataServiceTypes,
+      "dataServiceTypesCount": content.dataServiceTypesCount,
       "colors": colors,
     };
   }
@@ -164,8 +168,11 @@ function mergeContentIntoState(
   if (action.keywords.length > 0) {
     result.keywords = action.keywords;
   }
-  if (action.formats.length > 0) {
-    result.formats = action.formats;
+  if (action.fileTypes.length > 0) {
+    result.fileTypes = action.fileTypes;
+  }
+  if (action.dataServiceTypes.length > 0) {
+    result.dataServiceTypes = action.dataServiceTypes;
   }
   return result;
 }

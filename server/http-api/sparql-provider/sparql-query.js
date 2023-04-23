@@ -65,8 +65,8 @@ function createAsLiteral(language) {
 }
 
 function createTemporal(query) {
-  const start = query["temporal-start"];
-  const end = query["temporal-end"];
+  const start = query["temporalStart"];
+  const end = query["temporalEnd"];
   if (start === undefined && end === undefined) {
     return ["", ""];
   }

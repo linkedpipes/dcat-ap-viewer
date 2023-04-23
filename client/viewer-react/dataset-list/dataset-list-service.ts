@@ -93,8 +93,10 @@ function parsedQueryToQuery(
     "themesLimit": lastQuery.themesLimit,
     "keywords": asArray(parsedQuery.keywords),
     "keywordsLimit": lastQuery.keywordsLimit,
-    "formats": asIriArray(parsedQuery, "formats"),
-    "formatsLimit": lastQuery.formatsLimit,
+    "fileTypes": asIriArray(parsedQuery, "fileTypes"),
+    "fileTypesLimit": lastQuery.fileTypesLimit,
+    "dataServiceTypes": asIriArray(parsedQuery, "dataServiceTypes"),
+    "dataServiceTypesLimit": lastQuery.dataServiceTypesLimit,
     "temporalStart": parsedQuery.temporalStart ?
       parsedQuery.temporalStart as any : "",
     "temporalEnd": parsedQuery.temporalEnd ?
@@ -102,7 +104,6 @@ function parsedQueryToQuery(
     "isPartOf": asIriArray(parsedQuery, "isPartOf"),
     "view": asInteger(parsedQuery, "view", 0),
     "report": report,
-    "containsService": parsedQuery.containsService === "1",
     "isVdfCodelist" : parsedQuery.isVdfCodelist === "1",
     "isVdfPublicData" : parsedQuery.isVdfPublicData === "1",
   };
@@ -177,14 +178,15 @@ function createDefaultDatasetListQuery(): ExtendedDatasetListQuery {
     "themesLimit": 14,
     "keywords": [],
     "keywordsLimit": 14,
-    "formats": [],
-    "formatsLimit": 14,
+    "fileTypes": [],
+    "fileTypesLimit": 14,
+    "dataServiceTypes": [],
+    "dataServiceTypesLimit": 14,
     "temporalStart": "",
     "temporalEnd": "",
     "isPartOf": [],
     "view": 0,
     "report": [],
-    "containsService": false,
     "isVdfCodelist": false,
     "isVdfPublicData": false,
   };
@@ -213,15 +215,16 @@ function prepareForUrl(query: ExtendedDatasetListQuery): ParsedQuery {
       query.themes : null,
     "keywords": query.keywords.length > 0 ?
       query.keywords : null,
-    "formats": query.formats.length > 0 ?
-      query.formats : null,
+    "fileTypes": query.fileTypes.length > 0 ?
+      query.fileTypes : null,
+    "dataServiceTypes": query.dataServiceTypes.length > 0 ?
+      query.dataServiceTypes : null,
     "temporalStart": query.temporalStart !== "" ?
       query.temporalStart : null,
     "temporalEnd": query.temporalEnd !== "" ?
       query.temporalEnd : null,
     "isPartOf": query.isPartOf.length > 0 ?
       query.isPartOf : null,
-    "containsService": query.containsService ? "1" : null,
     "view": query.view !== defaultQuery.view ?
       String(query.view) : null,
     "isVdfCodelist": query.isVdfCodelist ? "1" : null,
@@ -253,8 +256,10 @@ export function useDatasetListApi(
     "datasetsCount": state.datasetsCount,
     "publishers": state.publishers,
     "publishersCount": state.publishersCount,
-    "formats": state.formats,
-    "formatsCount": state.formatsCount,
+    "fileTypes": state.fileTypes,
+    "fileTypesCount": state.fileTypesCount,
+    "dataServiceTypes": state.dataServiceTypes,
+    "dataServiceTypesCount": state.dataServiceTypesCount,
     "themes": state.themes,
     "themesCount": state.themesCount,
     "keywords": state.keywords,
@@ -277,12 +282,13 @@ function prepareDatasetListQuery(
     "themesLimit": query.themesLimit,
     "keywords": query.keywords,
     "keywordsLimit": query.keywordsLimit,
-    "formats": query.formats,
-    "formatsLimit": query.formatsLimit,
+    "fileTypes": query.fileTypes,
+    "fileTypesLimit": query.fileTypesLimit,
+    "dataServiceTypes": query.dataServiceTypes,
+    "dataServiceTypesLimit": query.dataServiceTypesLimit,
     "temporalStart": query.temporalStart,
     "temporalEnd": query.temporalEnd,
     "isPartOf": query.isPartOf,
-    "containsService": query.containsService,
     "isVdfPublicData" : query.isVdfPublicData,
     "isVdfCodelist": query.isVdfCodelist,
   }
@@ -308,12 +314,13 @@ function datasetListQueryEquals(
     && left.themesLimit === right.themesLimit
     && isArrayEqual(left.keywords, right.keywords)
     && left.keywordsLimit === right.keywordsLimit
-    && isArrayEqual(left.formats, right.formats)
-    && left.formatsLimit === right.formatsLimit
+    && isArrayEqual(left.fileTypes, right.fileTypes)
+    && left.fileTypesLimit === right.fileTypesLimit
+    && isArrayEqual(left.dataServiceTypes, right.dataServiceTypes)
+    && left.dataServiceTypesLimit === right.dataServiceTypesLimit
     && left.temporalStart === right.temporalStart
     && left.temporalEnd === right.temporalEnd
     && isArrayEqual(left.isPartOf, right.isPartOf)
-    && left.containsService === right.containsService
     && left.isVdfPublicData === right.isVdfPublicData
     && left.isVdfCodelist === right.isVdfCodelist;
 }
@@ -426,14 +433,17 @@ function optimizeDatasetListQuery(
     "keywordsLimit":
       prevQuery.keywordsLimit === nextQuery.keywordsLimit ?
         0 : nextQuery.keywordsLimit,
-    "formats": nextQuery.formats,
-    "formatsLimit":
-      prevQuery.formatsLimit === nextQuery.formatsLimit ?
-        0 : nextQuery.formatsLimit,
+    "fileTypes": nextQuery.fileTypes,
+    "fileTypesLimit":
+      prevQuery.fileTypesLimit === nextQuery.fileTypesLimit ?
+        0 : nextQuery.fileTypesLimit,
+    "dataServiceTypes": nextQuery.dataServiceTypes,
+    "dataServiceTypesLimit":
+      prevQuery.dataServiceTypesLimit === nextQuery.dataServiceTypesLimit ?
+        0 : nextQuery.dataServiceTypesLimit,
     "temporalStart": nextQuery.temporalStart,
     "temporalEnd": nextQuery.temporalEnd,
     "isPartOf": nextQuery.isPartOf,
-    "containsService": nextQuery.containsService,
     "isVdfPublicData" : nextQuery.isVdfPublicData,
     "isVdfCodelist": nextQuery.isVdfCodelist,
   };
@@ -451,11 +461,11 @@ function shouldMergeDatasetList(
     && prevQuery.publishers === query.publishers
     && prevQuery.themes === query.themes
     && prevQuery.keywords === query.keywords
-    && prevQuery.formats === query.formats
+    && prevQuery.fileTypes === query.fileTypes
+    && prevQuery.dataServiceTypes === query.dataServiceTypes
     && prevQuery.temporalStart === query.temporalStart
     && prevQuery.temporalEnd === query.temporalEnd
     && prevQuery.isPartOf === query.isPartOf
-    && prevQuery.containsService === query.containsService
     && prevQuery.isVdfCodelist === query.isVdfCodelist
     && prevQuery.isVdfPublicData === query.isVdfPublicData;
 }

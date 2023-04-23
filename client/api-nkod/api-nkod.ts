@@ -215,14 +215,14 @@ function datasetQueryFiltersToUrlParams(
   params += query.search ? "&text=" + encodeURIComponent(query.search) : "";
   params += facetToParams(query.keywords, query.keywordsLimit, "keyword");
   params += facetToParams(query.publishers, query.publishersLimit, "publisher");
-  params += facetToParams(query.formats, query.formatsLimit, "format");
+  params += facetToParams(query.fileTypes, query.fileTypesLimit, "fileType");
+  params += facetToParams(query.dataServiceTypes, query.dataServiceTypesLimit, "dataServiceType");
   params += facetToParams(query.themes, query.themesLimit, "theme");
   params += query.temporalStart ?
     ("&temporal-start=" + query.temporalStart) : "";
   params += query.temporalEnd ?
     ("&temporal-end=" + query.temporalEnd) : "";
   params += query.isPartOf ? facetToParams(query.isPartOf, 0, "isPartOf") : "";
-  params += query.containsService ? "&containsService" : "";
   params += query.isVdfPublicData ? "&isVdfPublicData" : "";
   params += query.isVdfCodelist ? "&isVdfCodelist" : "";
   return params;

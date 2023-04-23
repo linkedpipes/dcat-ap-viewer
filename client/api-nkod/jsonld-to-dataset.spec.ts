@@ -403,7 +403,7 @@ test("Load datasets JSON-LD.", async () => {
         "description": {
           "cs": "Agendy evidované v Registru práv a povinností."
         },
-        "formats": [
+        "fileType": [
           "http://publications.europa.eu/resource/authority/file-type/JSON",
           "http://publications.europa.eu/resource/authority/file-type/JSON_LD",
         ],
@@ -434,7 +434,7 @@ test("Load datasets JSON-LD.", async () => {
         "description": {
           "cs": "Číselník stavů organizací",
         },
-        "formats": [
+        "fileType": [
           "http://publications.europa.eu/resource/authority/file-type/XML"
         ],
         "issued": undefined,
@@ -486,7 +486,7 @@ test("Load datasets JSON-LD.", async () => {
     "keywordsCount": 567,
     "publishers": [],
     "publishersCount": 5,
-    "formats": [
+    "fileType": [
       {
         "iri": "http://publications.europa.eu/resource/authority/file-type/CSV",
         "title": undefined,

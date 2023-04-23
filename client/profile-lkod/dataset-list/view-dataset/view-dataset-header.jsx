@@ -11,6 +11,7 @@ import {
 
 import {t, useLabelApi, formatNumber} from "../../viewer-api";
 import TagLine from "../../components/tag-line";
+import ViewSelector from "../dataset-list-query/view-selector";
 
 const SORT_OPTIONS = ["title asc", "title desc"];
 
@@ -45,14 +46,20 @@ export default function DatasetsViewHeader(props) {
           labelFunction={code => code}
         />
         <TagLine
-          items={props.query.formats}
+          items={props.query.fileTypes}
           labelFunction={labelSelector}
+        />
+        <TagLine
+          items={props.query.dataServiceTypes}
+          labelFunction={labelSelector}
+          className="badge-data-service"
         />
       </Col>
       <Col xs={12} md={3}>
         <SortSelector
           value={props.query.sort}
           onChange={setSort}
+          className="float-lg-end"
         />
       </Col>
     </Row>
@@ -67,7 +74,8 @@ DatasetsViewHeader.propTypes = {
     "publishers": PropTypes.arrayOf(PropTypes.string).isRequired,
     "themes": PropTypes.arrayOf(PropTypes.string).isRequired,
     "keywords": PropTypes.arrayOf(PropTypes.string).isRequired,
-    "formats": PropTypes.arrayOf(PropTypes.string).isRequired,
+    "fileTypes": PropTypes.arrayOf(PropTypes.string).isRequired,
+    "dataServiceTypes": PropTypes.arrayOf(PropTypes.string).isRequired,
     "sort": PropTypes.string.isRequired,
     "search": PropTypes.string.isRequired,
   }).isRequired,
@@ -90,18 +98,18 @@ SearchText.propTypes = {
   "search": PropTypes.string,
 };
 
-function SortSelector({value, onChange}) {
+function SortSelector(props) {
   return (
-    <UncontrolledDropdown>
+    <UncontrolledDropdown className={props.className}>
       <DropdownToggle caret>
-        {t(value)}
+        {t(props.value)}
       </DropdownToggle>
       <DropdownMenu>
         {
           SORT_OPTIONS
-            .filter(item => item !== value)
+            .filter(item => item !== props.value)
             .map(item => (
-              <DropdownItem key={item} onClick={() => onChange(item)}>
+              <DropdownItem key={item} onClick={() => props.onChange(item)}>
                 {t(item)}
               </DropdownItem>
             ))
@@ -114,4 +122,5 @@ function SortSelector({value, onChange}) {
 SortSelector.propTypes = {
   "value": PropTypes.string.isRequired,
   "onChange": PropTypes.func.isRequired,
+  "className": PropTypes.string,
 };

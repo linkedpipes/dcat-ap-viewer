@@ -38,7 +38,8 @@ function DatasetListQuery(props) {
       "publishers": [],
       "themes": [],
       "keywords": [],
-      "formats": [],
+      "fileTypes": [],
+      "dataServiceTypes": [],
       "temporalStart": "",
       "temporalEnd": "",
       "isPartOf": [],
@@ -96,7 +97,7 @@ function DatasetListQuery(props) {
       />
       {
         showAdvanced &&
-        <div style={{"margin": "1rem 1rem 0 2rem"}}>
+        <div style={{"margin": "1rem 0 1rem 0"}}>
           <TemporalFilter
             start={temporalStart}
             setStart={setTemporalStart}
@@ -104,20 +105,6 @@ function DatasetListQuery(props) {
             setEnd={setTemporalEnd}
             setInterval={onSetInterval}
           />
-          <FormGroup
-            check
-            inline
-          >
-            <Input type="checkbox" checked={props.query.containsService}
-                   onChange={(event) => {
-                     props.onUpdateQuery({
-                       "containsService": !props.query.containsService
-                     });
-                   }}/>
-            <Label check>
-              {t("search.containsService")}
-            </Label>
-          </FormGroup>
           <VdfFilter
             isVdfCodelist={props.query.isVdfCodelist}
             isVdfPublicData={props.query.isVdfPublicData}
@@ -140,12 +127,11 @@ function DatasetListQuery(props) {
           </Button>
         </Col>
         <Col className="mt-2">
-          <div className="float-lg-end">
-            <ViewSelector
-              value={props.query.view}
-              onChange={onSetViewType}
-            />
-          </div>
+          <ViewSelector
+            value={props.query.view}
+            onChange={onSetViewType}
+            className="float-lg-end"
+          />
         </Col>
       </Row>
     </div>

@@ -37,7 +37,8 @@ function DatasetListQuery(props) {
       "publishers": [],
       "themes": [],
       "keywords": [],
-      "formats": [],
+      "fileTypes": [],
+      "dataServiceTypes": [],
       "temporalStart": "",
       "temporalEnd": "",
       "isPartOf": [],
@@ -93,20 +94,6 @@ function DatasetListQuery(props) {
             setEnd={setTemporalEnd}
             setInterval={onSetInterval}
           />
-          <FormGroup
-            check
-            inline
-          >
-            <Input type="checkbox" checked={props.containsService}
-                   onChange={(event) => {
-                     props.onUpdateQuery({
-                       "containsService": !props.containsService
-                     });
-                   }}/>
-            <Label check>
-              {t("search.containsService")}
-            </Label>
-          </FormGroup>
         </div>
       }
       <Row>
@@ -124,12 +111,11 @@ function DatasetListQuery(props) {
           </Button>
         </Col>
         <Col className="mt-2">
-          <div className="float-lg-end">
-            <ViewSelector
-              value={props.query.view}
-              onChange={onSetViewType}
-            />
-          </div>
+          <ViewSelector
+            value={props.query.view}
+            onChange={onSetViewType}
+            className="float-lg-end"
+          />
         </Col>
       </Row>
     </div>

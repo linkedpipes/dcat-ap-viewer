@@ -17,7 +17,7 @@ const AVAILABLE_VISUALISATIONS = [
 
 export default function ViewSelector(props) {
   return (
-    <UncontrolledDropdown>
+    <UncontrolledDropdown className={props.className}>
       <DropdownToggle caret>
         {t(AVAILABLE_VISUALISATIONS[props.value])}
       </DropdownToggle>
@@ -36,4 +36,5 @@ export default function ViewSelector(props) {
 ViewSelector.propTypes = {
   "value": PropTypes.number.isRequired,
   "onChange": PropTypes.func.isRequired,
+  "className": PropTypes.string,
 };

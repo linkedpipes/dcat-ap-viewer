@@ -56,9 +56,13 @@ export interface DatasetList {
 
   publishersCount: number;
 
-  formats: Facet[];
+  fileTypes: Facet[];
 
-  formatsCount: number;
+  fileTypesCount: number;
+
+  dataServiceTypes: Facet[];
+
+  dataServiceTypesCount: number;
 
 }
 
@@ -72,7 +76,9 @@ export interface DatasetListItem {
 
   description?: Literal;
 
-  formats: string[];
+  fileTypes: string[];
+
+  dataServiceTypes: string[];
 
   issued?: Date;
 
@@ -89,8 +95,6 @@ export interface DatasetListItem {
   order: number;
 
   isPartOf?: string;
-
-  containsService: boolean;
 
 }
 
@@ -139,17 +143,19 @@ export interface DatasetListQuery {
 
   keywordsLimit: number;
 
-  formats: string[];
+  fileTypes: string[];
 
-  formatsLimit: number;
+  fileTypesLimit: number;
+
+  dataServiceTypes: string[];
+
+  dataServiceTypesLimit: number;
 
   temporalStart: string;
 
   temporalEnd: string;
 
   isPartOf: string[];
-
-  containsService: boolean;
 
   isVdfPublicData: boolean;
 

@@ -32,7 +32,8 @@ export function jsonLdToDatasetList(jsonld: JsonLdEntity[]): DatasetList {
   loadDatasetListDatasets(jsonld, result);
   // Make sure we have predefined ordering.
   result.keywords.sort((left, right) => -(left.count - right.count));
-  result.formats.sort((left, right) => -(left.count - right.count));
+  result.fileTypes.sort((left, right) => -(left.count - right.count));
+  result.dataServiceTypes.sort((left, right) => -(left.count - right.count));
   result.publishers.sort((left, right) => -(left.count - right.count));
   result.themes.sort((left, right) => -(left.count - right.count));
   result.datasets.sort((left, right) => left.order - right.order);
@@ -43,8 +44,10 @@ function createEmptyDatasetList(): DatasetList {
   return {
     datasets: [],
     datasetsCount: 0,
-    formats: [],
-    formatsCount: 0,
+    fileTypes: [],
+    fileTypesCount: 0,
+    dataServiceTypes: [],
+    dataServiceTypesCount: 0,
     keywords: [],
     keywordsCount: 0,
     publishers: [],
@@ -71,8 +74,11 @@ function loadDatasetListFacetMetadata(
       case LP.keyword:
         output.keywordsCount = count;
         break;
-      case LP.format:
-        output.formatsCount = count;
+      case LP.fileType:
+        output.fileTypesCount = count;
+        break;
+      case LP.dataServiceType:
+        output.dataServiceTypesCount = count;
         break;
       case LP.publisher:
         output.publishersCount = count;
@@ -98,8 +104,11 @@ function loadDatasetListFacets(jsonld: JsonLdEntity[], output: DatasetList) {
         facet.title = {"": facet.queryCode};
         output.keywords.push(facet);
         break;
-      case LP.format:
-        output.formats.push(facet);
+      case LP.fileType:
+        output.fileTypes.push(facet);
+        break;
+      case LP.dataServiceType:
+        output.dataServiceTypes.push(facet);
         break;
       case LP.publisher:
         output.publishers.push(facet);
@@ -119,7 +128,8 @@ function loadDatasetListDatasets(jsonld: JsonLdEntity[], output: DatasetList) {
       "title": getString(entry, DCTERMS.title),
       "accrualPeriodicity": getResource(entry, DCTERMS.accrualPeriodicity),
       "description": getString(entry, DCTERMS.description),
-      "formats": getResources(entry, DCTERMS.format),
+      "fileTypes": getResources(entry, DCTERMS.format),
+      "dataServiceTypes": getResources(entry, LP.dataServiceType),
       "issued": getDate(entry, DCTERMS.issued),
       "modified": getDate(entry, DCTERMS.modified),
       "publisher": getResource(entry, DCTERMS.publisher),
@@ -128,7 +138,6 @@ function loadDatasetListDatasets(jsonld: JsonLdEntity[], output: DatasetList) {
       "themes": getResources(entry, DCAT.theme),
       "order": Number(getValue(entry, LP.order)),
       "isPartOf": getResource(entry, LP.isPartOf),
-      "containsService": Boolean(getValue(entry, LP.containsService)),
     });
   }
 }
