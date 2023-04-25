@@ -17,13 +17,16 @@ export default function DataServiceConformsTo(props) {
     "labelFalse": "access.conformsToQualityFalse",
     "iconTrue": "verified_user",
     "iconFalse": "link_off",
-  }, {
-    "measureOf": QUALITY.conformsToCors,
-    "labelTrue": "access.conformsToQualityCorsTrue",
-    "labelFalse": "access.conformsToQualityCorsFalse",
-    "iconTrue": "http",
-    "iconFalse": "http",
-  }];
+  }
+  // Disabled CORS quality measure. We are not using this as of now.
+  // ,{
+  //   "measureOf": QUALITY.conformsToCors,
+  //   "labelTrue": "access.conformsToQualityCorsTrue",
+  //   "labelFalse": "access.conformsToQualityCorsFalse",
+  //   "iconTrue": "http",
+  //   "iconFalse": "http",
+  // }
+  ];
   return (
     <ListGroupItem className="px-2">
       {conformsTo.map(iri => (
