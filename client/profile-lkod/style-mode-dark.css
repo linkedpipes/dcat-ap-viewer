@@ -9,7 +9,10 @@
         --color-text-accent: #3bb5dc;
         --color-text-accent-inverted: white;
         --color-base: #057fa544;
-        --color-data-service: #0bac55;
+
+        --color-data-service-text: var(--color-text-default);
+        --color-data-service-background: var(--color-background);
+        --color-data-service-border: #0bac55;
     }
 
     html.bg-light {
@@ -66,5 +69,4 @@
     .paginator .page-item.active a.page-link {
         background-color: var(--color-text-default);
     }
-
 }

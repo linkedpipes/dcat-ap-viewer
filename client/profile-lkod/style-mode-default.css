@@ -8,4 +8,8 @@
     --color-text-accent: #057fa5 ;
     --color-text-accent-inverted: black ;
     --color-base: #057fa5 ;
+
+    --color-data-service-text: var(--color-text-inverted);
+    --color-data-service-background: #0bac55;
+    --color-data-service-border: #0bac55;
 }
