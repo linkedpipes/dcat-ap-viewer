@@ -112,7 +112,7 @@ function Footer() {
                 alt={translateString(language, "footer.euOzp")}
                 className="d-inline-block align-top"
                 id="eulogo"
-                src={translateString(language, "footer.opzLogoLink")}
+                src={translateString(language, "footer.npoLogoLink")}
                 width="300"
               />
             </div>
