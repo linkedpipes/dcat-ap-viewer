@@ -71,3 +71,5 @@ dcat-ap-viewer:
     # If set and not empty, then a link to semantic visualisation is shown.
     # The value is appended by encoded dataset IRI and used as URL.
     semantic-visualisation: ""
+    # Address of application-catalog, must end with '/'.
+    applications-url: """

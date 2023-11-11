@@ -42,6 +42,7 @@ const DatasetDetail = () => {
   const Parts = getElement("dataset-detail.parts").element;
   const Descendants = getElement("dataset-detail.descendants").element;
   const Vdf = getElement("dataset-detail.vdf").element;
+  const Applications = getElement("dataset-detail.applications").element;
 
   return (
     <Container>
@@ -51,6 +52,7 @@ const DatasetDetail = () => {
       <Parts dataset={data.dataset} language={navigation.language}/>
       <Descendants dataset={data.dataset} language={navigation.language}/>
       <Vdf dataset={data.dataset} language={navigation.language}/>
+      <Applications dataset={data.dataset} language={navigation.language}/>
     </Container>
   );
 };

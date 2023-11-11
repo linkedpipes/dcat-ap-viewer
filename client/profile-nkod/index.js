@@ -34,6 +34,7 @@ import "./dataset-list/dataset-list-query/dataset-list-query";
 import "./publisher-list/publisher-list";
 import "./dataset-detail/access/endpoint-url-item";
 import "./dataset-detail/dataset-detail-vdf";
+import "./dataset-detail/dataset-detail-applications";
 
 // Styles.
 import "bootstrap/dist/css/bootstrap.css";

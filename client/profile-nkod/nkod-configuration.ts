@@ -14,6 +14,8 @@ interface NkodConfiguration {
 
   classPropertiesUrlTemplate: string
 
+  applicationsUrl: string;
+
 }
 
 declare var CONFIGURATION: NkodConfiguration;

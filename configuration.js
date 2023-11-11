@@ -27,7 +27,7 @@ const YAML = require("yaml");
     "helmet": configuration["helmet"],
     /**
      * As this is provided to the profile, it may have custom properties
-     * so we only do some basic sanitization.
+     * thus we only do some basic sanitization.
      */
     "client": client,
   };
