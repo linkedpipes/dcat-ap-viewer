@@ -10,7 +10,7 @@ export function useApplications(language: string, dataset: string) {
   useEffect(() => {
     let isCancelled = false;
     const url = configuration.applicationsUrl +
-      "api/v1/applications-for-datasets?iri=" +
+      "api/aplikace/v1/applications-for-datasets?iri=" +
       encodeURIComponent(dataset) +
      "&language=" + encodeURIComponent((language));
 
