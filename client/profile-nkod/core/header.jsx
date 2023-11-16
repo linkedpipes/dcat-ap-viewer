@@ -12,9 +12,19 @@ import LanguageSelector from "../../profile-lkod/components/language-selector";
 
 import translations from "./header.json";
 
+const links = {
+  "cs": {
+    "applications": "./aplikace"
+  },
+  "en": {
+    "applications": "./applications"
+  }
+}
+
 function Header() {
   const {language} = useContext(NavigationContext);
   const [isOpen, setIsOpen] = useState(false);
+  const localLinks = links[language];
 
   return (
     <Namespace.Provider value="header">
@@ -53,7 +63,9 @@ function Header() {
                 {navLink("/publishers", "header.publishers")}
               </NavItem>
               <NavItem>
-                {navLink("/keywords", "header.keywords")}
+                <NavLink href={localLinks['applications']}>
+                  {t("header.applications")}
+                </NavLink>
               </NavItem>
               <NavItem>
                 <UncontrolledDropdown>
