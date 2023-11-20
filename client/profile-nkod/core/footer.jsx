@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import {Container, Row, Col} from "reactstrap";
 
-import {t, register, NavigationContext, translateString} from "../viewer-api";
+import {t, register, NavigationContext, translateString, configuration} from "../viewer-api";
 import {
   getCreateDatasetFormLink, getCreateCatalogFormLink,
 } from "../form/form-service";
@@ -11,6 +11,7 @@ import translations from "./footer.json";
 
 function Footer() {
   const {language} = useContext(NavigationContext);
+  const applicationFormLink = configuration.applicationsFormUrl;
 
   return (
     <footer className="footer py-4 mt-2 border-top">
@@ -27,6 +28,11 @@ function Footer() {
               <li>
                 <a href={getCreateCatalogFormLink(language)}>
                   {t("footer.registerLocalCatalog")}
+                </a>
+              </li>
+              <li>
+                <a href={applicationFormLink}>
+                  {t("footer.registerApplication")}
                 </a>
               </li>
             </ul>

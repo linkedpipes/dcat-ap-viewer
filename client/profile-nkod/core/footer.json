@@ -36,7 +36,8 @@
     "footer.legalTail": ". Při jeho využití uveďte zdroj a odkažte na patřičnou licenci.",
     "footer.npoLogoLink": "/images/npo_cz.webp",
     "footer.suggestions": "Podnět na data k otevření",
-    "footer.quality": "Datová kvalita"
+    "footer.quality": "Datová kvalita",
+    "footer.registerApplication": "Registrovat aplikaci využívající otevřená data"
   },
   "en": {
     "footer.nkodRegistration": "Registration in NKOD",
@@ -75,6 +76,7 @@
     "footer.legalTail": ". Please attribute correctly and link to the licence when reusing the content.",
     "footer.npoLogoLink": "/images/npo_en.webp",
     "footer.suggestions": "Suggest data to be opened",
-    "footer.quality": "Data quality"
+    "footer.quality": "Data quality",
+    "footer.registerApplication": "Registrovat aplikaci využívající otevřená data"
   }
 }

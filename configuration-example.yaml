@@ -72,4 +72,6 @@ dcat-ap-viewer:
     # The value is appended by encoded dataset IRI and used as URL.
     semantic-visualisation: ""
     # Address of application-catalog, must end with '/'.
-    applications-url: """
+    applications-url: ""
+    # Address of application registration form, visible in footer.
+    applications-form-url: ""
