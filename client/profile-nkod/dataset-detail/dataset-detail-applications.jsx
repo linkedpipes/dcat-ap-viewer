@@ -34,9 +34,9 @@ function DatasetDetailApplications(props) {
       <br/>
       {applications.map(item => (
         <div>
-          <Link to={item.href} rel="nofollow noopener noreferrer">
+          <a to={item.href} rel="nofollow noopener noreferrer">
             <h4>{item.label}</h4>
-          </Link>
+          </a>
           <p>
             {item.description}
           </p>
