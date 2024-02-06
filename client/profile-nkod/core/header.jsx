@@ -14,10 +14,12 @@ import translations from "./header.json";
 
 const links = {
   "cs": {
-    "applications": "./aplikace"
+    "applications": "./aplikace",
+    "suggestions": "./návrhy-na-datové-sady-k-otevření",
   },
   "en": {
-    "applications": "./applications"
+    "applications": "./applications",
+    "suggestions": "./suggestions-for-datasets-to-be-opened",
   }
 }
 
@@ -89,7 +91,7 @@ function Header() {
                     <DropdownItem href={createUrl(language, "/catalogs")}>
                       {t("header.catalogs")}
                     </DropdownItem>
-                    <DropdownItem href="https://docs.google.com/forms/d/e/1FAIpQLSdUaVaCITtmHdTGxsU5xPvdzIygOA7wHHaotPRPAbglCF3mpw/viewform">
+                    <DropdownItem href={localLinks['suggestions']}>
                       {t("header.suggestions")}
                     </DropdownItem>
                   </DropdownMenu>

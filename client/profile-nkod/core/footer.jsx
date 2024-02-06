@@ -12,6 +12,7 @@ import translations from "./footer.json";
 function Footer() {
   const {language} = useContext(NavigationContext);
   const applicationFormLink = configuration.applicationsFormUrl;
+  const suggestionsFormLink = configuration.suggestionsFormUrl;
 
   return (
     <footer className="footer py-4 mt-2 border-top">
@@ -33,6 +34,11 @@ function Footer() {
               <li>
                 <a href={applicationFormLink}>
                   {t("footer.registerApplication")}
+                </a>
+              </li>
+              <li>
+                <a href="{suggestionsFormLink}">
+                  {t("footer.suggestions")}
                 </a>
               </li>
             </ul>
@@ -86,7 +92,6 @@ function Footer() {
                   LinkedPipes ETL
                 </a>
               </li>
-              <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdUaVaCITtmHdTGxsU5xPvdzIygOA7wHHaotPRPAbglCF3mpw/viewform">{t("footer.suggestions")}</a></li>
               <li>
                 <a href="https://github.com/opendata-mvcr/nkod">
                   {t("footer.nkodDocumentation")}

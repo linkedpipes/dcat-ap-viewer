@@ -14,7 +14,7 @@
     "header.catalogs": "Lokální katalogy",
     "language.cs": "Čeština",
     "language.en": "English",
-    "header.suggestions": "Podnět na data k otevření"
+    "header.suggestions": "Návrhy na datové sady k otevření"
   },
   "en": {
     "header.logoAlt": "Open data",
@@ -31,6 +31,6 @@
     "header.catalogs": "Local catalogs",
     "language.cs": "Čeština",
     "language.en": "English",
-    "header.suggestions": "Suggest data to be opened"
+    "header.suggestions": "Suggestions for datasets to be opened"
   }
 }

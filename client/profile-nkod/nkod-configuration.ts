@@ -18,6 +18,8 @@ interface NkodConfiguration {
 
   applicationsFormUrl: string;
 
+  suggestionsFormUrl: string;
+
 }
 
 declare var CONFIGURATION: NkodConfiguration;
