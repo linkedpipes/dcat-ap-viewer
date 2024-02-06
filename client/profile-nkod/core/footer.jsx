@@ -37,7 +37,7 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a href="{suggestionsFormLink}">
+                <a href={suggestionsFormLink}>
                   {t("footer.suggestions")}
                 </a>
               </li>
